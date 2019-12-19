@@ -2970,3 +2970,21 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
   100% {
     -webkit-transform: scale(1.2, 1.2);
     opacity: 0.0; } }
+
+
+.card-height{
+  height: 400px;
+}
+.annouce_date_col{
+  background: #cec8c8; 
+  text-align: center;
+  font-weight: 600;
+}
+.annouce_date_col .month{
+  background: green;
+    color: white;
+}
+.annouce_date_col .date{
+    padding: 10px 0px;
+    color: #1b1b1b;
+}
