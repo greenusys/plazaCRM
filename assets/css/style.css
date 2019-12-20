@@ -2988,3 +2988,19 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
     padding: 10px 0px;
     color: #1b1b1b;
 }
+.rec_act{
+  width: 40px;
+  margin-right: 20px;
+}
+ 
+ #table2 { font-size: 14px; }
+    #table2 .sorting-table {cursor: ns-resize; box-shadow: 0 0 16px rgba(0, 0, 0, 0.2);}
+    #table2 thead th {background-color: #ccc; padding: 5px 8px;}
+    #table2 td {border-bottom: 1px solid #ffffff;
+    height: 25px;
+ padding: 5px 8px;}
+    #table2 tr.sorting-row td {background-color: #8b8;}
+    #table2 td.sorter {background-color: #f80; width: 10px; cursor: ns-resize;}
+    .sort-handler {float: right; background-color: #f80; width: 14px; height: 14px; margin: 2px 0 0 6px; cursor: ns-resize;}
+
+    #table2 .sorting-table tbody tr:not(.sorting-row) td {opacity: 0.2;}
