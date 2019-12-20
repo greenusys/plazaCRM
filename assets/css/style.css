@@ -2800,7 +2800,7 @@ body.layout-3 .main-footer {
         text-align: center; }
       .main-sidebar .sidebar-menu li a span {
         margin-top: 3px;
-        width: 100%; }
+        }
       .main-sidebar .sidebar-menu li a:hover {
         background-color: #f8fafb; }
     .main-sidebar .sidebar-menu li.active a {
@@ -2835,7 +2835,7 @@ body.layout-3 .main-footer {
       .main-sidebar .sidebar-menu li ul.dropdown-menu li a {
         color: #868e96;
         height: 35px;
-        padding-left: 65px;
+        padding-left: 45px;
         font-weight: 400; }
         .main-sidebar .sidebar-menu li ul.dropdown-menu li a:hover {
           color: #6777ef;
