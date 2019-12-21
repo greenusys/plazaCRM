@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <title>Ecommerce Dashboard &mdash; Stisla</title>
+
+  <!-- General CSS Files -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+  <!-- CSS Libraries -->
+  <!-- <link rel="stylesheet" href="../node_modules/jqvmap/dist/jqvmap.min.css"> -->
+  <!-- <link rel="stylesheet" href="../node_modules/summernote/dist/summernote-bs4.css"> -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
+
+ <!--  <link rel="stylesheet" href="../node_modules/owl.carousel/dist/assets/owl.carousel.min.css">
+  <link rel="stylesheet" href="../node_modules/owl.carousel/dist/assets/owl.theme.default.min.css"> -->
+
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="<?=base_url()?>assets/css/style.css">
+  <link rel="stylesheet" href="<?=base_url()?>assets/css/components.css">
+
+  <!-- General JS Scripts -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script src="<?=base_url()?>assets/js/stisla.js"></script>
+
+  <!-- JS Libraies -->
+ <!--  <script src="../node_modules/jquery-sparkline/jquery.sparkline.min.js"></script>
+  <script src="../node_modules/chart.js/dist/Chart.min.js"></script>
+  <script src="../node_modules/owl.carousel/dist/owl.carousel.min.js"></script> -->
+  <!-- <script src="../node_modules/summernote/dist/summernote-bs4.js"></script>
+  <script src="../node_modules/chocolat/dist/js/jquery.chocolat.min.js"></script> -->
+
+  <!-- Template JS File -->
+  <script src="<?=base_url()?>assets/js/scripts.js"></script>
+  <script src="<?=base_url()?>assets/js/custom.js"></script>
+
+  <!-- Page Specific JS File -->
+ <!--  <script src="../assets/js/page/index.js"></script> -->
+ <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+   <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script> 
+
+
+  <link href='<?=base_url()?>assets/css/calendar.css' rel='stylesheet' />
+<link href='<?=base_url()?>assets/css/daymain.css' rel='stylesheet' />
+<link href='<?=base_url()?>assets/css/timemain.css' rel='stylesheet' />
+<script src='<?=base_url()?>assets/js/calendar.js'></script>
+<script src='<?=base_url()?>assets/js/interaction.js'></script>
+<script src='<?=base_url()?>assets/js/daymain.js'></script>
+<script src='<?=base_url()?>assets/js/timemain.js'></script>
+  <script type="text/javascript" src="<?=base_url()?>assets/js/RowSorter.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <div class="main-wrapper">
+      <div class="navbar-bg"></div>
+      <nav class="navbar navbar-expand-lg main-navbar">
+        <form class="form-inline mr-auto">
+          <ul class="navbar-nav mr-3">
+            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
+            <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
+          </ul>
+          <div class="search-element">
+            <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
+            <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+            <div class="search-backdrop"></div>
+            <div class="search-result">
+              <div class="search-header">
+                Histories
+              </div>
+              <div class="search-item">
+                <a href="#">How to hack NASA using CSS</a>
+                <a href="#" class="search-close"><i class="fas fa-times"></i></a>
+              </div>
+              <div class="search-item">
+                <a href="#">Kodinger.com</a>
+                <a href="#" class="search-close"><i class="fas fa-times"></i></a>
+              </div>
+              <div class="search-item">
+                <a href="#">#Stisla</a>
+                <a href="#" class="search-close"><i class="fas fa-times"></i></a>
+              </div>
+              <div class="search-header">
+                Result
+              </div>
+              <div class="search-item">
+                <a href="#">
+                  <img class="mr-3 rounded" width="30" src="../assets/img/products/product-3-50.png" alt="product">
+                  oPhone S9 Limited Edition
+                </a>
+              </div>
+              <div class="search-item">
+                <a href="#">
+                  <img class="mr-3 rounded" width="30" src="../assets/img/products/product-2-50.png" alt="product">
+                  Drone X2 New Gen-7
+                </a>
+              </div>
+              <div class="search-item">
+                <a href="#">
+                  <img class="mr-3 rounded" width="30" src="../assets/img/products/product-1-50.png" alt="product">
+                  Headphone Blitz
+                </a>
+              </div>
+              <div class="search-header">
+                Projects
+              </div>
+              <div class="search-item">
+                <a href="#">
+                  <div class="search-icon bg-danger text-white mr-3">
+                    <i class="fas fa-code"></i>
+                  </div>
+                  Stisla Admin Template
+                </a>
+              </div>
+              <div class="search-item">
+                <a href="#">
+                  <div class="search-icon bg-primary text-white mr-3">
+                    <i class="fas fa-laptop"></i>
+                  </div>
+                  Create a new Homepage Design
+                </a>
+              </div>
+            </div>
+          </div>
+        </form>
+        <ul class="navbar-nav navbar-right">
+          
+          <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
+            <div class="dropdown-menu dropdown-list dropdown-menu-right">
+              <div class="dropdown-header">Notifications
+                <div class="float-right">
+                  <a href="#">Mark All As Read</a>
+                </div>
+              </div>
+              <div class="dropdown-list-content dropdown-list-icons">
+                <a href="#" class="dropdown-item dropdown-item-unread">
+                  <div class="dropdown-item-icon bg-primary text-white">
+                    <i class="fas fa-code"></i>
+                  </div>
+                  <div class="dropdown-item-desc">
+                    Template update is available now!
+                    <div class="time text-primary">2 Min Ago</div>
+                  </div>
+                </a>
+             
+              </div>
+              <div class="dropdown-footer text-center">
+                <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+              </div>
+            </div>
+          </li>
+          <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+            <img alt="image" src="../assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
+            <div class="d-sm-none d-lg-inline-block">Hi, Ujang Maman</div></a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <div class="dropdown-title">Logged in 5 min ago</div>
+              <a href="features-profile.html" class="dropdown-item has-icon">
+                <i class="far fa-user"></i> Profile
+              </a>
+              <a href="features-activities.html" class="dropdown-item has-icon">
+                <i class="fas fa-bolt"></i> Activities
+              </a>
+              <a href="features-settings.html" class="dropdown-item has-icon">
+                <i class="fas fa-cog"></i> Settings
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item has-icon text-danger">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <div class="main-sidebar">
+        <aside id="sidebar-wrapper">
+          <div class="sidebar-brand">
+            <a href="index.html">PlazaCRM</a>
+          </div>
+
+          <ul class="sidebar-menu">
+            <li><a class="nav-link" href="blank.html"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+            <li><a class="nav-link" href="blank.html"><i class="far fa-folder-open"></i><span>Projects</span></a></li>
+            <li><a class="nav-link" href="blank.html"><i class="fas fa-tasks"></i><span>Tasks</span></a></li>
+            <li><a class="nav-link" href="blank.html"><i class="fas fa-users"></i><span>Client</span></a></li>
+
+
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Attendance</span></a>
+                <ul class="dropdown-menu">
+                  <li><a class="nav-link" href=""><span> <i class="far fa-clock"></i></span>Time History</a></li>
+                  <li><a class="nav-link" href=""><span> <i class="far fa-calendar-minus"></i></span>TimeChange Request</a></li>
+                  <li><a class="nav-link" href=""><span><i class="far fa-file-alt"></i></span>Attendance Report</a></li>
+                  <li><a class="nav-link" href=""><span><i class="far fa-file-alt"></i></span>Mark Attendance</a></li>
+          
+                </ul>
+            </li>
+             <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-dollar-sign"></i> <span>Payroll</span></a>
+                <ul class="dropdown-menu">
+                  <li><a class="nav-link" href=""><span><i class="far fa-money-bill-alt"></i></span>Salary Template</a></li>
+                  <li><a class="nav-link" href=""><span>  <i class="far fa-clock"></i></span>Hourly Template</a></li>
+                  <li><a class="nav-link" href=""><span><i class="fas fa-dollar-sign"></i></span>Manage Salary</a></li>
+                  <li><a class="nav-link" href=""><span><i class="fas fa-user-secret"></i></span>Employee Salary List</a></li>
+                  <li><a class="nav-link" href=""><span><i class="fas fa-tasks"></i></span>Make Payment</a></li>
+                  <li><a class="nav-link" href=""><span><i class="fas fa-list"></i></span>Generate Payslip</a></li>
+                  <li><a class="nav-link" href=""><span><i class="fas fa-camera-retro"></i></span>Payroll Summary</a></li>
+                  <li><a class="nav-link" href=""><span><i class="fab fa-cc-mastercard"></i></span>Advance Salary</a></li>
+                  <li><a class="nav-link" href=""><span><i class="fas fa-briefcase"></i></span>Provident Fund</a></li>
+             
+                  <li><a class="nav-link" href=""><span><i class="far fa-clock"></i></span>Overtime</a></li>
+                  <li><a class="nav-link" href=""><span><i class="fas fa-trophy"></i></span>Employee Award</a></li>
+                  
+                </ul>
+            </li>
+             <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe-europe"></i> <span>Recruitment</span></a>
+                <ul class="dropdown-menu">
+                  <li><a class="nav-link" href=""><span> <i class="fas fa-ticket-alt"></i></span>Jobs Posted</a></li>
+                  <li><a class="nav-link" href=""><span><i class="far fa-compass"></i></span>Jobs Application</a></li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fab fa-dribbble"></i> <span>Transaction</span></a>
+                <ul class="dropdown-menu">
+                  <li><a class="nav-link" href=""><span> <i class="far fa-circle"></i></span>Expense</a></li>
+                  <li><a class="nav-link" href=""><span><i class="far fa-circle"></i></span>Deposit</a></li>
+                  <li><a class="nav-link" href=""><span><i class="far fa-circle"></i></span>Transfer</a></li>
+                  <li><a class="nav-link" href=""><span><i class="far fa-circle"></i></span>Transaction Report</a></li>
+                  <li><a class="nav-link" href=""><span><i class="far fa-circle"></i></span>Transfer Report</a></li>
+                  <li><a class="nav-link" href=""><span><i class="far fa-circle"></i></span>Balance Sheet</a></li>
+                   <li><a class="nav-link" href=""><span><i class="far fa-money-bill-alt"></i></span>Bank & Cash</a></li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fab fa-dribbble"></i> <span>Performance</span></a>
+                <ul class="dropdown-menu">
+                  <li><a class="nav-link" href=""><span> <i class="fas fa-random"></i></span>Indicator</a></li>
+                  <li><a class="nav-link" href=""><span><i class="fas fa-plus"></i></span>Give Appraisal</a></li>
+                  <li><a class="nav-link" href=""><span><i class="far fa-calendar"></i></span>Performance Report</a></li>
+                
+                </ul>
+            </li>
+            <li><a class="nav-link" href=""><i class="fab fa-telegram-plane"></i> <span>Leave Management</span></a></li>
+            <li><a class="nav-link" href=""><i class="fas fa-bullhorn"></i> <span>Announcements</span></a></li>
+            <li><a class="nav-link" href=""><i class="fas fa-database"></i> <span>Backup Database</span></a></li>
+             <li><a class="nav-link" href=""><i class="fas fa-envelope"></i> <span>Private Chat </span></a></li>
+            </ul>
+        </aside>
+      </div>
