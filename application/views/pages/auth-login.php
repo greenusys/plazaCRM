@@ -10,11 +10,10 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
   <!-- CSS Libraries -->
-  <link rel="stylesheet" href="../node_modules/bootstrap-social/bootstrap-social.css">
 
   <!-- Template CSS -->
-  <link rel="stylesheet" href="../assets/css/style.css">
-  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="<?=base_url()?>assets/css/style.css">
+  <link rel="stylesheet" href="<?=base_url()?>assets/css/components.css">
 </head>
 
 <body>
@@ -34,7 +33,7 @@
                 <form method="POST" action="<?=base_url('Login/validateLogin')?>" class="needs-validation" novalidate="">
                   <div class="form-group">
                     <label for="email">Email</label>
-                    <input id="email" type="email" class="form-control" name="email" tabindex="1" required autofocus>
+                    <input id="email" type="email" class="form-control" name="user_name" tabindex="1" required autofocus>
                     <div class="invalid-feedback">
                       Please fill in your email
                     </div>
@@ -45,7 +44,7 @@
                     	<label for="password" class="control-label">Password</label>
                       
                     </div>
-                    <input id="password" type="password" class="form-control" name="password" tabindex="2" required>
+                    <input id="password" type="password" class="form-control" name="pass_code" tabindex="2" required>
                     <div class="invalid-feedback">
                       please fill in your password
                     </div>

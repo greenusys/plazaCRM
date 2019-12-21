@@ -13,9 +13,12 @@ class Login extends CI_Controller {
 	}
 	public function validateLogin(){
 		// print_r($_POST);
-		$data=array("user_name_"=>$this->input->post(''),"password_"=>$this->input->post(''));
-		if(count($this->Login->verifyThisUser($data))>0){
-			redirect('Dashboard')
+		$data=array("user_name_"=>$this->input->post('user_name'),"password_"=>$this->input->post('pass_code'));
+		if($this->Login->verifyThisUser($data)){
+			redirect('Dashboard');
+		}else{
+			$this->session->set_flashdata('msg','Invalid Username Or Password');
+			redirect('Login');
 		}
 	}
 }
