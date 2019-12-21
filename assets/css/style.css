@@ -3004,3 +3004,20 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
     .sort-handler {float: right; background-color: #f80; width: 14px; height: 14px; margin: 2px 0 0 6px; cursor: ns-resize;}
 
     #table2 .sorting-table tbody tr:not(.sorting-row) td {opacity: 0.2;}
+.text_col{
+  color: #6777ef;
+  margin-bottom: 0px;
+}
+.progress {
+    display: -ms-flexbox;
+    display: flex;
+    height: .6rem;
+    overflow: hidden;
+    font-size: .75rem;
+    background-color: #e9ecef;
+    border-radius: .25rem;
+    margin-bottom: 10px;
+}
+.select2{
+  width: 96%;
+}
