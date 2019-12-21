@@ -3,10 +3,10 @@
 		public function verifyThisUser($data){
 			// $data['pass_code'];
 			$this->db->where('user_name_',$data['user_name_']);
-			if(count($result=$this->db->get('admin_')->result())>0){
-				print_r($result);
-				if($result['password_']==$data['password_']){
-					return true;
+			if(count($result=$this->db->get('user_')->result())>0){
+				// print_r($result);
+				if($result[0]->password_==$data['password_']){
+					return $result;
 				}
 				
 			}else{

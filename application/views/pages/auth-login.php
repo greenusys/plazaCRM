@@ -25,7 +25,11 @@
             <div class="login-brand" align="center">
               <img src="<?=base_url()?>assets/img/admin-settings-male.png" alt="logo" width="100" class="shadow-light rounded-circle">
             </div>
-
+            <?php
+              if($this->session->flashdata('msg')){
+                echo '<div class="alert alert-warning">'.$this->session->flashdata('msg').'</div>';
+              }
+            ?>
             <div class="card card-primary">
               <div class="card-header"><h4>Login</h4></div>
 
@@ -85,10 +89,10 @@
 
               </div>
             </div>
-            <!-- <div class="mt-5 text-muted text-center">
-              Don't have an account? <a href="auth-register.html">Create One</a>
+            <div class="mt-5 text-muted text-center">
+              Don't have an account? <a href="<?=base_url('User')?>">Create One</a>
             </div>
-            <div class="simple-footer">
+            <!-- <div class="simple-footer">
               Copyright &copy; Stisla 2018
             </div> -->
           </div>
