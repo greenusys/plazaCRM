@@ -194,37 +194,37 @@
           </div>
 
           <ul class="sidebar-menu">
-            <li><a class="nav-link" href="blank.html"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
-            <li><a class="nav-link" href="blank.html"><i class="far fa-folder-open"></i><span>Projects</span></a></li>
-            <li><a class="nav-link" href="blank.html"><i class="fas fa-tasks"></i><span>Tasks</span></a></li>
-            <li><a class="nav-link" href="blank.html"><i class="fas fa-users"></i><span>Client</span></a></li>
+            <li><a class="nav-link" href="<?=base_url('Dashboard')?>"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+            <li><a class="nav-link" href="<?=base_url('Projects')?>"><i class="far fa-folder-open"></i><span>Projects</span></a></li>
+            <li><a class="nav-link" href="<?=base_url('Task')?>"><i class="fas fa-tasks"></i><span>Tasks</span></a></li>
+            <li><a class="nav-link" href="<?=base_url('Client')?>"><i class="fas fa-users"></i><span>Client</span></a></li>
 
 
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Attendance</span></a>
                 <ul class="dropdown-menu">
-                  <li><a class="nav-link" href=""><span> <i class="far fa-clock"></i></span>Time History</a></li>
-                  <li><a class="nav-link" href=""><span> <i class="far fa-calendar-minus"></i></span>TimeChange Request</a></li>
-                  <li><a class="nav-link" href=""><span><i class="far fa-file-alt"></i></span>Attendance Report</a></li>
-                  <li><a class="nav-link" href=""><span><i class="far fa-file-alt"></i></span>Mark Attendance</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Attendance/timeHistory')?>"><span> <i class="far fa-clock"></i></span>Time History</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Attendance/timeChaneRequest')?>"><span> <i class="far fa-calendar-minus"></i></span>TimeChange Request</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Attendance/attendanceReport')?>"><span><i class="far fa-file-alt"></i></span>Attendance Report</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Attendance/markAttendance')?>"><span><i class="far fa-file-alt"></i></span>Mark Attendance</a></li>
           
                 </ul>
             </li>
              <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-dollar-sign"></i> <span>Payroll</span></a>
                 <ul class="dropdown-menu">
-                  <li><a class="nav-link" href=""><span><i class="far fa-money-bill-alt"></i></span>Salary Template</a></li>
-                  <li><a class="nav-link" href=""><span>  <i class="far fa-clock"></i></span>Hourly Template</a></li>
-                  <li><a class="nav-link" href=""><span><i class="fas fa-dollar-sign"></i></span>Manage Salary</a></li>
-                  <li><a class="nav-link" href=""><span><i class="fas fa-user-secret"></i></span>Employee Salary List</a></li>
-                  <li><a class="nav-link" href=""><span><i class="fas fa-tasks"></i></span>Make Payment</a></li>
-                  <li><a class="nav-link" href=""><span><i class="fas fa-list"></i></span>Generate Payslip</a></li>
-                  <li><a class="nav-link" href=""><span><i class="fas fa-camera-retro"></i></span>Payroll Summary</a></li>
-                  <li><a class="nav-link" href=""><span><i class="fab fa-cc-mastercard"></i></span>Advance Salary</a></li>
-                  <li><a class="nav-link" href=""><span><i class="fas fa-briefcase"></i></span>Provident Fund</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Payroll/salaryTemplate')?>"><span><i class="far fa-money-bill-alt"></i></span>Salary Template</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Payroll/hourlyTemplate')?>"><span>  <i class="far fa-clock"></i></span>Hourly Template</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Payroll/manageSalary')?>"><span><i class="fas fa-dollar-sign"></i></span>Manage Salary</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Payroll/empSalary')?>"><span><i class="fas fa-user-secret"></i></span>Employee Salary List</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Payroll/makePayment')?>"><span><i class="fas fa-tasks"></i></span>Make Payment</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Payroll/generatePaySlip')?>"><span><i class="fas fa-list"></i></span>Generate Payslip</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Payroll/payrollSummary')?>"><span><i class="fas fa-camera-retro"></i></span>Payroll Summary</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Payroll/advanceSalary')?>"><span><i class="fab fa-cc-mastercard"></i></span>Advance Salary</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Payroll/providentFund')?>"><span><i class="fas fa-briefcase"></i></span>Provident Fund</a></li>
              
-                  <li><a class="nav-link" href=""><span><i class="far fa-clock"></i></span>Overtime</a></li>
-                  <li><a class="nav-link" href=""><span><i class="fas fa-trophy"></i></span>Employee Award</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Payroll/overTime')?>"><span><i class="far fa-clock"></i></span>Overtime</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Payroll/employeeAward')?>"><span><i class="fas fa-trophy"></i></span>Employee Award</a></li>
                   
                 </ul>
             </li>

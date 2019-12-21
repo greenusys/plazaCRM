@@ -3,11 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Projects extends CI_Controller {
 
-	// public function index()
-	// {
-	// 	$this->load->view('layout/header');
-	// 	$this->load->view('pages/index');
-	// 	$this->load->view('layout/footer');
-	// }
+	public function index()
+	{
+		echo 'Projects';
+	}
 }
 ?>
