@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 23, 2019 at 06:35 AM
+-- Generation Time: Dec 23, 2019 at 02:01 PM
 -- Server version: 10.3.15-MariaDB
 -- PHP Version: 7.3.6
 
@@ -963,6 +963,14 @@ CREATE TABLE `projects_` (
   `description_` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `projects_`
+--
+
+INSERT INTO `projects_` (`id`, `project_name`, `client_id`, `start_date`, `end_date`, `bill_type`, `fixed_price`, `estimated_hours`, `status`, `assigned_to`, `description_`) VALUES
+(2, '1', 12, '1233', '2222', 1, 12, 12, 'Started', 11, '22233'),
+(3, '122', 12, '1233', '2222', 1, 12, 12, 'Started', 11, '22233');
+
 -- --------------------------------------------------------
 
 --
@@ -1109,6 +1117,12 @@ ALTER TABLE `countries`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `projects_`
+--
+ALTER TABLE `projects_`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `states`
 --
 ALTER TABLE `states`
@@ -1153,6 +1167,12 @@ ALTER TABLE `client_`
 --
 ALTER TABLE `countries`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=247;
+
+--
+-- AUTO_INCREMENT for table `projects_`
+--
+ALTER TABLE `projects_`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tasks_`
