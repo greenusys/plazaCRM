@@ -33,7 +33,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="<?=base_url()?>assets/js/stisla.js"></script>
 
- 
+ <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="<?=base_url()?>assets/js/bootstrap-toggle.min.js"></script>
    
 
   <!-- JS Libraies -->

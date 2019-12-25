@@ -29,5 +29,16 @@ class Transaction extends CI_Controller {
 		$this->load->view("pages/transaction_report");
 		$this->load->view("layout/footer");
 	}
+	public function TransferReport(){
+		$this->load->view('layout/header');
+		$this->load->view("pages/transfer_report");
+		$this->load->view("layout/footer");
+	}
+	public function BankAndCash(){
+		$this->load->view('layout/header');
+		$this->load->view("pages/manage_account");
+		$this->load->view("layout/footer");
+	}
+
 }
 ?>

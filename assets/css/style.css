@@ -3215,3 +3215,7 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
 .sele_staus i{
   cursor:pointer;
 }
+.toggle-handle{
+      border-color: transparent !important;
+    background-color: white !important;
+}

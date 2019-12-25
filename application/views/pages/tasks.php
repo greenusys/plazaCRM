@@ -320,48 +320,219 @@
                   </div>
                   <div class="tab-pane fade px-4" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
                     <div class="row">
-                      <div class="col-md-6">
-                          <div class="form-group">
-                            <label>Project Name<sup class="text-danger">*</sup></label>
-                            <input type="text" class="form-control" name="" placeholder="Enter Name" required="">
-                          </div>
-                          <div class="form-group">
-                            <label>Select Client<sup class="text-danger">*</sup></label>
-                             <div class="input-group d-flex">
-                               <select class="js-example-basic-single" name="state">
-                                    <option value="">Select Client</option>
-                                    <option value="1">GMAP</option>
-                                    <option value="2">HR</option>
-                                    <option value="3">IT</option>
-                                    <option value="4">BI</option>
-                                    <option value="5">Marketing ( Uro-Onco)</option>
-                                    <option value="6">R&amp;D</option>
-                                    <option value="7">Communication</option>
-                                    <option value="8">Global</option>
-                                    <option value="9">Medical</option>
-                                    <option value="10">Entreprise Excellence</option>
-                                    <option value="11">BI&amp;A</option>
-                                    <option value="12">Regulatory</option>
-                                    <option value="13">Purchasing</option>
-                                    <option value="14">ali</option>
-                            </select>
-                            <div class="input-group-addon" title="" data-toggle="tooltip" data-placement="top" data-original-title="New Client">
-                                <a data-toggle="modal" data-target="#myModal" href="http://plazacrm.com/admin/client/new_client"><i class="fa fa-plus"></i></a>
-                            </div>
-                        </div>
-                        <script type="text/javascript">
-                          $(document).ready(function() {
-                            $('.js-example-basic-single').select2();
-                        })
-                        </script>
-                          </div>
-                          <div class="form-group">
-                            <label>Project Name<sup class="text-danger">*</sup></label>
-                          <input type="text" class="form-control" name="" placeholder="Enter Name">
-                          </div>
-                      </div>  
-                      <div class="col-md-6"></div>
+        <div class="offset-1 col-sm-8 cl-md-8 col-lg-8">
+            <form>
+          <div class="form-group">
+              <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">Task Name <span class="text-danger">*</span> </label>
+              </div>
+              <div class="col-sm-9">
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+              <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">Related To   </label>
+              </div>
+              <div class="col-sm-9">
+                <div class="input-group">
+                                    <select name="client_id" class="form-control" id="related_to">
+                                        <option value="">None</option>
+                                        <option value="1">Opportunities</option>
+                                        <option value="2">Bugs</option>
+                                        <option value="3">Projects</option>
+                    <option value="1">Leads</option>
+                                        <option value="2">Goal Tracking</option>
+                                        <option value="3">Tasks</option>
+                                    </select>
+                              </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+              <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">Start Date  <span class="text-danger">*</span> </label>
+              </div>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="datepicker">
+              </div>
+              <div class="col-sm-1">
+                  <button type="button" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+              <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">Due Date  <span class="text-danger">*</span> </label>
+              </div>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="datepicker">
+              </div>
+              <div class="col-sm-1">
+                  <button type="button" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+              <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">Hourly Rate  </label>
+              </div>
+              <div class="col-sm-9">
+                <input type="number" step="0.01" value="" class="form-control" name="estimate_hours" data-parsley-id="23">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+              <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">Estimated Hours  </label>
+              </div>
+              <div class="col-sm-9">
+                <input type="number" step="0.01" value="" class="form-control" name="estimate_hours" data-parsley-id="23">
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+              <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">Progress </label>
+              </div>
+              <div class="col-sm-9">
+                  <div id="slider-range-min"></div>
+                <div class="row bg-light">
+                    <div class="col-sm-4">
+                    
+                      <label for="amount">Progress</label>
+                      <input type="text" id="amount" readonly style="border:0; color:#f6931f;width:40%; font-weight:bold;">
+                    
+                  </div>
+                  <div class="col-sm-4">
+                    <input type="checkbox" name="vehicle1" value="Bike"> Through tasks hours<br>
+                  </div>
+                  <div class="col-sm-4">
+                    <input type="checkbox" name="vehicle1" value="Bike"> Through Sub tasks<br>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+              <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">Task Status  <span class="text-danger">*</span> </label>
+              </div>
+              <div class="col-sm-9">
+                <div class="input-group">
+                                    <select name="client_id" class="form-control" id="task_status">
+                                       <option value="">Not Started </option>
+                                        <option value="1">In progress</option>
+                                        <option value="2">Completed</option>
+                                        <option value="3">Deferred</option>
+                     <option value="3">Waiting For Someone</option>
+                                    </select>
+                              </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+              <div class="row">
+              <div class=" col-md-3">
+                <label for="exampleInputEmail1">Task Description </label>
+              </div>
+              <div class="col-md-9">
+                 <textarea name="editor1"></textarea>
+                <script>
+                    CKEDITOR.replace( 'editor1' );
+                </script>
+              </div>
                     </div>
+                </div>
+          <div class="form-group">
+              <div class="row">
+              <div class=" col-md-3">
+                <label for="exampleInputEmail1">Billable  <span class="text-danger">*</span></label>
+              </div>
+              <div class="col-md-9">
+                <div class="checkbox">
+                  <label>
+                  <input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+                  </label>
+                                </div>
+              </div>
+                    </div>
+                </div>
+          <div class="form-group">
+                                  <div class="row">
+                                  <div class="col-sm-3">
+                                    <label for="exampleInputEmail1">Assigned To <span class="text-danger">*</span></label>
+                                  </div>
+                                  <div class="col-sm-9">
+                                    <div class="checkbox c-radio needsclick">
+                                      <input type="radio" name="radio_admin" value="" class="btn1"> Everyone<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
+                                                    </div>
+                                    <div class="checkbox c-radio needsclick">
+                                      <input type="radio" name="radio_admin" value=""  class="chkPassport"> Customise Permission<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
+                                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                                 <div class="form-group dvPassport"  style="display: none">
+                                    <div class="row">
+                                    <div class="col-sm-3">
+                                      <label for="exampleInputEmail1">select Users<span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                       <input type="checkbox" name="vehicle1" value="Bike"  class="chkPassport1"> admin <strong class="badge btn-danger">Admin</strong>
+                                       <br>
+                                       <div class="row dvPassport1"  id="dvPassport1" style="display: none">
+                                          <div class="col-md-3">
+                                         <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> View
+                                        </div>
+                                        <div class="col-md-3">
+                                             <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Edit
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Delete
+                                        </div>
+                                       </div>
+                                       
+                                         <input type="checkbox" name="vehicle2" value="Car" class="chkPassport2" > adminko <strong class="badge btn-danger">Admin</strong>
+                                       <br>
+                                       <div class="row dvPassport2"  id="dvPassport2" style="display: none">
+                                          <div class="col-md-3">
+                                         <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> View
+                                        </div>
+                                        <div class="col-md-3">
+                                             <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Edit
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Delete
+                                        </div>
+                                       </div>
+                                    </div>
+                                  </div>
+                                </div>
+            
+            
+        </form>
+       </div>
+        
+    </div>
+    
+    <div class="row mt-3">
+        <div class="offset-11 col-md-1">
+         <button type="button" class="btn btn-primary">Save</button>
+      </div>
+      
+    </div>
                   </div>
                   <div class="tab-pane fade show px-4" id="imp_project" role="tabpanel" aria-labelledby="import_project">
                     <div class="row">
@@ -387,13 +558,58 @@
                                      </select>            
                                   </div>
                               </div>
-                                <div class="form-group row">
-                                  <label for="staticEmail" class="text-right col-sm-3 col-form-label font-weight-bold">  Assigned to <sup class="a1">*</sup></label>
-                                  <div class="col-sm-8">
-                                     <input type="radio" name="everyone" value="everyone" checked=""> Everyone  <i class="fa fa-question-circle" aria-hidden="true"></i><br>
-                                    <input type="radio" name="everyone" value="everyone">  customize permision  <i class="fa fa-question-circle" aria-hidden="true"></i>
+                               <div class="form-group">
+                                  <div class="row">
+                                  <div class="col-sm-3">
+                                    <label for="exampleInputEmail1">Assigned To <span class="text-danger">*</span></label>
+                                  </div>
+                                  <div class="col-sm-9">
+                                    <div class="checkbox c-radio needsclick">
+                                      <input type="radio" name="radio_admin" value="" class="btn1"> Everyone<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
+                                                    </div>
+                                    <div class="checkbox c-radio needsclick">
+                                      <input type="radio" name="radio_admin" value=""  class="chkPassport"> Customise Permission<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
+                                                    </div>
                                   </div>
                                 </div>
+                              </div>
+                                 <div class="form-group dvPassport"  style="display: none">
+                                    <div class="row">
+                                    <div class="col-sm-3">
+                                      <label for="exampleInputEmail1">select Users<span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                       <input type="checkbox" name="vehicle1" value="Bike"  class="chkPassport1"> admin <strong class="badge btn-danger">Admin</strong>
+                                       <br>
+                                       <div class="row dvPassport1"  id="dvPassport1" style="display: none">
+                                          <div class="col-md-3">
+                                         <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> View
+                                        </div>
+                                        <div class="col-md-3">
+                                             <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Edit
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Delete
+                                        </div>
+                                       </div>
+                                       
+                                         <input type="checkbox" name="vehicle2" value="Car" class="chkPassport2" > adminko <strong class="badge btn-danger">Admin</strong>
+                                       <br>
+                                       <div class="row dvPassport2"  id="dvPassport2" style="display: none">
+                                          <div class="col-md-3">
+                                         <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> View
+                                        </div>
+                                        <div class="col-md-3">
+                                             <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Edit
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Delete
+                                        </div>
+                                       </div>
+                                    </div>
+                                  </div>
+                                </div>
+            
                                 <div class="" style="padding-left: 26%">
                                   <button type="submit" class="btn btn-primary">upload</button>
                               </div>  
@@ -410,3 +626,82 @@
           </div>
         </section>
       </div>
+
+
+<script type="text/javascript">
+    $(function () {
+        $(".chkPassport").click(function () {
+            if ($(this).is(":checked")) {
+                $(".dvPassport").show();
+            } else {
+                $(".dvPassport").hide();
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $(".chkPassport1").click(function () {
+            if ($(this).is(":checked")) {
+                $(".dvPassport1").show();
+            } else {
+                $(".dvPassport1").hide();
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $(".chkPassport2").click(function () {
+            if ($(this).is(":checked")) {
+                $(".dvPassport2").show();
+            } else {
+                $(".dvPassport2").hide();
+            }
+        });
+    });
+</script>
+<script>
+$(document).ready(function(){
+  $(".btn1").click(function(){
+    $(".dvPassport").hide();
+  });
+ 
+});
+</script>
+<script>
+    function openCity(evt, cityName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(cityName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+    </script>
+  
+  <script>
+    $( function() {
+    $( "#slider-range-min" ).slider({
+      range: "min",
+      value: 37,
+      min: 1,
+      max: 700,
+      slide: function( event, ui ) {
+      $( "#amount" ).val( "$" + ui.value );
+      }
+    });
+    $( "#amount" ).val( "$" + $( "#slider-range-min" ).slider( "value" ) );
+    } );
+  </script>
+  
+  <script>
+    $( function() {
+    $( "#datepicker" ).datepicker();
+    } );
+  </script>

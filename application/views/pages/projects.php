@@ -956,11 +956,8 @@ $(document).ready(function(){
                                      </select>            
                                   </div>
                               </div>
-                            <div class="form-group">
-              <div class="row">
-              <div class="col-sm-3">
-                <label for="exampleInputEmail1">Assigned To <span class="text-danger">*</span></label>
-              </div>
+                            <div class="form-group row">
+              <label for="staticEmail" class="text-right col-sm-3 col-form-label font-weight-bold">Assigned To  <sup class="a1">*</sup></label>
               <div class="col-sm-9">
                 <div class="checkbox c-radio needsclick">
                   <input type="radio" name="cln_rad" value="" class="btn1"> Everyone<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
