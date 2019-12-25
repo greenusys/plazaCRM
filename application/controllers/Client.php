@@ -5,7 +5,9 @@ class Client extends CI_Controller {
 
 	public function index()
 	{
-		echo 'Client';
+			$this->load->view('layout/header');
+		$this->load->view("pages/client");
+		$this->load->view("layout/footer");
 	}
 }
 ?>
