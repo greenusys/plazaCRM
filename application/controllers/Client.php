@@ -11,6 +11,7 @@ public function __construct(){
 
 	public function index()
 	{
+<<<<<<< HEAD
 		echo 'Task';
 	}
 
@@ -54,6 +55,11 @@ public function __construct(){
 		else{
 			die(json_encode(array('status' =>'0' ,'msg'=>'Failed')));
 		}
+=======
+			$this->load->view('layout/header');
+		$this->load->view("pages/client");
+		$this->load->view("layout/footer");
+>>>>>>> a312019b6e82bd1f94a1932b583b973488311c25
 	}
 }
 ?>

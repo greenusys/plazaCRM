@@ -10,7 +10,10 @@ class Projects extends CI_Controller {
 
 	public function index()
 	{
-		echo 'Projects';
+		//echo 'Projects';
+		$this->load->view('layout/header');
+		$this->load->view("pages/projects");
+		$this->load->view("layout/footer");
 	}
 
 	public function create_project(){

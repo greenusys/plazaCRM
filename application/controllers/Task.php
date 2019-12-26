@@ -11,7 +11,9 @@ class Task extends CI_Controller {
 
 	public function index()
 	{
-		echo 'Task';
+		$this->load->view('layout/header');
+		$this->load->view("pages/tasks");
+		$this->load->view("layout/footer");
 	}
 
 	public function create_task(){

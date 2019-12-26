@@ -33,6 +33,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="<?=base_url()?>assets/js/stisla.js"></script>
 
+ <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="<?=base_url()?>assets/js/bootstrap-toggle.min.js"></script>
+   
+
   <!-- JS Libraies -->
  <!--  <script src="../node_modules/jquery-sparkline/jquery.sparkline.min.js"></script>
   <script src="../node_modules/chart.js/dist/Chart.min.js"></script>
@@ -64,9 +68,30 @@
 <script src='<?=base_url()?>assets/js/interaction.js'></script>
 <script src='<?=base_url()?>assets/js/daymain.js'></script>
 <script src='<?=base_url()?>assets/js/timemain.js'></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
   <script type="text/javascript" src="<?=base_url()?>assets/js/RowSorter.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+  <script src="<?=base_url()?>assets/js/jquery.easypiechart.min.js"></script>
+
+
+  <script>
+  $(function() {
+    $('.chart').easyPieChart({
+      easing: 'easeOutBounce',
+      onStep: function(from, to, percent) {
+        $(this.el).find('.percent').text(Math.round(percent));
+      }
+    });
+    var chart = window.chart = $('.chart').data('easyPieChart');
+    $('.js_update').on('click', function() {
+      chart.update(Math.random()*200-100);
+    });
+  });
+  </script>
 </head>
 
 <body>
