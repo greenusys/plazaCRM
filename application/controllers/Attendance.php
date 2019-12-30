@@ -6,7 +6,9 @@ class Attendance extends CI_Controller {
 
 	public function timeHistory()
 	{
-		echo 'timeHistory';
+		$this->load->view('layout/header');
+		$this->load->view("pages/time_history");
+		$this->load->view("layout/footer");
 	}
 	public function timeChaneRequest()
 	{
@@ -16,11 +18,15 @@ class Attendance extends CI_Controller {
 	}
 	public function attendanceReport()
 	{
-		echo 'attendanceReport';
+		$this->load->view('layout/header');
+		$this->load->view("pages/attendance_report");
+		$this->load->view("layout/footer");
 	}
 	public function markAttendance()
 	{
-		echo 'markAttendance';
+		$this->load->view('layout/header');
+		$this->load->view("pages/mark_attendance");
+		$this->load->view("layout/footer");
 	}
 	
 	
