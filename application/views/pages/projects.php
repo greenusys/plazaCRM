@@ -336,7 +336,7 @@ $(document).ready(function(){
                 </div>
               </div>
               <div class="col-sm-1">
-                  <button type="button" class="btn btn-light butn" data-toggle="modal" data-target="#myModal" title="New Client"><i class="fa fa-plus"></i></button>
+                  <span type="button" class="btn btn-light butn" data-toggle="modal" data-target="#myModal" title="New Client"><i class="fa fa-plus"></i></span>
               </div>
             </div>
           </div>
