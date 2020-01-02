@@ -1,5 +1,5 @@
 <?php
-  $session=$this->session->userdata('logged_user');
+  //$session=$this->session->userdata('logged_user');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -200,7 +200,7 @@
           </li>
           <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
             <img alt="image" src="../assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
-            <div class="d-sm-none d-lg-inline-block">Hi, <?=$session[0]->full_name?></div></a>
+            <div class="d-sm-none d-lg-inline-block">Hi, <?php echo "name"?></div></a>
             <div class="dropdown-menu dropdown-menu-right">
               <div class="dropdown-title">Logged in 5 min ago</div>
               <a href="features-profile.html" class="dropdown-item has-icon">
