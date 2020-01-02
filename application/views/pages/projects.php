@@ -93,7 +93,49 @@ $(document).ready(function(){
                    </div>
                   </div>
               </div>
-          
+           <div class="p-3">
+            <div class="row bg-white mt-3">
+                <div class="col-md-2 ">
+                  <div class="p-3 pro_status">
+                    <span>0</span>
+                    <p>Without Converted</p>
+                  </div>
+                </div>
+                <div class="col-md-2 ">
+                  <div class="p-3 pro_status">
+                    <span>0</span>
+                    <p>Last Weeks Created</p>
+                  </div>
+                </div>
+                <div class="col-md-2 ">
+                  <div class="p-3 pro_status">
+                    <span>0</span>
+                    <p>Completed Achievement</p>
+                  </div>
+                </div>
+                <div class="col-md-2 ">
+                  <div class="p-3 pro_status">
+                    <span>0</span>
+                    <p>Without Converted</p>
+                  </div>
+                </div>
+                <div class="col-md-2 ">
+                  <div class="p-3 pro_status">
+                    <span>0</span>
+                    <p>Pending Achievement</p>
+                  </div>
+                </div>
+                <div class="col-md-2 ">
+                  <div class="p-3 pro_status">
+                    <span class="chart" data-percent="40">
+                      <span class="percent"></span>
+                    </span>
+                    <span class="ml-2"> Done</span>
+                  </div>
+
+                </div>
+            </div>  
+          </div>
          
           <div class="row mt-4">
             <div class="col-lg-2 col-md-2 col-sm-12">
@@ -234,7 +276,7 @@ $(document).ready(function(){
                   <a class="nav-link" id="import_project" data-toggle="tab" href="#imp_project" role="tab" aria-controls="imp_project" aria-selected="false">Import Projects</a>
                   </li>
                 </ul>
-                <div class="tab-content card pt-5" id="myTabContentJust">
+                <div class="tab-content card pt-3" id="myTabContentJust">
                   <div class="tab-pane fade show active px-4" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
 
                    <table id="example" class="display nowrap" style="width:100%">
@@ -347,7 +389,7 @@ $(document).ready(function(){
               </div>
               <div class="col-sm-9">
                   <div id="slider-range-min"></div>
-                <div class="row bg-light">
+                <div class="d-flex bg-light">
                     <div class="col-sm-4">
                     
                       <label for="amount">Progress</label>
@@ -612,7 +654,7 @@ $(document).ready(function(){
    <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content style">
-          <div class="modal-header border-bottom-0">
+          <div class="modal-header border-bottom">
             <h5 class="modal-title" id="exampleModalLabel">Client list</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -933,11 +975,14 @@ $(document).ready(function(){
   </div>
                   </div>
                   <div class="tab-pane fade show px-4" id="imp_project" role="tabpanel" aria-labelledby="import_project">
+                    <div class="text-right">
+                      <button class="btn btn-success rounded-0"><i class="fa fa-download" aria-hidden="true"></i> Download Sample</button>
+                    </div>
                     <div class="row">
-                     
-                        <div class="col-md-12 card p-4">
+                      <form method="" class="w-100">
+                       <div class="col-md-12 card p-4">
                           <div class="col-md-5 offset-md-1 mt-3">
-                            <form action="/action_page.php">
+                       
                                 <div class="form-group  row">
                                   <label for="staticEmail" class="text-right col-sm-3 col-form-label font-weight-bold">Choose File <sup class="a1">*</sup></label>
                                   <div class="col-sm-8">
@@ -948,11 +993,11 @@ $(document).ready(function(){
                                 <div class="form-group row">
                                   <label for="staticEmail" class="text-right col-sm-3 col-form-label font-weight-bold">Task Status <sup class="a1">*</sup></label>
                                   <div class="col-sm-8">
-                                     <select class="form-control">
+                                     <select  name="task_status" class="form-control " id="task_status" style="width: 100%" required="">
                                       <option value="" selected="">select</option>
-                                      <option value="">A</option>
-                                      <option value="">A</option>
-                                      <option value="">A</option>
+                                      <option value="">GMAP</option>
+                                      <option value="">HR</option>
+                                      <option value="">IT</option>
                                      </select>            
                                   </div>
                               </div>
@@ -967,6 +1012,7 @@ $(document).ready(function(){
                                 </div>
               </div>
             </div>
+        
           </div>
           <div class="form-group dvPassport"  id="dvPassport" style="display: none">
               <div class="row">
@@ -1007,8 +1053,9 @@ $(document).ready(function(){
                                 <div class="" style="padding-left: 26%">
                                   <button type="submit" class="btn btn-primary">upload</button>
                               </div>  
+                               </div>
                             </form>   
-                          </div>
+                         
                         </div>
                       </div>
               
@@ -1022,9 +1069,7 @@ $(document).ready(function(){
       </div>
      
      <style>
-      .tabsb .active{
-        border-bottom:2px solid rebeccapurple;
-      }
+ 
      </style>
       <script>
         $(document).ready(function() {
@@ -1036,6 +1081,7 @@ $(document).ready(function(){
         $("#language").select2();
         $("#currency").select2(); 
         $("#comp_country").select2();
+          $("#task_status").select2();
        });
     </script>
 

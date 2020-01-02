@@ -5,7 +5,9 @@ class Backupdatabase extends CI_Controller {
 
 	public function index()
 	{
-		echo 'Working';
+		$this->load->view('layout/header');
+		$this->load->view("pages/backup_database");
+		$this->load->view("layout/footer");
 	}
 }
 ?>

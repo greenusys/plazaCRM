@@ -179,7 +179,7 @@
                   <a class="nav-link" id="import_project" data-toggle="tab" href="#imp_project" role="tab" aria-controls="imp_project" aria-selected="false">Import Tasks</a>
                   </li>
                 </ul>
-                <div class="tab-content card pt-5" id="myTabContentJust">
+                <div class="tab-content card pt-3" id="myTabContentJust">
                   <div class="tab-pane fade show active px-4" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
 
                    <table id="example" class="display nowrap" style="width:100%">
@@ -211,7 +211,7 @@
                                       </ul>
                                   </div>
                                  </td>
-                                <td>Edinburgh</td>
+                                <td>Edinburgh <span data-toggle="modal" data-target="#assign_to"><i class="fa fa-plus" aria-hidden="true"></i></span></td>
                                 <td>
                                     <div class="">
                                       <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
@@ -344,7 +344,7 @@
                                         <option value="1">Opportunities</option>
                                         <option value="2">Bugs</option>
                                         <option value="3">Projects</option>
-                    <option value="1">Leads</option>
+                                        <option value="1">Leads</option>
                                         <option value="2">Goal Tracking</option>
                                         <option value="3">Tasks</option>
                                     </select>
@@ -357,11 +357,15 @@
               <div class="col-sm-3">
                 <label for="exampleInputEmail1">Start Date  <span class="text-danger">*</span> </label>
               </div>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="datepicker">
-              </div>
-              <div class="col-sm-1">
-                  <button type="button" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
+              <div class="col-sm-9">
+              
+                    <div class='input-group date datetimepicker1' id='datetimepicker1'>
+                        <input type='text' class="form-control" />
+                        <span class="input-group-addon">
+                            <span ><i class="fa fa-calendar"></i></span>
+                        </span>
+                    </div>
+         
               </div>
             </div>
           </div>
@@ -370,12 +374,17 @@
               <div class="col-sm-3">
                 <label for="exampleInputEmail1">Due Date  <span class="text-danger">*</span> </label>
               </div>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="datepicker">
+              <div class="col-sm-9">
+                 <div class='input-group date datetimepicker1' id=''>
+                        <input type='text' class="form-control" />
+                        <span class="input-group-addon">
+                            <span ><i class="fa fa-calendar"></i></span>
+                        </span>
+                    </div>
               </div>
-              <div class="col-sm-1">
+             <!--  <div class="col-sm-1">
                   <button type="button" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="form-group">
@@ -406,7 +415,7 @@
               </div>
               <div class="col-sm-9">
                   <div id="slider-range-min"></div>
-                <div class="row bg-light">
+                <div class="d-flex bg-light">
                     <div class="col-sm-4">
                     
                       <label for="amount">Progress</label>
@@ -535,10 +544,12 @@
     </div>
                   </div>
                   <div class="tab-pane fade show px-4" id="imp_project" role="tabpanel" aria-labelledby="import_project">
+                     <div class="float-right">
+                      <button class="btn btn-success rounded-0"><i class="fa fa-download" aria-hidden="true"></i> Download Sample</button>
+                    </div>
                     <div class="row">
-                     
                         <div class="col-md-12 card p-4">
-                          <div class="col-md-5 offset-md-1 mt-3">
+                          <div class="col-md-8 offset-md-1 mt-3">
                             <form action="/action_page.php">
                                 <div class="form-group  row">
                                   <label for="staticEmail" class="text-right col-sm-3 col-form-label font-weight-bold">Choose File <sup class="a1">*</sup></label>
@@ -550,18 +561,18 @@
                                 <div class="form-group row">
                                   <label for="staticEmail" class="text-right col-sm-3 col-form-label font-weight-bold">Task Status <sup class="a1">*</sup></label>
                                   <div class="col-sm-8">
-                                     <select class="form-control">
+                                     <select  name="imptask_status" class="form-control " id="imptask_status" style="width: 100%" required="">
                                       <option value="" selected="">select</option>
-                                      <option value="">A</option>
-                                      <option value="">A</option>
-                                      <option value="">A</option>
-                                     </select>            
+                                      <option value="">GMAP</option>
+                                      <option value="">HR</option>
+                                      <option value="">IT</option>
+                                     </select>        
                                   </div>
                               </div>
                                <div class="form-group">
                                   <div class="row">
-                                  <div class="col-sm-3">
-                                    <label for="exampleInputEmail1">Assigned To <span class="text-danger">*</span></label>
+                                  <div class="col-sm-3 form-group text-right">
+                                    <label for="exampleInputEmail1" class="  col-form-label font-weight-bold">Assigned To <span class="text-danger">*</span></label>
                                   </div>
                                   <div class="col-sm-9">
                                     <div class="checkbox c-radio needsclick">
@@ -627,6 +638,82 @@
         </section>
       </div>
 
+<div id="assign_to" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+     <div class="modal-header border-bottom">
+          <h5 class="modal-title" id="exampleModalLabel">All Users</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-sm-3">
+              <label for="exampleInputEmail1">Assigned To <span class="text-danger">*</span></label>
+            </div>
+            <div class="col-sm-9">
+              <div class="checkbox c-radio needsclick">
+                <input type="radio" name="radio_admin" value="" class="btn1"> Everyone<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
+                              </div>
+              <div class="checkbox c-radio needsclick">
+                <input type="radio" name="radio_admin" value=""  class="chkPassport"> Customise Permission<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
+                              </div>
+            </div>
+          </div>
+        </div>
+           <div class="form-group dvPassport"  style="display: none">
+              <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">select Users<span class="text-danger">*</span></label>
+              </div>
+              <div class="col-sm-9">
+                 <input type="checkbox" name="vehicle1" value="Bike"  class="chkPassport1"> admin <strong class="badge btn-danger">Admin</strong>
+                 <br>
+                 <div class="row dvPassport1"  id="dvPassport1" style="display: none">
+                    <div class="col-md-3">
+                   <input type="checkbox" name="admin1" value="view" checked="checked" disabled="">Can View
+                  </div>
+                  <div class="col-md-3">
+                       <input type="checkbox" name="admin1" value="edit" checked="checked" disabled="">Can Edit
+                  </div>
+                  <div class="col-md-3">
+                      <input type="checkbox" name="admin1" value="Delete" checked="checked" disabled="">Can Delete
+                  </div>
+                 </div>
+                 
+                   <input type="checkbox" name="vehicle2" value="Car" class="chkPassport2" > adminko <strong class="badge btn-danger">Admin</strong>
+                 <br>
+                 <div class="row dvPassport2"  id="dvPassport2" style="display: none">
+                    <div class="col-md-3">
+                   <input type="checkbox" name="admin2" value="view" checked="checked" disabled="">Can View
+                  </div>
+                  <div class="col-md-3">
+                       <input type="checkbox" name="admin2" value="edit" checked="checked" disabled="">Can Edit
+                  </div>
+                  <div class="col-md-3">
+                      <input type="checkbox" name="admin2" value="delete" checked="checked" disabled="">Can Delete
+                  </div>
+                 </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center" > <button type="button" class="btn btn-success" >Update</button></div>
+        </form>
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 
 <script type="text/javascript">
     $(function () {
@@ -667,6 +754,18 @@ $(document).ready(function(){
     $(".dvPassport").hide();
   });
  
+  // $(function(){
+  //     $('#datetimepicker1').datetimepicker();
+  // });
+  // $(function () {
+  //    $(".datetimepicker1").datepicker();
+  // });
+
+
+                $(function () {
+                    $('.datetimepicker1').datetimepicker();
+                });
+       
 });
 </script>
 <script>
@@ -701,7 +800,8 @@ $(document).ready(function(){
   </script>
   
   <script>
-    $( function() {
-    $( "#datepicker" ).datepicker();
-    } );
+     $(document).ready(function() {
+        $("#task_status").select2();
+          $("#imptask_status").select2();
+      });
   </script>

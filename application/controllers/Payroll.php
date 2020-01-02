@@ -9,7 +9,9 @@ class Payroll extends CI_Controller {
 	}
 	public function salaryTemplate()
 	{
-		echo 'salaryTemplate';
+		$this->load->view('layout/header');
+		$this->load->view("pages/salary_template");
+		$this->load->view("layout/footer");
 	}
 	public function hourlyTemplate()
 	{
