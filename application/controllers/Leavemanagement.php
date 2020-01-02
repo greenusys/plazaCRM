@@ -8,9 +8,10 @@ class Leavemanagement extends CI_Controller {
 	}
 	public function index()
 	{
-		// $this->load->view('web/template/header');
-		// $this->load->view('web/Leave',$data);
-		// $this->load->view('web/template/footer');
+		
+		$this->load->view('layout/header');
+		$this->load->view("pages/leave_management");
+		$this->load->view("layout/footer");
 	}
 	public function addleavecategory()
 	{

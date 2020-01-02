@@ -5,7 +5,9 @@ class Announcement extends CI_Controller {
 
 	public function index()
 	{
-		echo 'Working';
+			$this->load->view('layout/header');
+		$this->load->view("pages/announcements");
+		$this->load->view("layout/footer");
 	}
 }
 ?>
