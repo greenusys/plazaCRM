@@ -141,7 +141,7 @@
                            <!--    <div class="col-md-6 text-right"><button class="btn btn-success rounded-0"><i class="fa fa-plus" aria-hidden="true"></i> Add Time Manually</button></div> -->
                           </div>
                        
-                          <form action="/action_page.php">
+                   
                             <div class="form-group">
                                   <label for="email" class="t3 font-weight-bold ">House Rent Allowance</label>
                                   <input type="text" class="form-control">
@@ -153,7 +153,7 @@
                                </div>
                            <a href="add more"><b>+ Add More</b></a>
                           
-                          </form>
+                    
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -166,7 +166,7 @@
                              <!--    <div class="col-md-6 text-right"><button class="btn btn-success rounded-0"><i class="fa fa-plus" aria-hidden="true"></i> Add Time Manually</button></div> -->
                             </div>
                        
-                           <form action="/action_page.php">
+                          
                             <div class="form-group">
                                   <label for="email" class="t3 font-weight-bold ">Provident Fund</label>
                                   <input type="text" class="form-control">
@@ -175,7 +175,7 @@
                                   <label for="email" class="t3  font-weight-bold">Tax Deduction</label>
                                   <input type="text" class="form-control">
                                 </div>
-                           </form>
+                        
                             <a href="add more"><b>+ Add More</b></a>
                     
                         </div>
