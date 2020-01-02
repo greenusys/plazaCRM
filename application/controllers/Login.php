@@ -14,12 +14,12 @@ class Login extends CI_Controller {
 	public function validateLogin(){
 		// print_r($_POST);
 		$data=array("user_name_"=>$this->input->post('user_name'),"password_"=>$this->input->post('pass_code'));
-		if($res=$this->Login->verifyThisUser($data)){
-			$this->session->set_userdata('logged_user',$res);
+		//if($res=$this->Login->verifyThisUser($data)){
+			//$this->session->set_userdata('logged_user',$res);
 			redirect('Dashboard');
-		}else{
-			$this->session->set_flashdata('msg','Invalid Username Or Password');
-			redirect('Login');
-		}
+		// }else{
+		// 	$this->session->set_flashdata('msg','Invalid Username Or Password');
+		// 	redirect('Login');
+		// }
 	}
 }
