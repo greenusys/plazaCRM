@@ -3,11 +3,16 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Attendance extends CI_Controller {
+	function __construct(){
+		parent::__construct();
+		$this->load->model('AttendanceModel','ATND');
+	}
 
 	public function timeHistory()
 	{
+		$data['Employee']=$this->ATND->fetchEmployee();
 		$this->load->view('layout/header');
-		$this->load->view("pages/time_history");
+		$this->load->view("pages/time_history",$data);
 		$this->load->view("layout/footer");
 	}
 	public function timeChaneRequest()

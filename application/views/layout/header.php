@@ -99,7 +99,7 @@
   </script>
 </head>
 
-<body>
+<body onload="startTime()">
   <div id="app">
     <div class="main-wrapper">
       <div class="navbar-bg"></div>
@@ -296,3 +296,56 @@
             </ul>
         </aside>
       </div>
+      <script>
+          function startTime() {
+          var today = new Date();
+          var h = today.getHours();
+          var m = today.getMinutes();
+          var s = today.getSeconds();
+          m = checkTime(m);
+          s = checkTime(s);
+          document.getElementById('txt').innerHTML =
+          h + ":" + m + ":" + s;
+          var t = setTimeout(startTime, 500);
+          }
+          function checkTime(i) {
+          if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+          return i;
+          }
+      </script>
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+     
+              <div class="row">
+                    <div class="col-md-6 bg-white">
+                      <h4 class=" p-2">Dashboard</h4>
+                    </div>
+                  <div class="col-md-6 bg-white text-right ">
+                    <div class="p-2"><div id="txt"></div>
+                    <button class="btn btn-danger d-none check_btn" onclick="printTime(0)"><i class="fas fa-sign-out-alt"></i> Checkout</button>
+                    <button class="btn btn-success check_btn " onclick="printTime(1)"><i class="fas fa-sign-in-alt"></i> Checkin</button>
+                   </div>
+                  </div>
+              </div>
+  <script type="text/javascript">
+		function printTime(let id){
+      if(id==1){
+        console.log("Check In:")
+      }
+			// $.ajax({
+			// 	url:"aten.php",
+			// 	success:function(response)
+			// 			{
+			// 				console.log(response);
+			// 			}
+			// });
+			// var old_time=new Date("11:27:45");
+      var time_=document.getElementById('txt').innerHTML;
+			// var now_=new Date(document.getElementById('txt').innerHTML);
+			// console.log(" OLD : "+old_time);
+			console.log(" Now : "+time_);
+			// var dif_=(now_.getTime())-old_time.getTime();
+			// console.log(" Difference : "+dif_);
+		}
+		</script>
