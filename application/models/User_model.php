@@ -12,7 +12,7 @@ if (!defined('BASEPATH')) {
  *  version: 1.0
  */
 
-class User_Model extends MY_Model
+class User_model extends MY_Model
 {
 
     public $_table_name;
@@ -30,6 +30,28 @@ class User_Model extends MY_Model
         $result = $query_result->result();
 
         return $result;
+    }
+
+    public function fetch_user(){
+        $checker=array('role_id'=>'1',
+                       'activated'=>'1',
+                       'banned'=>'0');
+        $this->db->where($checker);
+        $check = $this->db->get("tbl_users")->result_array();
+        if(count($check)==0 ){
+            return false;
+        }else{
+            return $check;
+        } 
+    }
+
+    public function fetch_user_by_id($id){
+        $checker=array('tbl_users.user_id'=>$id);
+        $this->db->select('tbl_users.user_id as userid,fullname,avatar');
+        $this->db->join('tbl_account_details', 'tbl_users.user_id = tbl_account_details.user_id');
+        $this->db->where($checker);
+        $check = $this->db->get("tbl_users")->row();
+        return $check;
     }
 
     public function get_new_user()

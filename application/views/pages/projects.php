@@ -1,5 +1,6 @@
 <script>
     function openCity(evt, cityName) {
+      console.log(evt);
       var i, tabcontent, tablinks;
       tabcontent = document.getElementsByClassName("tabcontent");
       for (i = 0; i < tabcontent.length; i++) {
@@ -13,6 +14,53 @@
       evt.currentTarget.className += " active";
     }
     </script>
+
+<script>
+$(document).on('click','.next_contact',function(){
+
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+  tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById('contactDetails').style.display = "block";
+  $('#contact_tab').addClass('active');
+})
+
+$(document).on('click','.next_web',function(){
+
+var i, tabcontent, tablinks;
+tabcontent = document.getElementsByClassName("tabcontent");
+for (i = 0; i < tabcontent.length; i++) {
+tabcontent[i].style.display = "none";
+}
+tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+}
+document.getElementById('web').style.display = "block";
+$('#web_tab').addClass('active');
+})
+
+$(document).on('click','.next_hosting',function(){
+
+var i, tabcontent, tablinks;
+tabcontent = document.getElementsByClassName("tabcontent");
+for (i = 0; i < tabcontent.length; i++) {
+tabcontent[i].style.display = "none";
+}
+tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+}
+document.getElementById('hosting').style.display = "block";
+$('#hosting_tab').addClass('active');
+})
+</script>
   
   <script>
     $( function() {
@@ -20,56 +68,20 @@
       range: "min",
       value: 37,
       min: 1,
-      max: 700,
+      max: 100,
       slide: function( event, ui ) {
-      $( "#amount" ).val( "$" + ui.value );
+      $( "#amount" ).val(ui.value + "%");
       }
     });
-    $( "#amount" ).val( "$" + $( "#slider-range-min" ).slider( "value" ) );
+    $( "#amount" ).val($( "#slider-range-min" ).slider( "value" ) );
     } );
   </script>
   
   <script>
     $( function() {
-    $( "#datepicker" ).datepicker();
+    $( ".datepicker" ).datepicker();
     } );
   </script>
-  
-  
-
-<script type="text/javascript">
-    $(function () {
-        $(".chkPassport").click(function () {
-            if ($(this).is(":checked")) {
-                $(".dvPassport").show();
-            } else {
-                $(".dvPassport").hide();
-            }
-        });
-    });
-</script>
-<script type="text/javascript">
-    $(function () {
-        $(".chkPassport1").click(function () {
-            if ($(this).is(":checked")) {
-                $(".dvPassport1").show();
-            } else {
-                $(".dvPassport1").hide();
-            }
-        });
-    });
-</script>
-<script type="text/javascript">
-    $(function () {
-        $(".chkPassport2").click(function () {
-            if ($(this).is(":checked")) {
-                $(".dvPassport2").show();
-            } else {
-                $(".dvPassport2").hide();
-            }
-        });
-    });
-</script>
 <script>
 $(document).ready(function(){
   $(".btn1").click(function(){
@@ -282,72 +294,90 @@ $(document).ready(function(){
                    <table id="example" class="display nowrap" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th>Project Name</th>
+                                <th>Client</th>
+                                <th>End Date</th>
+                                <th>Status</th>
+                                <th>Assigned To</th>
+                                <th>Action</th>
+                             
                             </tr>
                         </thead>
                         <tbody>
+                          <?php
+                          foreach ($project as $pr) {
+                          ?>
                             <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
+                              <td>  
+                                <?=$pr['project_name']?>
+                                <div class="progress">
+                                  <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:<?=$pr['progress']?>">
+                                    <span class="sr-only">70% Complete</span>
+                                  </div>
+                                </div>
+                              </td>
+                                <td><?=$pr['client_name']?></td>
+                                <td><?=$pr['end_date']?></td>
+                                <td><span class="text-white bg-info sele_staus"><?=$pr['project_status']?></span>
+                                  <div class="btn-group open">
+                                      <button class="btn btn-xs p-0 border btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> Change <span class="caret"></span></button>
+                                      <ul class="dropdown-menu animated zoomIn">
+                                        <li><a href="">Waiting For Someone</a></li>
+                                        <li><a href="">Deferred</a></li>
+                                        <li><a href="">Completed</a></li>
+                                        <li><a href="">In Progress</a></li>
+                                        <li><a href="">Not Started</a></li>
+                                      </ul>
+                                  </div>
+                                 </td>
+                                <td>
+                                  <?php
+                                  $total = count((array)$pr);
+                                  if($total>7){
+                                    $total=$total-7;
+                                    for($i=0;$i<$total;$i++){
+                                      if($pr[$i]=="Everyone "){
+                                        echo "Everyone";
+                                      }
+                                      else{
+                                        echo $pr[$i]->fullname;
+                                      }
+                                   }
+                                  }
+                                  else{
+                                    echo "Everyone";
+                                  }
+                                  //print_r($pr[0]->fullname);
+                                 
+                                  ?>
+                                </td>
+                                <td>
+                                    <div class="">
+                                      <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                      <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
+                                       <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
+                                    </div>
+
+                                </td>
+                             
                             </tr>
-                            
-                            <tr>
-                                <td>Shad Decker</td>
-                                <td>Regional Director</td>
-                                <td>Edinburgh</td>
-                                <td>51</td>
-                                <td>2008/11/13</td>
-                                <td>$183,000</td>
-                            </tr>
-                            <tr>
-                                <td>Michael Bruce</td>
-                                <td>Javascript Developer</td>
-                                <td>Singapore</td>
-                                <td>29</td>
-                                <td>2011/06/27</td>
-                                <td>$183,000</td>
-                            </tr>
-                            <tr>
-                                <td>Donna Snider</td>
-                                <td>Customer Support</td>
-                                <td>New York</td>
-                                <td>27</td>
-                                <td>2011/01/25</td>
-                                <td>$112,000</td>
-                            </tr>
+                            <?php
+                             }
+                            ?>
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
-                            </tr>
-                        </tfoot>
                     </table>
                   </div>
-                  <div class="tab-pane fade px-4" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
+      <div class="tab-pane fade px-4" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
                      <div class="row">
         <div class="col-sm-7 cl-md-7 col-lg-7">
-            <form>
+          <form id="create_project">
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
                 <label for="exampleInputEmail1">Project Name <span class="text-danger">*</span> </label>
               </div>
               <div class="col-sm-9">
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input type="text" name="project_name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
               </div>
             </div>
           </div>
@@ -358,22 +388,15 @@ $(document).ready(function(){
               </div>
               <div class="col-sm-8">
                 <div class="input-group">
-                      <select name="state" class="form-control" id="e1" style="width: 100%" >
+                      <select name="client_id" class="form-control" id="e1" style="width: 100%" >
                           <option value="">Select Client</option>
-                          <option value="1">GMAP</option>
-                          <option value="2">HR</option>
-                          <option value="3">IT</option>
-                          <option value="4">BI</option>
-                          <option value="5">Marketing ( Uro-Onco)</option>
-                          <option value="6">R&amp;D</option>
-                          <option value="7">Communication</option>
-                          <option value="8">Global</option>
-                          <option value="9">Medical</option>
-                          <option value="10">Entreprise Excellence</option>
-                          <option value="11">BI&amp;A</option>
-                          <option value="12">Regulatory</option>
-                          <option value="13">Purchasing</option>
-                          <option value="14">ali</option>
+                          <?php
+                          foreach($clients as $client){
+                            ?>
+                          <option value="<?=$client->client_id?>"><?=$client->name?></option>
+                          <?php
+                          }
+                          ?>
                       </select>
                 </div>
               </div>
@@ -393,14 +416,21 @@ $(document).ready(function(){
                     <div class="col-sm-4">
                     
                       <label for="amount">Progress</label>
-                      <input type="text" id="amount" readonly style="border:0; color:#f6931f;width:40%; font-weight:bold;">
+                      <input type="text" id="amount" name="progress" readonly style="border:0; color:#f6931f;width:40%; font-weight:bold;">
                     
                   </div>
+<script>
+// $(document).ready(function(){
+//   $('input[type="checkbox"]').on('change', function() {
+//    $('input[type="checkbox"]').not(this).prop('checked', false);
+// });
+// })
+</script>
                   <div class="col-sm-4">
-                    <input type="checkbox" name="vehicle1" value="Bike"> Project Hours<br>
+                    <input type="checkbox" name="vehicle1" value="hours"> Project Hours<br>
                   </div>
                   <div class="col-sm-4">
-                    <input type="checkbox" name="vehicle1" value="Bike"> Through Tasks<br>
+                    <input type="checkbox" name="vehicle1" value="task"> Through Tasks<br>
                   </div>
                 </div>
               </div>
@@ -412,7 +442,7 @@ $(document).ready(function(){
                 <label for="exampleInputEmail1">Start Date  <span class="text-danger">*</span> </label>
               </div>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="datepicker">
+                <input type="text" name="start_date" class="form-control datepicker">
               </div>
               <div class="col-sm-1">
                   <button type="button" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
@@ -425,7 +455,7 @@ $(document).ready(function(){
                 <label for="exampleInputEmail1">End Date  <span class="text-danger">*</span> </label>
               </div>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="datepicker">
+                <input type="text" name="end_date" class="form-control datepicker">
               </div>
               <div class="col-sm-1">
                   <button type="button" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
@@ -439,7 +469,7 @@ $(document).ready(function(){
               </div>
               <div class="col-sm-9">
                 <div class="input-group">
-                      <select name="billing" class="form-control" id="bill2" style="width: 100%" required="">
+                      <select name="billing_type" class="form-control" id="bill2" style="width: 100%" required="">
                           <option value="">Fixed Price</option>
                           <option value="1">Only Project Hours</option>
                           <option value="2">Only Task Hours</option>
@@ -455,7 +485,7 @@ $(document).ready(function(){
                 <label for="exampleInputEmail1">Fixed Price  </label>
               </div>
               <div class="col-sm-9">
-                <input type="email" class="form-control" placeholder="50" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input type="text" name="fixed_rate" class="form-control" placeholder="50" id="exampleInputEmail1" aria-describedby="emailHelp">
               </div>
             </div>
           </div>
@@ -476,12 +506,12 @@ $(document).ready(function(){
               </div>
               <div class="col-sm-9">
                 <div class="input-group">
-                  <select name="status" class="form-control" id="stat_br" style="width: 100%"  required="" >
-                      <option value="">Started </option>
-                      <option value="1">In progress</option>
-                      <option value="2">Hold</option>
-                      <option value="3">Cancel</option>
-                     <option value="3">Completed</option>
+                  <select name="project_status" class="form-control" id="stat_br" style="width: 100%"  required="" >
+                      <option value="started">Started </option>
+                      <option value="in_progress">In progress</option>
+                      <option value="on_hold">Hold</option>
+                      <option value="cancelled">Cancel</option>
+                     <option value="completed">Completed</option>
                   </select>
                 </div>
               </div>
@@ -493,7 +523,7 @@ $(document).ready(function(){
                 <label for="exampleInputEmail1">Demo Url </label>
               </div>
               <div class="col-sm-9">
-                <input type="email" class="form-control" placeholder="http://www.demo.com" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input type="text" name="demo_url" class="form-control" placeholder="http://www.demo.com" id="exampleInputEmail1" aria-describedby="emailHelp">
               </div>
             </div>
           </div>
@@ -504,134 +534,69 @@ $(document).ready(function(){
               </div>
               <div class="col-sm-9">
                 <div class="checkbox c-radio needsclick">
-                  <input type="radio" name="radio_admin" value="" class="btn1"> Everyone<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
-                                </div>
+                  <input type="radio" value="" name="everyone" id="everyone" class="btn1"> Everyone<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
+                </div>
                 <div class="checkbox c-radio needsclick">
-                  <input type="radio" name="radio_admin" value=""  class="chkPassport"> Customise Permission<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
-                                </div>
+                  <input type="radio" value="" name="everyone" class="customize_permission"> Customise Permission<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
+                </div>
               </div>
             </div>
           </div>
+<script type="text/javascript">
+    $(function () {
+        $(".customize_permission").click(function () {
+            if ($(this).is(":checked")) {
+                $(".dvPassport").show();
+            } else {
+                $(".dvPassport").hide();
+            }
+        });
+    });
+</script>
           <div class="form-group dvPassport"  style="display: none">
               <div class="row">
               <div class="col-sm-3">
-                <label for="exampleInputEmail1">select Users<span class="text-danger">*</span></label>
+                <label for="exampleInputEmail1">Select Users<span class="text-danger">*</span></label>
               </div>
               <div class="col-sm-9">
-                 <input type="checkbox" name="vehicle1" value="Bike"  class="chkPassport1"> admin <strong class="badge btn-danger">Admin</strong>
+                 <?php
+                 $count=1;
+                 foreach ($users as $user) {
+                 ?>
+
+                   <input type="checkbox" name="vehicle2" value="<?=$user['user_id']?>" class="chkPassport admind" > <?=$user['username']?> <strong class="badge btn-danger">Admin</strong>
                  <br>
-                 <div class="row dvPassport1"  id="dvPassport1" style="display: none">
+                 <div class="row dvPassport"  id="dvPassport<?=$count?>" style="display: none">
                     <div class="col-md-3">
-                   <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> View
+                   <input type="checkbox" class="data" name="vehicle1" value="View" > View
                   </div>
                   <div class="col-md-3">
-                       <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Edit
+                       <input type="checkbox" class="data" name="vehicle1" value="Edit" > Edit
                   </div>
                   <div class="col-md-3">
-                      <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Delete
+                      <input type="checkbox" class="data" name="vehicle1" value="Delete"> Delete
                   </div>
                  </div>
-                 
-                   <input type="checkbox" name="vehicle2" value="Car" class="chkPassport2" > adminko <strong class="badge btn-danger">Admin</strong>
-                 <br>
-                 <div class="row dvPassport2"  id="dvPassport2" style="display: none">
-                    <div class="col-md-3">
-                   <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> View
-                  </div>
-                  <div class="col-md-3">
-                       <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Edit
-                  </div>
-                  <div class="col-md-3">
-                      <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Delete
-                  </div>
-                 </div>
+                 <?php
+                 $count++;
+                  }
+                 ?>
               </div>
             </div>
           </div>
-            
-        </form>
        </div>
         <div class="offset-1 col-sm-4 cl-md-4 col-lg-4 ">
-           <label class="small-box"> Allow Client to Show Team Members
-          <input type="checkbox" checked="checked">
+        <?php
+        foreach ($settings as $setting) {
+        ?>
+        <label class="small-box"> <?=$setting['description']?>
+          <input type="checkbox" class="song" checked="checked" value="<?=$setting['settings']?>"> 
           <span class="checkmark"></span>
         </label>
         <hr>
-        <label class="small-box">Allow Client to Show Milestones
-          <input type="checkbox" checked="checked">
-          <span class="checkmark"></span>
-        </label>
-        <hr>
-        <label class="small-box"> Allow Client to Project Tasks
-          <input type="checkbox" checked="checked">
-          <span class="checkmark"></span>
-        </label>
-        <hr>
-        <label class="small-box"> Allow Client to Project Attachments
-          <input type="checkbox" checked="checked">
-          <span class="checkmark"></span>
-        </label>
-        <hr>
-        <label class="small-box"> Allow Client to Timesheets
-          <input type="checkbox" checked="checked">
-          <span class="checkmark"></span>
-        </label>
-        <hr>
-        <label class="small-box"> Allow Client to Project Bugs
-          <input type="checkbox" checked="checked">
-          <span class="checkmark"></span>
-        </label>
-        <hr>
-        <label class="small-box"> Allow Client to Project History
-          <input type="checkbox" checked="checked">
-          <span class="checkmark"></span>
-        </label>
-        <hr>
-        <label class="small-box"> Allow Client to Project Calender
-          <input type="checkbox" checked="checked">
-          <span class="checkmark"></span>
-        </label>
-        <hr>
-        <label class="small-box"> Allow Client to Project Comments
-          <input type="checkbox" checked="checked">
-          <span class="checkmark"></span>
-        </label>
-        <hr>
-        <label class="small-box"> Allow Client to Gantt Chart
-          <input type="checkbox" checked="checked">
-          <span class="checkmark"></span>
-        </label>
-        <hr>
-        <label class="small-box"> Allow Client to Show Project Hours
-          <input type="checkbox" checked="checked">
-          <span class="checkmark"></span>
-        </label>
-        <hr>
-        <label class="small-box"> Allow Client to Show Project Tasks Comments
-          <input type="checkbox" checked="checked">
-          <span class="checkmark"></span>
-        </label>
-        <hr>
-        <label class="small-box"> Allow Client to Show Project Tasks Attachments
-          <input type="checkbox" checked="checked">
-          <span class="checkmark"></span>
-        </label>
-        <hr>
-        <label class="small-box"> Allow Client to Show Project Tasks Hours
-          <input type="checkbox" checked="checked">
-          <span class="checkmark"></span>
-        </label>
-        <hr>
-        <label class="small-box"> Allow Client to All Finance Overview
-          <input type="checkbox" checked="checked">
-          <span class="checkmark"></span>
-        </label>
-        <hr>
-        <label class="small-box"> Allow Staff to All Finance Overview
-          <input type="checkbox" checked="checked">
-          <span class="checkmark"></span>
-        </label>
-        <hr>
+        <?php
+        }
+        ?>
         </div>
     </div>
       <div class="row">
@@ -647,332 +612,69 @@ $(document).ready(function(){
     </div>
     <div class="row mt-3">
         <div class="offset-11 col-md-1">
-         <button type="button" class="btn btn-primary">Save</button>
+         <button type="submit" class="btn btn-primary">Save</button>
       </div>
-      
+      </form>
     </div>
-   <div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content style">
-          <div class="modal-header border-bottom">
-            <h5 class="modal-title" id="exampleModalLabel">Client list</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          </div>
-          <div class="line"></div>
-        <div class="modal-body">
-          <div class="card">
-            <div class="tab">
-                <div class="container tabsb">
-                <button class="tablinks active" onclick="openCity(event, 'general')">General</button>
-                <button class="tablinks" onclick="openCity(event, 'contactDetails')">Contact Details</button>
-                <button class="tablinks" onclick="openCity(event, 'web')">Web</button>
-                <button class="tablinks" onclick="openCity(event, 'hosting')">Hosting</button>
-              </div>
-            </div>
-            <div id="general" class=" tabcontent" style="display: block">
-                <form>
-                <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Company Name <span class="text-danger">*</span> </label>
-                  </div>
-                  <div class="col-sm-9">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Company Email <span class="text-danger">*</span> </label>
-                  </div>
-                  <div class="col-sm-9">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Company VAT </label>
-                  </div>
-                  <div class="col-sm-9">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Customer Group  </label>
-                  </div>
-                  <div class="col-sm-9">
-                    <div class="input-group">
-                      <select name="cus_grp" class="form-control " id="cus_grp" style="width: 100%" required="" >
-                        <option value=""></option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                  </div>
-                  <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Language  </label>
-                  </div>
-                  <div class="col-sm-9">
-                    <div class="input-group">
-                      <select name="language" class="form-control" id="language"style="width: 100%" required="" >
-                        <option value=""></option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                  </div>
-                  <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Currency </label>
-                  </div>
-                  <div class="col-sm-9">
-                    <div class="input-group">
-                      <select name="currency" class="form-control " style="width: 100%" id="currency" required=""> 
-                        <option value=""></option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Short Note  </label>
-                  </div>
-                  <div class="col-sm-9">
-                    <textarea class="form-control" name="short_note"></textarea>
-                  </div>
-                </div>
-                  </div>
-              </form>
-            </div>
-
-            <div id="contactDetails" class="tabcontent">
-              <form>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Company Phone</label>
-                  </div>
-                  <div class="col-sm-9">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Company Mobile </label>
-                  </div>
-                  <div class="col-sm-9">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Zip code </label>
-                  </div>
-                  <div class="col-sm-9">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div> 
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Company City</label>
-                  </div>
-                  <div class="col-sm-9">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div> 
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Company Country</label>
-                  </div>
-                  <div class="col-sm-9">
-                    <div class="input-group">
-                      <select name="client_id" class="form-control" required="" id="comp_country">
-                        <option value="">India</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Company Fax</label>
-                  </div>
-                  <div class="col-sm-9">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-                            <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Company Address </label>
-                  </div>
-                  <div class="col-sm-9">
-                    <textarea class="form-control" name="short_note"></textarea>
-                  </div>
-                </div>
-                  </div>  
-                            <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1"> Latitude( Google Map ) </label>
-                  </div>
-                  <div class="col-sm-9">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-                            <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Longitude( Google Map ) </label>
-                  </div>
-                  <div class="col-sm-9">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-                          </form>             
-            </div>
-
-            <div id="web" class="tabcontent">
-               <form>
-                <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Company Website</label>
-                  </div>
-                  <div class="col-sm-9">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Skype id</label>
-                  </div>
-                  <div class="col-sm-9">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Facebook URL</label>
-                  </div>
-                  <div class="col-sm-9">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Twitter URL</label>
-                  </div>
-                  <div class="col-sm-9">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Linkedin URL</label>
-                  </div>
-                  <div class="col-sm-9">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              </form>
-            </div>
-            <div id="hosting" class="tabcontent">
-              <form>
-                <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Hosting Company</label>
-                  </div>
-                  <div class="col-sm-9">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Hosting</label>
-                  </div>
-                  <div class="col-sm-9">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Username</label>
-                  </div>
-                  <div class="col-sm-9">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Password</label>
-                  </div>
-                  <div class="col-sm-9">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Port</label>
-                  </div>
-                  <div class="col-sm-9">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              </form>
-            </div>
-          </div>
-        </div>
-          <div class="modal-footer border-top-0 modal-butn">
-            <button type="button" class="btn btn-primary">Save</button>
-          </div>
-      </div>
-    </div>
-  </div>
+<script type="text/javascript">
+        $("#create_project").submit(function(e){
+         e.preventDefault();
+         var ar=[];
+           var count=1;
+           var obj = {};
+            $('.admind').each(function(){
+              var pass_id="#dvPassport"+count;
+              if($(this).is(':checked')){
+               var user_id=$(this).val();
+               var data=$(pass_id).find('.data');
+               data.each(function(){
+                if($(this).is(':checked')){
+                  ar.push($(this).val());
+                }
+               })
+               obj[user_id] = ar;
+               ar=[];
+               }
+               count++;
+            })
+         var new_ar=[];
+          $('.song').each(function(){
+              if($(this).is(':checked'))
+              {
+                  new_ar.push($(this).val()); 
+              }        
+          });
+         var project_settings=JSON.stringify(new_ar);
+         var permission=JSON.stringify(obj);
+         if(Object.keys(permission).length==2){
+          permission="all";
+         }
+         if($('#everyone').is(':checked')) { permission="all"; }
+         var formData= new FormData($(this)[0]);
+         formData.append('permission',permission);
+         formData.append('project_settings',project_settings);
+         formData.append('description', CKEDITOR.instances.editor1.getData());
+         $.ajax({
+             url:"<?=base_url()?>Projects/create_project",
+              type:"post",
+              data:formData,
+              contentType:false,
+              processData:false,
+              cache:false,
+             success:function(response)
+             {
+                var response=JSON.parse(response);
+               if(response.status==1){
+                 swal("Project Created Successfully!", "Created", "success");
+                 //window.location.href='<?=base_url()?>Home';
+               }
+               else if(response.status=="0"){
+                swal(response.msg, "Already Exists", "error");
+              }
+             }
+         });
+    });
+</script>
                   </div>
                   <div class="tab-pane fade show px-4" id="imp_project" role="tabpanel" aria-labelledby="import_project">
                     <div class="text-right">
@@ -1005,11 +707,11 @@ $(document).ready(function(){
               <label for="staticEmail" class="text-right col-sm-3 col-form-label font-weight-bold">Assigned To  <sup class="a1">*</sup></label>
               <div class="col-sm-9">
                 <div class="checkbox c-radio needsclick">
-                  <input type="radio" name="cln_rad" value="" class="btn1"> Everyone<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
-                                </div>
+                  <input type="radio" checked="checked" name="cln_rad" value="" class="btn1"> Everyone<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
+                </div>
                 <div class="checkbox c-radio needsclick">
                   <input type="radio" name="cln_rad" value=""  class="chkPassport" > Customise Permission<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
-                                </div>
+                </div>
               </div>
             </div>
         
@@ -1067,7 +769,332 @@ $(document).ready(function(){
           </div>
         </section>
       </div>
-     
+
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content style">
+          <div class="modal-header border-bottom">
+            <h5 class="modal-title" id="exampleModalLabel">Client list</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          </div>
+          <div class="line"></div>
+        <div class="modal-body">
+          <div class="card">
+            <div class="tab">
+                <div class="container tabsb">
+                <button class="tablinks active" onclick="openCity(event, 'general')">General</button>
+                <button class="tablinks" id="contact_tab" onclick="openCity(event, 'contactDetails')">Contact Details</button>
+                <button class="tablinks" id="web_tab" onclick="openCity(event, 'web')">Web</button>
+                <button class="tablinks" id="hosting_tab" onclick="openCity(event, 'hosting')">Hosting</button>
+              </div>
+            </div>
+          <form id="new_client"> 
+            <div id="general" class=" tabcontent" style="display: block">
+                <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1">Company Name <span class="text-danger">*</span> </label>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" name="name" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+                </div>
+                  </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1">Company Email <span class="text-danger">*</span> </label>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+                </div>
+                  </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1">Company VAT </label>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" name="vat" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+                </div>
+                  </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1">Customer Group  </label>
+                  </div>
+                  <div class="col-sm-9">
+                    <div class="input-group">
+                      <select name="customer_group_id" class="form-control " id="cus_grp" style="width: 100%">
+                        <option value=""></option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                  </div>
+                  <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1">Language  </label>
+                  </div>
+                  <div class="col-sm-9">
+                    <div class="input-group">
+                      <select name="language" class="form-control" id="language"style="width: 100%">
+                        <option value=""></option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                  </div>
+                  <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1">Currency </label>
+                  </div>
+                  <div class="col-sm-9">
+                    <div class="input-group">
+                      <select name="currency" class="form-control " style="width: 100%" id="currency"> 
+                        <option value=""></option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                  </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1">Short Note  </label>
+                  </div>
+                  <div class="col-sm-9">
+                    <textarea class="form-control" name="short_note"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer border-top-0 modal-butn">
+                <span class="btn btn-primary next_contact">Next</span>
+              </div>
+            </div>
+
+            <div id="contactDetails" class="tabcontent">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1">Company Phone</label>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="number" name="phone" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+                </div>
+                  </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1">Company Mobile </label>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="number" class="form-control" name="mobile" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+                </div>
+                  </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1">Zip code </label>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="text" name="zipcode" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+                </div>
+                  </div> 
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1">Company City</label>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="text" name="city" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+                </div>
+                  </div> 
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="comp_country">Company Country</label>
+                  </div>
+                  <div class="col-sm-9">
+                    <div class="input-group">
+                      <select name="country" class="form-control"  id="comp_country">
+                        <option value="">India</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                  </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1">Company Fax</label>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="text" name="fax" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+                </div>
+                  </div>
+                <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1">Company Address </label>
+                  </div>
+                  <div class="col-sm-9">
+                    <textarea class="form-control" name="address"></textarea>
+                  </div>
+                </div>
+                  </div>  
+                            <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1"> Latitude( Google Map ) </label>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="text" name="latitude" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+                </div>
+                  </div>
+                            <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1">Longitude( Google Map ) </label>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="text" name="longitude" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+                </div>
+                  </div>   
+          <div class="modal-footer border-top-0 modal-butn">
+            <span class="btn btn-primary next_web">Next</span>
+          </div>         
+            </div>
+
+            <div id="web" class="tabcontent">
+                <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1">Company Website</label>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="text" name="website" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+                </div>
+                  </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1">Skype id</label>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="text" name="skype_id" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+                </div>
+                  </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1">Facebook URL</label>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="text" name="facebook" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+                </div>
+                  </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1">Twitter URL</label>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="text" name="twitter" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+                </div>
+                  </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1">Linkedin URL</label>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="text" name="linkedin" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+                </div>
+                  </div>
+            <div class="modal-footer border-top-0 modal-butn">
+            <span class="btn btn-primary next_hosting">Next</span>
+          </div>
+            </div>
+            <div id="hosting" class="tabcontent">
+                <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1">Hosting Company</label>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="text" name="hosting_company" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+                </div>
+                  </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1">Hosting</label>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="text" name="hostname" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+                </div>
+                  </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1">Username</label>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="text" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+                </div>
+                  </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1">Password</label>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="password" name="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+                </div>
+                  </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="exampleInputEmail1">Port</label>
+                  </div>
+                  <div class="col-sm-9">
+                    <input type="text" name="port" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+                </div>
+                  </div>
+                  <!-- <div class="modal-footer border-top-0 modal-butn"> -->
+            <button type="submit" class="btn btn-primary">Save</button>
+          <!-- </div> -->
+          </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
      <style>
  
      </style>
@@ -1081,8 +1108,60 @@ $(document).ready(function(){
         $("#language").select2();
         $("#currency").select2(); 
         $("#comp_country").select2();
-          $("#task_status").select2();
+        $("#task_status").select2();
        });
+
+       $(document).on('submit','#new_client',function(e){
+        e.preventDefault();
+        var formData= new FormData($(this)[0]);
+        $.ajax({
+            url:"<?=base_url()?>Client/client_ajax",
+             type:"post",
+             data:formData,
+             contentType:false,
+             processData:false,
+             cache:false,
+            success:function(response)
+            {
+              var response=JSON.parse(response);
+              if(response.status==1){
+                //$("#profile-just").load(location.href + " #profile-just");
+                swal("Client Added Successfully", "Success", "success");
+              }
+              else if(response.status=="0"){
+                swal('Client Already Exists', "Client Already Exists", "error");
+              }
+            }
+        });
+       })
+
+      //  $("#new_project").submit(function(e){
+      //   e.preventDefault();
+      //   console.log("working");
+      //   var formData= new FormData($(this)[0]);
+      //   for(var pair of formData.entries()) {
+      //     console.log(pair[0]+ ', '+ pair[1]); 
+      //   }
+        // $.ajax({
+        //     url:"<?=base_url()?>login/signin",
+        //      type:"post",
+        //      data:formData,
+        //      contentType:false,
+        //      processData:false,
+        //      cache:false,
+        //     success:function(response)
+        //     {
+        //        var response=JSON.parse(response);
+        //       if(response.status==1){
+        //         //swal("User Registred Successfully!", "Please Login!", "success");
+        //         window.location.href='<?=base_url()?>Home';
+        //       }
+        //       else if(response.status=="0"){
+        //         swal(response.msg, "Please Check Credentials!", "error");
+        //       }
+        //     }
+        // });
+    //});
     </script>
 
 

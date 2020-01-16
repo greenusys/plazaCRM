@@ -18,6 +18,31 @@ class Payroll_Model extends MY_Model
     public $_order_by;
     public $_primary_key;
 
+    public function set_template($data){
+           $this->db->insert('tbl_salary_template', $data);
+           $insert_id = $this->db->insert_id();
+
+           return  $insert_id;
+    }
+
+    public function set_template_allowance($data){
+           $this->db->insert('tbl_salary_allowance', $data);
+           return true;
+    }
+
+    public function set_template_deduction($data){
+           $this->db->insert('tbl_salary_deduction', $data);
+           return true;
+    }
+
+    public function fetch_templates(){
+        $this->db->select('*');
+        $this->db->from('tbl_salary_template');
+        $query_result = $this->db->get();
+        $result = $query_result->result();
+        return $result;
+    }
+
     public function get_department_by_id($departments_id)
     {
         $this->db->select('tbl_departments.deptname', FALSE);
