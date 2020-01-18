@@ -1,6 +1,6 @@
  
       <!-- Main Content -->
-      <div class="main-content">
+     <!--  <div class="main-content">
         <section class="section">
      
               <div class="row">
@@ -14,7 +14,7 @@
                    </div>
                   </div>
               </div>
-             
+              -->
         
           <div class="row mt-4">
            <div class="col-lg-12">
