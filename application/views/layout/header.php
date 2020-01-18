@@ -329,22 +329,30 @@
                   </div>
               </div>
   <script type="text/javascript">
-		function printTime(let id){
+		function printTime(id){
+      var d_time=document.getElementById('txt').innerHTML;
+      var type;
       if(id==1){
-        console.log("Check In:")
+        type=1;
+        console.log("Check In: ");
+      }else{
+        console.log("Check Out: ");
+        type=0;
       }
-			// $.ajax({
-			// 	url:"aten.php",
-			// 	success:function(response)
-			// 			{
-			// 				console.log(response);
-			// 			}
-			// });
+			$.ajax({
+				url:"<?=base_url('Attendance/markMyAttendance')?>",
+        type:"post",
+        data:{d_time:d_time,type:type},
+				success:function(response)
+						{
+							console.log(response);
+						}
+			});
 			// var old_time=new Date("11:27:45");
-      var time_=document.getElementById('txt').innerHTML;
+      
 			// var now_=new Date(document.getElementById('txt').innerHTML);
 			// console.log(" OLD : "+old_time);
-			console.log(" Now : "+time_);
+			console.log(" Now : "+d_time);
 			// var dif_=(now_.getTime())-old_time.getTime();
 			// console.log(" Difference : "+dif_);
 		}
