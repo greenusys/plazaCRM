@@ -8,7 +8,10 @@ class Attendance extends CI_Controller {
 		$this->load->model('AttendanceModel','ATND');
 	}
 	public function markMyAttendance(){
-		$my_Id=22;
+		$session=$this->session->userdata('logged_user');
+		$my_Id=$session[0]->user_id;
+		// echo $_SESSION['clocked']=0;
+		// die;
 		$my_time=$this->input->post('d_time');
 		$type=$this->input->post('type');
 		$ip=$this->input->ip_address();
@@ -41,6 +44,12 @@ class Attendance extends CI_Controller {
 				"clocking_status"=>0
 			);
 		}
+		// print_r($data);
+		// echo '************* </br>';
+		// print_r($attArray);
+		// die(json_encode(array("code"=>1)));
+		
+		// die;
 		//die(json_encode(array("Ip"=>$ip,"last"=>$attendanceId[0]['attendance_id'])));
 		// tbl_clock`(`clock_id`, ``, ``, ``, `comments`, `clocking_status`, `ip_address`)
 		$st=$this->ATND->markMyAttendance($data,$my_Id,$attArray);
@@ -66,7 +75,7 @@ class Attendance extends CI_Controller {
 					$clock_out=$my_time;
 					if($this->db->update('tbl_clock',array("clockout_time"=>$clock_out))){
 						$_SESSION['clocked']=0;
-						die(json_encode(array("code"=>1,"msg"=>"Attendance Marked.","data"=>$st)));
+						die(json_encode(array("code"=>1,"msg"=>"Attendance Marked.","data"=>$st,"act"=>"Update ")));
 					}else{
 						die(json_encode(array("code"=>0,"msg"=>"Failed to Mark Attendance.","data"=>$st)));
 					} 
@@ -75,7 +84,7 @@ class Attendance extends CI_Controller {
 					$new=array_merge($data,array("attendance_id"=>$st));
 					if($this->db->insert('tbl_clock',$new)){
 						$_SESSION['clocked']=1;
-						die(json_encode(array("code"=>1,"msg"=>"Attendance Marked.","data"=>$st)));
+						die(json_encode(array("code"=>1,"msg"=>"Attendance Marked.","data"=>$st,"act"=>"Insert")));
 					}else{
 						die(json_encode(array("code"=>0,"msg"=>"Failed to Mark Attendance.","data"=>$st)));
 					} 
@@ -86,7 +95,7 @@ class Attendance extends CI_Controller {
 				$new=array_merge($data,array("attendance_id"=>$st));
 				if($this->db->insert('tbl_clock',$new)){
 					$_SESSION['clocked']=1;
-					die(json_encode(array("code"=>1,"msg"=>"Attendance Marked.","data"=>$st)));
+					die(json_encode(array("code"=>1,"msg"=>"Attendance Marked.","data"=>$st,"act"=>"Insert ")));
 				}else{
 					die(json_encode(array("code"=>0,"msg"=>"Failed to Mark Attendance.","data"=>$st)));
 				}
