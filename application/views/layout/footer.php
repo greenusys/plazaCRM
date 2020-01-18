@@ -132,13 +132,13 @@ RowSorter(gebi('table2'), {
 
 
 </script>
- <script type="text/javascript">
+ <!-- <script type="text/javascript">
             $(document).on("click",".check_btn",function(){
               $(".check_btn").removeClass("d-none");
                 $(this).addClass("d-none");
 
             })
-          </script>
+          </script> -->
          
 </body>
 </html>

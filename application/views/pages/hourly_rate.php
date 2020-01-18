@@ -27,23 +27,21 @@
                    <table id="example" class="display nowrap" style="width:100%">
                         <thead>
                             <tr>
-                                <th>From Account</th>
-                                <th>To Account</th>
-                                <th>Ammount</th>
-                                <th>Date</th>
-                                <th>Attachment</th>
+                                <th>#</th>
+                                <th>Hourly Rate</th>
+                                <th>Hourly Grade</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
+                          <?php
+                          $count=1;
+                          foreach ($templates as $data) {
+                          ?>
                             <tr>
-                              <td>Tittle</td>
-                              
-                                <td>System Architect</td>
-                                <td>$320,800</td>
-                                <td>2011/04/25</td>
-                                <td>61</td>
-                               
+                                <td><?=$count?></td>
+                                <td><?=$data->hourly_grade?></td>
+                                <td><?=$data->hourly_rate?></td> 
                                 <td>
                                     <div class="">
                                       <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
@@ -53,33 +51,16 @@
 
                                 </td>
                             </tr>
-                            
-                            <tr>
-                              <td>Tittle</td>
-                              
-                                <td>System Architect</td>
-                                <td>$320,800</td>
-                                <td>2011/04/25</td>
-                                <td>61</td>
-                               
-                                <td>
-                                    <div class="">
-                                      <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                      <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                       <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                    </div>
-
-                                </td>
-                            </tr>
-                              
+                            <?php
+                            $count++;
+                          }
+                            ?>
                         </tbody>
                         <tfoot>
                              <tr>
-                                <th>From Account</th>
-                                <th>To Account</th>
-                                <th>Ammount</th>
-                                <th>Date</th>
-                                <th>Attachment</th>
+                                <th>#</th>
+                                <th>Hourly Rate</th>
+                                <th>Hourly Grade</th>
                                 <th>Action</th>
                             </tr>
                         </tfoot>
@@ -90,30 +71,60 @@
                        <div class="col-md-8 offset-md-1 mt-3">
                      <div class="">
                        
-                          <form action="/action_page.php">
+                          <form id="add_hourly">
                             <div class="form-group  row mt-2">
                                  <label class="col-md-3 text-right">Hourly Grade<sup class="text-danger">*</sup></label>
                                <div class="col-md-9">
-                                    <input type="text" class=" form-control"placeholder="Enter Hourly Grade">
+                                    <input type="text" required="" class="form-control" name="hourly_grade" placeholder="Enter Hourly Grade">
                                </div>
 
                             </div>
                             <div class="form-group  row">
                              <label class="col-md-3 text-right">Hourly Rate<sup class="text-danger">*</sup></label>
                                <div class="col-md-9">
-                                   <input type="text" class=" form-control"placeholder="Enter Hourly Rate" >
+                                   <input type="number" required="" name="hourly_rate" class=" form-control"placeholder="Enter Hourly Rate" >
                                </div>
 
                             </div>
-                          </form>
-                        </div>
-                        
                           <div class="text-center ">
                             <button type="submit" class="btn btn-primary pull-right">Save</button>
                           </div>
+                          </form>
+                        </div>
                       </div>
                     </div>
                   </div>
+<script type="text/javascript">
+        $(document).on('submit','#add_hourly',function(e){
+        e.preventDefault();
+        var formData= new FormData($(this)[0]);
+        $.ajax({
+            url:"<?=base_url()?>Payroll/set_hourly_template",
+             type:"post",
+             data:formData,
+             contentType:false,
+             processData:false,
+             cache:false,
+            success:function(response)
+            {
+              if(response==1){
+                location.reload();
+              }
+              else{
+                swal('OOPS', "Something went wrong", "error");
+              }
+              // var response=JSON.parse(response);
+              // if(response.status==1){
+              //   //$("#profile-just").load(location.href + " #profile-just");
+              //   swal("Client Added Successfully", "Success", "success");
+              // }
+              // else if(response.status=="0"){
+              //   swal('Client Already Exists', "Client Already Exists", "error");
+              // }
+            }
+        });
+       }) 
+</script>
                   <!-- <div class="tab-pane fade show px-4" id="imp_project" role="tabpanel" aria-labelledby="import_project">
                     <div class="row">
                      

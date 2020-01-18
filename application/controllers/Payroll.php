@@ -21,8 +21,9 @@ class Payroll extends CI_Controller {
 	}
 	public function hourlyTemplate()
 	{
+		$data['templates']=$this->Payroll_model->fetch_hourly_templates();
 		$this->load->view('layout/header');
-		$this->load->view("pages/hourly_rate");
+		$this->load->view("pages/hourly_rate",$data);
 		$this->load->view("layout/footer");
 	}
 	public function manageSalary()
@@ -36,6 +37,16 @@ class Payroll extends CI_Controller {
 		$this->load->view('layout/header');
 		$this->load->view("pages/emp_salary_list");
 		$this->load->view("layout/footer");
+	}
+
+	public function set_hourly_template(){
+		$template=$this->Payroll_model->set_hourly_template($_POST);
+		if($template){
+			echo "1";
+		}
+		else{
+			echo "0";
+		}
 	}
 
 	public function set_template(){
