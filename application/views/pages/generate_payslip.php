@@ -1,6 +1,6 @@
  
       <!-- Main Content -->
-      <div class="main-content">
+<!--       <div class="main-content">
         <section class="section">
      
               <div class="row">
@@ -13,7 +13,7 @@
                      <button class="btn btn-success check_btn "><i class="fas fa-sign-in-alt"></i> Checkin</button>
                    </div>
                   </div>
-              </div>
+              </div> -->
              
         
           <div class="row mt-4">

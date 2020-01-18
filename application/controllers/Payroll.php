@@ -80,15 +80,22 @@ class Payroll extends CI_Controller {
 	}
 	public function generatePaySlip()
 	{
-		echo 'generatePaySlip';
+		$this->load->view('layout/header');
+		$this->load->view("pages/generate_payslip.php");
+		$this->load->view("layout/footer");
 	}
 	public function payrollSummary()
 	{
-		echo 'payrollSummary';
+		$this->load->view('layout/header');
+		$this->load->view("pages/payroll_summary");
+		$this->load->view("layout/footer");
 	}
 	public function advanceSalary()
 	{
-		echo 'advanceSalary';
+		$this->load->view('layout/header');
+		$this->load->view("pages/advance_salary");
+		$this->load->view("layout/footer");
+		
 	}
 	public function providentFund()
 	{
