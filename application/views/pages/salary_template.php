@@ -176,35 +176,36 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12 pull-right">
-                            <div class="panel panel-custom">
+                            <div class="">
                                 <div class="panel-heading">
                                     <div class="panel-title">
                                         <strong>Total Salary Details</strong>
                                     </div>
                                 </div>
-                                <div class="panel-body">
+                                <div class="">
                                     <table class="table table-bordered custom-table">
-                                        <tbody><tr><!-- Sub total -->
-                                            <th class="col-sm-8 vertical-td"><strong>Gross Salary                                                    :</strong>
+                                       
+                                          <tr><!-- Sub total -->
+                                            <th class=" vertical-td">Gross Salary :
                                             </th>
                                             <td class="">
                                                 <input name="" disabled="" value="" id="total" class="form-control" data-parsley-id="18" type="text">
                                             </td>
                                         </tr> <!-- / Sub total -->
                                         <tr><!-- Total tax -->
-                                            <th class="col-sm-8 vertical-td"><strong>Total Deduction                                                    :</strong></th>
+                                            <th class="c vertical-td">Total Deduction :</th>
                                             <td class="">
                                                 <input name="" disabled="" value="" id="deduc" class="form-control" data-parsley-id="20" type="text">
                                             </td>
                                         </tr><!-- / Total tax -->
                                         <tr><!-- Grand Total -->
-                                            <th class="col-sm-8 vertical-td"><strong>Net Salary             :</strong>
+                                            <th class="vertical-td">Net Salary :
                                             </th>
                                             <td class="">
                                                 <input name="" disabled="" required="" value="" id="net_salary" class="form-control" data-parsley-id="22" type="text">
                                             </td>
                                         </tr><!-- Grand Total -->
-                                    </tbody>
+                                  
                                   </table><!-- Order Total table list start -->
                                   <button type="submit" class="btn btn-primary float-right">Save</button>
                                 </div>
@@ -229,7 +230,7 @@
         <h4 class="modal-title">Salary Template Details</h4>
         <div class="pull-right ">
               <span><a href="http://plazacrm.com/admin/payroll/salary_template/5" class="btn btn-primary btn-xs" title="" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil-square-o"></i></a></span>
-              <span><a href="http://plazacrm.com/admin/payroll/salary_template_pdf/5" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="top" title="" data-original-title="PDF"><span <i="" class="fa fa-file-pdf-o"></span></a></span>
+              <span><a href="http://plazacrm.com/admin/payroll/salary_template_pdf/5" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="top" title="" data-original-title="PDF"><span> <i="" class="fa fa-file-pdf-o"></span></a></span>
               <button class="btn btn-xs btn-danger" type="button" data-toggle="tooltip" title="" onclick="printDiv('printableArea')" data-original-title="Print"><i class="fa fa-print"></i></button>
             </div>
       </div>
@@ -317,17 +318,17 @@
 <script>
 function open_modal(id){
   var template_id=id;
-  $.ajax({
-    type:'POST',
-    data:{
-      template_id:template_id
-    },
-    url:'<?=base_url()?>Payroll/fetch_template',
-    success:function(response){
-      console.log(response);
-    }
-  })
-  //$('#myModal').modal('show');
+  // $.ajax({
+  //   type:'POST',
+  //   data:{
+  //     template_id:template_id
+  //   },
+  //   url:'<?=base_url()?>Payroll/fetch_template',
+  //   success:function(response){
+  //     console.log(response);
+  //   }
+  // })
+  $('#myModal').modal('show');
 }
 
 
