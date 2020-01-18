@@ -1,64 +1,11 @@
 
-
           <div class="row mt-4">
-           
             <div class="col-lg-6 col-md-6 col-sm-12">
               <div class="card card-statistic-2">
                 <div class="row">
                  <div class="col-md-3">
                    <div class="card-icon shadow-primary bg-primary">
-                      <i class="fas fa-tasks"></i>
-                  </div>
-                 </div>
-                 <div class="col-md-9">
-                    <div class="card-wrap text-center">
-                      <div class="card-header">
-                        <h4>0</h4>
-                      </div>
-                      <div class="card-body">
-                       Open Tickets<br>
-                    <span><a href="">More Info <i class="fas fa-arrow-circle-right"></i></a></span>
-                      </div>
-                    </div>
-                 </div>
-               </div>
-              
-              </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-12">
-              <div class="card card-statistic-2">
-               <div class="row">
-                 <div class="col-md-3">
-                   <div class="card-icon shadow-primary bg-primary">
-                  <i class="fas fa-ticket-alt"></i>
-                  </div>
-                 </div>
-                 <div class="col-md-9">
-                    <div class="card-wrap text-center">
-                      <div class="card-header">
-                        <h4>0</h4>
-                      </div>
-                      <div class="card-body">
-                       Open Tickets<br>
-                    <span><a href="">More Info <i class="fas fa-arrow-circle-right"></i></a></span>
-                      </div>
-                    </div>
-                 </div>
-               </div>
-                
-             
-              </div>
-            </div>
-          </div>
-           <div class="row">
-           
-            <div class="col-lg-6 col-md-6 col-sm-12">
-              <div class="card card-statistic-2">
-               
-                <div class="row">
-                 <div class="col-md-3">
-                   <div class="card-icon shadow-primary bg-primary">
-                   <i class="fas fa-bug"></i>
+                   <i class="fas fa-tasks"></i>
                   </div>
                 </div>
                 <div class="col-md-9">
@@ -101,6 +48,57 @@
               </div>
             </div>
           </div>
+          <div class="row ">
+           
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="card card-statistic-2">
+                <div class="row">
+                 <div class="col-md-3">
+                   <div class="card-icon shadow-primary bg-primary">
+                      <i class="fas fa-bug"></i>
+                  </div>
+                 </div>
+                 <div class="col-md-9">
+                    <div class="card-wrap text-center">
+                      <div class="card-header">
+                        <h4>0</h4>
+                      </div>
+                      <div class="card-body">
+                       Open Tickets<br>
+                    <span><a href="">More Info <i class="fas fa-arrow-circle-right"></i></a></span>
+                      </div>
+                    </div>
+                 </div>
+               </div>
+              
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="card card-statistic-2">
+               <div class="row">
+                 <div class="col-md-3">
+                   <div class="card-icon shadow-primary bg-primary">
+                  <i class="fas fa-ticket-alt"></i>
+                  </div>
+                 </div>
+                 <div class="col-md-9">
+                    <div class="card-wrap text-center">
+                      <div class="card-header">
+                        <h4>0</h4>
+                      </div>
+                      <div class="card-body">
+                       Open Tickets<br>
+                    <span><a href="">More Info <i class="fas fa-arrow-circle-right"></i></a></span>
+                      </div>
+                    </div>
+                 </div>
+               </div>
+                
+             
+              </div>
+            </div>
+          </div>
+          
           <div class="row mt-4">
             <div class="col-lg-12">
               <div class="card">

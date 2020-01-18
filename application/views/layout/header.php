@@ -217,7 +217,7 @@ $myId=$session[0]->user_id;
             </div>
           </li>
           <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-            <img alt="image" src="../assets/img/avatar/avatar-1.png" onerror="this.src='<?=base_url()?>assets/img/avatar/avatar-4.png';" class="rounded-circle mr-1">
+            <img alt="image" src="../assetsd/img/avatar/avatar-1.png" onerror="this.src='<?=base_url()?>assets/img/avatar/avatar-5.png';" class="rounded-circle mr-1">
             <div class="d-sm-none d-lg-inline-block">Hi, <?=$session[0]->fullname?></div></a>
             <div class="dropdown-menu dropdown-menu-right">
               <div class="dropdown-title">Logged in 5 min ago</div>
