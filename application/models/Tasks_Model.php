@@ -4,9 +4,9 @@ class Tasks_Model extends CI_Model{
 	public function create_task($data){
 		$checker=array('task_name'=>$data['task_name']);
 		$this->db->where($checker);
-		$check = $this->db->get("tasks_")->result_array();
+		$check = $this->db->get("tbl_task")->result_array();
 		if(count($check) ==0 ){
-		 	if($this->db->insert("tasks_",$data)){ 		
+		 	if($this->db->insert("tbl_task",$data)){ 		
 		 		return true;
 		 	}else{
 		 		return false;

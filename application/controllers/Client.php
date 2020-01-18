@@ -97,7 +97,17 @@ public function __construct(){
         } else {
             // redirect('admin/dashboard');
         }
-    }
+	}
+	
+	public function client_ajax(){
+		$result = $this->Client->create_client($_POST);
+		if($result == TRUE){
+			die(json_encode(array('status' =>'1','msg'=>'Project Created Successfully')));
+		}
+		else{
+			die(json_encode(array('status' =>'0','msg'=>'Project With Same Name Already Exists')));
+		}
+   }
 
 
 	public function create_client(){

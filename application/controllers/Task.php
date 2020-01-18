@@ -6,17 +6,22 @@ class Task extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('Tasks_Model');
+		$this->load->model('User_model');
 		}
 
 
 	public function index()
 	{
+		$data['users']=$this->User_model->fetch_user();
 		$this->load->view('layout/header');
-		$this->load->view("pages/tasks");
+		$this->load->view("pages/tasks",$data);
 		$this->load->view("layout/footer");
 	}
 
 	public function create_task(){
+		unset($_POST['client_id']);
+		unset($_POST['radio_admin']);
+		unset($_POST['editor1']);
 		 $result = $this->Tasks_Model->create_task($_POST);
 		 if($result == TRUE){
 		 	die(json_encode(array('status' =>'1','msg'=>'Task Created Successfully')));

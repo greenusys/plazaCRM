@@ -304,16 +304,16 @@
                     </table>
                   </div>
                   <div class="tab-pane fade px-4" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
+        <form id="create_task">
                     <div class="row">
         <div class="offset-1 col-sm-8 cl-md-8 col-lg-8">
-            <form>
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
                 <label for="exampleInputEmail1">Task Name <span class="text-danger">*</span> </label>
               </div>
               <div class="col-sm-9">
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input type="text" name="task_name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
               </div>
             </div>
           </div>
@@ -324,19 +324,24 @@
               </div>
               <div class="col-sm-9">
                 <div class="input-group">
-                                    <select name="client_id" class="form-control" id="related_to">
-                                        <option value="">None</option>
-                                        <option value="1">Opportunities</option>
-                                        <option value="2">Bugs</option>
-                                        <option value="3">Projects</option>
-                                        <option value="1">Leads</option>
-                                        <option value="2">Goal Tracking</option>
-                                        <option value="3">Tasks</option>
-                                    </select>
-                              </div>
+                  <select name="client_id" class="form-control" id="related_to">
+                      <option value="">None</option>
+                      <option value="opportunities">Opportunities</option>
+                      <option value="bug">Bugs</option>
+                      <option value="project">Projects</option>
+                      <option value="leads">Leads</option>
+                      <option value="goal">Goal Tracking</option>
+                      <option value="task">Tasks</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
+
+          <div class="form-group related_to_task">
+            
+          </div>
+
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
@@ -345,7 +350,7 @@
               <div class="col-sm-9">
               
                     <div class='input-group date datetimepicker1' id='datetimepicker1'>
-                        <input type='text' class="form-control" />
+                        <input type='text' name="task_start_date" class="form-control" />
                         <span class="input-group-addon">
                             <span ><i class="fa fa-calendar"></i></span>
                         </span>
@@ -361,7 +366,7 @@
               </div>
               <div class="col-sm-9">
                  <div class='input-group date datetimepicker1' id=''>
-                        <input type='text' class="form-control" />
+                        <input type='text' name="due_date" class="form-control" />
                         <span class="input-group-addon">
                             <span ><i class="fa fa-calendar"></i></span>
                         </span>
@@ -378,7 +383,7 @@
                 <label for="exampleInputEmail1">Hourly Rate  </label>
               </div>
               <div class="col-sm-9">
-                <input type="number" step="0.01" value="" class="form-control" name="estimate_hours" data-parsley-id="23">
+                <input type="number" name="hourly_rate" step="0.01" value="" class="form-control" name="estimate_hours" data-parsley-id="23">
               </div>
             </div>
           </div>
@@ -388,7 +393,7 @@
                 <label for="exampleInputEmail1">Estimated Hours  </label>
               </div>
               <div class="col-sm-9">
-                <input type="number" step="0.01" value="" class="form-control" name="estimate_hours" data-parsley-id="23">
+                <input type="number" name="task_hour" step="0.01" value="" class="form-control" name="estimate_hours" data-parsley-id="23">
               </div>
             </div>
           </div>
@@ -404,15 +409,15 @@
                     <div class="col-sm-4">
                     
                       <label for="amount">Progress</label>
-                      <input type="text" id="amount" readonly style="border:0; color:#f6931f;width:40%; font-weight:bold;">
+                      <input type="text" id="amount" name="task_progress" readonly style="border:0; color:#f6931f;width:40%; font-weight:bold;">
                     
                   </div>
-                  <div class="col-sm-4">
+<!--                   <div class="col-sm-4">
                     <input type="checkbox" name="vehicle1" value="Bike"> Through tasks hours<br>
                   </div>
                   <div class="col-sm-4">
                     <input type="checkbox" name="vehicle1" value="Bike"> Through Sub tasks<br>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -425,14 +430,14 @@
               </div>
               <div class="col-sm-9">
                 <div class="input-group">
-                                    <select name="client_id" class="form-control" id="task_status">
-                                       <option value="">Not Started </option>
-                                        <option value="1">In progress</option>
-                                        <option value="2">Completed</option>
-                                        <option value="3">Deferred</option>
-                     <option value="3">Waiting For Someone</option>
-                                    </select>
-                              </div>
+                    <select name="task_status" class="form-control" id="task_status">
+                       <option value="not_started">Not Started </option>
+                        <option value="in_progress">In progress</option>
+                        <option value="completed">Completed</option>
+                        <option value="deferred">Deferred</option>
+                        <option value="waiting_for_someone">Waiting For Someone</option>
+                    </select>
+                </div>
               </div>
             </div>
           </div>
@@ -457,9 +462,9 @@
               <div class="col-md-9">
                 <div class="checkbox">
                   <label>
-                  <input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+                  <input type="checkbox" name="billable" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
                   </label>
-                                </div>
+                </div>
               </div>
                     </div>
                 </div>
@@ -484,49 +489,112 @@
                                       <label for="exampleInputEmail1">select Users<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-sm-9">
-                                       <input type="checkbox" name="vehicle1" value="Bike"  class="chkPassport1"> admin <strong class="badge btn-danger">Admin</strong>
+                                       <?php
+                                       $count=1;
+                                       foreach ($users as $user) {
+                                       ?>
+
+                                         <input type="checkbox" value="<?=$user['user_id']?>" class="chkPassport admind" ><?=$user['username']?><strong class="badge btn-danger">Admin</strong>
                                        <br>
-                                       <div class="row dvPassport1"  id="dvPassport1" style="display: none">
+                                       <div class="row dvPassport"  id="dvPassport<?=$count?>" style="display: none">
                                           <div class="col-md-3">
-                                         <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> View
+                                         <input type="checkbox" class="data" value="View" > View
                                         </div>
                                         <div class="col-md-3">
-                                             <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Edit
+                                             <input type="checkbox" class="data" value="Edit" > Edit
                                         </div>
                                         <div class="col-md-3">
-                                            <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Delete
+                                            <input type="checkbox" class="data" value="Delete"> Delete
                                         </div>
                                        </div>
-                                       
-                                         <input type="checkbox" name="vehicle2" value="Car" class="chkPassport2" > adminko <strong class="badge btn-danger">Admin</strong>
-                                       <br>
-                                       <div class="row dvPassport2"  id="dvPassport2" style="display: none">
-                                          <div class="col-md-3">
-                                         <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> View
-                                        </div>
-                                        <div class="col-md-3">
-                                             <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Edit
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Delete
-                                        </div>
-                                       </div>
+                                       <?php
+                                       $count++;
+                                        }
+                                       ?>
                                     </div>
                                   </div>
                                 </div>
             
-            
-        </form>
        </div>
         
     </div>
     
     <div class="row mt-3">
         <div class="offset-11 col-md-1">
-         <button type="button" class="btn btn-primary">Save</button>
+         <button type="submit" style="display: none" class="btn btn-primary save_btn">Save</button>
       </div>
       
     </div>
+    </form>
+<script type="text/javascript">
+    $(function () {
+        $(".customize_permission").click(function () {
+            if ($(this).is(":checked")) {
+                $(".dvPassport").show();
+            } else {
+                $(".dvPassport").hide();
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+        $("#create_task").submit(function(e){
+         e.preventDefault();
+         var ar=[];
+           var count=1;
+           var obj = {};
+            $('.admind').each(function(){
+              var pass_id="#dvPassport"+count;
+              if($(this).is(':checked')){
+               var user_id=$(this).val();
+               var data=$(pass_id).find('.data');
+               data.each(function(){
+                if($(this).is(':checked')){
+                  ar.push($(this).val());
+                }
+               })
+               obj[user_id] = ar;
+               ar=[];
+               }
+               count++;
+            })
+         // var new_ar=[];
+         //  $('.song').each(function(){
+         //      if($(this).is(':checked'))
+         //      {
+         //          new_ar.push($(this).val()); 
+         //      }        
+         //  });
+         // var project_settings=JSON.stringify(new_ar);
+         var permission=JSON.stringify(obj);
+         if(Object.keys(permission).length==2){
+          permission="all";
+         }
+         if($('#everyone').is(':checked')) { permission="all"; }
+         var formData= new FormData($(this)[0]);
+         formData.append('permission',permission);
+         formData.append('task_description', CKEDITOR.instances.editor1.getData());
+         $.ajax({
+             url:"<?=base_url()?>Task/create_task",
+              type:"post",
+              data:formData,
+              contentType:false,
+              processData:false,
+              cache:false,
+             success:function(response)
+             {
+                var response=JSON.parse(response);
+               if(response.status==1){
+                 swal("Task Created Successfully!", "Created", "success");
+                 //window.location.href='<?=base_url()?>Home';
+               }
+               else if(response.status=="0"){
+                swal(response.msg, "Already Exists", "error");
+              }
+             }
+         });
+    });
+</script>
                   </div>
                   <div class="tab-pane fade show px-4" id="imp_project" role="tabpanel" aria-labelledby="import_project">
                      <div class="float-right">
@@ -698,7 +766,42 @@
 
   </div>
 </div>
-
+<script>
+  $(document).on('change','#related_to',function(){
+    var related= $(this).val();
+    if(related=="project"){
+      $.ajax({
+        type:'GET',
+        url:'<?=base_url()?>Projects/fetch_all_projects',
+        success:function(response){
+          var response=JSON.parse(response);
+          var html='';
+          html+='<div class="row">'
+                +'<div class="col-sm-3">'
+                +'<label for="exampleInputEmail1">Select Project</label>'
+              +'</div>'
+              +'<div class="col-sm-9">'
+                +'<div class="input-group">'
+                  +'<select name="project_id" class="form-control">'
+                      +'<option value="">None</option>';
+                      for(var i=0;i<response.data.length;i++){
+          html+='<option value="'+response.data[i].project_id+'">'+response.data[i].project_name+'</option>';
+                      }
+          html+= '</select>'
+                +'</div>'
+              +'</div>'
+            +'</div>';
+          $('.related_to_task').empty();
+          $('.related_to_task').append(html);
+          $('.save_btn').show();
+        }
+      })
+    }
+    else{
+      $('.save_btn').hide();
+    }
+  })
+</script>
 
 <script type="text/javascript">
     $(function () {
@@ -775,12 +878,12 @@ $(document).ready(function(){
       range: "min",
       value: 37,
       min: 1,
-      max: 700,
+      max: 100,
       slide: function( event, ui ) {
-      $( "#amount" ).val( "$" + ui.value );
+      $( "#amount" ).val( "%" + ui.value );
       }
     });
-    $( "#amount" ).val( "$" + $( "#slider-range-min" ).slider( "value" ) );
+    $( "#amount" ).val( "%" + $( "#slider-range-min" ).slider( "value" ) );
     } );
   </script>
   
