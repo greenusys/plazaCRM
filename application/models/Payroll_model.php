@@ -25,6 +25,11 @@ class Payroll_Model extends MY_Model
            return  $insert_id;
     }
 
+    public function set_hourly_template($data){
+           $this->db->insert('tbl_hourly_rate', $data);
+           return true;
+    }
+
     public function set_template_allowance($data){
            $this->db->insert('tbl_salary_allowance', $data);
            return true;
@@ -38,6 +43,14 @@ class Payroll_Model extends MY_Model
     public function fetch_templates(){
         $this->db->select('*');
         $this->db->from('tbl_salary_template');
+        $query_result = $this->db->get();
+        $result = $query_result->result();
+        return $result;
+    }
+
+    public function fetch_hourly_templates(){
+        $this->db->select('*');
+        $this->db->from('tbl_hourly_rate');
         $query_result = $this->db->get();
         $result = $query_result->result();
         return $result;
