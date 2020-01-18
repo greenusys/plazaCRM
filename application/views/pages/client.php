@@ -1,22 +1,4 @@
-<style>
 
-</style>
-      <!-- Main Content -->
-      <div class="main-content">
-        <section class="section">
-     
-              <div class="row">
-                    <div class="col-md-6 bg-white">
-                      <h4 class=" p-2">Dashboard</h4>
-                    </div>
-                  <div class="col-md-6 bg-white text-right ">
-                    <div class="p-2">date
-                <button class="btn btn-danger d-none check_btn"><i class="fas fa-sign-out-alt"></i> Checkout</button>
-                     <button class="btn btn-success check_btn "><i class="fas fa-sign-in-alt"></i> Checkin</button>
-                   </div>
-                  </div>
-              </div>
-          
           <div class="p-3">
             <div class="row bg-white mt-3">
                 <div class="col-md-2 ">
@@ -200,7 +182,46 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                          <?php
+                            foreach ($Clients as $client) {
+                              # code...
+                                // print_r($client);
+                              ?>
+                              <tr>
+                            
+                                <td><?=$client->name?></td>
+                                <td><?=$client->primary_contact?></td>
+                                <td><?=$client->mobile?></td>
+                                <td><?=$client->project_name?></td>
+                                <td>23131</td>
+                                <td>2700</td>
+                                <td>1212</td>
+                                <td>-</td>
+                                <td>
+                                    <div class="">
+                                      <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                      <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
+                                       <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
+                                    </div>
+
+                                </td>
+                            </tr>
+                              <?php
+                            }
+                          ?>
+                                
+                             <script type="text/javascript">
+                               $(document).ready(function(){
+                                $.ajax({
+                                  url:"<?=base_url('Client/clientList')?>",
+                                  type:"post",
+                                  success:function(res){
+                                    console.log(res);
+                                  }
+                                })
+                               });
+                             </script>
+                            <!-- <tr>
                             
                                 <td>Donna Snider</td>
                                 <td>2122</td>
@@ -237,26 +258,7 @@
                                     </div>
 
                                 </td>
-                            </tr>
-                            <tr>
-                            
-                                <td>Donna Snider</td>
-                                <td>2122</td>
-                                <td>Customer Support</td>
-                                <td>hotel mgmt</td>
-                                <td>23131</td>
-                                <td>2700</td>
-                                <td>1212</td>
-                                <td>-</td>
-                                <td>
-                                    <div class="">
-                                      <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                      <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                       <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                    </div>
-
-                                </td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                         <tfoot>
                             <tr>
@@ -274,374 +276,332 @@
                     </table>
                   </div>
                   <div class="tab-pane fade px-4" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
-                         <div class="row">
-        <div class="col-sm-12 cl-md-12 col-lg-12">
-                <div class="card">
-             
-            <div class="tab">
-                <div class="offset-3 col-md-9 tabsb">
-                <button class="tablinks active" onclick="openCity(event, 'general')">General</button>
-                <button class="tablinks" onclick="openCity(event, 'contactdetails')">Contact Details</button>
-                <button class="tablinks" onclick="openCity(event, 'web')">Web</button>
-                <button class="tablinks" onclick="openCity(event, 'hosting')">Hosting</button>
-              </div>
-            </div>
-            <div id="general" class="tabcontent active">
-                 <form  method="post">
-                <div class="form-group">
                     <div class="row">
-                      <div class="offset-1 col-sm-2 text-right">
-                        <label for="exampleInputEmail1">Company Name <span class="text-danger">*</span> </label>
-                      </div>
-                      <div class="col-sm-7">
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                      </div>
-                    </div>
-                </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1">Company Email <span class="text-danger">*</span> </label>
-                  </div>
-                  <div class="col-sm-7">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1">Company VAT </label>
-                  </div>
-                  <div class="col-sm-7">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1">Customer Group </label>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="input-group">
-                        <select name="client_id" class="form-control" id="customer_group">
-                        <option value=""></option>
-                        
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-sm-1">
-                    <button type="button" class="btn btn-light butn1" data-toggle="modal" data-target="#exampleModal" data-toggle="tooltip" data-placement="top" title="New Customer Group"><i class="fa fa-plus"></i></button>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1">Language </label>
-                  </div>
-                  <div class="col-sm-7">
-                    <div class="input-group">
-                        <select name="client_id" class="form-control language" id="language" style="width: 100%">
-                        <option value="">English</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                  </div>
-                  <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1">Currency </label>
-                  </div>
-                  <div class="col-sm-7">
-                    <div class="input-group">
-                        <select name="client_id" class="form-control currency" id="currency" style="width: 100%">
-                        <option value="">Euro</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class=" col-sm-3 text-right">
-                    <label for="exampleInputEmail1">Received sms Notifications  </label>
-                  </div>
-                  <div class="col-md-9">
-                    <div class="checkbox input-group gap">
-                      <label class="ml-4">
-                      <input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
-                      </label>
-                    </div>
-                  </div>
-                </div>
+                      <div class="col-sm-12 cl-md-12 col-lg-12">
+                        <div class="card">
+                          <div class="tab">
+                            <div class="offset-3 col-md-9 tabsb">
+                              <button class="tablinks active" onclick="openCity(event, 'general')">General</button>
+                              <button class="tablinks" onclick="openCity(event, 'contactdetails')">Contact Details</button>
+                              <button class="tablinks" onclick="openCity(event, 'web')">Web</button>
+                              <button class="tablinks" onclick="openCity(event, 'hosting')">Hosting</button>
+                            </div>
+                          </div>
+                          <form  method="post" action="<?=base_url('Client/create_client')?>">
+                            <div id="general" class="tabcontent active">
+                              <div class="form-group">
+                                  <div class="row">
+                                    <div class="offset-1 col-sm-2 text-right">
+                                      <label for="exampleInputEmail1">Company Name <span class="text-danger">*</span> </label>
+                                    </div>
+                                    <div class="col-sm-7">
+                                      <input type="name" class="form-control" name="compName" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    </div>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1">Company Email <span class="text-danger">*</span> </label>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <input type="email" class="form-control" name="compEmail" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1">Company VAT </label>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <input type="email" class="form-control" name="compVat" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1">Customer Group </label>
+                                  </div>
+                                  <div class="col-sm-6">
+                                    <div class="input-group">
+                                        <select name="customer_group_id" class="form-control"  id="customer_group">
+                                        <option value=""></option>
+                                        
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-1">
+                                    <button type="button" class="btn btn-light butn1" data-toggle="modal" data-target="#exampleModal" data-toggle="tooltip" data-placement="top" title="New Customer Group"><i class="fa fa-plus"></i></button>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1">Language </label>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <div class="input-group">
+                                        <select name="compLanguage" class="form-control language" id="language" style="width: 100%">
+                                        <option value="">English</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1">Currency </label>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <div class="input-group">
+                                        <select name="currency" class="form-control currency" id="currency" style="width: 100%">
+                                        <option value="EU">Euro</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class=" col-sm-3 text-right">
+                                    <label for="exampleInputEmail1">Received SMS Notifications  </label>
+                                  </div>
+                                  <div class="col-md-9">
+                                    <div class="checkbox input-group gap">
+                                      <label class="ml-4">
+                                        <input type="checkbox" name="smsNoti" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+                                      </label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1">Short Note  </label>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <textarea class="form-control" name="short_note"></textarea>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div id="contactdetails" class="tabcontent">
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1">Company Phone</label>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <input type="number" class="form-control" name="compPhone" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1">Company Mobile </label>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <input type="number" class="form-control" name="compMobile" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1">Zip code </label>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <input type="number" class="form-control" name="compZipCode" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                  </div>
+                                </div>
+                              </div> 
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1">Company City</label>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <input type="text" class="form-control" name="compCity" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                  </div>
+                                </div>
+                              </div> 
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1">Company Country</label>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <div class="input-group">
+                                        <select name="countryName" class="form-control" name="compCountry" id="company_country">
+                                        <option value="">India</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1">Company Fax</label>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <input type="email" class="form-control" name="compFax" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1">Company Address </label>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <textarea class="form-control" name="compAddress"></textarea>
+                                  </div>
+                                </div>
+                                  </div>  
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1"> Latitude( Google Map ) </label>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <input type="email" class="form-control" name="compLatitude" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1">Longitude( Google Map ) </label>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <input type="email" class="form-control" name="compLongitude" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div id="web" class="tabcontent">
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1">Company Website</label>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <input type="email" class="form-control"name="compWebsite" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1">Skype id</label>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <input type="email" class="form-control" name="compSkype" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                  </div>
+                                </div>
+                                  </div>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1">Facebook URL</label>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <input type="url" class="form-control" name="faceBookUrL" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                  </div>
+                                </div>
+                                  </div>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1">Twitter URL</label>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <input type="url" class="form-control" name="TwitterURL" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1">Linkedin URL</label>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <input type="email" class="form-control" name="LinkedinUrl" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div id="hosting" class="tabcontent">
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1">Hosting Company</label>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <input type="text" name="hostingCompany" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1">Hosting</label>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <input type="text" name="hostName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                  </div>
+                                </div>
+                                  </div>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1">Username</label>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <input type="text" class="form-control" name="compUsername" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                  </div>
+                                </div>
+                                  </div>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1">Password</label>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <input type="email" class="form-control" name="compPassword" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                  </div>
+                                </div>
+                                  </div>
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="offset-1 col-sm-2 text-right">
+                                    <label for="exampleInputEmail1">Port</label>
+                                  </div>
+                                  <div class="col-sm-7">
+                                    <input type="email" class="form-control" name="compPort" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row mt-3">
+                              <div class="offset-8 col-md-1">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                              </div>
+                              <div class=" col-md-3">
+                                 <button type="button" class="btn btn-warning">Save and Create Contact</button>
+                              </div>
+                            </div>
+                          </form>
                         </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1">Short Note  </label>
-                  </div>
-                  <div class="col-sm-7">
-                    <textarea class="form-control" name="short_note"></textarea>
-                  </div>
-                </div>
-                  </div>
-                  <div class="row mt-3">
-                        <div class="offset-8 col-md-1">
-                         <button type="button" class="btn btn-primary">Save</button>
-                      </div>
-                      <div class=" col-md-3">
-                         <button type="button" class="btn btn-warning">Save and Create Contact</button>
-                      </div>
-                      
+                      </div>   
                     </div>
-                </form>
-            </div>
-
-            <div id="contactdetails" class="tabcontent">
-              <form  method="post">
-                  <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1">Company Phone</label>
-                  </div>
-                  <div class="col-sm-7">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1">Company Mobile </label>
-                  </div>
-                  <div class="col-sm-7">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1">Zip code </label>
-                  </div>
-                  <div class="col-sm-7">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div> 
-              <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1">Company City</label>
-                  </div>
-                  <div class="col-sm-7">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div> 
-              <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1">Company Country</label>
-                  </div>
-                  <div class="col-sm-7">
-                    <div class="input-group">
-                        <select name="client_id" class="form-control" id="company_country">
-                        <option value="">India</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1">Company Fax</label>
-                  </div>
-                  <div class="col-sm-7">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-             <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1">Company Address </label>
-                  </div>
-                  <div class="col-sm-7">
-                    <textarea class="form-control" name="short_note"></textarea>
-                  </div>
-                </div>
-                  </div>  
-              <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1"> Latitude( Google Map ) </label>
-                  </div>
-                  <div class="col-sm-7">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1">Longitude( Google Map ) </label>
-                  </div>
-                  <div class="col-sm-7">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-              </div>
-              <div class="row mt-3">
-                        <div class="offset-8 col-md-1">
-                         <button type="button" class="btn btn-primary">Save</button>
-                      </div>
-                      <div class=" col-md-3">
-                         <button type="button" class="btn btn-warning">Save and Create Contact</button>
-                      </div>
-                      
-                    </div>
-            </form>
-          </div>
-
-            <div id="web" class="tabcontent">
-              <form  method="post">
-                <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1">Company Website</label>
-                  </div>
-                  <div class="col-sm-7">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1">Skype id</label>
-                  </div>
-                  <div class="col-sm-7">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1">Facebook URL</label>
-                  </div>
-                  <div class="col-sm-7">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1">Twitter URL</label>
-                  </div>
-                  <div class="col-sm-7">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1">Linkedin URL</label>
-                  </div>
-                  <div class="col-sm-7">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-                  <div class="row mt-3">
-                        <div class="offset-8 col-md-1">
-                         <button type="button" class="btn btn-primary">Save</button>
-                      </div>
-                      <div class=" col-md-3">
-                         <button type="button" class="btn btn-warning">Save and Create Contact</button>
-                      </div>
-                      
-                    </div>
-                </form>
-            </div>
-            
-            <div id="hosting" class="tabcontent">
-              <form  method="post">
-                <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1">Hosting Company</label>
-                  </div>
-                  <div class="col-sm-7">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1">Hosting</label>
-                  </div>
-                  <div class="col-sm-7">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1">Username</label>
-                  </div>
-                  <div class="col-sm-7">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1">Password</label>
-                  </div>
-                  <div class="col-sm-7">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="offset-1 col-sm-2 text-right">
-                    <label for="exampleInputEmail1">Port</label>
-                  </div>
-                  <div class="col-sm-7">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                </div>
-                  </div>
-                   <div class="row mt-3">
-                        <div class="offset-8 col-md-1">
-                         <button type="button" class="btn btn-primary">Save</button>
-                      </div>
-                      <div class=" col-md-3">
-                         <button type="button" class="btn btn-warning">Save and Create Contact</button>
-                      </div>
-                      
-                    </div>
-               </form>    
-            </div>
-           
-          </div>
-      
-       </div>
-       
-     
-    </div>
                   </div>
                   <div class="tab-pane fade show px-4" id="imp_project" role="tabpanel" aria-labelledby="import_project">
                     <div class="float-right">

@@ -1,20 +1,4 @@
- 
-      <!-- Main Content -->
-      <div class="main-content">
-        <section class="section">
-     
-              <div class="row">
-                    <div class="col-md-6 bg-white">
-                      <h4 class=" p-2">Time History</h4>
-                    </div>
-                  <div class="col-md-6 bg-white text-right ">
-                    <div class="p-2">date
-                <button class="btn btn-danger d-none check_btn"><i class="fas fa-sign-out-alt"></i> Checkout</button>
-                     <button class="btn btn-success check_btn "><i class="fas fa-sign-in-alt"></i> Checkin</button>
-                   </div>
-                  </div>
-              </div>
-             
+
         
           <div class="row mt-4">
             <div class="col-md-12">
@@ -33,15 +17,19 @@
                         <label for="exampleInputEmail1" class="pt-2">Employee<sup class="text-danger">*</sup></label>
                       </div>
                       <div class="col-sm-5">
+                      
                           <div class="input-group">
                                 <select name="client_id" class="form-control" id="emply">
                                     <option selected="" disabled="">Select Employee</option>
-                                    <option value="1">Opportunities</option>
-                                    <option value="2">Bugs</option>
-                                    <option value="3">Projects</option>
-                                    <option value="1">Leads</option>
-                                    <option value="2">Goal Tracking</option>
-                                    <option value="3">Tasks</option>
+                                    <?php
+                                      foreach($Employee as $empD){
+                                        // /print_r($empD);
+                                        ?>
+                                           <option value="<?=$empD->user_id?>"><?=$empD->full_name?> (<?=$empD->designations ?>) </option>   
+                                        <?php
+                                      }
+                                    ?>
+                        
                                 </select>
                           </div>
                       </div>

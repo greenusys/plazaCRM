@@ -78,21 +78,7 @@ $(document).ready(function(){
  
 });
 </script>
-      <!-- Main Content -->
-      <div class="main-content">
-        <section class="section">
-     
-              <div class="row">
-                    <div class="col-md-6 bg-white">
-                      <h4 class=" p-2">Dashboard</h4>
-                    </div>
-                  <div class="col-md-6 bg-white text-right ">
-                    <div class="p-2">date
-                <button class="btn btn-danger d-none check_btn"><i class="fas fa-sign-out-alt"></i> Checkout</button>
-                     <button class="btn btn-success check_btn "><i class="fas fa-sign-in-alt"></i> Checkin</button>
-                   </div>
-                  </div>
-              </div>
+
            <div class="p-3">
             <div class="row bg-white mt-3">
                 <div class="col-md-2 ">
@@ -378,7 +364,7 @@ $(document).ready(function(){
                 </div>
               </div>
               <div class="col-sm-1">
-                  <button type="button" class="btn btn-light butn" data-toggle="modal" data-target="#myModal" title="New Client"><i class="fa fa-plus"></i></button>
+                  <span type="button" class="btn btn-light butn" data-toggle="modal" data-target="#myModal" title="New Client"><i class="fa fa-plus"></i></span>
               </div>
             </div>
           </div>

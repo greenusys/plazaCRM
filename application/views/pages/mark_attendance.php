@@ -3,22 +3,7 @@
     width: 20px;
   }
  </style>
-      <!-- Main Content -->
-      <div class="main-content">
-        <section class="section">
-     
-              <div class="row">
-                    <div class="col-md-6 bg-white">
-                      <h4 class=" p-2">Mark Attendance</h4>
-                    </div>
-                  <div class="col-md-6 bg-white text-right ">
-                    <div class="p-2">date
-                <button class="btn btn-danger d-none check_btn"><i class="fas fa-sign-out-alt"></i> Checkout</button>
-                     <button class="btn btn-success check_btn "><i class="fas fa-sign-in-alt"></i> Checkin</button>
-                   </div>
-                  </div>
-              </div>
-             
+
         
           <div class="row mt-4">
             <div class="col-md-12">
