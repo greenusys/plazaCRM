@@ -21,7 +21,7 @@
                     return false;
                 }
             }else{
-                echo 'Already Hai';
+                // echo 'Already Hai';
                 $this->db->where('user_id',$id);
                 if($this->db->update('tbl_attendance',$attArray)){
                    return $res[0]->attendance_id;

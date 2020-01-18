@@ -45,47 +45,50 @@ class Attendance extends CI_Controller {
 		// tbl_clock`(`clock_id`, ``, ``, ``, `comments`, `clocking_status`, `ip_address`)
 		$st=$this->ATND->markMyAttendance($data,$my_Id,$attArray);
 		if($st!=false){
-			echo '===>'.$st;
+			// echo '===>'.$st;
 			if($response=$this->checkForExistenceIntblClock($st)){
 				//insert
-				//echo 'Insert Krna Hai';
-				print_r($response);
+				// echo 'Insert Krna Hai';
+				// print_r($response);
 				$temp=0;
 				$clk_id=0;
 				foreach($response as $clk){
-					echo ' Clock In Time : '.$clk->clockin_time;
-					echo ' Clock Out Time : '.$clk->clockout_time;
+					// echo ' Clock In Time : '.$clk->clockin_time;
+					// echo ' Clock Out Time : '.$clk->clockout_time;
 					if($clk->clockout_time==""){
 						$temp=1;
 						$clk_id=$clk->clock_id;
 					}
 				}
 				if($temp==1){
-					echo 'isiko update krana h';
+					// echo 'isiko update krana h';
 					$this->db->where('clock_id',$clk_id);
 					$clock_out=$my_time;
 					if($this->db->update('tbl_clock',array("clockout_time"=>$clock_out))){
+						$_SESSION['clocked']=0;
 						die(json_encode(array("code"=>1,"msg"=>"Attendance Marked.","data"=>$st)));
 					}else{
-						die(json_encode(array("code"=>1,"msg"=>"Failed to Mark Attendance.","data"=>$st)));
+						die(json_encode(array("code"=>0,"msg"=>"Failed to Mark Attendance.","data"=>$st)));
 					} 
 				}else{
-					echo 'insert krna hai';
+					// echo 'insert krna hai';
 					$new=array_merge($data,array("attendance_id"=>$st));
 					if($this->db->insert('tbl_clock',$new)){
+						$_SESSION['clocked']=1;
 						die(json_encode(array("code"=>1,"msg"=>"Attendance Marked.","data"=>$st)));
 					}else{
-						die(json_encode(array("code"=>1,"msg"=>"Failed to Mark Attendance.","data"=>$st)));
+						die(json_encode(array("code"=>0,"msg"=>"Failed to Mark Attendance.","data"=>$st)));
 					} 
 				}
 			}else{
 				//print_r($response);
-				echo 'Insert Krna Hai';
+				// echo 'Insert Krna Hai';
 				$new=array_merge($data,array("attendance_id"=>$st));
 				if($this->db->insert('tbl_clock',$new)){
+					$_SESSION['clocked']=1;
 					die(json_encode(array("code"=>1,"msg"=>"Attendance Marked.","data"=>$st)));
 				}else{
-					die(json_encode(array("code"=>1,"msg"=>"Failed to Mark Attendance.","data"=>$st)));
+					die(json_encode(array("code"=>0,"msg"=>"Failed to Mark Attendance.","data"=>$st)));
 				}
 				// if($this->db->update('tbl_clock',$new)){
 				// 	die(json_encode(array("code"=>1,"msg"=>"Attendance Marked.","data"=>$st)));
@@ -99,7 +102,7 @@ class Attendance extends CI_Controller {
 			//insert or update tbl_clock
 			
 		}else{
-			die(json_encode(array("code"=>1,"msg"=>"Failed to Mark Attendance.","data"=>$st)));
+			die(json_encode(array("code"=>0,"msg"=>"Failed to Mark Attendance.","data"=>$st)));
 		}
 	}
 	public function checkForExistenceIntblClock($st){

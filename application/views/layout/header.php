@@ -323,14 +323,28 @@
                     </div>
                   <div class="col-md-6 bg-white text-right ">
                     <div class="p-2"><div id="txt"></div>
-                    <button class="btn btn-danger d-none check_btn" onclick="printTime(0)"><i class="fas fa-sign-out-alt"></i> Checkout</button>
-                    <button class="btn btn-success check_btn " onclick="printTime(1)"><i class="fas fa-sign-in-alt"></i> Checkin</button>
+                    <?php
+                      if(isset($_SESSION['clocked'])){
+                        if($_SESSION['clocked']==1){
+                          echo '<button class="btn btn-danger check_btn2" onclick="printTime(0)" d-Val="0"><i class="fas fa-sign-out-alt"></i> Checkout</button>';
+                        }else{
+                          echo '<button class="btn btn-success check_btn2 " onclick="printTime(1)" d-Val="1"><i class="fas fa-sign-in-alt"></i> Checkin</button>';
+                        }
+                      }else{
+                        echo '<button class="btn btn-success check_btn2 " onclick="printTime(1)" d-Val="1"><i class="fas fa-sign-in-alt"></i> Checkin</button>';
+                      }
+                    ?>
+                    
+                    
                    </div>
                   </div>
               </div>
   <script type="text/javascript">
-		function printTime(id){
-      var d_time=document.getElementById('txt').innerHTML;
+   
+    $(document).on('click','.check_btn2',function(){
+       var d_time=document.getElementById('txt').innerHTML;
+      var elem=$(this);
+      var id=elem.attr('d-Val');
       var type;
       if(id==1){
         type=1;
@@ -339,20 +353,71 @@
         console.log("Check Out: ");
         type=0;
       }
-			$.ajax({
-				url:"<?=base_url('Attendance/markMyAttendance')?>",
-        type:"post",
-        data:{d_time:d_time,type:type},
-				success:function(response)
-						{
-							console.log(response);
-						}
-			});
+
+
+       if(id==1){
+                // type=1;
+                elem.attr('d-Val','0');
+                elem.addClass('btn-danger');
+                elem.removeClass('btn-success');
+                // console.log("Check In: ");
+              }else{
+                elem.attr('d-Val','1');
+                elem.removeClass('btn-danger');
+                elem.addClass('btn-success');
+                // console.log("Check Out: ");
+                // type=0;
+              }
+      // $.ajax({
+      //  url:"<?=base_url('Attendance/markMyAttendance')?>",
+      //   type:"post",
+      //   data:{d_time:d_time,type:type},
+      //  success:function(response)
+      //      {
+      //        // console.log(response);
+      //        response=JSON.parse(response);
+      //        if(response.code==1){
+      //         if(id==1){
+      //           // type=1;
+      //           elem.attr('d-Val','0');
+      //           elem.addClass('btn-danger');
+      //           elem.removeClass('btn-success');
+      //           // console.log("Check In: ");
+      //         }else{
+      //           elem.attr('d-Val','1');
+      //           elem.removeClass('btn-danger');
+      //           elem.addClass('btn-success');
+      //           // console.log("Check Out: ");
+      //           // type=0;
+      //         }
+      //        }
+      //      }
+      // })
+    });
+		function printTime(id){
+      // var d_time=document.getElementById('txt').innerHTML;
+      // var type;
+      // if(id==1){
+      //   type=1;
+      //   console.log("Check In: ");
+      // }else{
+      //   console.log("Check Out: ");
+      //   type=0;
+      // }
+			// $.ajax({
+			// 	url:"<?=base_url('Attendance/markMyAttendance')?>",
+   //      type:"post",
+   //      data:{d_time:d_time,type:type},
+			// 	success:function(response)
+			// 			{
+			// 				console.log(response);
+			// 			}
+			// });
 			// var old_time=new Date("11:27:45");
       
 			// var now_=new Date(document.getElementById('txt').innerHTML);
 			// console.log(" OLD : "+old_time);
-			console.log(" Now : "+d_time);
+			// console.log(" Now : "+d_time);
 			// var dif_=(now_.getTime())-old_time.getTime();
 			// console.log(" Difference : "+dif_);
 		}
