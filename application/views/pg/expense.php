@@ -1,5 +1,20 @@
 
-        <div class="p-3">
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+     
+              <div class="row">
+                    <div class="col-md-6 bg-white">
+                      <h4 class=" p-2">Expense</h4>
+                    </div>
+                  <div class="col-md-6 bg-white text-right ">
+                    <div class="p-2">date
+                <button class="btn btn-danger d-none check_btn"><i class="fas fa-sign-out-alt"></i> Checkout</button>
+                     <button class="btn btn-success check_btn "><i class="fas fa-sign-in-alt"></i> Checkin</button>
+                   </div>
+                  </div>
+              </div>
+             <div class="p-3">
             <div class="row bg-white mt-3">
                 <div class="col-md-2 ">
                   <div class="p-3 pro_status">
@@ -56,14 +71,14 @@
                 <ul class="nav nav-tabs nav-justified md-tabs indigo col-md-5" id="myTabJust" role="tablist">
                   <li class="nav-item">
                     <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
-                      aria-selected="true">All Deposit</a>
+                      aria-selected="true">All Expense</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
-                      aria-selected="false">New Deposit</a>
+                      aria-selected="false">New Expense</a>
                   </li>
                   <li class="nav-item ">
-                  <a class="nav-link" id="import_project" data-toggle="tab" href="#imp_project" role="tab" aria-controls="imp_project" aria-selected="false">Import Deposit </a>
+                  <a class="nav-link" id="import_project" data-toggle="tab" href="#imp_project" role="tab" aria-controls="imp_project" aria-selected="false">Import Expense</a>
                   </li>
                 </ul>
                 <div class="tab-content card pt-5" id="myTabContentJust">
@@ -75,10 +90,9 @@
                                
                                 <th>Name/Title</th>
                                 <th>Date</th>
-                                <th>Accounts</th>
-                                <th>Paid By</th>
+                                <th>Account Name</th>
                                 <th>Ammount</th>
-                                 <th>Balance</th>
+                                <th>Status</th>
                                 <th>Attachment</th>
                                 <th>Action</th>
                             </tr>
@@ -88,7 +102,6 @@
                               <td>Tittle</td>
                                 <td>2011/04/25</td>
                                 <td>System Architect</td>
-                                <td>$320,800</td>
                                 <td>$320,800</td>
                                 <td>61</td>
                                 <td>assfa</td>
@@ -109,7 +122,6 @@
                                 <td>System Architect</td>
                                 <td>$320,800</td>
                                 <td>61</td>
-                                  <td>61</td>
                                 <td>assfa</td>
                                <td>
                                     <div class="">
@@ -127,7 +139,6 @@
                                 <td>System Architect</td>
                                 <td>$320,800</td>
                                 <td>61</td>
-                                  <td>61</td>
                                 <td>assfa</td>
                                 <td>
                                     <div class="">
@@ -145,7 +156,6 @@
                                 <td>System Architect</td>
                                 <td>$320,800</td>
                                 <td>61</td>
-                                  <td>61</td>
                                 <td>assfa</td>
                                 <td>
                                     <div class="">
@@ -158,14 +168,13 @@
                             </tr>
                         </tbody>
                         <tfoot>
-                             <tr>
+                           <tr>
                                
                                 <th>Name/Title</th>
                                 <th>Date</th>
-                                <th>Accounts</th>
-                                <th>Paid By</th>
+                                <th>Account Name</th>
                                 <th>Ammount</th>
-                                 <th>Balance</th>
+                                <th>Status</th>
                                 <th>Attachment</th>
                                 <th>Action</th>
                             </tr>

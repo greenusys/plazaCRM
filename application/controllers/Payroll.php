@@ -27,12 +27,14 @@ class Payroll extends CI_Controller {
 	}
 	public function manageSalary()
 	{
-		echo 'manageSalary';
+		$this->load->view('layout/header');
+		$this->load->view("pages/manage_salary");
+		$this->load->view("layout/footer");
 	}
 	public function empSalary()
 	{
 		$this->load->view('layout/header');
-		$this->load->view("pages/employee_salary_list");
+		$this->load->view("pages/emp_salary_list");
 		$this->load->view("layout/footer");
 	}
 
@@ -72,7 +74,9 @@ class Payroll extends CI_Controller {
 
 	public function makePayment()
 	{
-		echo 'makePayment';
+		$this->load->view('layout/header');
+		$this->load->view("pages/make_payment");
+		$this->load->view("layout/footer");
 	}
 	public function generatePaySlip()
 	{
