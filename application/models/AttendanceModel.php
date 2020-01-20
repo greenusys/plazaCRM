@@ -12,7 +12,8 @@
         }
         public function markMyAttendance($data,$id,$attArray){
         //  print_r($attArray);
-            $this->db->where('user_id',$id);
+            $conditionArr=array("user_id"=>$id,"date_in"=>date('Y-m-d'));
+            $this->db->where($conditionArr);
             if(count($res=$this->db->get('tbl_attendance')->result())==0){
                 if($this->db->insert('tbl_attendance',$attArray)){
                     $insert_id = $this->db->insert_id();
