@@ -48,32 +48,55 @@ min-height: 35px
                               </tr>
                           </thead>
                           <tbody id="user_data">
-<!--                               <tr>
-                                  <td>Tiger Nixon</td>
-                                  <td>2011/04/25</td>
+                            <?php
+                            foreach ($department as $dep) {
+                            ?>
+                              <tr>
+                                  <td><?=$dep->fullname?></td>
+                                  <td><?=$dep->designations?></td>
                                   <td>
                                     <div class="d-flex">
-                                        <div ><input type="checkbox" name="" class="chkbox_ht mt-2"></div>
-                                      <select  name="imptask_status" class="form-control hourly_status" style="width: 60%;margin-top: -15px;" required="">
-                                        <option value="" selected="">Select Hourly Grade</option>
-                                        <option value="">IT / Collaborative</option>
-                                        <option value="">HR</option>
-                                        <option value="">IT</option>
+                                        <div ><input type="checkbox" <?php if($dep->hourly_rate_id!=null)echo "checked";?> name="hourly[]" class="chkbox_ht mt-2"></div>
+                                      <select  name="imptask_status" class="form-control hourly_status" style="width: 60%;" required="">
+                                        <option value="">--Select Hourly Grade--</option>
+                                        <?php
+                                        foreach ($hourly_grade as $hourly) {
+                                             $isSelected =""; //added this line
+                                             if($dep->hourly_rate_id == $hourly->hourly_rate_id){
+                                               $isSelected = "selected";
+                                             }
+                                        ?>
+                                        <option value="<?=$hourly->hourly_rate_id?>" <?=$isSelected?>><?=$hourly->hourly_grade?></option>
+<!--                                         <option value="<?=$hourly->hourly_rate_id?>"><?=$hourly->hourly_grade?></option> -->
+                                        <?php
+                                        }
+                                        ?>
                                       </select> 
                                     </div>
                                   </td>
                                   <td>
                                     <div class="d-flex">
-                                      <div ><input type="checkbox" name="" class="chkbox_ht mt-2"></div>
+                                      <div ><input type="checkbox" <?php if($dep->salary_template_id!=null)echo "checked";?> name="monthly[]" class="chkbox_ht mt-2"></div>
                                       <select  name="imptask_status" class="form-control monthly_status" style="width: 60%" required="">
-                                        <option value="" selected="">Select Monthly Grade</option>
-                                        <option value="">IT / Collaborative</option>
-                                        <option value="">HR</option>
-                                        <option value="">IT</option>
+                                        <option value="">--Select Monthly Grade--</option>
+                                        <?php
+                                        foreach ($monthly_grade as $monthly) {
+                                             $isSelected =""; //added this line
+                                             if($monthly->salary_template_id == $dep->salary_template_id){
+                                               $isSelected = "selected";
+                                             }
+                                        ?>
+                                        <option value="<?=$monthly->salary_template_id?>" <?=$isSelected?>><?=$monthly->salary_grade?></option>
+                                        <?php
+                                        }
+                                        ?>
                                       </select> 
                                     </div>
                                   </td>
-                              </tr> -->
+                              </tr>
+                              <?php
+                              }
+                              ?>
                           </tbody>
                           <tfoot>
                                 <tr>
@@ -94,16 +117,22 @@ min-height: 35px
     
         </section>
       </div>
-<script>
-     $(document).ready(function() {
-          $(".hourly_status").select2();
-          $("#imptask_status").select2();
-          $(".monthly_status").select2();
-      });
+<script type="text/javascript">
+$( document ).ready(function() {
+    $('input[type="checkbox"]').on('change', function() {
+      var checkedValue = $(this).prop('checked');
+        // uncheck sibling checkboxes (checkboxes on the same row)
+        $(this).closest('tr').find('input[type="checkbox"]').each(function(){
+           $(this).prop('checked',false);
+        });
+        $(this).prop("checked",checkedValue);
+
+    });
+}); 
 
      $(document).on('click','.search',function(){
          var dept_id=$("#imptask_status option:selected").val();
          var url="<?=base_url()?>Payroll/manageSalary/"+dept_id;
          window.location.href=url;
-     })
+     }) 
 </script>
