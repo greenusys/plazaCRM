@@ -25,39 +25,33 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Tittle</td>
-                                    <td>61</td>
-                                    <td>System Architect</td>
-                                    <td>$320,800</td>
-                                    <td>2011/04/25</td>
-                                    <td>
-                                        <div class="">
-                                            <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                            <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                            <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                        </div>
+                                <?php
+                                    foreach ($Announcement as $announce) {
+                                        # code...?
+                                        ?>
+                                            <tr>
+                                                <td><?=$announce->title?></td>
+                                                <td><?=$announce->fullname?></td>
+                                                <td><?=$announce->start_date?></td>
+                                                <td><?=$announce->end_date?></td>
+                                                <td><?=$announce->status?></td>
+                                                <td>
+                                                    <div class="">
+                                                        <a href="javascript:void(0)" class="sele_staus bg-info p-1 text-white " data-id="<?=$announce->announcements_id?>"><span><i class="far fa-edit"></i></span></a>
+                                                        <a href="javascript:void(0)" class="deleteAnnuo" data-id="<?=$announce->announcements_id?>"><span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+                                                        <a><span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span></a>
+                                                    </div>
 
-                                    </td>
+                                                </td>
 
-                                </tr>
+                                            </tr>
+                                        <?php
+                                    }
 
-                                <tr>
-                                    <td>Tittle</td>
-                                    <td>61</td>
-                                    <td>System Architect</td>
-                                    <td>$320,800</td>
-                                    <td>2011/04/25</td>
-                                    <td>
-                                        <div class="">
-                                            <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                            <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                            <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                        </div>
+                                ?>
+                                
 
-                                    </td>
-
-                                </tr>
+                                
 
                             </tbody>
                             <tfoot>
@@ -86,97 +80,105 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header border-bottom">
-                <h5 class="modal-title" id="exampleModalLabel">Client list</h5>
+                <h5 class="modal-title" id="exampleModalLabel">New Announcements</h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <label for="exampleInputEmail1"> Leave Category <span class="text-danger">*</span></label>
-                        </div>
-                        <div class="col-sm-9">
-                            <input type="text" value="" class="form-control" name="">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class=" col-md-3">
-                            <label for="exampleInputEmail1">Description </label>
-                        </div>
-                        <div class="col-md-9">
-                            <textarea name="editor1"></textarea>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <label for="exampleInputEmail1">Start Date <span class="text-danger">*</span> </label>
-                        </div>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="datepicker">
-                        </div>
-                        <div class="col-sm-1">
-                            <button type="button" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group " id="end_date">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <label for="exampleInputEmail1">End Date <span class="text-danger">*</span> </label>
-                        </div>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="datepicker">
-                        </div>
-                        <div class="col-sm-1">
-                            <button type="button" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class=" col-md-3">
-                            <label for="exampleInputEmail1">Attachment <span class="text-danger">*</span></label>
-                        </div>
-
-                        <div class="col-md-9">
-                            <div class="form-group inputDnD">
-                                <label class="sr-only" for="inputFile">File Upload</label>
-                                <input type="file" class="form-control-file text-primary font-weight-bold" id="inputFile" accept="image/*" onchange="readUrl(this)" data-title="Drag and drop a file or Click">
+                <form id="submitAnnouncement">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="exampleInputEmail1"> Title <span class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="text" value="" class="form-control" name="title">
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class=" col-md-3">
-                            <label for="exampleInputEmail1">Share With </label>
-                        </div>
-                        <div class="col-md-9">
-                            <input type="checkbox" name=""> All Clients
+                    <div class="form-group">
+                        <div class="row">
+                            <div class=" col-md-3">
+                                <label for="exampleInputEmail1">Description </label>
+                            </div>
+                            <div class="col-md-9">
+                                <textarea name="description"></textarea>
 
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class=" col-md-3">
-                            <label for="exampleInputEmail1">Status </label>
-                        </div>
-                        <div class="col-md-4">
-                            <input type="checkbox" name=""> Published
-
-                        </div>
-                        <div class="col-md-4">
-                            <input type="checkbox" name=""> Un Published
-
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="exampleInputEmail1">Start Date <span class="text-danger">*</span> </label>
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="datepicker" name="start_date">
+                            </div>
+                            <div class="col-sm-1">
+                                <button type="button" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    <div class="form-group " id="end_date">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="exampleInputEmail1">End Date <span class="text-danger">*</span> </label>
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="datepicker" name="end_date">
+                            </div>
+                            <div class="col-sm-1">
+                                <button type="button" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class=" col-md-3">
+                                <label for="exampleInputEmail1">Attachment <span class="text-danger">*</span></label>
+                            </div>
+
+                            <div class="col-md-9">
+                                <div class="form-group inputDnD">
+                                    <label class="sr-only" for="inputFile">File Upload</label>
+                                    <input type="file" class="form-control-file text-primary font-weight-bold" id="inputFile" accept="image/*" onchange="readUrl(this)" data-title="Drag and drop a file or Click" name="fileToUpload">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class=" col-md-3">
+                                <label for="exampleInputEmail1">Share With </label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="checkbox" name="shareWith" value="1"> All Clients
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class=" col-md-3">
+                                <label for="exampleInputEmail1">Status </label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="checkbox" name="published"> Published
+
+                            </div>
+                            <div class="col-md-4">
+                                <input type="checkbox" name="unPublished"> Un Published
+
+                            </div>
+                        </div>
+                         <div class="row">
+                            <div class="col">
+                                <input type="submit" class="btn btn-info" value="Save">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
 
             </div>
             <div class="modal-footer">
@@ -187,9 +189,33 @@
     </div>
 </div>
 <script>
-    CKEDITOR.replace('editor1');
+    CKEDITOR.replace('description');
 </script>
 <script type="text/javascript">
+    $(document).on('submit','#submitAnnouncement',function(e){
+        e.preventDefault();
+        var formData=new FormData($(this)[0]);
+        console.log(formData);
+        $.ajax({
+            url:"<?=base_url('Announcement/addAnnouncement')?>",
+            type:"post",
+            cache:false,
+            contentType:false,
+            processData:false,
+            data:formData,
+            success:function(response){
+                // console.log(response);
+                response=JSON.parse(response);
+                if(response.code==1){
+                    swal("Good job!", response.msg, "success");
+                }else{
+                    swal("Ooops!", response.msg, "warning");
+                }
+                
+            }
+        })
+    });
+
    $(document).ready(function() {
       function readUrl(input) {
   

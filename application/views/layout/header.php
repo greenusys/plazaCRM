@@ -1,5 +1,12 @@
 <?php
-  //$session=$this->session->userdata('logged_user');
+  $session=$this->session->userdata('logged_user');
+  // print_r($session);
+$myId=$session[0]->user_id;
+
+
+  $this->db->where('user_id',$myId);
+  $attendaceData=$this->db->get('tbl_attendance')->result();
+  // print_r($attendaceData);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -97,6 +104,17 @@
     });
   });
   </script>
+  <style type="text/css">
+    .d-non{
+      display:none;
+    }
+    .abc{
+      color: crimson;
+      font-family: monospace;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 
 <body onload="startTime()">
@@ -112,7 +130,7 @@
           <div class="search-element">
             <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
             <button class="btn" type="submit"><i class="fas fa-search"></i></button>
-            <div class="search-backdrop"></div>
+            <!-- <div class="search-backdrop"></div>
             <div class="search-result">
               <div class="search-header">
                 Histories
@@ -169,7 +187,7 @@
                   Create a new Homepage Design
                 </a>
               </div>
-            </div>
+            </div> -->
           </div>
         </form>
         <ul class="navbar-nav navbar-right">
@@ -199,8 +217,8 @@
             </div>
           </li>
           <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-            <img alt="image" src="../assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
-            <div class="d-sm-none d-lg-inline-block">Hi, <?php echo "name"?></div></a>
+            <img alt="image" src="../assetsd/img/avatar/avatar-1.png" onerror="this.src='<?=base_url()?>assets/img/avatar/avatar-5.png';" class="rounded-circle mr-1">
+            <div class="d-sm-none d-lg-inline-block">Hi, <?=$session[0]->fullname?></div></a>
             <div class="dropdown-menu dropdown-menu-right">
               <div class="dropdown-title">Logged in 5 min ago</div>
               <a href="features-profile.html" class="dropdown-item has-icon">
@@ -213,7 +231,7 @@
                 <i class="fas fa-cog"></i> Settings
               </a>
               <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item has-icon text-danger">
+              <a href="<?=base_url('Login/logout')?>" class="dropdown-item has-icon text-danger">
                 <i class="fas fa-sign-out-alt"></i> Logout
               </a>
             </div>
@@ -290,7 +308,7 @@
                 </ul>
             </li>
             <li><a class="nav-link" href=""><i class="fab fa-telegram-plane"></i> <span>Leave Management</span></a></li>
-            <li><a class="nav-link" href=""><i class="fas fa-bullhorn"></i> <span>Announcements</span></a></li>
+            <li><a class="nav-link" href="<?=base_url('Announcement/')?>"><i class="fas fa-bullhorn"></i> <span>Announcements</span></a></li>
             <li><a class="nav-link" href=""><i class="fas fa-database"></i> <span>Backup Database</span></a></li>
              <li><a class="nav-link" href=""><i class="fas fa-envelope"></i> <span>Private Chat </span></a></li>
             </ul>
@@ -322,77 +340,78 @@
                       <h4 class=" p-2">Dashboard</h4>
                     </div>
                   <div class="col-md-6 bg-white text-right ">
-                    <div class="p-2"><div id="txt"></div>
-                    <?php
-                      if(isset($_SESSION['clocked'])){
-                        if($_SESSION['clocked']==1){
-                          echo '<button class="btn btn-danger check_btn2" onclick="printTime(0)" d-Val="0"><i class="fas fa-sign-out-alt"></i> Checkout</button>';
-                        }else{
-                          echo '<button class="btn btn-success check_btn2 " onclick="printTime(1)" d-Val="1"><i class="fas fa-sign-in-alt"></i> Checkin</button>';
-                        }
-                      }else{
-                        echo '<button class="btn btn-success check_btn2 " onclick="printTime(1)" d-Val="1"><i class="fas fa-sign-in-alt"></i> Checkin</button>';
-                      }
-                    ?>
+                    <div class="row p-2">
+                      <div class="col-md-8 p-2 abc">
+                        <span>
+                            <?=date('l, d-M-Y')?>
+                        </span>
+                        <span id="txt"></span>
+                       <!--  <div class="row">
+                          <div class="col-md-6 text-align-right" >
+                            
+                          </div>
+                          <div class="col-md-6" >
+                            
+                          </div>
+                        </div> -->
+                        
+                      </div>
+                      <div class="col-md-4">
+                        <?php
+                          if(isset($_SESSION['clocked'])){
+                            if($_SESSION['clocked']==1){
+                              echo '<button class="btn btn-success check_btn2 chekcIn d-non" onclick="printTime(1)" d-Val="1"><i class="fas fa-sign-in-alt"></i> Checkin</button><button class="btn btn-danger check_btn2 checkOut" onclick="printTime(0)" d-Val="0"><i class="fas fa-sign-out-alt"></i> Checkout</button>';
+                            }else{
+                              echo '<button class="btn btn-success check_btn2 chekcIn" onclick="printTime(1)" d-Val="1"><i class="fas fa-sign-in-alt"></i> Checkin</button><button class="btn btn-danger check_btn2 checkOut d-non" onclick="printTime(0)" d-Val="0"><i class="fas fa-sign-out-alt"></i> Checkout</button>' ;
+                            }
+                          }else{
+                            echo '<button class="btn btn-success check_btn2 chekcIn" onclick="printTime(1)" d-Val="1"><i class="fas fa-sign-in-alt"></i> Checkin</button><button class="btn btn-danger check_btn2 checkOut d-non" onclick="printTime(0)" d-Val="0"><i class="fas fa-sign-out-alt"></i> Checkout</button>' ;
+                          }
+                          if(count($attendaceData)>0){
+
+                          }else{
+
+                          }
+                        ?>
+                        
+                      </div>
+                    </div>
                     
-                    
-                   </div>
                   </div>
               </div>
   <script type="text/javascript">
    
     $(document).on('click','.check_btn2',function(){
-       var d_time=document.getElementById('txt').innerHTML;
+      var d_time=document.getElementById('txt').innerHTML;
       var elem=$(this);
       var id=elem.attr('d-Val');
       var type;
       if(id==1){
         type=1;
-        console.log("Check In: ");
+        // console.log("Check In: ");
       }else{
-        console.log("Check Out: ");
+        // console.log("Check Out: ");
         type=0;
       }
-
-
-       if(id==1){
-                // type=1;
-                elem.attr('d-Val','0');
-                elem.addClass('btn-danger');
-                elem.removeClass('btn-success');
-                // console.log("Check In: ");
+      $.ajax({
+       url:"<?=base_url('Attendance/markMyAttendance')?>",
+        type:"post",
+        data:{d_time:d_time,type:type},
+       success:function(response)
+           {
+             // console.log(response);
+             response=JSON.parse(response);
+             if(response.code==1){
+              if(id==1){
+                $('.chekcIn').hide();
+                $('.checkOut').show();
               }else{
-                elem.attr('d-Val','1');
-                elem.removeClass('btn-danger');
-                elem.addClass('btn-success');
-                // console.log("Check Out: ");
-                // type=0;
+                $('.checkOut').hide();
+                $('.chekcIn').show();
               }
-      // $.ajax({
-      //  url:"<?=base_url('Attendance/markMyAttendance')?>",
-      //   type:"post",
-      //   data:{d_time:d_time,type:type},
-      //  success:function(response)
-      //      {
-      //        // console.log(response);
-      //        response=JSON.parse(response);
-      //        if(response.code==1){
-      //         if(id==1){
-      //           // type=1;
-      //           elem.attr('d-Val','0');
-      //           elem.addClass('btn-danger');
-      //           elem.removeClass('btn-success');
-      //           // console.log("Check In: ");
-      //         }else{
-      //           elem.attr('d-Val','1');
-      //           elem.removeClass('btn-danger');
-      //           elem.addClass('btn-success');
-      //           // console.log("Check Out: ");
-      //           // type=0;
-      //         }
-      //        }
-      //      }
-      // })
+             }
+           }
+      })
     });
 		function printTime(id){
       // var d_time=document.getElementById('txt').innerHTML;

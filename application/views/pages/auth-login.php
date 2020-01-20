@@ -36,8 +36,8 @@
               <div class="card-body">
                 <form method="POST" action="<?=base_url('Login/validateLogin')?>" class="needs-validation" novalidate="">
                   <div class="form-group">
-                    <label for="email">Email</label>
-                    <input id="email" type="email" class="form-control" name="user_name" tabindex="1" required autofocus>
+                    <label for="username">Username</label>
+                    <input id="email" type="text" class="form-control" name="user_name" tabindex="1" required autofocus>
                     <div class="invalid-feedback">
                       Please fill in your email
                     </div>
