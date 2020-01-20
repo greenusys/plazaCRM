@@ -48,6 +48,25 @@ class Payroll_Model extends MY_Model
         return $result;
     }
 
+    public function fetch_departments_data($id){
+        $this->db->select('*');
+        $this->db->from('tbl_designations');
+        $this->db->join('tbl_account_details', 'tbl_designations.designations_id=tbl_account_details.designations_id');
+        $this->db->join('tbl_employee_payroll','tbl_employee_payroll.user_id = tbl_account_details.user_id','left');
+        $this->db->where('tbl_designations.departments_id', $id);
+        $query_result = $this->db->get();
+        $result = $query_result->result();
+        return $result;
+    }
+
+    public function fetch_departments(){
+        $this->db->select('*');
+        $this->db->from('tbl_departments');
+        $query_result = $this->db->get();
+        $result = $query_result->result();
+        return $result;
+    }
+
     public function fetch_hourly_templates(){
         $this->db->select('*');
         $this->db->from('tbl_hourly_rate');

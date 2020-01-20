@@ -28,10 +28,29 @@ class Payroll extends CI_Controller {
 	}
 	public function manageSalary()
 	{
+		$data['departments']=$this->Payroll_model->fetch_departments();
 		$this->load->view('layout/header');
-		$this->load->view("pages/manage_salary");
+		$this->load->view("pages/manage_salary",$data);
 		$this->load->view("layout/footer");
 	}
+
+	public function fetch_department_data(){
+		$dept_id=$this->uri->segment(3);
+		$data['department']=$this->Payroll_model->fetch_departments_data($dept_id);
+		$data['hourly_grade']=$this->Payroll_model->fetch_hourly_templates();
+		$data['monthly_grade']=$this->Payroll_model->fetch_templates();
+		$data['departments']=$this->Payroll_model->fetch_departments();
+		$this->load->view('layout/header');
+		$this->load->view("pages/manage_salary_num",$data);
+		$this->load->view("layout/footer");
+		// if(count($data)>0){
+		// 	die(json_encode(array('status' =>'1' , 'data'=>$data ,'hourly'=>$hourly_grade,'monthly'=>$monthly_grade)));
+		// }
+		// else{
+		// 	die(json_encode(array('status' => '0' , 'data'=>'no data')));
+		// }
+	}
+
 	public function empSalary()
 	{
 		$this->load->view('layout/header');
