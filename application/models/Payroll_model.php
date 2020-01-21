@@ -45,14 +45,30 @@ class Payroll_Model extends MY_Model
         $this->db->from('tbl_salary_template');
         $query_result = $this->db->get();
         $result = $query_result->result();
+        if(count($result)>0){
+            return $result;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function check_user_payment($id,$date){
+        $this->db->select('*');
+        $this->db->from('tbl_salary_payment');
+        $this->db->where('user_id',$id);
+        $this->db->where('payment_month',$date);
+        $query_result = $this->db->get();
+        $result = $query_result->result();
         return $result;
     }
 
     public function fetch_departments_data($id){
-        $this->db->select('*');
+        $this->db->select('*,tbl_account_details.user_id as user');
         $this->db->from('tbl_designations');
         $this->db->join('tbl_account_details', 'tbl_designations.designations_id=tbl_account_details.designations_id');
         $this->db->join('tbl_employee_payroll','tbl_employee_payroll.user_id = tbl_account_details.user_id','left');
+        $this->db->join('tbl_salary_template','tbl_employee_payroll.salary_template_id=tbl_salary_template.salary_template_id','left');
         $this->db->where('tbl_designations.departments_id', $id);
         $query_result = $this->db->get();
         $result = $query_result->result();
