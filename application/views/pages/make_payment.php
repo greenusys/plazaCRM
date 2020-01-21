@@ -1,40 +1,19 @@
- 
-      <!-- Main Content -->
-     <!--  <div class="main-content">
-        <section class="section">
-     
-              <div class="row">
-                    <div class="col-md-6 bg-white">
-                      <h4 class=" p-2">Make Payment</h4>
-                    </div>
-                  <div class="col-md-6 bg-white text-right ">
-                    <div class="p-2">date
-                <button class="btn btn-danger d-none check_btn"><i class="fas fa-sign-out-alt"></i> Checkout</button>
-                     <button class="btn btn-success check_btn "><i class="fas fa-sign-in-alt"></i> Checkin</button>
-                   </div>
-                  </div>
-              </div>
-              -->
-        
           <div class="row mt-4">
            <div class="col-lg-12">
               <div class="card">
-          
-     <!--            <ul class="nav nav-tabs nav-justified md-tabs indigo col-md-5" id="myTabJust" role="tablist">
-                  <li class="nav-item">
-                    <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
-                      aria-selected="true">Manage Account</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
-                      aria-selected="false">New Account</a>
-                  </li>
-                  
-  
-                </ul> -->
-             <!--    <div class="tab-content card pt-5" id="myTabContentJust"> -->
-
               <style type="text/css">
+                .label-danger {
+                    background-color: red;
+                }
+                .label-success {
+                    background-color: #27c24c;
+                }
+                .label {
+                    display: inline;
+                    padding: .2em .6em .3em;
+                    font-size: 75%;
+                    color: #fff;
+                }
                 .chkbox_ht{
                   height: 23px;
                   width: 23px;
@@ -52,26 +31,29 @@
 }
               </style>
                   <div class=" p-4" >
-                    <form method="">
+                    <form method="POST" action="<?=base_url()?>Payroll/makePayment">
                       <div class="row">
                         <div class="col-md-4 text-right pt-1">
                           <label class="form-group">Select Department<sup class="text-danger">*</sup></label>
                           <br>
                           <br>
                           <label>Select Month<sup class="text-danger">*</sup></label>
-
                         </div>
                         <div class="col-md-4">
                           <div class="form-group"> 
-                            <select  name="imptask_status" class="form-control " id="imptask_status" style="width: 100%" required="">
-                              <option value="" selected="">Select Department</option>
-                              <option value="">IT / Collaborative</option>
-                              <option value="">HR</option>
-                              <option value="">IT</option>
+                            <select  name="dept_id" class="form-control " id="imptask_status" style="width: 100%" required="">
+                              <option value="">Select Department</option>
+                              <?php
+                              foreach ($departments as $dept) {
+                              ?>
+                              <option value="<?=$dept->departments_id?>"><?=$dept->deptname?></option>
+                              <?php
+                              }
+                              ?>
                             </select> 
                           </div>
                           <div class='input-group date form-group' id='datetimepicker10'>
-                              <input type='text' class="form-control" />
+                              <input type='text' name="sal_date" class="form-control" />
                                 <span class="input-group-addon">
                                   <span ><i class="fa fa-calendar"></i></span>
                               </span>
@@ -86,7 +68,7 @@
                           $(function () {
                               $('#datetimepicker10').datetimepicker({
                                   viewMode: 'years',
-                                  format: 'MM/YYYY'
+                                  format: 'YYYY-MM'
                               });
                           });
                       </script>
@@ -107,42 +89,55 @@
                                       <th>Basic Salary</th>
                                       <th>Net Salary</th>
                                       <th>Details</th>
-                                      <th>  Status </th>
+                                      <th> Status </th>
                                       <th>Action</th>
                                   </tr>
                               </thead>
                               <tbody>
-                            
+                                <?php
+                                foreach ($table_data as $main_data) {
+                                ?>
                                     <tr>
-                                      <td>Tiger Nixon</td>
-                                      <td>2011/04/25</td>
-                                      <td>Edinburgh</td>
-                                      <td>Edinburgh</td>
-                                      <td>Tiger Nixon</td>
-                                      <td>2011/04/25</td>
-                                      <td>Edinburgh</td>
-                                      <td>Edinburgh</td>
+                                      <td><?=$main_data->employment_id?></td>
+                                      <td><?=$main_data->fullname?></td>
+                                      <td><?php
+                                      if($main_data->salary_grade==""){
+                                        echo "Salary Not Set Yet";
+                                      }
+                                      else{
+                                        echo $main_data->salary_grade;
+                                      }
+                                      ?></td>
+                                      <td><?=$main_data->basic_salary?></td>
+                                      <td><?=$main_data->basic_salary?></td>
+                                      <td><?=$main_data->fullname?></td>
+                                      <td>
+                                        <?php
+                                        if($main_data->salary_grade!=""){
+                                          if($main_data->salary_paid=="true"){
+                                            echo "<span class='label label-success'>Paid</span>";
+                                          }
+                                          else{
+                                            echo "<span class='label label-danger'>Unpaid</span>";
+                                          }
+                                        }
+                                        ?>
+                                        </td>
+                                      <td><?php
+                                      if ($main_data->salary_paid=="true") {
+                                        echo "Generate Payslip";
+                                      }
+                                      elseif ($main_data->salary_grade!="") {
+                                        echo "Make Payment";
+                                      }
+                                      else{
+                                        echo "Set Salary";
+                                      }
+                                      ?></td>
                                   </tr>
-                                     <tr>
-                                      <td>Tiger Nixon</td>
-                                      <td>2011/04/25</td>
-                                      <td>Edinburgh</td>
-                                      <td>Edinburgh</td>
-                                      <td>Tiger Nixon</td>
-                                      <td>2011/04/25</td>
-                                      <td>Edinburgh</td>
-                                      <td>Edinburgh</td>
-                                  </tr>
-                                     <tr>
-                                      <td>Tiger Nixon</td>
-                                      <td>2011/04/25</td>
-                                      <td>Edinburgh</td>
-                                      <td>Edinburgh</td>
-                                      <td>Tiger Nixon</td>
-                                      <td>2011/04/25</td>
-                                      <td>Edinburgh</td>
-                                      <td>Edinburgh</td>
-                                  </tr>
+                                  <?php
+                                  }
+                                  ?>
                               </tbody>
                               <tfoot>
                                   <tr>
@@ -154,7 +149,6 @@
                                       <th>Details</th>
                                       <th>  Status </th>
                                       <th>Action</th>
-
                                   </tr>
                               </tfoot>
                           </table>

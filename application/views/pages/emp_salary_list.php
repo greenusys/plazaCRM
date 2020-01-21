@@ -39,12 +39,15 @@
                             </tr>
                         </thead>
                         <tbody>
+                          <?php
+                          foreach ($employee as $emp_data) {
+                          ?>
                             <tr>
-                              <td>Tittle</td>
-                              <td>61</td>
-                                <td>System Architect</td>
-                                <td>$320,800</td>
-                                <td>2011/04/25</td>
+                              <td><?=$emp_data->employment_id?></td>
+                              <td><?=$emp_data->fullname?></td>
+                                <td>TO BE CHANGED</td>
+                                <td><?=$emp_data->basic_salary?></td>
+                                <td><?=$emp_data->overtime_salary?></td>
                                 <td>
                                     <div class="">
                                       <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
@@ -53,27 +56,10 @@
                                     </div>
 
                                 </td>
-                               
-                              
-                            </tr>
-                            
-                            <tr>
-                              <td>Tittle</td>
-                              <td>61</td>
-                                <td>System Architect</td>
-                                <td>$320,800</td>
-                                <td>2011/04/25</td>
-                                <td>
-                                    <div class="">
-                                      <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                      <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                       <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                    </div>
-
-                                </td>
-                                
-                            </tr>
-                              
+                            </tr>  
+                            <?php
+                            }
+                            ?>                 
                         </tbody>
                         <tfoot>
                           <tr>

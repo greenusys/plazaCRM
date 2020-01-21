@@ -43,18 +43,13 @@ class Payroll extends CI_Controller {
 		$this->load->view('layout/header');
 		$this->load->view("pages/manage_salary_num",$data);
 		$this->load->view("layout/footer");
-		// if(count($data)>0){
-		// 	die(json_encode(array('status' =>'1' , 'data'=>$data ,'hourly'=>$hourly_grade,'monthly'=>$monthly_grade)));
-		// }
-		// else{
-		// 	die(json_encode(array('status' => '0' , 'data'=>'no data')));
-		// }
 	}
 
 	public function empSalary()
 	{
+		$data['employee']=$this->Payroll_model->get_emp_salary_list();
 		$this->load->view('layout/header');
-		$this->load->view("pages/emp_salary_list");
+		$this->load->view("pages/emp_salary_list",$data);
 		$this->load->view("layout/footer");
 	}
 
@@ -104,9 +99,35 @@ class Payroll extends CI_Controller {
 
 	public function makePayment()
 	{
+		if (isset($_POST['dept_id']) && isset($_POST['sal_date'])) {
+		$date=$_POST['sal_date'];
+		$dept_id=$_POST['dept_id'];
+		$department=$this->Payroll_model->fetch_departments_data($dept_id);
+		foreach ($department as $dept) {
+			$user_id=$dept->user;
+			$check_payment_status=$this->Payroll_model->check_user_payment($user_id,$date);
+			if(count($check_payment_status)>0){
+				$dept->salary_paid="true";
+			}
+			else{
+				$dept->salary_paid="false";
+			}
+			$arr[]=$dept;
+		}
+		$data['table_data']=$arr;
+		$data['departments']=$this->Payroll_model->fetch_departments();
+		// print_r($data);
 		$this->load->view('layout/header');
-		$this->load->view("pages/make_payment");
+		$this->load->view("pages/make_payment",$data);
 		$this->load->view("layout/footer");
+		}
+		else{
+		$data['table_data']=array();
+		$data['departments']=$this->Payroll_model->fetch_departments();
+		$this->load->view('layout/header');
+		$this->load->view("pages/make_payment",$data);
+		$this->load->view("layout/footer");
+		}
 	}
 	public function generatePaySlip()
 	{
