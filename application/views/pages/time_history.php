@@ -25,7 +25,7 @@
                                       foreach($Employee as $empD){
                                         // /print_r($empD);
                                         ?>
-                                           <option value="<?=$empD->user_id?>"><?=$empD->full_name?> (<?=$empD->designations ?>) </option>   
+                                           <option value="<?=$empD->user_id?>"><?=$empD->fullname?> (<?=$empD->designations ?>) </option>   
                                         <?php
                                       }
                                     ?>
