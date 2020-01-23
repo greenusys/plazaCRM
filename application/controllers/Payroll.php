@@ -162,7 +162,9 @@ class Payroll extends CI_Controller {
 	}
 	public function employeeAward()
 	{
-		echo 'employeeAward';
+		$this->load->view('layout/header');
+		$this->load->view("pages/employee_award");
+		$this->load->view("layout/footer");
 	}
 	
 	

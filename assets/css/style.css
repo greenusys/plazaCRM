@@ -3240,3 +3240,6 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
     color: #444;
     line-height: 39px !important;
 }      
+.input-group-addon{
+  padding: 10px !important; 
+}

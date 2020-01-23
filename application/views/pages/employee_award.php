@@ -38,7 +38,7 @@
           }
           .card .card-header .btn {
     margin-top: 1px;
-    padding: 4px 12px;
+    padding: 0px 12px;
 }
        /*   h1 {
               margin-left: 15px;
@@ -89,6 +89,9 @@
     background-color: #7266ba;
     border-color: transparent;
 }
+.margl_65{
+  margin-left: -65px;
+}
         </style>
         <script type="text/javascript">
           $(document).on("click","#advn_salry",function(){
@@ -106,6 +109,8 @@
                $("#advn_salry").show();
           })
         </script>
+
+        <div class="first_div" id="advn_div">
         <div class="row mt-5">
           <div class="col-md-3">
                  <div class="yetr__">
@@ -124,16 +129,18 @@
                 </div>
               </div>
               <div class="col-md-7">
-                <div class="mt-3"><a href="#" class="text-danger" data-toggle="modal" data-target="#exampleModal" data-toggle="tooltip" ><i class="fas fa-plus"></i> New Overtime</a></div>
+                <div class="mt-3">
+                  <a href="#" class="text-danger" data-toggle="modal" data-target="#exampleModal" data-toggle="tooltip" ><i class="fas fa-plus"></i> Give Award</a>
+                </div>
               </div>
-          <!--     <div class="col-md-2">
+              <div class="col-md-2">
                 <div class="text-right">
                   <button class="btn btn-info" id="advn_salry"><i class="fas fa-undo-alt"></i> Switch</button>
-                  <button class="btn btn-purple" style="display:none" id="advn_salry_reprt"><i class="fas fa-undo-alt"></i> Switch</button>
+                  <!-- <button class="btn btn-purple" style="display:none" id="advn_salry_reprt"><i class="fas fa-undo-alt"></i> Switch</button> -->
                 </div>
-              </div> -->
+              </div>
             </div>
-          <div class="row " id="advn_div">
+          <div class="row " >
          
               <!-- <div class="card"></div> -->
               <div class="col-md-3">
@@ -253,7 +260,99 @@
               </div>
             
           </div>
-          
+        </div>
+          <div style="display: none" class="mt-5" id="advn_sar_reprt_div">
+            <div role="tabpanel" class="row">
+              <div class="col-sm-12">
+                <div class="card p-3">
+                       <div class="card-header row border-bottom py-1">
+                        <div class="col-md-6">
+                          <span><i class="fas fa-calendar-alt"></i> <strong> Award List</strong></span> 
+                         </div>
+                          <div class="col-md-6 text-right">
+                            <button  class=" btn btn-danger rounded " data-toggle="modal" data-target="#exampleModal" data-toggle="tooltip" ><i class="fas fa-plus"></i> Give Award</button>
+                            <button class="btn btn-purple rounded " id="advn_salry_reprt"><i class="fas fa-undo-alt"></i> Switch</button>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-info rounded dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  <i class="fas fa-search"></i>
+                                </button>
+                                <div class="margl_65 dropdown-menu">
+                                  <a class="dropdown-item" href="#">Action</a>
+                                  <a class="dropdown-item" href="#">Another action</a>
+                                  <a class="dropdown-item" href="#">Something else here</a>
+                                  <div class="dropdown-divider"></div>
+                                  <a class="dropdown-item" href="#">Separated link</a>
+                                </div>
+                            </div>
+                          </div>
+                      </div>
+                      <div class="p-2 pt-3 ">
+                       <table id="award_list" class="display nowrap " style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>EMP ID</th>
+                                    <th>Name</th>
+                                    <th>Amount </th>
+                                    <th>Deduct Month</th>
+                                    <th>Request Date</th>
+                                   
+                                    <th>Status </th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                          
+                                  <tr>
+                                    <td>Tiger Nixon</td>
+                                    <td>2011/04/25</td>
+                                    <td>Edinburgh</td>
+                                    <td>Edinburgh</td>
+                                    <td>Tiger Nixon</td>
+                                    <td>2011/04/25</td>
+                                    <td>Edinburgh</td>
+                             
+                                </tr>
+                                   <tr>
+                                    <td>Tiger Nixon</td>
+                                    <td>2011/04/25</td>
+                                    <td>Edinburgh</td>
+                                    <td>Edinburgh</td>
+                                    <td>Tiger Nixon</td>
+                                    <td>2011/04/25</td>
+                                    <td>Edinburgh</td>
+                             
+                                </tr>
+                                   <tr>
+                                    <td>Tiger Nixon</td>
+                                    <td>2011/04/25</td>
+                                    <td>Edinburgh</td>
+                                    <td>Edinburgh</td>
+                                    <td>Tiger Nixon</td>
+                                    <td>2011/04/25</td>
+                                    <td>Edinburgh</td>
+                                  
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>EMP ID</th>
+                                    <th>Name</th>
+                                    <th>Amount </th>
+                                    <th>Deduct Month</th>
+                                    <th>Request Date</th>
+                                    <th>Status </th>
+                                    <th>Action</th>
+
+                                </tr>
+                            </tfoot>
+                        </table>
+                      </div>
+                    </div>
+                    
+            </div>
+        </div>
+          </div>
+    
         </section>
       </div>
 
@@ -261,7 +360,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content style">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">New Overtime </h5>
+            <h5 class="modal-title" id="exampleModalLabel">Give Award</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -287,75 +386,83 @@
             <div class="form-group">
               <div class="row">
                 <div class="offset-1 col-sm-3">
-                  <label for="exampleInputEmail1">Date<sup class="text-danger">*</sup>  </label>
+                  <label for="exampleInputEmail1">Award Name <sup class="text-danger">*</sup> </label>
                 </div>
                 <div class="col-sm-6">
-                  <div class='input-group date datetimepicker1' id='datetimepicker1'>
-                      <input type='text' class="form-control" />
-                      <span class="input-group-addon ">
-                          <span ><i class="fa fa-calendar"></i></span>
-                      </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-           
-            <div class="form-group">
-              <div class="row">
-                <div class="offset-1 col-sm-3">
-                  <label for="exampleInputEmail1">Ocertime Hour <sup class="text-danger">*</sup>  </label>
-                </div>
-                <div class="col-sm-6">
-                  <div class='input-group date datetimepicker3' id='datetimepicker3'>
-                      <input type='text' class="form-control" />
-                      <span class="input-group-addon ">
-                          <span ><i class="far fa-clock "></i></span>
-                      </span>
-                  </div>
+                  <input type="text" class="form-control" id=""  placeholder="Amount" required="">
                 </div>
               </div>
             </div>
             <div class="form-group">
               <div class="row">
                 <div class="offset-1 col-sm-3">
-                  <label for="exampleInputEmail1">Notes  </label>
+                  <label for="exampleInputEmail1">Gift Item  </label>
                 </div>
                 <div class="col-sm-6">
-                  <textarea type="number" class="form-control" id=""  placeholder="Reason" rows="5"></textarea>
+                  <input type="text" class="form-control" id=""  placeholder="Amount" required="">
                 </div>
               </div>
             </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="offset-1 col-sm-3">
+                  <label for="exampleInputEmail1">Cash Price  </label>
+                </div>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id=""  placeholder="Amount" required="">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="offset-1 col-sm-3">
+                  <label for="exampleInputEmail1">Select Month <sup class="text-danger">*</sup>  </label>
+                </div>
+                <div class="col-sm-6">
+                    <div class='input-group date form-group datetimepicker10' id='datetimepicker10'>
+                        <input type='text' class="form-control" />
+                          <span class="input-group-addon">
+                            <span ><i class="fa fa-calendar"></i></span>
+                        </span>
+                     </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="offset-1 col-sm-3">
+                  <label for="exampleInputEmail1">Award Date <sup class="text-danger">*</sup>  </label>
+                </div>
+                <div class="col-sm-6">
+                    <div class='input-group date form-group datetimepicker10' id='datetimepicker10'>
+                        <input type='text' class="form-control" />
+                          <span class="input-group-addon">
+                            <span ><i class="fa fa-calendar"></i></span>
+                        </span>
+                     </div>
+                </div>
+              </div>
+            </div>
+       
           </form>
         </div>
-          <div class="modal-footer border-top-0 modal-butn">
-           <button type="button" class="btn btn-primary">Save</button>
-            <button type="button" class="btn btn-secondary">close</button>
+        <div class="modal-footer border-top-0 modal-butn">
+          <button type="button" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-secondary">close</button>
           </div>
       </div>
     </div>
   </div>
 
 
-<!-- <script type="text/javascript">
+<script type="text/javascript">
     $(function () {
         $('.datetimepicker10').datetimepicker({
             viewMode: 'years',
             format: 'MM/YYYY'
         });
     });
-</script> -->
-  <script type="text/javascript">
-      $(function () {
-          $('#datetimepicker3').datetimepicker({
-              format: 'LT'
-          });
-      });
-  </script>
-     <script type="text/javascript">
-      $(function () {
-          $('#datetimepicker1').datetimepicker();
-      });
-  </script>
+</script>
 <script>
      $(document).ready(function() {
           $(".hourly_status").select2();
@@ -363,3 +470,13 @@
           $(".monthly_status").select2();
       });
   </script>
+  <script type="text/javascript">
+  $(document).ready(function() {
+    $('#award_list').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } );
+} );
+</script>
