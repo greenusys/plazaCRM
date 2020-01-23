@@ -126,7 +126,7 @@
                           <div class='input-group date datetimepicker1' id='datetimepicker1'>
                               <input type='text' class="form-control" />
                               <span class="input-group-addon">
-                                  <span ><i class="fa fa-calendar"></i></span>
+                                  <span ><i class="far fa-clock"></i></span>
                               </span>
                           </div>
                         </div>
@@ -141,7 +141,7 @@
                           <div class='input-group date datetimepicker1' id='datetimepicker1'>
                               <input type='text' class="form-control" />
                               <span class="input-group-addon">
-                                  <span ><i class="fa fa-calendar"></i></span>
+                                  <span ><i class="far fa-clock"></i></span>
                               </span>
                           </div>
                         </div>
@@ -158,7 +158,7 @@
                           <div class='input-group date datetimepicker3' id='datetimepicker3'>
                               <input type='text' class="form-control" />
                               <span class="input-group-addon">
-                                  <span ><i class="fa fa-calendar"></i></span>
+                                  <span ><i class="far fa-clock"></i></span>
                               </span>
                           </div>
                         </div>
@@ -173,7 +173,7 @@
                           <div class='input-group date datetimepicker3' id='datetimepicker3'>
                               <input type='text' class="form-control" />
                               <span class="input-group-addon">
-                                  <span ><i class="fa fa-calendar"></i></span>
+                                  <span ><i class="far fa-clock"></i></span>
                               </span>
                           </div>
                         </div>

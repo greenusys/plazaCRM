@@ -600,7 +600,8 @@ select.form-control:not([size]):not([multiple]) {
 
 /* 3.5 Card */
 .card {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
+  /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);*/
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.16);
   background-color: #fff;
   border-radius: 3px;
   border: none;
@@ -3052,7 +3053,7 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
       }
 .butn
 {
-    padding: 11px 19px;
+    padding: 10px 12px !important;
     margin-left: -30px;
     font-size: 14px;
     font-weight: 400;
@@ -3240,3 +3241,52 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
     color: #444;
     line-height: 39px !important;
 }      
+
+.files input {
+    outline: 2px dashed #92b0b3;
+    outline-offset: -10px;
+    -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
+    transition: outline-offset .15s ease-in-out, background-color .15s linear;
+    padding: 40px 0px 85px 35% !important;
+    text-align: center !important;
+    margin: 0;
+    width: 100% !important;
+    height: unset !important;
+}
+.files input:focus{     outline: 2px dashed #92b0b3;  outline-offset: -10px;
+    -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
+    transition: outline-offset .15s ease-in-out, background-color .15s linear; border:1px solid #92b0b3;
+ }
+.files{ position:relative}
+.files:after {  pointer-events: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 50px;
+    right: 0;
+    height: 56px;
+    content: "";
+   
+    display: block;
+    margin: 0 auto;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+.color input{ 
+  background-color:#f1f1f1;
+}
+.files:before {
+    position: absolute;
+    bottom: 0px;
+    left: 0;  pointer-events: none;
+    width: 100%;
+    right: 0;
+    height: 57px;
+    content: " or drag it here. ";
+    display: block;
+    margin: 0 auto;
+    color: #2ea591;
+    font-weight: 600;
+    text-transform: capitalize;
+    text-align: center;
+}
