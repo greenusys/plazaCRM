@@ -150,11 +150,15 @@ class Payroll extends CI_Controller {
 	}
 	public function providentFund()
 	{
-		echo 'providentFund';
+		$this->load->view('layout/header');
+		$this->load->view("pages/provident_fund");
+		$this->load->view("layout/footer");
 	}
 	public function overTime()
 	{
-		echo 'overTime';
+		$this->load->view('layout/header');
+		$this->load->view("pages/overtime");
+		$this->load->view("layout/footer");
 	}
 	public function employeeAward()
 	{

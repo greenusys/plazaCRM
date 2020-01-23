@@ -124,14 +124,14 @@
                 </div>
               </div>
               <div class="col-md-7">
-                <div class="mt-3"><a href="#" class="text-danger" data-toggle="modal" data-target="#exampleModal" data-toggle="tooltip" ><i class="fas fa-plus"></i> New Advance Salary</a></div>
+                <div class="mt-3"><a href="#" class="text-danger" data-toggle="modal" data-target="#exampleModal" data-toggle="tooltip" ><i class="fas fa-plus"></i> New Overtime</a></div>
               </div>
-              <div class="col-md-2">
+          <!--     <div class="col-md-2">
                 <div class="text-right">
                   <button class="btn btn-info" id="advn_salry"><i class="fas fa-undo-alt"></i> Switch</button>
                   <button class="btn btn-purple" style="display:none" id="advn_salry_reprt"><i class="fas fa-undo-alt"></i> Switch</button>
                 </div>
-              </div>
+              </div> -->
             </div>
           <div class="row " id="advn_div">
          
@@ -253,200 +253,7 @@
               </div>
             
           </div>
-          <div style="display: none" id="advn_sar_reprt_div">
-                    <div role="tabpanel" class="row">
-            <div class="col-sm-3">
-              <div class="card">
-                <ul class="list-unstyled nav-pills brand-pills nav-stacked" role="tablist">
-                    <li role="presentation" class="brand-nav active"><a href="#tab1"class="mnth_c border-bottom"   aria-controls="tab1" role="tab" data-toggle="tab"><strong>Advance Salary Report</strong></a></li>
-                    <li role="presentation" class="brand-nav"><a href="#tab2" class="mnth_c border-bottom"  aria-controls="tab2" role="tab" data-toggle="tab"><strong>Advance Salary</strong></a></li>
-                    <li role="presentation" class="brand-nav"><a href="#tab3" class="mnth_c border-bottom"  aria-controls="tab3" role="tab" data-toggle="tab"><strong>All Advance Salary</strong></a></li>
-                  <!--   <li role="presentation" class="brand-nav"><a href="#tab4" class="mnth_c border-bottom"  aria-controls="tab4" role="tab" data-toggle="tab">Corporate ipsum</a></li> -->
-                </ul>
-              </div>
-            </div>
-            <div class="col-sm-9">
-              <div class="card p-3">
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="tab1">
-                      <div class="card-header row border-bottom py-1">
-                        <div class="col-md-8">
-                          <span><i class="fas fa-calendar-alt"></i> <strong> Advance Salary Report</strong></span> 
-                        </div>
-
-                          <div class="col-md-4 text-right ">
-                              <ul class="list-unstyled d-flex">
-                                 
-                                    <li>
-                                      <div class='input-group date form-group datetimepicker10' id='datetimepicker10'>
-                                        <strong>Year :</strong> &nbsp;&nbsp;<input type='text' class="form-control" />
-                                          <span class="input-group-addon">
-                                            <span ><i class="fa fa-calendar"></i></span>
-                                        </span>
-                                      </div>
-                                    </li>
-                                  <li> <button class="btn btn-success rounded-0"><i class="fas fa-search"></i></button></li>
-                              </ul>
-
-                             <span> </span>   
-                           
-
-                          </div>
-                      </div>
-                        <ul class="list-unstyled ">
-                          <li class="border-bottom p-2">All Advance Salary Report</li>
-                            <li class="border-bottom p-2">My Report</li>
-                        </ul>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="tab2">
-                      <div class="p-2 pt-3 ">
-                       <table id="example" class="display nowrap " style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>EMP ID</th>
-                                    <th>Name</th>
-                                    <th>Amount </th>
-                                    <th>Deduct Month</th>
-                                    <th>Request Date</th>
-                                   
-                                    <th>Status </th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                          
-                                  <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                                    <td>Edinburgh</td>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                             
-                                </tr>
-                                   <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                                    <td>Edinburgh</td>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                             
-                                </tr>
-                                   <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                                    <td>Edinburgh</td>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                                  
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>EMP ID</th>
-                                    <th>Name</th>
-                                    <th>Amount </th>
-                                    <th>Deduct Month</th>
-                                    <th>Request Date</th>
-                                    <th>Status </th>
-                                    <th>Action</th>
-
-                                </tr>
-                            </tfoot>
-                        </table>
-                      </div>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="tab3">
-                       <div class="p-2 pt-3 ">
-                       <table id="example" class="display nowrap " style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>EMP ID</th>
-                                    <th>Name</th>
-                                    <th>Amount </th>
-                                    <th>Deduct Month</th>
-                                    <th>Request Date</th>
-                                   
-                                    <th>Status </th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                          
-                                  <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                                    <td>Edinburgh</td>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                             
-                                </tr>
-                                   <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                                    <td>Edinburgh</td>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                             
-                                </tr>
-                                   <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                                    <td>Edinburgh</td>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                                  
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>EMP ID</th>
-                                    <th>Name</th>
-                                    <th>Amount </th>
-                                    <th>Deduct Month</th>
-                                    <th>Request Date</th>
-                                    <th>Status </th>
-                                    <th>Action</th>
-
-                                </tr>
-                            </tfoot>
-                        </table>
-                      </div>
-                    </div>
-     <!--                <div role="tabpanel" class="tab-pane" id="tab4">
-                        <p>
-                            Collaboratively administrate empowered markets via plug-and-play networks. 
-                            Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer directed convergence without 
-                            revolutionary ROI.
-                        </p>
-                        <p>
-                            Efficiently unleash cross-media information without cross-media value. 
-                            Quickly maximize timely deliverables for real-time schemas. Dramatically maintain clicks-and-mortar 
-                            solutions without functional solutions.
-                        </p>
-                        <p>
-                            Completely synergize resource sucking relationships via premier niche markets. Professionally cultivate 
-                            one-to-one customer service with robust ideas. Dynamically innovate resource-leveling customer service 
-                            for state of the art customer service.
-                        </p>
-                    </div> -->
-                </div>
-              </div>
-            </div>
-        </div>
-          </div>
-    
+          
         </section>
       </div>
 
@@ -454,7 +261,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content style">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Request Advance Salary</h5>
+            <h5 class="modal-title" id="exampleModalLabel">New Overtime </h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -480,32 +287,38 @@
             <div class="form-group">
               <div class="row">
                 <div class="offset-1 col-sm-3">
-                  <label for="exampleInputEmail1">Amount <sup class="text-danger">*</sup> </label>
+                  <label for="exampleInputEmail1">Date<sup class="text-danger">*</sup>  </label>
                 </div>
                 <div class="col-sm-6">
-                  <input type="number" class="form-control" id=""  placeholder="Amount" required="">
+                  <div class='input-group date datetimepicker1' id='datetimepicker1'>
+                      <input type='text' class="form-control" />
+                      <span class="input-group-addon ">
+                          <span ><i class="fa fa-calendar pt-2"></i></span>
+                      </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+           
+            <div class="form-group">
+              <div class="row">
+                <div class="offset-1 col-sm-3">
+                  <label for="exampleInputEmail1">Ocertime Hour <sup class="text-danger">*</sup>  </label>
+                </div>
+                <div class="col-sm-6">
+                  <div class='input-group date datetimepicker3' id='datetimepicker3'>
+                      <input type='text' class="form-control" />
+                      <span class="input-group-addon ">
+                          <span ><i class="far fa-clock pt-2"></i></span>
+                      </span>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="form-group">
               <div class="row">
                 <div class="offset-1 col-sm-3">
-                  <label for="exampleInputEmail1">Deduct Month <sup class="text-danger">*</sup>  </label>
-                </div>
-                <div class="col-sm-6">
-                    <div class='input-group date form-group datetimepicker10' id='datetimepicker10'>
-                        <input type='text' class="form-control" />
-                          <span class="input-group-addon">
-                            <span ><i class="fa fa-calendar"></i></span>
-                        </span>
-                     </div>
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="row">
-                <div class="offset-1 col-sm-3">
-                  <label for="exampleInputEmail1">Reason  </label>
+                  <label for="exampleInputEmail1">Notes  </label>
                 </div>
                 <div class="col-sm-6">
                   <textarea type="number" class="form-control" id=""  placeholder="Reason" rows="5"></textarea>
@@ -514,23 +327,35 @@
             </div>
           </form>
         </div>
-        <div class="modal-footer border-top-0 modal-butn">
-          <button type="button" class="btn btn-primary">Save</button>
-          <button type="button" class="btn btn-secondary">close</button>
+          <div class="modal-footer border-top-0 modal-butn">
+           <button type="button" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-secondary">close</button>
           </div>
       </div>
     </div>
   </div>
 
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     $(function () {
         $('.datetimepicker10').datetimepicker({
             viewMode: 'years',
             format: 'MM/YYYY'
         });
     });
-</script>
+</script> -->
+  <script type="text/javascript">
+      $(function () {
+          $('#datetimepicker3').datetimepicker({
+              format: 'LT'
+          });
+      });
+  </script>
+     <script type="text/javascript">
+      $(function () {
+          $('#datetimepicker1').datetimepicker();
+      });
+  </script>
 <script>
      $(document).ready(function() {
           $(".hourly_status").select2();
