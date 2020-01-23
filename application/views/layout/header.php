@@ -114,9 +114,6 @@ $myId=$session[0]->user_id;
       font-size: 16px;
       font-weight: bold;
     }
-    .margl-130{
-      margin-left: -130px;
-    }
   </style>
 </head>
 
@@ -196,7 +193,7 @@ $myId=$session[0]->user_id;
         <ul class="navbar-nav navbar-right">
           
           <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
-            <div class="dropdown-menu dropdown-list dropdown-menu-right margl-130">
+            <div class="dropdown-menu dropdown-list dropdown-menu-right">
               <div class="dropdown-header">Notifications
                 <div class="float-right">
                   <a href="#">Mark All As Read</a>
@@ -292,13 +289,13 @@ $myId=$session[0]->user_id;
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fab fa-dribbble"></i> <span>Transaction</span></a>
                 <ul class="dropdown-menu">
-                  <li><a class="nav-link" href="<?=base_url('Transaction/expense')?>"><span> <i class="far fa-circle"></i></span>Expense</a></li>
-                  <li><a class="nav-link" href="<?=base_url('Transaction/deposit')?>"><span><i class="far fa-circle"></i></span>Deposit</a></li>
-                  <li><a class="nav-link" href="<?=base_url('Transaction/transfer')?>"><span><i class="far fa-circle"></i></span>Transfer</a></li>
-                  <li><a class="nav-link" href="<?=base_url('Transaction/TransactionReport')?>"><span><i class="far fa-circle"></i></span>Transaction Report</a></li>
-                  <li><a class="nav-link" href="<?=base_url('Transaction/TransferReport')?>"><span><i class="far fa-circle"></i></span>Transfer Report</a></li>
-                  <li><a class="nav-link" href="<?=base_url('Transaction/overTime')?>"><span><i class="far fa-circle"></i></span>Balance Sheet</a></li>
-                   <li><a class="nav-link" href="<?=base_url('Transaction/BankAndCash')?>"><span><i class="far fa-money-bill-alt"></i></span>Bank & Cash</a></li>
+                  <li><a class="nav-link" href=""><span> <i class="far fa-circle"></i></span>Expense</a></li>
+                  <li><a class="nav-link" href=""><span><i class="far fa-circle"></i></span>Deposit</a></li>
+                  <li><a class="nav-link" href=""><span><i class="far fa-circle"></i></span>Transfer</a></li>
+                  <li><a class="nav-link" href=""><span><i class="far fa-circle"></i></span>Transaction Report</a></li>
+                  <li><a class="nav-link" href=""><span><i class="far fa-circle"></i></span>Transfer Report</a></li>
+                  <li><a class="nav-link" href=""><span><i class="far fa-circle"></i></span>Balance Sheet</a></li>
+                   <li><a class="nav-link" href=""><span><i class="far fa-money-bill-alt"></i></span>Bank & Cash</a></li>
                 </ul>
             </li>
             <li class="nav-item dropdown">

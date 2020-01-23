@@ -129,17 +129,10 @@ class Payroll extends CI_Controller {
 		$this->load->view("layout/footer");
 		}
 	}
-
-	public function makePaymentHistory(){
-		$this->load->view('layout/header');
-		$this->load->view("pages/make_payment_history.php");
-		$this->load->view("layout/footer");
-	}
-
 	public function generatePaySlip()
 	{
 		$this->load->view('layout/header');
-		$this->load->view("pages/generate_payslip");
+		$this->load->view("pages/generate_payslip.php");
 		$this->load->view("layout/footer");
 	}
 	public function payrollSummary()
@@ -157,21 +150,15 @@ class Payroll extends CI_Controller {
 	}
 	public function providentFund()
 	{
-		$this->load->view('layout/header');
-		$this->load->view("pages/provident_fund");
-		$this->load->view("layout/footer");
+		echo 'providentFund';
 	}
 	public function overTime()
 	{
-		$this->load->view('layout/header');
-		$this->load->view("pages/overtime");
-		$this->load->view("layout/footer");
+		echo 'overTime';
 	}
 	public function employeeAward()
 	{
-		$this->load->view('layout/header');
-		$this->load->view("pages/provident_fund");
-		$this->load->view("layout/footer");
+		echo 'employeeAward';
 	}
 	
 	
