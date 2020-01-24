@@ -315,9 +315,15 @@ $myId=$session[0]->user_id;
                 
                 </ul>
             </li>
+<<<<<<< HEAD
+            <li><a class="nav-link" href=""><i class="fab fa-telegram-plane"></i> <span>Leave Management</span></a></li>
+            <li><a class="nav-link" href="<?=base_url('Announcement/')?>"><i class="fas fa-bullhorn"></i> <span>Announcements</span></a></li>
+            <li><a class="nav-link" href="<?=base_url('Backupdatabase/backupDatabase')?>"><i class="fas fa-database"></i> <span>Backup Database</span></a></li>
+=======
             <li><a class="nav-link" href="<?=base_url('Leavemanagement/index')?>"><i class="fab fa-telegram-plane"></i> <span>Leave Management</span> <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
             <li><a class="nav-link" href="<?=base_url('Announcement/')?>"><i class="fas fa-bullhorn"></i> <span>Announcements </span>  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
             <li><a class="nav-link" href=""><i class="fas fa-database"></i> <span>Backup Database</span></a></li>
+>>>>>>> 5b004b83d71ed2a5c757089baba38689aa7b2c84
              <li><a class="nav-link" href=""><i class="fas fa-envelope"></i> <span>Private Chat </span></a></li>
             </ul>
         </aside>

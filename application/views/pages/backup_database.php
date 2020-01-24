@@ -111,20 +111,7 @@
 </style>
 
 <!-- Main Content -->
-<div class="main-content">
-    <section class="section">
 
-        <div class="row">
-            <div class="col-md-6 bg-white">
-                <h4 class=" p-2">Announcements</h4>
-            </div>
-            <div class="col-md-6 bg-white text-right ">
-                <div class="p-2">date
-                    <button class="btn btn-danger d-none check_btn"><i class="fas fa-sign-out-alt"></i> Checkout</button>
-                    <button class="btn btn-success check_btn "><i class="fas fa-sign-in-alt"></i> Checkin</button>
-                </div>
-            </div>
-        </div>
 
         <div class="row mt-4">
             <div class="col-md-12">
@@ -133,7 +120,7 @@
         <div class="col-md-3"> <!-- required for floating -->
           <!-- Nav tabs -->
           <ul class="nav nav-tabs tabs-left sideways bg-white">
-            <li class="w-100 "><a href="#home-v" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Company Details</a></li>
+            <li class="w-100 active"><a href="#home-v" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Company Details</a></li>
             <li class="w-100"> <a href="#profile-v" data-toggle="tab"><i class="fas fa-desktop" aria-hidden="true"></i> System Settings</a></li>
             <li class="w-100"><a href="#email_set" data-toggle="tab"><i class="fas fa-envelope" aria-hidden="true"></i> Email Settings</a></li>
             <li class="w-100"><a href="#sms_set" data-toggle="tab"><i class="fas fa-envelope" aria-hidden="true"></i> SMS Settings</a></li>
@@ -172,7 +159,142 @@
         <div class="col-md-9">
           <!-- Tab panes -->
           <div class="tab-content">
-            <div class="tab-pane bg-white active" id="home-v">Home Tab.</div>
+            <div class="tab-pane bg-white active" id="home-v">
+               <div class="container bg-white card ">
+      <h6 class="mt">Company Details</h6>
+    <div class="line mt-2"></div>
+    <div class="row pd-4 mt-4">
+        <div class="offset-1 col-sm-9">
+            <form>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">Company Name <span class="text-danger">*</span> </label>
+              </div>
+              <div class="col-sm-9">
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Tester">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">Legal Name  <span class="text-danger">*</span> </label>
+              </div>
+              <div class="col-sm-9">
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Tester">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">Contact Person  </label>
+              </div>
+              <div class="col-sm-9">
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Tester">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class=" col-sm-3">
+                <label for="exampleInputEmail1">Company Address <span class="text-danger">*</span> </label>
+              </div>
+              <div class="col-sm-9">
+                <textarea class="form-control" name="short_note"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+              <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">Country</label>
+              </div>
+              <div class="col-sm-9">
+                <div class="input-group">
+                                    <select name="client_id" class="form-control" id="customer_group">
+                                        <option value="0">Selected Country</option>
+                                        <option value="5" >France </option>
+                                        <option value="4" >Other Countries</option>
+                                        <option value="3" >Afganistan</option>
+                                        <option value="2" >Aringland Islands</option>
+                                        <option value="1" >Albania</option>
+                                    </select>
+                              </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">City </label>
+              </div>
+              <div class="col-sm-9">
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Dehradun">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">Zip Code </label>
+              </div>
+              <div class="col-sm-4">
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="28">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">Company Phone</label>
+              </div>
+              <div class="col-sm-4">
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">Company Email</label>
+              </div>
+              <div class="col-sm-9">
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="info@greenusys.com">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">Company Website </label>
+              </div>
+              <div class="col-sm-9">
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" >
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">Company VAT</label>
+              </div>
+              <div class="col-sm-9">
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" >
+              </div>
+            </div>
+          </div>
+            </form>
+      </div>
+    </div>
+    <div class="row mt-3">
+        <div class="offset-3 col-md-3">
+         <button type="button" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+            </div>
             <div class="tab-pane" id="profile-v">Profile Tab.</div>
             <div class="tab-pane" id="messages-v">Messages Tab.</div>
             <div class="tab-pane" id="settings-v">Settings Tab.</div>
