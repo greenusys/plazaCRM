@@ -41,53 +41,59 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Tittle</td>
+                                    <?php
+                                    foreach($fetch_leave_data as $leaseAllData)
+                                    {
+                                        // print_r($leaseAllData);
+                                    ?>
+                                        <tr>
+                                            <td><?=$leaseAllData->fullname?></td>
+                                            <td><?=$leaseAllData->leave_category?></td>
+                                            <td><?=$leaseAllData->leave_start_date.' '.$leaseAllData->leave_end_date?></td>
+                                            
+                                            <td><?=$leaseAllData->hours?></td>
+                                            <?php
+                                            if($leaseAllData->application_status==1)
+                                            {?>
+                                              <td>Pending</td>
+                                              <?php
+                                            }
+                                            elseif($leaseAllData->application_status==2)
+                                            {?>
+                                            <td>Accepted</td>
+                                            <?php 
+                                            }
+                                            else
+                                            {?>
+                                                <td>Rejected</td>
+                                                <?php
+                                            }?>
+                                          
+                                            <td>
+                                                <div class="">
+                                                    <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                                    <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
+                                                    <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
+                                                </div>
+    
+                                            </td>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>
 
-                                        <td>System Architect</td>
-                                        <td>$320,800</td>
-                                        <td>2011/04/25</td>
-                                        <td>61</td>
-
-                                        <td>
-                                            <div class="">
-                                                <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                                <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                                <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                            </div>
-
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Tittle</td>
-
-                                        <td>System Architect</td>
-                                        <td>$320,800</td>
-                                        <td>2011/04/25</td>
-                                        <td>61</td>
-
-                                        <td>
-                                            <div class="">
-                                                <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                                <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                                <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                            </div>
-
-                                        </td>
-                                    </tr>
-
+                                  
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Leave Category</th>
-                                        <th>Date</th>
-                                        <th>Duration</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </tfoot>
+                                <!--<tfoot>-->
+                                <!--    <tr>-->
+                                <!--        <th>Name</th>-->
+                                <!--        <th>Leave Category</th>-->
+                                <!--        <th>Date</th>-->
+                                <!--        <th>Duration</th>-->
+                                <!--        <th>Status</th>-->
+                                <!--        <th>Action</th>-->
+                                <!--    </tr>-->
+                                <!--</tfoot>-->
                             </table>
                         </div>
                         <div class="tab-pane fade px-4" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
@@ -221,25 +227,30 @@
                         <div class="tab-pane fade show px-4" id="apply_leave" role="tabpanel" aria-labelledby="apply_leave">
                             <div class="row">
                                 <div class="offset-1 col-sm-7 cl-md-7 col-lg-7">
-                                    <form>
+                                    <form action="<?=base_url('Leavemanagement/addleaveapplication')?>" method="post" enctype="multipart/form-data">
 
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-sm-3">
-                                                    <label for="exampleInputEmail1">Select Users <span class="text-danger">*</span> </label>
+                                                    <label for="exampleInputEmail1">Select Client <span class="text-danger">*</span> </label>
                                                 </div>
                                                 <div class="col-sm-8">
                                                     <div class="input-group">
-                                                        <select name="state" class="form-control" id="e1" style="width: 100%">
-                                                            <option value="">Select Client</option>
-                                                            <option value="1">GMAP</option>
-
+                                                        <select name="user_id" class="form-control" id="e1" style="width: 100%">
+                                                            
+                                                            <option value="0">Select Client</option>
+                                                            <?php
+                                                            foreach($fetch_users_data as $usersdata)
+                                                            {
+                                                            ?>
+                                                        <option  value="<?=$usersdata->user_id?>"><?=$usersdata->fullname?></option>';
+                                                        <?php
+                                                            }
+                                                            ?>
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-1">
-                                                    <button type="button" class="btn btn-light butn" data-toggle="modal" data-target="#myModal" title="New Client"><i class="fa fa-plus"></i></button>
-                                                </div>
+                                               
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -247,16 +258,26 @@
                                                 <div class="col-sm-3">
                                                     <label for="e2">Leave Category </label>
                                                 </div>
-                                                <div class="col-sm-9">
+                                                <div class="col-sm-8">
                                                     <div class="input-group">
-                                                        <select name="client_id" class="form-control" style="width: 100%" id="e2">
-                                                            <option value="">None</option>
-                                                            <option value="1">Opportunities</option>
-
+                                                        <select name="leave_category_id" class="form-control" style="width: 100%" id="e2">
+                                                            <option value="0">Leave Category</option>
+                                                           <?php
+                                                           foreach($fetch_leave_category_data as $leaveCat)
+                                                           {
+                                                           ?>
+                                                            <option value="<?=$leaveCat->leave_category_id?>"><?=$leaveCat->leave_category?></option>';
+                                                        
+                                                            <?php
+                                                            }
+                                                            ?>
                                                         </select>
                                                     </div>
                                                 </div>
-                                            </div>
+                                                 <div class="col-sm-1">
+                                                    <button type="button" class="btn btn-light butn" data-toggle="modal" data-target="#myModal" title="New Client"><i class="fa fa-plus"></i></button>
+                                                </div>
+                                            </div>id="datetimepicker2"
                                         </div>
 
                                         <div class="form-group">
@@ -267,15 +288,15 @@
                                                 <div class="col-sm-9 d-flex">
                                                     <!-- <ul></ul> -->
                                                     <div class="radio">
-                                                        <input id="radio1" name="duration" type="radio" checked>
+                                                        <input id="radio1" value="1"name="duration" type="radio" checked>
                                                         <label for="radio1" class="radio-label">Single day</label>
                                                     </div>
                                                     <div class="radio">
-                                                        <input id="radio2" name="duration" type="radio">
+                                                        <input id="radio2" value="2"name="duration" type="radio">
                                                         <label for="radio2" class="radio-label">Multiple days</label>
                                                     </div>
                                                     <div class="radio">
-                                                        <input id="radio3" name="duration" type="radio">
+                                                        <input id="radio3" value="3"name="duration" type="radio">
                                                         <label for="radio3" class="radio-label">Hours</label>
                                                     </div>
                                                 </div>
@@ -288,7 +309,7 @@
                                                     <label for="exampleInputEmail1">Start Date <span class="text-danger">*</span> </label>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="datepicker">
+                                                    <input type="date" class="form-control " name="leave_start_date"id="">
                                                 </div>
                                                 <div class="col-sm-1">
                                                     <button type="button" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
@@ -301,8 +322,9 @@
                                                     <label for="exampleInputEmail1">Hours <span class="text-danger">*</span> </label>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <select class="form-control" name="">
-                                                        <option selected="" value="1">01</option>
+                                                    <select class="form-control" name="hours">
+                                                        <option selected="" value="0"></option>
+                                                        <option value="1">01</option>
                                                         <option value="2">02</option>
                                                         <option value="3">03</option>
                                                         <option value="4">04</option>
@@ -321,7 +343,7 @@
                                                     <label for="exampleInputEmail1">End Date <span class="text-danger">*</span> </label>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="datepicker">
+                                                     <input type="date" class="form-control " name="leave_end_date" id="">
                                                 </div>
                                                 <div class="col-sm-1">
                                                     <button type="button" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
@@ -349,14 +371,14 @@
                                                 <div class="col-md-9">
                                                      <div class="form-group inputDnD">
         <label class="sr-only" for="inputFile">File Upload</label>
-        <input type="file" class="form-control-file text-primary font-weight-bold" id="inputFile" accept="image/*" onchange="readUrl(this)" data-title="Drag and drop a file or Click">
+        <input type="file" name="files[]"class="form-control-file text-primary font-weight-bold" id="inputFile" accept="image/*" multiple onchange="readUrl(this)" data-title="Drag and drop a file or Click">
       </div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="text-center">
-                                            <button class="btn btn-success">Submit</button>
+                                            <button type="submit" class="btn btn-success">Submit</button>
                                         </div>
 
                                     </form>
@@ -459,6 +481,13 @@
         });
     });
 </script>
+ <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker2').datetimepicker({
+                    locale: 'ru'
+                });
+            });
+        </script>
 <script>
     CKEDITOR.replace('editor1');
 </script>
