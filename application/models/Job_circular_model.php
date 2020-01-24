@@ -39,5 +39,33 @@ class Job_Circular_Model extends MY_Model
         $result = $query_result->result();
         return $result;
     }
+    public function create_job($data)
+    {
+        $this->db->where($data);
+        $check = $this->db->get("tbl_job_circular")->result_array();
+        if(count($check) ==0 )
+        {
+            if($this->db->insert("tbl_job_circular",$data)){        
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        } 
+    }
+     public function fetch_job($data)
+    {
+        $this->db->select('*', FALSE);
+        $this->db->from('tbl_job_circular');
+        $this->db->join('tbl_designations', 'tbl_job_circular.designations_id = tbl_designations.designations_id', 'full');
+        $this->db->order_by('job_circular_id','Desc');
+        $query_result = $this->db->get();
+        $result = $query_result->result();
+        return $result;
+    }
+
+  
+
 
 }
