@@ -282,28 +282,28 @@ $myId=$session[0]->user_id;
              <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe-europe"></i> <span>Recruitment</span></a>
                 <ul class="dropdown-menu">
-                  <li><a class="nav-link" href=""><span> <i class="fas fa-ticket-alt"></i></span>Jobs Posted</a></li>
-                  <li><a class="nav-link" href=""><span><i class="far fa-compass"></i></span>Jobs Application</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Recruitment/jobsPosted')?>"><span> <i class="fas fa-ticket-alt"></i></span>Jobs Posted</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Recruitment/jobsApplications')?>"><span><i class="far fa-compass"></i></span>Jobs Application</a></li>
                 </ul>
             </li>
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fab fa-dribbble"></i> <span>Transaction</span></a>
                 <ul class="dropdown-menu">
-                  <li><a class="nav-link" href=""><span> <i class="far fa-circle"></i></span>Expense</a></li>
-                  <li><a class="nav-link" href=""><span><i class="far fa-circle"></i></span>Deposit</a></li>
-                  <li><a class="nav-link" href=""><span><i class="far fa-circle"></i></span>Transfer</a></li>
-                  <li><a class="nav-link" href=""><span><i class="far fa-circle"></i></span>Transaction Report</a></li>
-                  <li><a class="nav-link" href=""><span><i class="far fa-circle"></i></span>Transfer Report</a></li>
-                  <li><a class="nav-link" href=""><span><i class="far fa-circle"></i></span>Balance Sheet</a></li>
-                   <li><a class="nav-link" href=""><span><i class="far fa-money-bill-alt"></i></span>Bank & Cash</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Transaction/expense')?>"><span> <i class="far fa-circle"></i></span>Expense</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Transaction/deposite')?>"><span><i class="far fa-circle"></i></span>Deposit</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Transaction/transfer')?>"><span><i class="far fa-circle"></i></span>Transfer</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Transaction/TransactionReport')?>"><span><i class="far fa-circle"></i></span>Transaction Report</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Transaction/TransferReport')?>"><span><i class="far fa-circle"></i></span>Transfer Report</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Transaction/expense')?>"><span><i class="far fa-circle"></i></span>Balance Sheet</a></li>
+                   <li><a class="nav-link" href="<?=base_url('Transaction/BankAndCash')?>"><span><i class="far fa-money-bill-alt"></i></span>Bank & Cash</a></li>
                 </ul>
             </li>
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fab fa-dribbble"></i> <span>Performance</span></a>
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href=""><span> <i class="fas fa-random"></i></span>Indicator</a></li>
-                  <li><a class="nav-link" href=""><span><i class="fas fa-plus"></i></span>Give Appraisal</a></li>
-                  <li><a class="nav-link" href=""><span><i class="far fa-calendar"></i></span>Performance Report</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Performance/giveAppraisal')?>"><span><i class="fas fa-plus"></i></span>Give Appraisal</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Performance/performanceReport')?>"><span><i class="far fa-calendar"></i></span>Performance Report</a></li>
                 
                 </ul>
             </li>
