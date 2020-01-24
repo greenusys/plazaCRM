@@ -88,48 +88,169 @@
                   </div>
                   <div class="tab-pane fade px-4" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
                     <div class="row">
-                      <div class="col-md-6">
-                          <div class="form-group">
-                            <label>Project Name<sup class="text-danger">*</sup></label>
-                            <input type="text" class="form-control" name="" placeholder="Enter Name" required="">
-                          </div>
-                          <div class="form-group">
-                            <label>Select Client<sup class="text-danger">*</sup></label>
-                             <div class="input-group d-flex">
-                               <select class="js-example-basic-single" name="state">
-                                    <option value="">Select Client</option>
-                                    <option value="1">GMAP</option>
-                                    <option value="2">HR</option>
-                                    <option value="3">IT</option>
-                                    <option value="4">BI</option>
-                                    <option value="5">Marketing ( Uro-Onco)</option>
-                                    <option value="6">R&amp;D</option>
-                                    <option value="7">Communication</option>
-                                    <option value="8">Global</option>
-                                    <option value="9">Medical</option>
-                                    <option value="10">Entreprise Excellence</option>
-                                    <option value="11">BI&amp;A</option>
-                                    <option value="12">Regulatory</option>
-                                    <option value="13">Purchasing</option>
-                                    <option value="14">ali</option>
-                            </select>
-                            <div class="input-group-addon" title="" data-toggle="tooltip" data-placement="top" data-original-title="New Client">
-                                <a data-toggle="modal" data-target="#myModal" href="http://plazacrm.com/admin/client/new_client"><i class="fa fa-plus"></i></a>
+        <div class="offset-1 col-sm-8 cl-md-8 col-lg-8">
+            <form>
+          <div class="form-group row">
+              <div class="col-sm-3 text-right">
+                <label for="exampleInputEmail1">From Account <sub class="text-danger">*</sub></label>
+              </div>
+              <div class="col-sm-8">
+                <div class="input-group">
+                      <select name="client_id" class="form-control" id="account">
+                          <option value=""></option>
+                      </select>
+                </div>
+              </div>
+          </div>
+          <div class="form-group">
+              <div class="row">
+              <div class="col-sm-3 text-right">
+                <label for="exampleInputEmail1">To Account <span class="text-danger">*</span> </label>
+              </div>
+              <div class="col-sm-8">
+                <div class="input-group">
+                      <select name="client_id" class="form-control" id="to_account">
+                          <option value=""></option>
+                      </select>
+                </div>
+              </div>
+             
+            </div>
+          </div>
+          <div class="form-group">
+              <div class="row">
+              <div class="col-sm-3 text-right">
+                <label for="exampleInputEmail1">Date   </label>
+              </div>
+              <div class="col-sm-8">
+                <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                    <span ><i class="fa fa-calendar"></i></span>
+                    </span>
+                </div>
+              </div>
+            </div>
+          </div>
+           
+          <div class="form-group">
+            <div class="row">
+              <div class=" col-sm-3 text-right">
+                <label for="exampleInputEmail1">Notes  </label>
+              </div>
+              <div class="col-sm-8">
+                <textarea class="form-control" name="short_note"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+              <div class="row">
+              <div class="col-sm-3 text-right">
+                <label for="exampleInputEmail1">Amount  <span class="text-danger">*</span></label>
+              </div>
+              <div class="col-sm-6">
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              </div>
+            </div>
+          </div>
+
+            <div class="form-group row">
+              
+              <div class="col-sm-3 text-right">
+                <label for="exampleInputEmail1">Payment Method</label>
+              </div>
+              <div class="col-sm-8">
+                  <div class="input-group">
+                        <select name="client_id" class="form-control" id="customer_group">
+                            <option value="0">Select payment method</option>
+                            <option value="5" >Cash </option>
+                            <option value="4" >Bank Transfer</option>
+                            <option value="3" >Payoneer</option>
+                            <option value="2" >PayPal</option>
+                            <option value="1" >Online</option>
+                        </select>
+                  </div>
+              </div>
+         </div>
+        
+          <div class="form-group">
+              <div class="row">
+              <div class="col-sm-3 text-right">
+                <label for="exampleInputEmail1">Reference  </label>
+              </div>
+              <div class="col-sm-8">
+                <input type="number"  value="" class="form-control" placeholder="e.g. Transection Id, Check No" name="estimate_hours" data-parsley-id="23">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+              <div class="row">
+                <div class="col-sm-3 text-right">
+                  <label for='uploaded_file'>Attachment</label>
                             </div>
-                        </div>
-                        <script type="text/javascript">
-                          $(document).ready(function() {
-                            $('.js-example-basic-single').select2();
-                        })
-                        </script>
-                          </div>
-                          <div class="form-group">
-                            <label>Project Name<sup class="text-danger">*</sup></label>
-                          <input type="text" class="form-control" name="" placeholder="Enter Name">
-                          </div>
-                      </div>  
-                      <div class="col-md-6"></div>
-                    </div>
+              <div class="col-sm-8">
+                <div class="form-group files">
+                  <!--<label>Upload Your File </label>--->
+                  <input type="file" class="form-control" multiple="">
+                </div>
+              </div>
+              </div>
+          </div>
+          
+          <div class="form-group">
+              <div class="row">
+              <div class="col-sm-3 text-right">
+                <label for="exampleInputEmail1 " >Permission<span class="text-danger">*</span></label>
+              </div>
+              <div class="col-sm-9">
+                <div class="checkbox c-radio needsclick ">
+                  <input type="radio" name="gender" value="male" class="btn1"> Everyone<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
+                                </div>
+                <div class="checkbox c-radio needsclick">
+                  <input type="radio" name="gender" value="male" id="chkPassport" onclick="ShowHideDiv(this)" > Customise Permission<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
+                                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group"  id="dvPassport" style="display: none">
+              <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">select Users<span class="text-danger">*</span></label>
+              </div>
+              <!--<div class="col-sm-9">
+                 <input type="checkbox" name="vehicle1" value="Bike"  id="chkPassport1" onclick="ShowHideDiv(this)"> admin <strong class="badge btn-danger">Admin</strong>
+                 <br>
+                 <div class="row"  id="dvPassport1" style="display: none">
+                    <div class="col-md-3">
+                   <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> View
+                  </div>
+                  <div class="col-md-3">
+                       <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Edit
+                  </div>
+                  <div class="col-md-3">
+                      <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Delete
+                  </div>
+                 </div>
+                 
+                                 <input type="checkbox" name="vehicle2" value="Car"  id="chkPassport2" onclick="ShowHideDiv(this)" > adminko <strong class="badge btn-danger">Admin</strong>
+                 <br>
+                 <div class="row"  id="dvPassport2" style="display: none">
+                    <div class="col-md-3">
+                   <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> View
+                  </div>
+                  <div class="col-md-3">
+                       <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Edit
+                  </div>
+                  <div class="col-md-3">
+                      <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Delete
+                  </div>
+                 </div>
+              </div>--->
+            </div>
+          </div>
+          </form>
+        </div>
+    </div>
                   </div>
                   <!-- <div class="tab-pane fade show px-4" id="imp_project" role="tabpanel" aria-labelledby="import_project">
                     <div class="row">
@@ -178,3 +299,38 @@
           </div>
         </section>
       </div>
+ <script>
+        $(document).ready(function() {
+      
+        $("#cust_grp").select2(); 
+        $("#accounts").select2();
+        $(".language").select2();
+        $(".currency").select2(); 
+        $("#country").select2();
+      
+       });
+    </script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#chkPassport").click(function () {
+            if ($(this).is(":checked")) {
+                $("#dvPassport").show();
+            } else {
+                $("#dvPassport").hide();
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#chkPassport1").click(function () {
+            if ($(this).is(":checked")) {
+                $("#dvPassport1").show();
+            } else {
+                $("#dvPassport1").hide();
+            }
+        });
+    });
+</script>

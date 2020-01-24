@@ -21,7 +21,7 @@
               <div class="card">
                       <div class="card-header row border-bottom py-1">
                           <div class="col-md-6">
-                            <span><strong>Generate Payslip</strong></span> 
+                            <span><strong>Give Performance Appraisal</strong></span> 
                            </div>
                             <!-- <div class="col-md-6 text-right"><button class="btn btn-success rounded-0"><i class="fa fa-plus" aria-hidden="true"></i> Add Time Manually</button></div> -->
                       </div>
@@ -60,7 +60,7 @@
                     <form method="">
                       <div class="row">
                         <div class="col-md-4 text-right pt-1">
-                          <label class="form-group">Generate Payslip<sup class="text-danger">*</sup></label>
+                          <label class="form-group">Employee<sup class="text-danger">*</sup></label>
                           <br>
                           <br>
                           <label>Select Month<sup class="text-danger">*</sup></label>
@@ -69,7 +69,7 @@
                         <div class="col-md-4">
                           <div class="form-group"> 
                             <select  name="imptask_status" class="form-control " id="imptask_status" style="width: 100%" required="">
-                              <option value="" selected="">Select Department</option>
+                              <option value="" selected="">Select Employee</option>
                               <option value="">IT / Collaborative</option>
                               <option value="">HR</option>
                               <option value="">IT</option>
@@ -93,27 +93,23 @@
             </div>
 
 <div class="row mt-4">
-           <div class="col-lg-12">
+        
+             <div class="col-md-6">
               <div class="card">
-                <div class="">
-                        <div class="card-header row border-bottom py-1">
-                          <div class="col-md-6">
-                            <span><strong>Generate Payslip for month year</strong></span> 
+                   <div class="card-header row border-bottom py-1">
+                          <div class="col-md-12">
+                            <span><strong>Technical Competencies</strong></span> 
                            </div>
                             <!-- <div class="col-md-6 text-right"><button class="btn btn-success rounded-0"><i class="fa fa-plus" aria-hidden="true"></i> Add Time Manually</button></div> -->
                         </div>
                       <div class="p-4">
-                         <table id="example" class="display nowrap " style="width:100%">
+                         <table id="" class="display nowrap table table-striped" style="width:100%">
                               <thead>
                                   <tr>
-                                      <th>EMP ID</th>
-                                      <th>Name</th>
-                                      <th>Salary Type </th>
-                                      <th>Basic Salary</th>
-                                      <th>Net Salary</th>
-                                      <th>Details</th>
-                                      <th>  Status </th>
-                                      <th>Action</th>
+                                      <th>Indicator</th>
+                                      <th>Expected Value</th>
+                                      <th>Set Value </th>
+                                     
                                   </tr>
                               </thead>
                               <tbody>
@@ -122,70 +118,104 @@
                                       <td>Tiger Nixon</td>
                                       <td>2011/04/25</td>
                                       <td>Edinburgh</td>
-                                      <td>Edinburgh</td>
-                                      <td>Tiger Nixon</td>
-                                      <td>2011/04/25</td>
-                                      <td>Edinburgh</td>
-                                      <td>Edinburgh</td>
+                                  
                                   </tr>
                                      <tr>
                                       <td>Tiger Nixon</td>
                                       <td>2011/04/25</td>
                                       <td>Edinburgh</td>
-                                      <td>Edinburgh</td>
-                                      <td>Tiger Nixon</td>
-                                      <td>2011/04/25</td>
-                                      <td>Edinburgh</td>
-                                      <td>Edinburgh</td>
+                                      
                                   </tr>
                                      <tr>
                                       <td>Tiger Nixon</td>
                                       <td>2011/04/25</td>
                                       <td>Edinburgh</td>
-                                      <td>Edinburgh</td>
-                                      <td>Tiger Nixon</td>
-                                      <td>2011/04/25</td>
-                                      <td>Edinburgh</td>
-                                      <td>Edinburgh</td>
+                                    
                                   </tr>
                               </tbody>
                               <tfoot>
                                   <tr>
-                                      <th>EMP ID</th>
-                                      <th>Name</th>
-                                      <th>Salary Type </th>
-                                      <th>Basic Salary</th>
-                                      <th>Net Salary</th>
-                                      <th>Details</th>
-                                      <th>  Status </th>
-                                      <th>Action</th>
-
+                                      <th>Indicator</th>
+                                      <th>Expected Value</th>
+                                      <th>Set Value </th>
+                                     
                                   </tr>
                               </tfoot>
                           </table>
                         </div>
                     </div>
                   </div>
-                  
-              </div>
+                  <div class="col-md-6">
+              <div class="card">
+                   <div class="card-header row border-bottom py-1">
+                          <div class="col-md-12">
+                            <span><strong>Behavioural / Organizational Competencies</strong></span> 
+                           </div>
+                            <!-- <div class="col-md-6 text-right"><button class="btn btn-success rounded-0"><i class="fa fa-plus" aria-hidden="true"></i> Add Time Manually</button></div> -->
+                        </div>
+                      <div class="p-4">
+                         <table id="" class="display nowrap table table-striped" style="width:100%">
+                              <thead>
+                                  <tr>
+                                      <th>Indicator</th>
+                                      <th>Expected Value</th>
+                                      <th>Set Value </th>
+                                     
+                                  </tr>
+                              </thead>
+                              <tbody>
+                            
+                                    <tr>
+                                      <td>Tiger Nixon</td>
+                                      <td>2011/04/25</td>
+                                      <td>Edinburgh</td>
+                                  
+                                  </tr>
+                                     <tr>
+                                      <td>Tiger Nixon</td>
+                                      <td>2011/04/25</td>
+                                      <td>Edinburgh</td>
+                                      
+                                  </tr>
+                                     <tr>
+                                      <td>Tiger Nixon</td>
+                                      <td>2011/04/25</td>
+                                      <td>Edinburgh</td>
+                                    
+                                  </tr>
+                              </tbody>
+                              <tfoot>
+                                  <tr>
+                                      <th>Indicator</th>
+                                      <th>Expected Value</th>
+                                      <th>Set Value </th>
+                                     
+                                  </tr>
+                              </tfoot>
+                          </table>
+                        </div>
+                    </div>
+                  </div>
+             
             </div>
+
+            <div class="mt-3 text-center"><h5 class="text-danger">Please set Expected value at least one</h5></div>
           </div>
     
         </section>
       </div>
 <script>
-     $(document).ready(function() {
-          $(".hourly_status").select2();
-          $("#imptask_status").select2();
-          $(".monthly_status").select2();
-      });
-  </script>
-
-  <script type="text/javascript">
-      $(function () {
-          $('#datetimepicker10').datetimepicker({
-              viewMode: 'years',
-              format: 'MM/YYYY'
-          });
-      });
-  </script>
+   $(document).ready(function() {
+        $(".hourly_status").select2();
+        $("#imptask_status").select2();
+        $(".monthly_status").select2();
+    });
+</script>
+ <script type="text/javascript">
+                          $(function () {
+                              $('#datetimepicker10').datetimepicker({
+                                  viewMode: 'years',
+                                  format: 'MM/YYYY'
+                              });
+                          });
+                      </script>

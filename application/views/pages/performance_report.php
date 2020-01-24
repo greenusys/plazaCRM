@@ -128,15 +128,15 @@
               </div>
               <div class="col-md-7">
                 <div class="mt-3">
-                  <a href="#" class="text-danger" data-toggle="modal" data-target="#exampleModal" data-toggle="tooltip" ><i class="fas fa-plus"></i> Give Award</a>
+                  <a href="<?=base_url('Performance/giveAppraisal')?>" class="text-danger" ><i class="fas fa-plus"></i> Give Award</a>
                 </div>
               </div>
-              <div class="col-md-2">
+            <!--   <div class="col-md-2">
                 <div class="text-right">
                   <button class="btn btn-info" id="advn_salry"><i class="fas fa-undo-alt"></i> Switch</button>
-                  <!-- <button class="btn btn-purple" style="display:none" id="advn_salry_reprt"><i class="fas fa-undo-alt"></i> Switch</button> -->
+                <button class="btn btn-purple" style="display:none" id="advn_salry_reprt"><i class="fas fa-undo-alt"></i> Switch</button> 
                 </div>
-              </div>
+              </div> -->
             </div>
           <div class="row " >
          
@@ -259,198 +259,12 @@
             
           </div>
         </div>
-          <div style="display: none" class="mt-5" id="advn_sar_reprt_div">
-            <div role="tabpanel" class="row">
-              <div class="col-sm-12">
-                <div class="card p-3">
-                       <div class="card-header row border-bottom py-1">
-                        <div class="col-md-6">
-                          <span><i class="fas fa-calendar-alt"></i> <strong> Award List</strong></span> 
-                         </div>
-                          <div class="col-md-6 text-right">
-                            <button  class=" btn btn-danger rounded " data-toggle="modal" data-target="#exampleModal" data-toggle="tooltip" ><i class="fas fa-plus"></i> Give Award</button>
-                            <button class="btn btn-purple rounded " id="advn_salry_reprt"><i class="fas fa-undo-alt"></i> Switch</button>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-info rounded dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  <i class="fas fa-search"></i>
-                                </button>
-                                <div class="margl_65 dropdown-menu">
-                                  <a class="dropdown-item" href="#">Action</a>
-                                  <a class="dropdown-item" href="#">Another action</a>
-                                  <a class="dropdown-item" href="#">Something else here</a>
-                                  <div class="dropdown-divider"></div>
-                                  <a class="dropdown-item" href="#">Separated link</a>
-                                </div>
-                            </div>
-                          </div>
-                      </div>
-                      <div class="p-2 pt-3 ">
-                       <table id="award_list" class="display nowrap " style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>EMP ID</th>
-                                    <th>Name</th>
-                                    <th>Amount </th>
-                                    <th>Deduct Month</th>
-                                    <th>Request Date</th>
-                                   
-                                    <th>Status </th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                          
-                                  <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                                    <td>Edinburgh</td>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                             
-                                </tr>
-                                   <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                                    <td>Edinburgh</td>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                             
-                                </tr>
-                                   <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                                    <td>Edinburgh</td>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                                  
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>EMP ID</th>
-                                    <th>Name</th>
-                                    <th>Amount </th>
-                                    <th>Deduct Month</th>
-                                    <th>Request Date</th>
-                                    <th>Status </th>
-                                    <th>Action</th>
-
-                                </tr>
-                            </tfoot>
-                        </table>
-                      </div>
-                    </div>
-                    
-            </div>
-        </div>
-          </div>
+    
     
         </section>
       </div>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content style">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Give Award</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          </div>
-          <div class="line"></div>
-        <div class="modal-body">
-            <form>
-            <div class="form-group">
-              <div class="row">
-                <div class="offset-1 col-sm-3">
-                  <label for="exampleInputEmail1">Employee <sup class="text-danger">*</sup></label>
-                </div>
-                <div class="col-sm-6">
-                  <select  name="imptask_status" class="form-control " id="imptask_status" style="width: 100%" required="">
-                    <option value="" selected="">Select Department</option>
-                    <option value="">IT / Collaborative</option>
-                    <option value="">HR</option>
-                    <option value="">IT</option>
-                  </select> 
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="row">
-                <div class="offset-1 col-sm-3">
-                  <label for="exampleInputEmail1">Award Name <sup class="text-danger">*</sup> </label>
-                </div>
-                <div class="col-sm-6">
-                  <input type="text" class="form-control" id=""  placeholder="Amount" required="">
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="row">
-                <div class="offset-1 col-sm-3">
-                  <label for="exampleInputEmail1">Gift Item  </label>
-                </div>
-                <div class="col-sm-6">
-                  <input type="text" class="form-control" id=""  placeholder="Amount" required="">
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="row">
-                <div class="offset-1 col-sm-3">
-                  <label for="exampleInputEmail1">Cash Price  </label>
-                </div>
-                <div class="col-sm-6">
-                  <input type="text" class="form-control" id=""  placeholder="Amount" required="">
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="row">
-                <div class="offset-1 col-sm-3">
-                  <label for="exampleInputEmail1">Select Month <sup class="text-danger">*</sup>  </label>
-                </div>
-                <div class="col-sm-6">
-                    <div class='input-group date form-group datetimepicker10' id='datetimepicker10'>
-                        <input type='text' class="form-control" />
-                          <span class="input-group-addon">
-                            <span ><i class="fa fa-calendar"></i></span>
-                        </span>
-                     </div>
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="row">
-                <div class="offset-1 col-sm-3">
-                  <label for="exampleInputEmail1">Award Date <sup class="text-danger">*</sup>  </label>
-                </div>
-                <div class="col-sm-6">
-                    <div class='input-group date form-group datetimepicker10' id='datetimepicker10'>
-                        <input type='text' class="form-control" />
-                          <span class="input-group-addon">
-                            <span ><i class="fa fa-calendar"></i></span>
-                        </span>
-                     </div>
-                </div>
-              </div>
-            </div>
-       
-          </form>
-        </div>
-        <div class="modal-footer border-top-0 modal-butn">
-          <button type="button" class="btn btn-primary">Save</button>
-          <button type="button" class="btn btn-secondary">close</button>
-          </div>
-      </div>
-    </div>
-  </div>
+
 
 
 <script type="text/javascript">
