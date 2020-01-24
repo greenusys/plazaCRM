@@ -9,5 +9,11 @@ class Backupdatabase extends CI_Controller {
 		$this->load->view("pages/backup_database");
 		$this->load->view("layout/footer");
 	}
+	// public function backupDatabase()
+	// {
+	// 	$this->load->view('layout/header');
+	// 	$this->load->view("pages/backup_database");
+	// 	$this->load->view("layout/footer");
+	// }
 }
 ?>
