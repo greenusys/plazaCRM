@@ -117,7 +117,19 @@ class Attendance extends CI_Controller {
 	}
 	public function timeHistory()
 	{
+		
 		$data['Employee']=$this->ATND->fetchEmployee();
+		$this->load->view('layout/header');
+		$this->load->view("pages/time_history",$data);
+		$this->load->view("layout/footer");
+	}
+	public function getTimeHistory(){
+		$userId=$this->input->post('emp_id');
+		$data['active'] = date('Y');
+		$attendance_info = $this->ATND->get_attendance(array('user_id' => $userId));
+        $data['mytime_info'] = $this->get_mytime_info($attendance_info);
+        // print_r($data['mytime_info']);
+        $data['Employee']=$this->ATND->fetchEmployee();
 		$this->load->view('layout/header');
 		$this->load->view("pages/time_history",$data);
 		$this->load->view("layout/footer");
@@ -140,6 +152,35 @@ class Attendance extends CI_Controller {
 		$this->load->view("pages/mark_attendance");
 		$this->load->view("layout/footer");
 	}
+	public function get_mytime_info($attendance_info)
+    {
+
+        if (!empty($attendance_info)) {
+
+            foreach ($attendance_info as $v_info) {
+            	
+            	
+                if ($v_info->date_in == $v_info->date_out) {
+                	// echo ' ****** ';
+                    $date = strftime("%m.%d.%Y", strtotime($v_info->date_in));
+                    // print_r($date);
+                } else {
+                    $date = lang('date_in') . ' : ' . strftime("%m.%d.%Y", strtotime($v_info->date_in)) . ', ' . lang('day_out') . ': ' . strftime("%m.%d.%Y", strtotime($v_info->date_out));
+                }
+                // echo $v_info->attendance_id;
+                $details_=$this->get_result($v_info->attendance_id);
+                // print_r($details_);
+                $clock_info[date('Y', strtotime($v_info->date_in))][date('W', strtotime($v_info->date_in))][$date] = $details_;
+//                    $this->attendance_model->get_mytime_info($v_info->attendance_id);
+            }
+            // print_r($clock_info);
+            // echo '****************************************************************************************************************';
+            return $clock_info;
+        }
+    }
+    public function get_Result($id){
+    	return $this->ATND->getAttendanceDetails($id);
+    }
 	
 	
 	

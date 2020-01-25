@@ -52,5 +52,18 @@
             return $this->db->get('tbl_attendance')->result();
             
         }
+        public function get_attendance($condition){
+            // $table_="tbl_attendance";
+            // print_r($condition);
+            $this->db->where('user_id',$condition['user_id']);
+            // $this->db->order_by("attendance_id", "desc");
+            // $this->db->limit(1);  
+            return $this->db->get('tbl_attendance')->result();
+        }
+        public function getAttendanceDetails($id){
+            // echo 'Id Passed: '.$id;
+            $this->db->where('attendance_id',$id);
+            return $this->db->get('tbl_attendance')->result();
+        }
     }
 ?>

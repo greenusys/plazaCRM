@@ -18,6 +18,7 @@
 			$this->db->join('tbl_account_details','tbl_account_details.user_id=tbl_announcements.user_id');
 			return $this->db->get('tbl_announcements')->result();
 		}
+	
 	}
 
 ?>
