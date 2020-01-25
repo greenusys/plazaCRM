@@ -19,8 +19,13 @@
           <div class="row mt-4">
            <div class="col-lg-12">
               <div class="card">
-          
-     <!--            <ul class="nav nav-tabs nav-justified md-tabs indigo col-md-5" id="myTabJust" role="tablist">
+                      <div class="card-header row border-bottom py-1">
+                          <div class="col-md-6">
+                            <span><strong>Generate Payslip</strong></span> 
+                           </div>
+                            <!-- <div class="col-md-6 text-right"><button class="btn btn-success rounded-0"><i class="fa fa-plus" aria-hidden="true"></i> Add Time Manually</button></div> -->
+                      </div>
+     <!--   <ul class="nav nav-tabs nav-justified md-tabs indigo col-md-5" id="myTabJust" role="tablist">
                   <li class="nav-item">
                     <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
                       aria-selected="true">Manage Account</a>
@@ -82,22 +87,22 @@
                       </div>
                   
                     </form>
-                      <script type="text/javascript">
-                          $(function () {
-                              $('#datetimepicker10').datetimepicker({
-                                  viewMode: 'years',
-                                  format: 'MM/YYYY'
-                              });
-                          });
-                      </script>
-                    <div class="mt-5">
+                  </div>   
+                </div>
+              </div>
+            </div>
+
+<div class="row mt-4">
+           <div class="col-lg-12">
+              <div class="card">
+                <div class="">
                         <div class="card-header row border-bottom py-1">
                           <div class="col-md-6">
                             <span><strong>Generate Payslip for month year</strong></span> 
                            </div>
                             <!-- <div class="col-md-6 text-right"><button class="btn btn-success rounded-0"><i class="fa fa-plus" aria-hidden="true"></i> Add Time Manually</button></div> -->
                         </div>
-                      <div class="pt-3">
+                      <div class="p-4">
                          <table id="example" class="display nowrap " style="width:100%">
                               <thead>
                                   <tr>
@@ -173,5 +178,14 @@
           $(".hourly_status").select2();
           $("#imptask_status").select2();
           $(".monthly_status").select2();
+      });
+  </script>
+
+  <script type="text/javascript">
+      $(function () {
+          $('#datetimepicker10').datetimepicker({
+              viewMode: 'years',
+              format: 'MM/YYYY'
+          });
       });
   </script>

@@ -275,7 +275,7 @@
                   <div class='input-group date datetimepicker1' id='datetimepicker1'>
                       <input type='text' class="form-control" name="overtime_date" />
                       <span class="input-group-addon ">
-                          <span ><i class="fa fa-calendar pt-2"></i></span>
+                          <span ><i class="fa fa-calendar"></i></span>
                       </span>
                   </div>
                 </div>
@@ -291,7 +291,7 @@
                   <div class='input-group date datetimepicker3' id='datetimepicker3' >
                       <input type='text' name="overtime_hours" class="form-control" />
                       <span class="input-group-addon ">
-                          <span ><i class="far fa-clock pt-2"></i></span>
+                          <span ><i class="far fa-clock "></i></span>
                       </span>
                   </div>
                 </div>
