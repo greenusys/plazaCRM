@@ -40,6 +40,11 @@ class Payroll_Model extends MY_Model
            return true;
     }
 
+    public function add_overtime($post){
+           $this->db->insert('tbl_overtime', $post);
+           return true;
+    }
+
     public function fetch_templates(){
         $this->db->select('*');
         $this->db->from('tbl_salary_template');
@@ -51,6 +56,22 @@ class Payroll_Model extends MY_Model
         else{
             return false;
         }
+    }
+
+    public function add_account($data){
+        $checker=array('account_name'=>$data['account_name']);
+        $this->db->where($checker);
+        $check = $this->db->get("tbl_accounts")->result_array();
+        if(count($check) ==0 ){
+            if($this->db->insert("tbl_accounts",$data)){
+                $insert_id = $this->db->insert_id();
+                return  $insert_id;         
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        } 
     }
 
     public function check_user_payment($id,$date){
@@ -72,6 +93,34 @@ class Payroll_Model extends MY_Model
         $this->db->where('tbl_designations.departments_id', $id);
         $query_result = $this->db->get();
         $result = $query_result->result();
+        return $result;
+    }
+
+    public function get_advance_salary_info_by_date($payment_month = NULL, $id = NULL, $user_id = NULL)
+    {
+        $this->db->select('tbl_advance_salary.*', FALSE);
+        $this->db->select('tbl_account_details.*', FALSE);
+        $this->db->from('tbl_advance_salary');
+        $this->db->join('tbl_account_details', 'tbl_account_details.user_id = tbl_advance_salary.user_id', 'left');
+        if ($this->session->userdata('user_type') != 1) {
+            $this->db->where('tbl_advance_salary.user_id', $this->session->userdata('user_id'));
+            $this->db->where('tbl_advance_salary.deduct_month', $payment_month);
+            $query_result = $this->db->get();
+            $result = $query_result->result();
+        } elseif (!empty($id)) {
+            $this->db->where('tbl_advance_salary.advance_salary_id', $id);
+            $query_result = $this->db->get();
+            $result = $query_result->row();
+        } elseif (!empty($user_id)) {
+            $this->db->where('tbl_advance_salary.status', '1');
+            $this->db->where('tbl_account_details.user_id', $user_id);
+            $query_result = $this->db->get();
+            $result = $query_result->result();
+        } else {
+            $this->db->where('tbl_advance_salary.deduct_month', $payment_month);
+            $query_result = $this->db->get();
+            $result = $query_result->result();
+        }
         return $result;
     }
 
@@ -183,34 +232,6 @@ class Payroll_Model extends MY_Model
         return $result;
     }
 
-    public function get_advance_salary_info_by_date($payment_month = NULL, $id = NULL, $user_id = NULL)
-    {
-        $this->db->select('tbl_advance_salary.*', FALSE);
-        $this->db->select('tbl_account_details.*', FALSE);
-        $this->db->from('tbl_advance_salary');
-        $this->db->join('tbl_account_details', 'tbl_account_details.user_id = tbl_advance_salary.user_id', 'left');
-        if ($this->session->userdata('user_type') != 1) {
-            $this->db->where('tbl_advance_salary.user_id', $this->session->userdata('user_id'));
-            $this->db->where('tbl_advance_salary.deduct_month', $payment_month);
-            $query_result = $this->db->get();
-            $result = $query_result->result();
-        } elseif (!empty($id)) {
-            $this->db->where('tbl_advance_salary.advance_salary_id', $id);
-            $query_result = $this->db->get();
-            $result = $query_result->row();
-        } elseif (!empty($user_id)) {
-            $this->db->where('tbl_advance_salary.status', '1');
-            $this->db->where('tbl_account_details.user_id', $user_id);
-            $query_result = $this->db->get();
-            $result = $query_result->result();
-        } else {
-            $this->db->where('tbl_advance_salary.deduct_month', $payment_month);
-            $query_result = $this->db->get();
-            $result = $query_result->result();
-        }
-        return $result;
-    }
-
     public function view_advance_salary($id = NULL)
     {
         $this->db->select('tbl_advance_salary.*', FALSE);
@@ -259,6 +280,18 @@ class Payroll_Model extends MY_Model
         return $result;
     }
 
+    public function get_overtime_info($data){
+        $this->db->select('*', FALSE);
+        $this->db->from('tbl_overtime');
+        $this->db->where('overtime_date >=',$data['start_date']);
+        $this->db->where('overtime_date <=', $data['end_date']);
+        $this->db->where('user_id', $data['user_id']);
+        $this->db->order_by('overtime_id');
+        $query_result = $this->db->get();
+        $result = $query_result->result();
+        return $result;
+    }
+
     public function get_provident_fund_info_by_date($start_date, $end_date, $user_id = null)
     {
         $this->db->select('tbl_salary_payment.*', FALSE);
@@ -275,6 +308,40 @@ class Payroll_Model extends MY_Model
         }
         $query_result = $this->db->get();
         $result = $query_result->result();
+        return $result;
+    }
+
+        public function get_overtime_info_by_date($start_date, $end_date, $user_id = null)
+    {
+        $this->db->select('tbl_overtime.*', FALSE);
+        $this->db->select('tbl_account_details.fullname', FALSE);
+        $this->db->from('tbl_overtime');
+        $this->db->join('tbl_account_details', 'tbl_account_details.user_id = tbl_overtime.user_id', 'left');
+        $this->db->where('tbl_overtime.overtime_date >=', $start_date);
+        $this->db->where('tbl_overtime.overtime_date <=', $end_date);
+        // if ($this->session->userdata('user_type') != 1) {
+        //     $this->db->where('tbl_overtime.user_id', $this->session->userdata('user_id'));
+        // }
+        // if (!empty($user_id)) {
+        //     $this->db->where('tbl_overtime.user_id', $user_id);
+        // }
+        $query_result = $this->db->get();
+        $result = $query_result->result();
+
+        return $result;
+    }
+
+    public function get_overtime_info_by_emp_id($overtime_id)
+    {
+
+        $this->db->select('tbl_overtime.*', FALSE);
+        $this->db->select('tbl_account_details.*', FALSE);
+        $this->db->from('tbl_overtime');
+        $this->db->join('tbl_account_details', 'tbl_account_details.user_id = tbl_overtime.user_id', 'left');
+        $this->db->where('tbl_overtime.overtime_id', $overtime_id);
+        $query_result = $this->db->get();
+        $result = $query_result->row();
+
         return $result;
     }
 

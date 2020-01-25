@@ -127,9 +127,9 @@
                                       if ($main_data->salary_paid=="true") {
                                         echo "Generate Payslip";
                                       }
-                                      elseif ($main_data->salary_grade!="") {
-                                        echo "Make Payment";
-                                      }
+                                      elseif ($main_data->salary_grade!="") {?>
+                                        <a href='<?=base_url()?>Payroll/makePayment/<?=$main_data->user?>/<?=$main_data->search_date?>/<?=$main_data->departments_id?>'>Make Payment</a>
+                                      <?php }
                                       else{
                                         echo "Set Salary";
                                       }
