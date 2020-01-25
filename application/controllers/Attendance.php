@@ -165,7 +165,7 @@ class Attendance extends CI_Controller {
                     $date = strftime("%m.%d.%Y", strtotime($v_info->date_in));
                     // print_r($date);
                 } else {
-                    $date = lang('date_in') . ' : ' . strftime("%m.%d.%Y", strtotime($v_info->date_in)) . ', ' . lang('day_out') . ': ' . strftime("%m.%d.%Y", strtotime($v_info->date_out));
+                    $date = 'Day In'. ' : ' . strftime("%m.%d.%Y", strtotime($v_info->date_in)) . ', ' . 'Day Out'. ': ' . strftime("%m.%d.%Y", strtotime($v_info->date_out));
                 }
                 // echo $v_info->attendance_id;
                 $details_=$this->get_result($v_info->attendance_id);

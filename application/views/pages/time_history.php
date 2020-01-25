@@ -148,6 +148,8 @@
                                       { 
                                         if ($year == $active) {
                                             $cls="active";
+                                        }else{
+                                          $cls="";
                                         }
                                       ?>
                                       <!-- <li role="presentation" class="<?php
@@ -165,6 +167,8 @@
 
                             </div>
                         </nav>
+
+                      
                         <div class="tab-content" id="nav-tabContent">
                           <?php
                             if (!empty($mytime_info))
@@ -175,6 +179,8 @@
                                 { 
                                   if ($year == $active) {
                                       $cls="active";
+                                  }else{
+                                    $cls="d-none";
                                   }
                                   ?>
 
@@ -185,6 +191,13 @@
                                             if (!empty($v_time_info)){
                                               foreach ($v_time_info as $week => $time_info){
                                                 if (!empty($time_info)){
+                                                  if($week==date('W')){
+                                                    $show="show";
+                                                  }else{
+                                                    $show="";
+                                                  }
+
+                                                  // print_r( $time_info);
                                                   ?>
                                                     <div class="card mt-2">
                                                       <div class="card-header" data-toggle="collapse" data-target="#collapse<?=$week?>" aria-expanded="true">     
@@ -192,47 +205,89 @@
                                                           <span class="accicon"><i class="fas fa-angle-down rotate-icon"></i></span>
                                                       </div>
 
-                                                      <?php
-
-                                                          $total_hh = 0;
-                                                          $total_mm = 0;
-
-                                                          // if (!empty($time_info)):foreach ($time_info as $key => $v_mytime):
-
-                                                      ?>
-                                                      <div id="collapse<?=$week?>" class="collapse <?=$show?>" data-parent="#accordionExample">
+                                                      <div id="collapse<?=$week?>" clock_id="" class="collapse <?=$show?>" data-parent="#accordionExample">
                                                           <div class="card-body">
-                                                             <table class=" table table-stripped table-bordered">
-                                                                <thead>
-                                                                  <tr>
-                                                                      <th>Clock In Time</th>
-                                                                      <th>Clock Out Time</th>
-                                                                      <th>IP Address</th>
-                                                                      <th>Hours</th>
-                                                                      <th>Action</th>
-                                                                  </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                  <tr>
-                                                                    <td colspan="5">Date In : 01.03.2020, Date Out : 01.17.2020</td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                    <td>08:30</td>
-                                                                    <td>08:31</td>
-                                                                    <td>103.99.15.182</td>
-                                                                    <td>0 : 0 m</td>
-                                                                    <td>
-                                                                            <div class="">
-                                                                                <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                                                                <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                                                                 <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                                                              </div>
-                                                                    </td>
-                                                                  </tr>
-                                                                </tbody>
-                                                             </table>
+                                                              <table class=" table table-stripped table-bordered">
+                                                                  <thead>
+                                                                      <tr>
+                                                                          <th>Clock In Time</th>
+                                                                          <th>Clock Out Time</th>
+                                                                          <th>IP Address</th>
+                                                                          <th>Hours</th>
+                                                                          <th>Action</th>
+                                                                      </tr>
+                                                                  </thead>
+                                                                  <tbody>
+                                                                  <?php
+                                                                if (!empty($time_info)){
+                                                                  foreach ($time_info as $key => $v_mytime){
+                                                                    $vtimeinfo = $v_mytime[0];
+                                                                    if ($vtimeinfo->attendance_status == 1) 
+                                                                    {
+                                                                      $this->db->where(array('attendance_id' => $vtimeinfo->attendance_id));
+                                                                      $timeinfo = $this->db->get('tbl_clock')->result();
+                                                                      foreach ($timeinfo as $mytime){
+
+                                                                          ?>
+                                                                              <tr>
+                                                                              <td colspan="5"><?= $key ?></td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                              <td><?=$mytime->clockin_time?></td>
+                                                                              <td>
+                                                                                <?php
+                                                                                  if (empty($mytime->clockout_time)) {
+                                                                                      echo '<span class="text-danger">' . lang("currently_clock_in") . '<span>';
+                                                                                  } else {
+                                                                                      echo $mytime->clockout_time;
+                                                                                  }
+                                                                                ?>
+                                                                              </td>
+                                                                              <td><?= $mytime->ip_address ?></td>
+                                                                              <td><?php
+                                                                                  if (!empty($mytime->clockout_time)) {
+                                                                                      // calculate the start timestamp
+                                                                                      $startdatetime = strtotime($vtimeinfo->date_in . " " . $mytime->clockin_time);
+                                                                                      // calculate the end timestamp
+                                                                                      $enddatetime = strtotime($vtimeinfo->date_out . " " . $mytime->clockout_time);
+                                                                                      // calulate the difference in seconds
+                                                                                      $difference = $enddatetime - $startdatetime;
+                                                                                      $years = abs(floor($difference / 31536000));
+                                                                                      $days = abs(floor(($difference - ($years * 31536000)) / 86400));
+                                                                                      $hours = abs(floor(($difference - ($years * 31536000) - ($days * 86400)) / 3600));
+                                                                                      $mins = abs(floor(($difference - ($years * 31536000) - ($days * 86400) - ($hours * 3600)) / 60));#floor($difference / 60);
+                                                                                      $total_mm += $mins;
+                                                                                      $total_hh += $hours;
+                                                                                      echo $hours . " : h " . $mins . " m";
+                                                                                  }
+                                                                                  ?>
+                                                                                </td>
+                                                                              <td>
+                                                                                      <div class="">
+                                                                                          <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                                                                          <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
+                                                                                          <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
+                                                                                          </div>
+                                                                              </td>
+                                                                              </tr>
+
+                                                                          <?php
+                                                                      }
+                                                                      }else if ($vtimeinfo->attendance_status == 0){
+                                                                        echo 'Absent';
+                                                                      }
+                                                                      elseif ($vtimeinfo->attendance_status == 3){
+                                                                        echo 'On leave';
+                                                                      }
+                                                                  }
+                                                                }    
+                                                                  ?>
+                                                                  </tbody>
+                                                              </table>
                                                           </div>
                                                       </div>
+                                                  
+                                                      
                                                     </div>
                                                   <?php
                                                 }
