@@ -3,6 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Performance extends CI_Controller {
 
+	function __construct(){
+		parent::__construct();
+		$this->load->model('AttendanceModel','ATND');
+	}
 	public function index()
 	{
 		echo 'Working';
@@ -15,8 +19,9 @@ class Performance extends CI_Controller {
 	}
 	public function giveAppraisal()
 	{
+		$data['Employee']=$this->ATND->fetchEmployee();
 		$this->load->view('layout/header');
-		$this->load->view("pages/give_appraisal");
+		$this->load->view("pages/give_appraisal",$data);
 		$this->load->view("layout/footer");
 	}
 }

@@ -264,19 +264,12 @@ $myId=$session[0]->user_id;
              <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-dollar-sign"></i> <span>Payroll</span></a>
                 <ul class="dropdown-menu">
-<<<<<<< HEAD
-                  <li><a class="nav-link" href="<?=base_url('Payroll/salaryTemplate')?>"><span><i class="far fa-money-bill-alt"></i></span>Salary Template</a> </li>
-                  <li><a class="nav-link" href="<?=base_url('Payroll/hourlyTemplate')?>"><span>  <i class="far fa-clock"></i></span>Hourly Template</a></li>
-                  <li><a class="nav-link" href="<?=base_url('Payroll/manageSalary')?>"><span><i class="fas fa-dollar-sign"></i></span>Manage Salary</a></li>
-                  <li><a class="nav-link" href="<?=base_url('Payroll/empSalary')?>"><span><i class="fas fa-user-secret"></i></span>Employee Salary List</a></li>
-                  <li><a class="nav-link" href="<?=base_url('Payroll/makePayment')?>"><span><i class="fas fa-tasks"></i></span>Make Payment</a></li>
-=======
+
                   <li><a class="nav-link" href="<?=base_url('Payroll/salaryTemplate')?>"><span><i class="far fa-money-bill-alt"></i></span>Salary Template  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
                   <li><a class="nav-link" href="<?=base_url('Payroll/hourlyTemplate')?>"><span>  <i class="far fa-clock"></i></span>Hourly Template  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
                   <li><a class="nav-link" href="<?=base_url('Payroll/manageSalary')?>"><span><i class="fas fa-dollar-sign"></i></span>Manage Salary  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
                   <li><a class="nav-link" href="<?=base_url('Payroll/empSalary')?>"><span><i class="fas fa-user-secret"></i></span>Employee Salary List  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
                   <li><a class="nav-link" href="<?=base_url('Payroll/makePayment')?>"><span><i class="fas fa-tasks"></i></span>Make Payment  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
->>>>>>> fb0a2d42878a92c13bd4f17d5332b471d9a5416d
                   <li><a class="nav-link" href="<?=base_url('Payroll/generatePaySlip')?>"><span><i class="fas fa-list"></i></span>Generate Payslip</a></li>
                   <li><a class="nav-link" href="<?=base_url('Payroll/payrollSummary')?>"><span><i class="fas fa-camera-retro"></i></span>Payroll Summary</a></li>
                   <li><a class="nav-link" href="<?=base_url('Payroll/advanceSalary')?>"><span><i class="fab fa-cc-mastercard"></i></span>Advance Salary</a></li>
@@ -288,9 +281,9 @@ $myId=$session[0]->user_id;
                 </ul>
             </li>
              <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe-europe"></i> <span>Recruitment</span></a>
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe-europe"></i> <span>Recruitment <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></span></a>
                 <ul class="dropdown-menu">
-                  <li><a class="nav-link" href="<?=base_url('Recruitment/jobsPosted')?>"><span> <i class="fas fa-ticket-alt"></i></span>Jobs Posted</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Recruitment/jobsPosted')?>"><span> <i class="fas fa-ticket-alt"></i></span>Jobs Posted </a></li>
                   <li><a class="nav-link" href="<?=base_url('Recruitment/jobsApplications')?>"><span><i class="far fa-compass"></i></span>Jobs Application</a></li>
                 </ul>
             </li>
@@ -315,15 +308,10 @@ $myId=$session[0]->user_id;
                 
                 </ul>
             </li>
-<<<<<<< HEAD
-            <li><a class="nav-link" href=""><i class="fab fa-telegram-plane"></i> <span>Leave Management</span></a></li>
-            <li><a class="nav-link" href="<?=base_url('Announcement/')?>"><i class="fas fa-bullhorn"></i> <span>Announcements</span></a></li>
-            <li><a class="nav-link" href="<?=base_url('Backupdatabase/backupDatabase')?>"><i class="fas fa-database"></i> <span>Backup Database</span></a></li>
-=======
+
             <li><a class="nav-link" href="<?=base_url('Leavemanagement/index')?>"><i class="fab fa-telegram-plane"></i> <span>Leave Management</span> <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
             <li><a class="nav-link" href="<?=base_url('Announcement/')?>"><i class="fas fa-bullhorn"></i> <span>Announcements </span>  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
             <li><a class="nav-link" href=""><i class="fas fa-database"></i> <span>Backup Database</span></a></li>
->>>>>>> 5b004b83d71ed2a5c757089baba38689aa7b2c84
              <li><a class="nav-link" href=""><i class="fas fa-envelope"></i> <span>Private Chat </span></a></li>
             </ul>
         </aside>
