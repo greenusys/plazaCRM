@@ -90,11 +90,11 @@
               <table id="example" class="display nowrap" style="width:100%">
                         <thead>
                             <tr>
-                                <th>From Account</th>
-                                <th>To Account</th>
-                                <th>Ammount</th>
                                 <th>Date</th>
-                                <th>Attachment</th>
+                                <th>Accounts</th>
+                                <th>Type</th>
+                                <th>Name/Title</th>
+                                <th>Amount</th>
                                 <th>Action</th>
                             </tr>
                         </thead>

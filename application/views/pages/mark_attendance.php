@@ -44,25 +44,35 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+
+                          <?php
+                            foreach ($Employee as $key => $value) {
+                              # code...
+                              ?>
+                                  <tr>
+                                    <td><input type="checkbox" name=" " class="h_22 form-control"></td>
+                                      <td><?=$value->fullname?></td>
+                                      <td><button class="btn btn-success">Check In</td>
+                                  
+                                  </tr>
+                              <?php
+                            }
+
+                          ?>
+                            
+                            
+                             <!-- <tr>
                               <td><input type="checkbox" name=" " class="h_22 form-control"></td>
                                 <td>Tiger Nixon</td>
                                 <td><button class="btn btn-success">Check In</td>
                             
                             </tr>
-                            
                              <tr>
                               <td><input type="checkbox" name=" " class="h_22 form-control"></td>
                                 <td>Tiger Nixon</td>
                                 <td><button class="btn btn-success">Check In</td>
                             
-                            </tr>
-                             <tr>
-                              <td><input type="checkbox" name=" " class="h_22 form-control"></td>
-                                <td>Tiger Nixon</td>
-                                <td><button class="btn btn-success">Check In</td>
-                            
-                            </tr>
+                            </tr> -->
                         </tbody>
                         <tfoot>
                              <tr>
