@@ -29,7 +29,7 @@ class Leave_Model extends CI_Model
 	}
 	public function fetchLeaveDetails()
 	{
-	    return $this->db->query("select tbl_leave_application.*,tbl_users.*,tbl_leave_category.*,tbl_leave_application.user_id as users,tbl_leave_application.leave_category_id as leavecatid from tbl_leave_application join tbl_users on tbl_users.user_id=tbl_leave_application.user_id  join  tbl_account_details on tbl_account_details.user_id= tbl_users.user_id join tbl_leave_category on tbl_leave_category.leave_category_id=tbl_leave_application.leave_category_id")->result();
+	    return $this->db->query("select tbl_leave_application.*,tbl_users.*,tbl_account_details.*,tbl_leave_category.*,tbl_leave_application.user_id as users,tbl_leave_application.leave_category_id as leavecatid from tbl_leave_application join tbl_users on tbl_users.user_id=tbl_leave_application.user_id  join  tbl_account_details on tbl_account_details.user_id= tbl_users.user_id join tbl_leave_category on tbl_leave_category.leave_category_id=tbl_leave_application.leave_category_id")->result();
 	}
 	public function fetchUserForApplyLeave()
 	{

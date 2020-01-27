@@ -1,4 +1,4 @@
- 
+
       <!-- Main Content -->
      <!--  <div class="main-content">
         <section class="section">
@@ -84,13 +84,29 @@
                           <div class="form-group"> 
                             <select  name="imptask_status" class="form-control " id="imptask_status" style="width: 100%" required="">
                               <option value="" selected="">Select Department</option>
-                              <option value="">IT / Collaborative</option>
-                              <option value="">HR</option>
-                              <option value="">IT</option>
+                                <?php if (!empty($all_department_info)): foreach ($all_department_info as $v_department_info) :
+                                    if (!empty($v_department_info->deptname)) {
+                                        $deptname = $v_department_info->deptname;
+                                    } else {
+                                        $deptname = 'undefined_department';
+                                    }
+                                    ?>
+                                    <option value="<?php echo $v_department_info->departments_id; ?>"
+                                        <?php
+                                        if (!empty($departments_id)) {
+                                            echo $v_department_info->departments_id == $departments_id ? 'selected' : '';
+                                        }
+                                        ?>><?php echo $deptname ?></option>
+                                <?php endforeach; ?>
+                                <?php endif; ?>
                             </select> 
                           </div>
                             <div class='input-group date form-group' id='datetimepicker10'>
-                              <input type='text' class="form-control" />
+                                <input required type="text" value="<?php
+                                if (!empty($payment_month)) {
+                                    echo $payment_month;
+                                }
+                                ?>" class="form-control monthyear" name="payment_month" data-format="yyyy/mm/dd">
                                 <span class="input-group-addon">
                                   <span ><i class="fa fa-calendar"></i></span>
                               </span>
@@ -117,12 +133,88 @@
                           $("#outprint").print();
                       });
                   </script>
+         <?php
+        if (!empty($payment_flag))
+        if (!empty($advance_salary)) {
+            $advance_amount = $advance_salary['advance_amount'];
+        } else {
+            $advance_amount = 0;
+        }
+        if (!empty($total_hours)) {
+            $total_hour = $total_hours['total_hours'];
+            $total_minutes = $total_hours['total_minutes'];
+            if ($total_hour > 0) {
+                $hours_ammount = $total_hour * $employee_info->hourly_rate;
+            } else {
+                $hours_ammount = 0;
+            }
+            if ($total_minutes > 0) {
+                $amount = round($employee_info->hourly_rate / 60, 2);
+                $minutes_ammount = $total_minutes * $amount;
+            } else {
+                $minutes_ammount = 0;
+            }
+            $total_hours_amount = $hours_ammount + $minutes_ammount;
+        }
+        if (!empty($employee_info->basic_salary)) {
+            if (empty($deduction_info)) {
+                $deduction_info = 0;
+            } else {
+                $deduction_info = $deduction_info;
+            }
+            if (empty($allowance_info)) {
+                $allowance_info = 0;
+            } else {
+                $allowance_info = $allowance_info;
+            }
+            if (!empty($overtime_info)) {
+                $total_hour = $overtime_info['overtime_hours'];
+                $total_minutes = $overtime_info['overtime_minutes'];
+                if ($total_hour > 0) {
+                    $hours_ammount = $total_hour * $employee_info->overtime_salary;
+                } else {
+                    $hours_ammount = 0;
+                }
+                if ($total_minutes > 0) {
+                    $amount = round($employee_info->overtime_salary / 60, 2);
+                    $minutes_ammount = $total_minutes * $amount;
+                } else {
+                    $minutes_ammount = 0;
+                }
+                $total_amount = $hours_ammount + $minutes_ammount + $allowance_info;
+            }
+        }
+        if (empty($total_advance)) {
+            $total_advance = 0;
+        }
+        if (empty($deduction_info)) {
+            $deduction_info = 0;
+        }
+        if (empty($total_award)) {
+            $total_award = 0;
+        }
+        if (empty($total_allowance)) {
+            $total_allowance = 0;
+        }
+        if (empty($total_amount)) {
+            $total_amount = 0;
+        }
+        if (empty($v_employee->basic_salary)) {
+            $basic_salary = 0;
+        } else {
+            $basic_salary = $v_employee->basic_salary;
+        }
+        ?>
               <div class="row mt-4">
                 <div class="col-md-3">
                    <div class="card">
                      <div class="card-header border-bottom py-1">
                         <div class="col-md-12">
-                          <span><strong>Payment For Month Year</strong></span> 
+                          <span><strong>Payment For Month Year<?php
+                                        if (!empty($payment_month)) {
+                                            echo ' <span class="text-danger">' . date('F Y', strtotime($payment_month)) . '</span>';
+                                        }
+                                        ?></strong></span> 
                          </div>
                           <!-- <div class="col-md-6 text-right bg-red text-white"><i class="fas fa-print"></i></div> -->
                       </div>
@@ -130,30 +222,63 @@
                         <form method="POST">
                            
                               <label> Gross Salary
-                                <input class="form-control" type="text" disabled="" name="">
+                                <input type="text" name="house_rent_allowance" disabled value="<?php
+
+                                if (!empty($total_hours_amount)) {
+                                    echo $gross = round($total_hours_amount, 2);
+                                    $deduction_info = 0;
+                                } else {
+                                    echo $gross = $employee_info->basic_salary + $total_amount;
+                                }
+                                ?>" class="salary form-control">
                               </label>
                            
                               <label > Total Deduction
-                                  <input class="form-control" type="text" disabled="" name="">
+                                <input type="text" name="" disabled value="<?php
+                                echo $deduction = $deduction_info + $advance_amount;
+                                ?>" class="salary form-control">
                               </label>
                       
                               <label> Net Salary
-                                  <input class="form-control" type="text" disabled="" name="">
+                                <input type="text" id="net_salary" name="other_allowance" disabled value="<?php
+                                echo $net_salary = $gross - $deduction;
+                                ?>" class="salary form-control">
                               </label>
                                 <label> Fine Deduction
-                                  <input class="form-control" type="text" name="">
+                                <input type="text" data-parsley-type="number" name="fine_deduction" id="fine_deduction"
+                                       value="<?php
+                                       if (!empty($check_salary_payment->fine_deduction)) {
+                                           echo $check_salary_payment->fine_deduction;
+                                       }
+                                       ?>" class="form-control">
                               </label>
                               <label> Payment Amount
-                                  <input class="form-control" type="text" disabled="" name="">
+                                <input type="text" disabled=""
+                                       value="<?php echo $net_salary + $total_award; ?>"
+                                       class="payment_amount form-control">
                               </label>  
                               <label>Payment Method <sub class="text-danger">*</sub></label>
                               <select class="form-control" name="">
                                 <option selected="" disabled="">Select Payment Method</option>
-                                <option value="" >Paypal</option>
-                                <option value="">Online</option>
+                                    <?php
+                                    $all_payment_method = $this->db->get('tbl_payment_methods')->result();
+                                    if (!empty($all_payment_method)) {
+                                        foreach ($all_payment_method as $v_payment_method) {
+                                            ?>
+                                            <option<?php
+                                            if (!empty($check_salary_payment->payment_type)) {
+                                                echo $check_salary_payment->payment_type == $v_payment_method->payment_methods_id ? 'selected' : '';
+                                            }
+                                            ?> value="<?= $v_payment_method->payment_methods_id; ?>"><?= $v_payment_method->method_name; ?></option>
+                                        <?php }
+                                    } ?>
                               </select>
                                <label> Comments 
-                                  <input class="form-control" type="text" disabled="" name="">
+                                <input type="text" name="comments" value="<?php
+                                if (!empty($check_salary_payment->comments)) {
+                                    echo $check_salary_payment->comments;
+                                }
+                                ?>" class=" form-control">
                               </label>
                               <div class="d-flex"> 
                                <label class="float-left"> Deduct From Account <i class="fas fa-question-circle" title="This ammount will be deduct from your account. This account information only admin can see it."></i></label>
@@ -163,6 +288,15 @@
                                 <label>Select Accounts</label>
                                 <select  name="imptask_status" class="form-control " id="select_accounts" style="width: 100%" required="">
                                   <option value="" selected="">Select Accounts</option>
+                                                                          <?php
+                                        $account_info = $this->db->order_by('account_id', 'DESC')->get('tbl_accounts')->result();
+                                        if (!empty($account_info)) {
+                                            foreach ($account_info as $v_account) : ?>
+                                                <option
+                                                    value="<?= $v_account->account_id ?>"<?= (config_item('default_account') == $v_account->account_id ? ' selected="selected"' : '') ?>><?= $v_account->account_name ?></option>
+                                            <?php endforeach;
+                                        }
+                                        ?>
                                 </select> 
                               </div>
                               <a href="javascript:void(0)" data-toggle="modal" data-target="#exampleModal" data-toggle="tooltip"><i class="fas fa-plus"></i>Add New</a>
@@ -198,20 +332,23 @@
                          <table id="example" class="display nowrap " style="width:100%">
                               <thead>
                                   <tr>
-                                      <th>EMP ID</th>
-                                      <th>Name</th>
-                                      <th>Salary Type </th>
-                                      <th>Basic Salary</th>
+                                      <th>Month</th>
+                                      <th>Date</th>
+                                      <th>Gross Salary</th>
+                                      <th>Total Deduction</th>
                                       <th>Net Salary</th>
+                                      <th>Fine Deduction</th>
+                                      <th>Amount</th>
                                       <th>Details</th>
-                                      <th>  Status </th>
-                                      <th>Action</th>
                                   </tr>
                               </thead>
                               <tbody>
-                            
+                            <?php
+                            foreach ($employee_info as $v_emp_info){
+                              print_r($v_emp_info);
+                            ?>
                                     <tr>
-                                      <td>Tiger Nixon</td>
+                                      <td></td>
                                       <td>2011/04/25</td>
                                       <td>Edinburgh</td>
                                       <td>Edinburgh</td>
@@ -224,7 +361,8 @@
                                         </span>
                                       </td>
                                   </tr>
-                                     <tr>
+                                <?php } ?>
+<!--                                      <tr>
                                       <td>Tiger Nixon</td>
                                       <td>2011/04/25</td>
                                       <td>Edinburgh</td>
@@ -243,7 +381,7 @@
                                       <td>2011/04/25</td>
                                       <td>Edinburgh</td>
                                       <td>Edinburgh</td>
-                                  </tr>
+                                  </tr> -->
                               </tbody>
                               <tfoot>
                                   <tr>
@@ -287,14 +425,14 @@
           </div>
           <div class="line"></div>
         <div class="modal-body">
-            <form method="POST">
+            <form id="add_account">
                <div class="form-group">
                   <div class="row">
                     <div class="offset-1 col-sm-3">
                       <label for="exampleInputEmail1">Account Name <sup class="text-danger">*</sup> </label>
                     </div>
                     <div class="col-sm-6">
-                      <input type="text" class="form-control" id=""  placeholder="Account Name" required="">
+                      <input type="text" name="account_name" class="form-control" id=""  placeholder="Account Name" required="">
                     </div>
                   </div>
                 </div>
@@ -304,7 +442,7 @@
                       <label for="exampleInputEmail1">Description <sup class="text-danger">*</sup> </label>
                     </div>
                     <div class="col-sm-6">
-                      <textarea class="form-control" id=""  placeholder="" ></textarea>
+                      <textarea class="form-control" name="description" id=""  placeholder="" ></textarea>
                     </div>
                   </div>
                 </div>
@@ -314,12 +452,13 @@
                       <label for="exampleInputEmail1">Initial Balance<sup class="text-danger">*</sup> </label>
                     </div>
                     <div class="col-sm-6">
-                      <input type="text" class="form-control" id=""  placeholder="Initial Balance" required="">
+                      <input type="text" name="balance" class="form-control" id=""  placeholder="Initial Balance" required="">
+                      <input type="hidden" name="permission" value="all">
                     </div>
                   </div>
                 </div>
                  <div class="modal-footer border-top-0 modal-butn justify-content-center">
-                    <button type="button" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                     <span type="button" class="ml-2 btn btn-default">close</span>
                   </div>
             </form>
@@ -545,3 +684,30 @@
       </div>
     </div>
   </div>
+<script type="text/javascript">
+$(document).on('submit','#add_account',function(e){
+e.preventDefault();
+var formData= new FormData($(this)[0]);
+$.ajax({
+    url:"<?=base_url()?>Payroll/add_account",
+     type:"post",
+     data:formData,
+     contentType:false,
+     processData:false,
+     cache:false,
+    success:function(response)
+    {
+      var response=JSON.parse(response);
+      if(response.status==1){
+        var html='';
+        var html='<option selected value='+response.id+'>'+response.name+'</option>';
+        $('#select_accounts').append(html);
+        swal("Account Added Successfully", "Success", "success");
+      }
+      else if(response.status=="0"){
+        swal('Account Already Exists', "Account Already Exists", "error");
+      }
+    }
+});
+})  
+</script>

@@ -192,12 +192,10 @@
                        <table id="example" class="display nowrap " style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>EMP ID</th>
+                                    <th>SL</th>
                                     <th>Name</th>
-                                    <th>Amount </th>
-                                    <th>Deduct Month</th>
-                                    <th>Request Date</th>
-                                   
+                                    <th>Overtime Date </th>
+                                    <th>Overtime Hour</th>
                                     <th>Status </th>
                                     <th>Action</th>
                                 </tr>
@@ -210,41 +208,17 @@
                                     <td>Edinburgh</td>
                                     <td>Edinburgh</td>
                                     <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                             
-                                </tr>
-                                   <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                                    <td>Edinburgh</td>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                             
-                                </tr>
-                                   <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                                    <td>Edinburgh</td>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                                  
+                                    <td>2011/04/25</td>       
                                 </tr>
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>EMP ID</th>
+                                    <th>SL</th>
                                     <th>Name</th>
-                                    <th>Amount </th>
-                                    <th>Deduct Month</th>
-                                    <th>Request Date</th>
+                                    <th>Overtime Date </th>
+                                    <th>Overtime Hour</th>
                                     <th>Status </th>
                                     <th>Action</th>
-
                                 </tr>
                             </tfoot>
                         </table>
@@ -268,18 +242,26 @@
           </div>
           <div class="line"></div>
         <div class="modal-body">
-            <form>
+            <form id="add_overtime">
             <div class="form-group">
               <div class="row">
                 <div class="offset-1 col-sm-3">
                   <label for="exampleInputEmail1">Employee <sup class="text-danger">*</sup></label>
                 </div>
                 <div class="col-sm-6">
-                  <select  name="imptask_status" class="form-control " id="imptask_status" style="width: 100%" required="">
+                  <select  name="user_id" class="form-control " id="imptask_status" style="width: 100%" required="">
                     <option value="" selected="">Select Department</option>
-                    <option value="">IT / Collaborative</option>
-                    <option value="">HR</option>
-                    <option value="">IT</option>
+                    <?php
+                    foreach ($all_employee as $emp=>$val) {
+                    ?>
+                      <optgroup label="<?=$emp?>">
+                        <?php
+                        foreach ($val as $value) {
+                        ?>
+                        <option value="<?=$value->user_id?>"><?=$value->fullname?></option>
+                      <?php } ?>
+                      </optgroup>
+                    <?php } ?>
                   </select> 
                 </div>
               </div>
@@ -291,7 +273,7 @@
                 </div>
                 <div class="col-sm-6">
                   <div class='input-group date datetimepicker1' id='datetimepicker1'>
-                      <input type='text' class="form-control" />
+                      <input type='text' class="form-control" name="overtime_date" />
                       <span class="input-group-addon ">
                           <span ><i class="fa fa-calendar"></i></span>
                       </span>
@@ -306,8 +288,8 @@
                   <label for="exampleInputEmail1">Ocertime Hour <sup class="text-danger">*</sup>  </label>
                 </div>
                 <div class="col-sm-6">
-                  <div class='input-group date datetimepicker3' id='datetimepicker3'>
-                      <input type='text' class="form-control" />
+                  <div class='input-group date datetimepicker3' id='datetimepicker3' >
+                      <input type='text' name="overtime_hours" class="form-control" />
                       <span class="input-group-addon ">
                           <span ><i class="far fa-clock "></i></span>
                       </span>
@@ -321,39 +303,57 @@
                   <label for="exampleInputEmail1">Notes  </label>
                 </div>
                 <div class="col-sm-6">
-                  <textarea type="number" class="form-control" id=""  placeholder="Reason" rows="5"></textarea>
+                  <textarea class="form-control" id=""  placeholder="Reason" name="notes" rows="5"></textarea>
+                  <input type="hidden" value="approved" name="status">
                 </div>
               </div>
             </div>
+           <button type="submit" class="btn btn-primary">Save</button>
           </form>
         </div>
           <div class="modal-footer border-top-0 modal-butn">
-           <button type="button" class="btn btn-primary">Save</button>
             <button type="button" class="btn btn-secondary">close</button>
           </div>
       </div>
     </div>
   </div>
-
-
-<!-- <script type="text/javascript">
-    $(function () {
-        $('.datetimepicker10').datetimepicker({
-            viewMode: 'years',
-            format: 'MM/YYYY'
-        });
-    });
-</script> -->
+<script type="text/javascript">
+$(document).on('submit','#add_overtime',function(e){
+e.preventDefault();
+var formData= new FormData($(this)[0]);
+$.ajax({
+    url:"<?=base_url()?>Payroll/add_overtime",
+     type:"post",
+     data:formData,
+     contentType:false,
+     processData:false,
+     cache:false,
+    success:function(response)
+    {
+      if(response==1){
+        swal("Overtime Added Successfully", "Success", "success");
+        $('#add_overtime').trigger("reset");
+      }
+      else{
+        swal('Error', "Error", "error");
+        $('#add_overtime').trigger("reset");
+      }
+    }
+});
+})  
+</script>
   <script type="text/javascript">
       $(function () {
           $('#datetimepicker3').datetimepicker({
-              format: 'LT'
+               format: 'HH:mm'
           });
       });
   </script>
      <script type="text/javascript">
       $(function () {
-          $('#datetimepicker1').datetimepicker();
+          $('#datetimepicker1').datetimepicker({
+             format: 'YYYY-MM-DD',
+          });
       });
   </script>
 <script>

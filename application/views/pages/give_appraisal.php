@@ -68,12 +68,31 @@
                         </div>
                         <div class="col-md-4">
                           <div class="form-group"> 
-                            <select  name="imptask_status" class="form-control " id="imptask_status" style="width: 100%" required="">
-                              <option value="" selected="">Select Employee</option>
-                              <option value="">IT / Collaborative</option>
-                              <option value="">HR</option>
-                              <option value="">IT</option>
+                            <select  name="imptask_status" class="form-control " name="client_id" id="imptask_status" style="width: 100%" required="">
+                              <option selected="" disabled="">Select Employee</option>
+                                    <?php
+                                      foreach($Employee as $empD){
+                                        // /print_r($empD);
+                                        ?>
+                                           <option value="<?=$empD->user_id?>"><?=$empD->fullname?> (<?=$empD->designations ?>) </option>   
+                                        <?php
+                                      }
+                                    ?>
                             </select> 
+
+
+                            <!-- <select name="client_id" class="form-control" id="emply">
+                                    <option selected="" disabled="">Select Employee</option>
+                                    <?php
+                                      foreach($Employee as $empD){
+                                        // /print_r($empD);
+                                        ?>
+                                           <option value="<?=$empD->user_id?>"><?=$empD->fullname?> (<?=$empD->designations ?>) </option>   
+                                        <?php
+                                      }
+                                    ?>
+                        
+                                </select> -->
                           </div>
                           <div class='input-group date form-group' id='datetimepicker10'>
                               <input type='text' class="form-control" />

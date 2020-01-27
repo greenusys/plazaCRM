@@ -18,8 +18,15 @@
                       <div class="col-sm-7">
                           <div class="input-group">
                                 <select name="client_id" class="form-control" id="emply">
-                                    <option selected="" disabled="">Select Employee</option>
-                                    <option value="1">IT/Collaborative</option>
+                                    <option selected="" disabled="" value="0">Select Employee</option>
+                                    <?php
+                                      foreach($Employee as $empD){
+                                        // /print_r($empD);
+                                        ?>
+                                           <option value="<?=$empD->user_id?>"><?=$empD->fullname?> (<?=$empD->designations ?>) </option>   
+                                        <?php
+                                      }
+                                    ?>
                                
                                 </select> 
                           </div>
