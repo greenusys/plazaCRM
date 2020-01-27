@@ -24,5 +24,11 @@ class Performance extends CI_Controller {
 		$this->load->view("pages/give_appraisal",$data);
 		$this->load->view("layout/footer");
 	}
+	public function indicator()
+	{
+		$this->load->view('layout/header');
+		$this->load->view("pages/indicator");
+		$this->load->view("layout/footer");
+	}
 }
 ?>

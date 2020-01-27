@@ -302,7 +302,7 @@ $myId=$session[0]->user_id;
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fab fa-dribbble"></i> <span>Performance</span></a>
                 <ul class="dropdown-menu">
-                  <li><a class="nav-link" href=""><span> <i class="fas fa-random"></i></span>Indicator</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Performance/indicator')?>"><span> <i class="fas fa-random"></i></span>Indicator</a></li>
                   <li><a class="nav-link" href="<?=base_url('Performance/giveAppraisal')?>"><span><i class="fas fa-plus"></i></span>Give Appraisal</a></li>
                   <li><a class="nav-link" href="<?=base_url('Performance/performanceReport')?>"><span><i class="far fa-calendar"></i></span>Performance Report</a></li>
                 
