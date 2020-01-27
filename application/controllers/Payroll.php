@@ -367,9 +367,38 @@ class Payroll extends CI_Controller {
 
 	public function generatePaySlip()
 	{
+		if (isset($_POST['dept_id']) && isset($_POST['sal_date'])) {
+		$date=$_POST['sal_date'];
+		$dept_id=$_POST['dept_id'];
+		$department=$this->Payroll_model->fetch_departments_data($dept_id);
+		foreach ($department as $dept) {
+			$user_id=$dept->user;
+			$check_payment_status=$this->Payroll_model->check_user_payment($user_id,$date);
+			if(count($check_payment_status)>0){
+				$dept->salary_paid="true";
+				$dept->search_date=$date;
+			}
+			else{
+				$dept->salary_paid="false";
+				$dept->search_date=$date;
+			}
+			$arr[]=$dept;
+		}
+		$data['table_data']=$arr;
+		$data['departments']=$this->Payroll_model->fetch_departments();
+		//print_r($data['table_data']);
 		$this->load->view('layout/header');
-		$this->load->view("pages/generate_payslip.php");
+		$this->load->view("pages/make_payment",$data);
 		$this->load->view("layout/footer");
+		}
+		else{
+		$data['table_data']=array();
+		$data['departments']=$this->Payroll_model->fetch_departments();
+		//print_r($data['table_data']);
+		$this->load->view('layout/header');
+		$this->load->view("pages/make_payment",$data);
+		$this->load->view("layout/footer");
+		}
 	}
 	public function payrollSummary()
 	{

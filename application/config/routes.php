@@ -55,3 +55,4 @@ $route['translate_uri_dashes'] = FALSE;
 $route['Payroll/manageSalary'] = 'Payroll/manageSalary';
 $route['Payroll/manageSalary/(:num)'] = 'Payroll/fetch_department_data';
 $route['Payroll/makePayment/(:any)/(:any)/(:any)'] = "Payroll/make_payment_pay/$1/$2/$3";
+$route['Payroll/generatePaySlip/(:any)/(:any)/(:any)'] = "Payroll/make_payment_pay/$1/$2/$3";
