@@ -75,7 +75,7 @@
 
 
                 <div class="p-2">
-                <form  method="post ">
+                <form  method="post" action="<?=base_url('Attendance/getTimeHistory')?>">
                   <div class="form-group pt-2">
                     <div class="row">
                       <div class="offset-1 col-sm-2 text-right">
@@ -84,8 +84,8 @@
                       <div class="col-sm-5">
                       
                           <div class="input-group">
-                                <select name="client_id" class="form-control" id="emply">
-                                    <option selected="" disabled="">Select Employee</option>
+                                <select name="emp_id" class="form-control" id="emply">
+                                    <option selected="" disabled="" value="0">Select Employee</option>
                                     <?php
                                       foreach($Employee as $empD){
                                         // /print_r($empD);
@@ -107,6 +107,22 @@
             </div>
           </div>
           </div>
+          <!-- <script type="text/javascript">
+            $(document).on('change','#emply',function(){
+              var userIdd=$(this).val();
+              $.ajax({
+
+              });
+            });
+          </script> -->
+          <!-- <?php
+            $current_year=date('Y');
+            for($i=2020; $i<=$current_year; $i++){
+              ?>
+                  <a class="nav-item nav-link col-md-1 p-1 tab_year" id="nav-profile-tab" data-toggle="tab" href="#nav-<?=$i?>" role="tab" aria-controls="nav-profile" aria-selected="false"><?=$i?></a>
+              <?php
+            }
+          ?> -->
           <div class="row mt-4">
             <div class="col-md-12">
               <div class="card p-2">
@@ -123,119 +139,171 @@
                     <div class="col-md-12">
                         <nav>
                             <div class="nav nav-tabs border-0 nav-fill row" id="nav-tab" role="tablist">
-                                <a class="nav-item nav-link active col-md-1 tab_year p-1" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">2019</a>
-                                <a class="nav-item nav-link col-md-1 p-1 tab_year" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">2020</a>
+                               <?php
+                                  if (!empty($mytime_info))
+                                  {
+                                    foreach ($mytime_info as $year => $v_time_info)
+                                    { 
+                                      if (!empty($v_time_info))
+                                      { 
+                                        if ($year == $active) {
+                                            $cls="active";
+                                        }else{
+                                          $cls="";
+                                        }
+                                      ?>
+                                      <!-- <li role="presentation" class="<?php
+                                      
+                                      ?>"> -->
+                                      <a class="nav-item nav-link col-md-1 p-1 tab_year <?=$cls?>" id="nav-profile-tab" data-toggle="tab" href="#nav-<?=$year?>" role="tab" aria-controls="nav-profile" aria-selected="false"><?=$year?></a>
+                                      <?php 
+                                      } 
+                                    }
+                                  }
+                                ?>
                               
+                              
+                                
+
                             </div>
                         </nav>
+
+                      
                         <div class="tab-content" id="nav-tabContent">
-                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                              <div class="p-2">
-                  <div class="accordion" id="accordionExample">
-        <div class="card mt-2">
-            <div class="card-header" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true">     
-                <span class="title pl-3">Week : 1 </span>
-                <span class="accicon"><i class="fas fa-angle-down rotate-icon"></i></span>
-            </div>
-            <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
-                <div class="card-body">
-                   <table class=" table table-stripped table-bordered">
-                      <thead>
-                        <tr>
-                            <th>Clock In Time</th>
-                            <th>Clock Out Time</th>
-                            <th>IP Address</th>
-                            <th>Hours</th>
-                            <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td colspan="5">Date In : 01.03.2020, Date Out : 01.17.2020</td>
-                        </tr>
-                        <tr>
-                          <td>08:30</td>
-                          <td>08:31</td>
-                          <td>103.99.15.182</td>
-                          <td>0 : 0 m</td>
-                          <td>
-                                  <div class="">
-                                      <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                      <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                       <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
+                          <?php
+                            if (!empty($mytime_info))
+                            {
+                              foreach ($mytime_info as $year => $v_time_info)
+                              { 
+                                if (!empty($v_time_info))
+                                { 
+                                  if ($year == $active) {
+                                      $cls="active";
+                                  }else{
+                                    $cls="d-none";
+                                  }
+                                  ?>
+
+                                    <div class="tab-pane fade show active" id="nav-<?=$year?>" role="tabpanel" aria-labelledby="nav-home-tab">
+                                      <div class="p-2">
+                                        <div class="accordion" id="accordionExample">
+                                          <?php
+                                            if (!empty($v_time_info)){
+                                              foreach ($v_time_info as $week => $time_info){
+                                                if (!empty($time_info)){
+                                                  if($week==date('W')){
+                                                    $show="show";
+                                                  }else{
+                                                    $show="";
+                                                  }
+
+                                                  // print_r( $time_info);
+                                                  ?>
+                                                    <div class="card mt-2">
+                                                      <div class="card-header" data-toggle="collapse" data-target="#collapse<?=$week?>" aria-expanded="true">     
+                                                          <span class="title pl-3">Week : <?=$week?></span>
+                                                          <span class="accicon"><i class="fas fa-angle-down rotate-icon"></i></span>
+                                                      </div>
+
+                                                      <div id="collapse<?=$week?>" clock_id="" class="collapse <?=$show?>" data-parent="#accordionExample">
+                                                          <div class="card-body">
+                                                              <table class=" table table-stripped table-bordered">
+                                                                  <thead>
+                                                                      <tr>
+                                                                          <th>Clock In Time</th>
+                                                                          <th>Clock Out Time</th>
+                                                                          <th>IP Address</th>
+                                                                          <th>Hours</th>
+                                                                          <th>Action</th>
+                                                                      </tr>
+                                                                  </thead>
+                                                                  <tbody>
+                                                                  <?php
+                                                                if (!empty($time_info)){
+                                                                  foreach ($time_info as $key => $v_mytime){
+                                                                    $vtimeinfo = $v_mytime[0];
+                                                                    if ($vtimeinfo->attendance_status == 1) 
+                                                                    {
+                                                                      $this->db->where(array('attendance_id' => $vtimeinfo->attendance_id));
+                                                                      $timeinfo = $this->db->get('tbl_clock')->result();
+                                                                      foreach ($timeinfo as $mytime){
+
+                                                                          ?>
+                                                                              <tr>
+                                                                              <td colspan="5"><?= $key ?></td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                              <td><?=$mytime->clockin_time?></td>
+                                                                              <td>
+                                                                                <?php
+                                                                                  if (empty($mytime->clockout_time)) {
+                                                                                      echo '<span class="text-danger">' . lang("currently_clock_in") . '<span>';
+                                                                                  } else {
+                                                                                      echo $mytime->clockout_time;
+                                                                                  }
+                                                                                ?>
+                                                                              </td>
+                                                                              <td><?= $mytime->ip_address ?></td>
+                                                                              <td><?php
+                                                                                  if (!empty($mytime->clockout_time)) {
+                                                                                      // calculate the start timestamp
+                                                                                      $startdatetime = strtotime($vtimeinfo->date_in . " " . $mytime->clockin_time);
+                                                                                      // calculate the end timestamp
+                                                                                      $enddatetime = strtotime($vtimeinfo->date_out . " " . $mytime->clockout_time);
+                                                                                      // calulate the difference in seconds
+                                                                                      $difference = $enddatetime - $startdatetime;
+                                                                                      $years = abs(floor($difference / 31536000));
+                                                                                      $days = abs(floor(($difference - ($years * 31536000)) / 86400));
+                                                                                      $hours = abs(floor(($difference - ($years * 31536000) - ($days * 86400)) / 3600));
+                                                                                      $mins = abs(floor(($difference - ($years * 31536000) - ($days * 86400) - ($hours * 3600)) / 60));#floor($difference / 60);
+                                                                                      $total_mm += $mins;
+                                                                                      $total_hh += $hours;
+                                                                                      echo $hours . " : h " . $mins . " m";
+                                                                                  }
+                                                                                  ?>
+                                                                                </td>
+                                                                              <td>
+                                                                                      <div class="">
+                                                                                          <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                                                                          <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
+                                                                                          <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
+                                                                                          </div>
+                                                                              </td>
+                                                                              </tr>
+
+                                                                          <?php
+                                                                      }
+                                                                      }else if ($vtimeinfo->attendance_status == 0){
+                                                                        echo 'Absent';
+                                                                      }
+                                                                      elseif ($vtimeinfo->attendance_status == 3){
+                                                                        echo 'On leave';
+                                                                      }
+                                                                  }
+                                                                }    
+                                                                  ?>
+                                                                  </tbody>
+                                                              </table>
+                                                          </div>
+                                                      </div>
+                                                  
+                                                      
+                                                    </div>
+                                                  <?php
+                                                }
+                                              }
+                                            } 
+                                          ?>
+                                                  
+                                               
+                                        </div>
+                                      </div>
                                     </div>
-                          </td>
-                        </tr>
-                      </tbody>
-                   </table>
-                </div>
-            </div>
-        </div>
-        <div class="card mt-2">
-            <div class="card-header collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">     
-                <span class="title pl-3">Week : 2</span>
-                <span class="accicon"><i class="fas fa-angle-down rotate-icon"></i></span>
-            </div>
-            <div id="collapseTwo" class="collapse" data-parent="#accordionExample">
-                <div class="card-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                </div>
-            </div>
-        </div>
-        <div class="card mt-2">
-            <div class="card-header collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false">
-                <span class="title pl-3">Week : 3 </span>
-                <span class="accicon"><i class="fas fa-angle-down rotate-icon"></i></span>
-            </div>
-            <div id="collapseThree" class="collapse" data-parent="#accordionExample">
-                <div class="card-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                </div>
-            </div>
-        </div>
-    </div>
-                </div>
-                            </div>
-                            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                              <div class="p-2">
-                <div class="accordion" id="accordionExample">
-        <div class="card mt-2">
-            <div class="card-header" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true">     
-                <span class="title pl-3">Week : 1 </span>
-                <span class="accicon"><i class="fas fa-angle-down rotate-icon"></i></span>
-            </div>
-            <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
-                <div class="card-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                </div>
-            </div>
-        </div>
-        <div class="card mt-2">
-            <div class="card-header collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">     
-                <span class="title pl-3">Week : 2 </span>
-                <span class="accicon"><i class="fas fa-angle-down rotate-icon"></i></span>
-            </div>
-            <div id="collapseTwo" class="collapse" data-parent="#accordionExample">
-                <div class="card-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                </div>
-            </div>
-        </div>
-        <div class="card mt-2">
-            <div class="card-header collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false">
-                <span class="title pl-3">Week : 3</span>
-                <span class="accicon"><i class="fas fa-angle-down rotate-icon"></i></span>
-            </div>
-            <div id="collapseThree" class="collapse" data-parent="#accordionExample">
-                <div class="card-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                </div>
-            </div>
-        </div>
-    </div>
-                </div>
-                            </div>
-                     
+                                  <?php
+                                  }
+                                }
+                              }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -245,7 +313,8 @@
               </div>
             </div>
           </div>
-    
+
+     
         </section>
       </div>
   <script>

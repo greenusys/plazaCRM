@@ -23,40 +23,46 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                              <td>Tittle</td>
-                              <td>61</td>
-                                <td>System Architect</td>
-                                <td>$320,800</td>
-                                <td>2011/04/25</td>
-                                <td>
-                                    <div class="">
-                                      <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                      <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                       <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                    </div>
 
-                                </td>
-                               
-                              
-                            </tr>
+                          <?php
+                          // print_r($EmpAttendanceDetail);
+                            foreach ($EmpAttendanceDetail as $key => $value) {
+                              # code...
+                              ?>
+                                <tr>
+                                  <td><?=$value->user_id?></td>
+                                  <td><?=$value->fullname?></td>
+                                    <td><?=$value->clockin_time?></td>
+                                    <td><?=$value->clockout_time?></td>
+                                    <td>
+                                      <?php
+                                        if($value->attendance_status==1){
+                                          echo 'Present';
+                                        }else if($value->attendance_status==0){
+                                          echo 'Absent';
+                                        }else{
+                                          echo 'On Leave';
+                                        }
+                                      ?>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                          <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                          <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
+                                           <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
+                                        </div>
+
+                                    </td>
+                                   
+                                  
+                                </tr>
+                              <?php
+                            }
+
+                          ?>
                             
-                            <tr>
-                              <td>Tittle</td>
-                              <td>61</td>
-                                <td>System Architect</td>
-                                <td>$320,800</td>
-                                <td>2011/04/25</td>
-                                <td>
-                                    <div class="">
-                                      <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                      <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                       <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                    </div>
-
-                                </td>
-                                
-                            </tr>
+                            
+                          
                               
                         </tbody>
                         <tfoot>
@@ -94,7 +100,30 @@
           <div class="line"></div>
       <div class="modal-body">
         <div>
-          <form method="POST">
+          <script type="text/javascript">
+            $(document).on('submit','#markUserAttendance', function(e){
+              e.preventDefault();
+              var formData = new FormData($(this)[0]);
+              $.ajax({
+                url:"<?=base_url('Attendance/markAttendanceManually')?>",
+                type:"post",
+                cache:false,
+                contentType:false,
+                processData:false,
+                data:formData,
+                success:function(response){
+                  console.log(response);
+                  response=JSON.parse(response);
+                  if(response.code==1){
+                    swal("Attendance Marked Successfully!", "Marked", "success");
+                  }else{
+                    swal("Ooops!", "Failed", "error");
+                  }
+                }
+              });
+            });
+          </script>
+          <form  id="markUserAttendance">
              <div class="form-group pt-2">
                 <div class="row">
                   <div class="offset-1 col-sm-2 text-right">
@@ -102,14 +131,16 @@
                   </div>
                   <div class="col-sm-7">
                       <div class="input-group">
-                          <select name="client_id" class="form-control" id="emply">
-                            <option selected="" disabled="">Select Employee</option>
-                            <option value="1">Opportunities</option>
-                            <option value="2">Bugs</option>
-                            <option value="3">Projects</option>
-                            <option value="1">Leads</option>
-                            <option value="2">Goal Tracking</option>
-                            <option value="3">Tasks</option>
+                          <select name="empl_id" class="form-control" id="emply">
+                            <option selected="" disabled="" value="0">Select Employee</option>
+                                    <?php
+                                      foreach($Employee as $empD){
+                                        // /print_r($empD);
+                                        ?>
+                                           <option value="<?=$empD->user_id?>"><?=$empD->fullname?> (<?=$empD->designations ?>) </option>   
+                                        <?php
+                                      }
+                                    ?>
                           </select>
                       </div>
                   </div>
@@ -119,12 +150,12 @@
                   <div class="col-md-6">
                     <div class="form-group pt-2">
                       <div class="row">
-                        <div class="col-sm-5 text-right">
+                        <div class="col-sm-4 text-right">
                           <label for="exampleInputEmail1" class="pt-2">Date In<sup class="text-danger">*</sup></label>
                         </div>
-                        <div class="col-sm-7">
+                        <div class="col-sm-8">
                           <div class='input-group date datetimepicker1' id='datetimepicker1'>
-                              <input type='text' class="form-control" />
+                              <input type='text' class="form-control" name="date_In" />
                               <span class="input-group-addon">
                                   <span ><i class="fa fa-calendar"></i></span>
                               </span>
@@ -134,12 +165,12 @@
                     </div>
                     <div class="form-group pt-2">
                       <div class="row">
-                        <div class="col-sm-5 text-right">
+                        <div class="col-sm-4 text-right">
                           <label for="exampleInputEmail1" class="pt-2">Date Out<sup class="text-danger">*</sup></label>
                         </div>
-                        <div class="col-sm-7">
+                        <div class="col-sm-8">
                           <div class='input-group date datetimepicker1' id='datetimepicker1'>
-                              <input type='text' class="form-control" />
+                              <input type='text' class="form-control" name="date_Out" />
                               <span class="input-group-addon">
                                   <span ><i class="fa fa-calendar"></i></span>
                               </span>
@@ -151,12 +182,12 @@
                   <div class="col-md-6">
                     <div class="form-group pt-2">
                       <div class="row">
-                        <div class=" col-sm-5 text-right">
+                        <div class=" col-sm-4 text-right">
                           <label for="exampleInputEmail1" class="pt-2">Clock In<sup class="text-danger">*</sup></label>
                         </div>
-                        <div class="col-sm-7">
+                        <div class="col-sm-8">
                           <div class='input-group date datetimepicker3' id='datetimepicker3'>
-                              <input type='text' class="form-control" />
+                              <input type='text' class="form-control" name="clock_In"/>
                               <span class="input-group-addon">
                                   <span ><i class="fa fa-calendar"></i></span>
                               </span>
@@ -166,12 +197,12 @@
                     </div>
                     <div class="form-group pt-2">
                       <div class="row">
-                        <div class=" col-sm-5 text-right">
+                        <div class=" col-sm-4 text-right">
                           <label for="exampleInputEmail1" class="pt-2">Clock Out<sup class="text-danger">*</sup></label>
                         </div>
-                        <div class="col-sm-7">
+                        <div class="col-sm-8">
                           <div class='input-group date datetimepicker3' id='datetimepicker3'>
-                              <input type='text' class="form-control" />
+                              <input type='text' class="form-control" name="clock_Out"/>
                               <span class="input-group-addon">
                                   <span ><i class="fa fa-calendar"></i></span>
                               </span>
