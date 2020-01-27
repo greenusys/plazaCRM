@@ -16,16 +16,18 @@
               <table id="job_post" class="display nowrap" style="width:100%">
                 <thead>
                   <tr>
-                    <th>Job Title</th>
-                    <th>Designation</th>
-                    <th>Vacancy</th>
-                    <th>Last Date</th>
-                    <th>Status</th>
-                    <th>Action</th>
+                    <th class="text-center">Job Title</th>
+                    <th class="text-center">Designation</th>
+                    <th class="text-center">Vacancy</th>
+                    <th class="text-center">Last Date</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($fetchjob as $fetch){?>
+                <?php foreach ($fetchjob as $fetch)
+                {
+                  ?>
                   <tr>
                     <td class="text-capitalize text-center"><?=$fetch->job_title?></td>
                     <td class="text-capitalize text-center"><?=$fetch->designations?></td>
