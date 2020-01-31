@@ -24,11 +24,6 @@ class Performance extends CI_Controller {
 		$this->load->view("pages/give_appraisal",$data);
 		$this->load->view("layout/footer");
 	}
-		public function paySlip()
-	{
-		$this->load->view('layout/header');
-		$this->load->view("pages/payslip");
-		$this->load->view("layout/footer");
-	}
+	
 }
 ?>
