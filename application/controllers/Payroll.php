@@ -12,6 +12,21 @@ class Payroll extends CI_Controller {
 	{
 		echo 'Payroll';
 	}
+    public function paySlip($salary_payment_id)
+    {
+
+        // check existing_recept_no by where
+        // $where = array('user_id' => $userId,'payment_month' => $date);
+         $paysl['payslipdata'] = $this->Payroll_model->generate_paySlip($salary_payment_id);
+         $paysl['salary_details'] = $this->Payroll_model->fetch_salary_payment_details($salary_payment_id);
+         $paysl['salary_deduction'] = $this->Payroll_model->fetch_sal_payment_deduction($salary_payment_id);
+        $this->load->view('layout/header');
+        $this->load->view("pages/payslip",$paysl);
+        $this->load->view("layout/footer");
+    }
+
+
+
 	public function salaryTemplate()
 	{
 		$data['templates']=$this->Payroll_model->fetch_templates();
@@ -242,9 +257,11 @@ class Payroll extends CI_Controller {
 		foreach ($department as $dept) {
 			$user_id=$dept->user;
 			$check_payment_status=$this->Payroll_model->check_user_payment($user_id,$date);
+
 			if(count($check_payment_status)>0){
 				$dept->salary_paid="true";
 				$dept->search_date=$date;
+                $dept->salary_payment_id=$check_payment_status;
 			}
 			else{
 				$dept->salary_paid="false";

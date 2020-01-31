@@ -94,7 +94,9 @@
                                   </tr>
                               </thead>
                               <tbody>
+
                                 <?php
+                               // print_r($table_data);
                                 foreach ($table_data as $main_data) {
                                 ?>
                                     <tr>
@@ -124,9 +126,9 @@
                                         ?>
                                         </td>
                                       <td><?php
-                                      if ($main_data->salary_paid=="true") {
-                                        echo "Generate Payslip";
-                                      }
+                                      if ($main_data->salary_paid=="true") { ?>
+                                          <a class="text-success" href='<?=base_url()?>Payroll/payslip/<?=$main_data->salary_payment_id[0]->salary_payment_id?>'>Generate Payslip</a>
+                                    <?php  }
                                       elseif ($main_data->salary_grade!="") {?>
                                         <a href='<?=base_url()?>Payroll/makePayment/<?=$main_data->user?>/<?=$main_data->search_date?>/<?=$main_data->departments_id?>'>Make Payment</a>
                                       <?php }

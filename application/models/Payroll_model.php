@@ -425,4 +425,38 @@ class Payroll_Model extends MY_Model
         return $result;
     }
 
+        public function generate_paySlip($salary_payment_id)
+    {
+     
+        $this->db->select('tbl_salary_payment.*', FALSE);
+        $this->db->select('tbl_salary_payslip.*', FALSE);
+     
+        //$this->db->select('tbl_salary_payment_allowance.*', FALSE);
+  
+        $this->db->select('tbl_account_details.*, tbl_users.*,tbl_designations.*, tbl_departments.*', FALSE);
+        $this->db->from('tbl_salary_payment');
+         $this->db->join('tbl_users', 'tbl_users.user_id=tbl_salary_payment.user_id');
+        $this->db->join('tbl_account_details', 'tbl_account_details.user_id=tbl_salary_payment.user_id');
+        $this->db->join('tbl_salary_payslip', 'tbl_salary_payslip.salary_payment_id = tbl_salary_payment.salary_payment_id', 'left');
+        $this->db->join('tbl_designations', 'tbl_designations.designations_id = tbl_account_details.designations_id');
+
+        $this->db->join('tbl_departments', 'tbl_designations.departments_id = tbl_departments.departments_id');
+      //  $this->db->join('tbl_salary_payment_allowance', 'tbl_salary_payment_allowance.salary_payment_id = tbl_salary_payment.salary_payment_id', 'left');
+      
+         $data_ary = array('tbl_salary_payment.salary_payment_id' => $salary_payment_id);
+         $this->db->where($data_ary);
+        $result = $this->db->get()->row();
+
+        return $result;
+    }
+
+    public function fetch_salary_payment_details($salary_payment_id){
+           $res = $this->db->query("select * from tbl_salary_payment_details where salary_payment_id = '$salary_payment_id'")->result();
+           return $res;
+    }
+
+     public function fetch_sal_payment_deduction($salary_payment_id){
+           $res = $this->db->query("select * from tbl_salary_payment_deduction where salary_payment_id = '$salary_payment_id'")->result();
+           return $res;
+    }
 }

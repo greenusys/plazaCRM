@@ -82,5 +82,31 @@ class Performance_Model extends MY_Model
 
         return $result;
     }
+    public function create_indicator($data)
+    {
+       $this->db->where($data);
+        $check = $this->db->get("tbl_performance_indicator")->result_array();
+        if(count($check) ==0 )
+        {
+            if($this->db->insert("tbl_performance_indicator",$data)){        
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        } 
+    }
+     public function fetch_indicator($data)
+    {
+        $this->db->select('*', FALSE);
+        $this->db->from('tbl_performance_indicator');
+        $this->db->join('tbl_designations', 'tbl_performance_indicator.designations_id = tbl_designations.designations_id', 'full');
+        $this->db->order_by('performance_indicator_id','Desc');
+        $query_result = $this->db->get();
+        $result = $query_result->result();
+        return $result;
+    }
+
 
 }
