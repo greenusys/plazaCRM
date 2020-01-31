@@ -249,17 +249,14 @@ $myId=$session[0]->user_id;
             <li><a class="nav-link" href="<?=base_url('Projects')?>"><i class="far fa-folder-open"></i><span>Projects  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></span></a></li>
             <li><a class="nav-link" href="<?=base_url('Task')?>"><i class="fas fa-tasks"></i><span>Tasks <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></span></a></li>
             <li><a class="nav-link" href="<?=base_url('Client')?>"><i class="fas fa-users"></i><span>Client  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></span></a></li>
-
-
             <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Attendance</span></a>
-                <ul class="dropdown-menu">
-                  <li><a class="nav-link" href="<?=base_url('Attendance/timeHistory')?>"><span> <i class="far fa-clock"></i></span>Time History</a></li>
-                  <li><a class="nav-link" href="<?=base_url('Attendance/timeChaneRequest')?>"><span> <i class="far fa-calendar-minus"></i></span>TimeChange Request</a></li>
-                  <li><a class="nav-link" href="<?=base_url('Attendance/attendanceReport')?>"><span><i class="far fa-file-alt"></i></span>Attendance Report</a></li>
-                  <li><a class="nav-link" href="<?=base_url('Attendance/markAttendance')?>"><span><i class="far fa-file-alt"></i></span>Mark Attendance</a></li>
-          
-                </ul>
+              <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Attendance</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="<?=base_url('Attendance/timeHistory')?>"><span> <i class="far fa-clock"></i></span>Time History</a></li>
+                <li><a class="nav-link" href="<?=base_url('Attendance/timeChaneRequest')?>"><span> <i class="far fa-calendar-minus"></i></span>TimeChange Request</a></li>
+                <li><a class="nav-link" href="<?=base_url('Attendance/attendanceReport')?>"><span><i class="far fa-file-alt"></i></span>Attendance Report</a></li>
+                <li><a class="nav-link" href="<?=base_url('Attendance/markAttendance')?>"><span><i class="far fa-file-alt"></i></span>Mark Attendance</a></li>
+              </ul>
             </li>
              <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-dollar-sign"></i> <span>Payroll</span></a>

@@ -128,7 +128,7 @@
               </div>
               <div class="col-md-7">
                 <div class="mt-3">
-                  <a href="<?=base_url('Performance/giveAppraisal')?>" class="text-danger" ><i class="fas fa-plus"></i> Give Award</a>
+                  <a href="<?=base_url('Performance/giveAppraisal')?>" class="text-danger" ><i class="fas fa-plus"></i>Give Appraisal</a>
                 </div>
               </div>
             <!--   <div class="col-md-2">
