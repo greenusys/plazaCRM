@@ -21,8 +21,48 @@ class Payroll_Model extends MY_Model
     public function set_template($data){
            $this->db->insert('tbl_salary_template', $data);
            $insert_id = $this->db->insert_id();
-
            return  $insert_id;
+    }
+
+    public function update_template($data,$id){
+            $this->db->where('salary_template_id', $id);
+            $this->db->update('tbl_salary_template', $data);
+            return true;
+    }
+
+    public function update_null_payroll($user){
+            $data=array("salary_template_id"=>null,"hourly_rate_id"=>null);
+            $this->db->where('user_id', $user);
+            $this->db->update('tbl_employee_payroll', $data);
+            return true;
+    }
+
+    public function update_hourly_model($hourly_user,$hourly_index){
+            $data=array("hourly_rate_id"=>$hourly_index);
+            $this->db->where('user_id', $hourly_user);
+            $this->db->update('tbl_employee_payroll', $data);
+            return true;
+    }
+
+    public function update_monthly_model($monthly_user,$monthly_index){
+            $data=array("salary_template_id"=>$monthly_index);
+            $this->db->where('user_id', $monthly_user);
+            $this->db->update('tbl_employee_payroll', $data);
+            return true;
+    }
+
+    public function update_hourly($data){
+        extract($data);
+        $array=array("hourly_grade"=>$hourly_grade,"hourly_rate"=>$hourly_rate);
+        $this->db->where('hourly_rate_id', $hourly_rate_id);
+        $this->db->update('tbl_hourly_rate', $array);
+        return true;
+    }
+
+    public function delete_allowances_deductions($id){
+        $this->db->delete('tbl_salary_allowance',array('salary_template_id'=>$id)); 
+        $this->db->delete('tbl_salary_deduction',array('salary_template_id'=>$id));
+        return true;
     }
 
     public function set_hourly_template($data){
@@ -56,6 +96,43 @@ class Payroll_Model extends MY_Model
         else{
             return false;
         }
+    }
+
+    public function fetch_template_by_id($id){
+        $this->db->select('*');
+        $this->db->from('tbl_salary_template');
+        $this->db->where('salary_template_id',$id);
+        $query_result = $this->db->get()->result_array();
+        if(count($query_result)>0){
+            return $query_result;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function delete_template($id){
+        $this->db->delete('tbl_salary_template',array('salary_template_id'=>$id));
+        $this->db->delete('tbl_salary_allowance',array('salary_template_id'=>$id)); 
+        $this->db->delete('tbl_salary_deduction',array('salary_template_id'=>$id));
+        return true;
+
+    }
+
+    public function fetch_allowance_by_id($id){
+        $this->db->select('*');
+        $this->db->from('tbl_salary_allowance');
+        $this->db->where('salary_template_id',$id);
+        $query_result = $this->db->get()->result_array();
+        return $query_result;
+    }
+
+    public function fetch_deduction_by_id($id){
+        $this->db->select('*');
+        $this->db->from('tbl_salary_deduction');
+        $this->db->where('salary_template_id',$id);
+        $query_result = $this->db->get()->result_array();
+        return $query_result;
     }
 
     public function add_account($data){
@@ -135,6 +212,15 @@ class Payroll_Model extends MY_Model
     public function fetch_hourly_templates(){
         $this->db->select('*');
         $this->db->from('tbl_hourly_rate');
+        $query_result = $this->db->get();
+        $result = $query_result->result();
+        return $result;
+    }
+
+    public function fetch_hourly_template_by_id($id){
+        $this->db->select('*');
+        $this->db->from('tbl_hourly_rate');
+        $this->db->where('hourly_rate_id',$id);
         $query_result = $this->db->get();
         $result = $query_result->result();
         return $result;
@@ -319,12 +405,6 @@ class Payroll_Model extends MY_Model
         $this->db->join('tbl_account_details', 'tbl_account_details.user_id = tbl_overtime.user_id', 'left');
         $this->db->where('tbl_overtime.overtime_date >=', $start_date);
         $this->db->where('tbl_overtime.overtime_date <=', $end_date);
-        // if ($this->session->userdata('user_type') != 1) {
-        //     $this->db->where('tbl_overtime.user_id', $this->session->userdata('user_id'));
-        // }
-        // if (!empty($user_id)) {
-        //     $this->db->where('tbl_overtime.user_id', $user_id);
-        // }
         $query_result = $this->db->get();
         $result = $query_result->result();
 
@@ -345,4 +425,49 @@ class Payroll_Model extends MY_Model
         return $result;
     }
 
+        public function generate_paySlip($salary_payment_id)
+    {
+     
+        $this->db->select('tbl_salary_payment.*', FALSE);
+        $this->db->select('tbl_salary_payslip.*', FALSE);
+     
+        //$this->db->select('tbl_salary_payment_allowance.*', FALSE);
+  
+        $this->db->select('tbl_account_details.*, tbl_users.*,tbl_designations.*, tbl_departments.*', FALSE);
+        $this->db->from('tbl_salary_payment');
+         $this->db->join('tbl_users', 'tbl_users.user_id=tbl_salary_payment.user_id');
+        $this->db->join('tbl_account_details', 'tbl_account_details.user_id=tbl_salary_payment.user_id');
+        $this->db->join('tbl_salary_payslip', 'tbl_salary_payslip.salary_payment_id = tbl_salary_payment.salary_payment_id', 'left');
+        $this->db->join('tbl_designations', 'tbl_designations.designations_id = tbl_account_details.designations_id');
+
+        $this->db->join('tbl_departments', 'tbl_designations.departments_id = tbl_departments.departments_id');
+      //  $this->db->join('tbl_salary_payment_allowance', 'tbl_salary_payment_allowance.salary_payment_id = tbl_salary_payment.salary_payment_id', 'left');
+      
+         $data_ary = array('tbl_salary_payment.salary_payment_id' => $salary_payment_id);
+         $this->db->where($data_ary);
+        $result = $this->db->get()->row();
+
+        return $result;
+    }
+
+    public function fetch_salary_payment_details($salary_payment_id){
+           $res = $this->db->query("select * from tbl_salary_payment_details where salary_payment_id = '$salary_payment_id'")->result();
+           return $res;
+    }
+
+     public function fetch_sal_payment_deduction($salary_payment_id){
+           $res = $this->db->query("select * from tbl_salary_payment_deduction where salary_payment_id = '$salary_payment_id'")->result();
+           return $res;
+    }
+    public function overTime($user_id){
+        $condition =array('user_id'=>$user_id,'status'=>'approved');
+        $this->db->where($condition);
+       return  $this->db->get('tbl_overtime')->result();
+    }
+
+
+    public function fetch_salary_allowance_details($salary_payment_id){
+           $res = $this->db->query("select * from tbl_salary_payment_allowance where salary_payment_id = '$salary_payment_id'")->result();
+           return $res;
+    }
 }

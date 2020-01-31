@@ -95,55 +95,39 @@
                                 <th>Type</th>
                                 <th>Name/Title</th>
                                 <th>Amount</th>
-                                <th>Action</th>
+                                <th>Credit</th>
+                                <th>Debit</th>
+                                <th>Balance</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                              <td>Tittle</td>
-                              
-                                <td>System Architect</td>
-                                <td>$320,800</td>
-                                <td>2011/04/25</td>
-                                <td>61</td>
-                               
-                                <td>
-                                    <div class="">
-                                      <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                      <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                       <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                    </div>
-
-                                </td>
-                            </tr>
-                            
-                            <tr>
-                              <td>Tittle</td>
-                              
-                                <td>System Architect</td>
-                                <td>$320,800</td>
-                                <td>2011/04/25</td>
-                                <td>61</td>
-                               
-                                <td>
-                                    <div class="">
-                                      <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                      <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                       <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                    </div>
-
-                                </td>
-                            </tr>
-                              
+                          <?php
+                          foreach ($transaction_report as $key) {
+                          ?>
+                          <tr>
+                            <td><?=$key->date?></td>
+                            <td><?=$key->fullname?></td>
+                            <td><?=$key->type?></td>
+                            <td><?=$key->name?></td>
+                            <td><?=$key->amount?></td>
+                            <td><?=$key->credit?></td>
+                            <td><?=$key->debit?></td>
+                            <td><?=$key->total_balance?></td>
+                          </tr>
+                          <?php
+                        }
+                          ?>
                         </tbody>
                         <tfoot>
-                             <tr>
-                                <th>From Account</th>
-                                <th>To Account</th>
-                                <th>Ammount</th>
+                            <tr>
                                 <th>Date</th>
-                                <th>Attachment</th>
-                                <th>Action</th>
+                                <th>Accounts</th>
+                                <th>Type</th>
+                                <th>Name/Title</th>
+                                <th>Amount</th>
+                                <th>Credit</th>
+                                <th>Debit</th>
+                                <th>Balance</th>
                             </tr>
                         </tfoot>
                     </table>

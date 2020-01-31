@@ -37,7 +37,8 @@ min-height: 35px
                         <div class="col-md-2"><button class="btn btn-info search">Go</button></div>
                       </div>
                     <div class="mt-5">
-                     <table id="example" class="display nowrap " style="width:100%">
+                      <form method="POST" action="<?=base_url()?>Payroll/update_salary_details">
+                     <table id="example" class="display nowrap" style="width:100%">
                           <thead>
                               <tr>
                                   <th>Employee Name</th>
@@ -52,12 +53,12 @@ min-height: 35px
                             foreach ($department as $dep) {
                             ?>
                               <tr>
-                                  <td><?=$dep->fullname?></td>
+                                  <td><input type="hidden" name="user_id[]" value="<?php echo $dep->user_id ?>"><?=$dep->fullname?></td>
                                   <td><?=$dep->designations?></td>
                                   <td>
                                     <div class="d-flex">
-                                        <div ><input type="checkbox" <?php if($dep->hourly_rate_id!=null)echo "checked";?> name="hourly[]" class="chkbox_ht mt-2"></div>
-                                      <select  name="imptask_status" class="form-control hourly_status" style="width: 60%;" required="">
+                                        <div ><input type="checkbox" <?php if($dep->hourly_rate_id!=null)echo "checked";?> name="hourly_status[]" value="<?php echo $dep->user_id ?>" class="chkbox_ht mt-2"></div>
+                                      <select  name="hourly_rate_id[]" class="form-control hourly_status" style="width: 60%;">
                                         <option value="">--Select Hourly Grade--</option>
                                         <?php
                                         foreach ($hourly_grade as $hourly) {
@@ -76,8 +77,8 @@ min-height: 35px
                                   </td>
                                   <td>
                                     <div class="d-flex">
-                                      <div ><input type="checkbox" <?php if($dep->salary_template_id!=null)echo "checked";?> name="monthly[]" class="chkbox_ht mt-2"></div>
-                                      <select  name="imptask_status" class="form-control monthly_status" style="width: 60%" required="">
+                                      <div ><input type="checkbox" <?php if($dep->salary_template_id!=null)echo "checked";?> name="monthly_status[]" value="<?php echo $dep->user_id ?>" class="chkbox_ht mt-2"></div>
+                                      <select  name="salary_template_id[]" class="form-control monthly_status" style="width: 60%">
                                         <option value="">--Select Monthly Grade--</option>
                                         <?php
                                         foreach ($monthly_grade as $monthly) {
@@ -108,6 +109,8 @@ min-height: 35px
                               </tr>
                           </tfoot>
                       </table>
+                      <button type="submit">Update</button>
+                    </form>
                     </div>
                   </div>
                   

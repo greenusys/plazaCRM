@@ -27,6 +27,9 @@ class Performance extends CI_Controller
 		$this->load->view("pages/give_appraisal",$data);
 		$this->load->view("layout/footer");
 	}
+<<<<<<< HEAD
+	
+=======
 	public function indicator()
 	{
 		$data['all_dept_info'] = $this->db->get('tbl_departments')->result();
@@ -90,5 +93,6 @@ class Performance extends CI_Controller
 		$this->load->view("pages/payslip");
 		$this->load->view("layout/footer");
 	}
+>>>>>>> d6898ff8b93c9698061a7dacc898f4822ee81833
 }
 ?>

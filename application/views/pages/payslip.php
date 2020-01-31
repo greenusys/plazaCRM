@@ -4,6 +4,14 @@
     color: white;
   }
 </Style>
+<?php 
+//print_r($payslipdata);
+// echo"--------------------------------------------";
+// print_r($salary_details);
+// echo"--------------------------------------------";
+// print_r($salOvertime);
+?>
+
           <div class="row mt-4" >
             <div class="col-md-12">
               <div style="float:right">
@@ -17,24 +25,24 @@
                 <div class="">
                   <div class="" style="margin: 0 auto">
                       <h4 style="text-align: center;margin-bottom: 0px;margin-top:5px" >Payslip</h4>
-                      <h4 style="text-align: center">Salary Month : January 2020</h4>
+                      <h4 style="text-align: center">Salary Month : <?=date('F Y',strtotime($payslipdata->payment_month))?></h4>
                   </div>  
                   <div class="">
                    <table class="table" style="width: 100%">
                       <tr>
-                        <td><strong>Employment ID :</strong>1234</td>
-                        <td><strong>Name :</strong>Ravish</td>
-                        <td><strong>Payslip No :</strong>1234</td>
+                        <td><strong>Employment ID :</strong><?=$payslipdata->employment_id?></td>
+                        <td><strong>Name :</strong><?=ucwords($payslipdata->fullname)?></td>
+                        <td><strong>Payslip No :</strong><?=$payslipdata->payslip_number?></td>
                       </tr>
                       <tr>
-                        <td><strong>Mobile :</strong>1234</td>
-                        <td><strong>Email :</strong>Ravish</td>
-                        <td><strong>Address :</strong>1234</td>
+                        <td><strong>Mobile :</strong><?=$payslipdata->mobile?></td>
+                        <td><strong>Email :</strong><?=$payslipdata->email?></td>
+                        <td><strong>Address :</strong><?=$payslipdata->address?></td>
                       </tr>
                       <tr>
-                        <td><strong>Departments  :</strong>1234</td>
-                        <td><strong>Designation  :</strong>Ravish</td>
-                        <td><strong>Joining Date :</strong>1234</td>
+                        <td><strong>Departments  :</strong><?=$payslipdata->deptname?></td>
+                        <td><strong>Designation  :</strong><?=$payslipdata->designations?></td>
+                        <td><strong>Joining Date :</strong><?=$payslipdata->joining_date?></td>
                       </tr>
                    </table>
                 </div>
@@ -48,34 +56,36 @@
                           <td><strong>Type of Pay</strong></td>
                           <td><strong>Amount</strong></td>
                         </tr>
-                         <tr>
-                          <td><strong>Salary Grades : </strong></td>
-                          <td>grade B</td>
-                        </tr>
-                        <tr>
-                        <td><strong>Basic Salary : </strong></td>
-                          <td>grade B</td>
-                        </tr>
-                        <tr>
-                        <td><strong>Overtime Salary ( Per Hour) : </strong></td>
-                          <td>grade B</td>
-                        </tr>
-                        <tr>
-                        <td><strong>Overtime Hour :  </strong></td>
-                          <td>grade B</td>
-                        </tr>
-                        <tr>
-                        <td><strong>Overtime Amount :  </strong></td>
-                          <td>grade B</td>
-                        </tr>
-                        <tr>
-                        <td><strong>House Rent Allowance :</strong></td>
-                          <td>grade B</td>
-                        </tr>
-                        <tr>
-                        <td><strong>Medical Allowance : </strong></td>
-                          <td>grade B</td>
-                        </tr>
+                        <?php 
+                      
+                          foreach ($salary_details as $earning) { 
+                              //$grossTotal = $grossTotal+$earning->salary_payment_details_value;
+                            switch ($earning->salary_payment_details_label) {
+                              case 'Overtime Hour': ?>
+                                      <tr>
+                                        <td><strong><?=$earning->salary_payment_details_label?> : </strong></td>
+                                        <td><?=$salOvertime['overtimeHour']?></td>
+                                      </tr>
+                            <?php    break;
+                              case 'Overtime Amount': ?>
+                                      <tr>
+                                        <td><strong><?=$earning->salary_payment_details_label?> : </strong></td>
+                                        <td><?=$salOvertime['overTimeAmmount']?></td>
+                                      </tr>
+                            <?php    break;
+                              default: ?>
+                                     <tr>
+                                      <td><strong><?=$earning->salary_payment_details_label?> : </strong></td>
+                                      <td><?=$earning->salary_payment_details_value?></td>
+                                    </tr>
+                            <?php    break;
+                            }
+                            ?>
+                              
+
+                     <?php     }
+                        ?>
+                     
                       </table>
                   </div>
                   <div class="" style="margin-left: 15px ; width: 42%">
@@ -85,14 +95,18 @@
                           <td><strong>Type of Pay</strong></td>
                           <td><strong>Amount</strong></td>
                         </tr>
-                        <tr>
-                          <td><strong>Provident Fund :</strong></td>
-                          <td>10000</td>
-                        </tr>
-                       <tr>
-                          <td><strong>Tax Deduction :</strong></td>
-                          <td>10000</td>
-                        </tr>
+                            <?php 
+                         
+                          foreach ($salary_deduction as $deduction) { 
+                            ?>
+                              <tr>
+                                <td><strong><?=$deduction->salary_payment_deduction_label?> : </strong></td>
+                                <td><?=$deduction->salary_payment_deduction_value?></td>
+                              </tr>
+
+                     <?php     }
+                        ?>
+                     
                         
                       </table>
                     
@@ -100,19 +114,19 @@
                   <table class="table er_table"  cellspacing="0" cellpadding="4" style="width: 100%">
                         <tr >
                           <td><strong>Gross Salary : </strong></td>
-                          <td>â‚¬ 25.200,00</td>
+                          <td><?=number_format($salOvertime['grossSalary'],2)?></td>
                         </tr>
                         <tr>
                           <td><strong>Total Deduction : </strong></td>
-                          <td> â‚¬ 200,00</td>
+                          <td> <?=number_format($salOvertime['totalDeduction'],2)?></td>
                         </tr>
                        <tr>
                           <td><strong>Net Salary :</strong></td>
-                          <td>  â‚¬ 25.000,00</td>
+                          <td><?= number_format($salOvertime['netSalary'],2)?></td>
                         </tr>
                         <tr >
-                          <td><strong>Paid Amount : </strong></td>
-                          <td> <strong> â‚¬ 25.000,00</strong></td>
+                          <td style="border-top:1px solid black"><strong>Paid Amount : </strong></td>
+                          <td style="border-top:1px solid black"> <strong> <?= number_format($salOvertime['paidAmount'],2)?> </strong></td>
                         </tr>
                         
                       </table>
@@ -120,8 +134,9 @@
               </div>
             </div>
           </div>
-        </section>
       </div>
+
+
   <script>
      $(document).ready(function() {
         $("#emply").select2();
