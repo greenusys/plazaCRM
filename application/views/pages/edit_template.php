@@ -1,20 +1,16 @@
-
+<?php
+$template_id=$this->uri->segment(3);
+?>
           <div class="row mt-4">
             <div class="col-lg-12">
               <div class="card">
-               <!--  <div class="card-header">
-                  <h4>Budget vs Sales</h4>
-                </div> -->
-             <!--    <div class="card-body">
-                  <canvas id="myChart" height="158"></canvas>
-                </div> -->
                 <ul class="nav nav-tabs nav-justified md-tabs indigo col-md-5" id="myTabJust" role="tablist">
                   <li class="nav-item">
-                    <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
+                    <a class="nav-link" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
                       aria-selected="true">Salary Template List</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
+                    <a class="nav-link active" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
                       aria-selected="false">Set Salary Template</a>
                   </li>
                  <!--  <li class="nav-item ">
@@ -22,7 +18,7 @@
                   </li> -->
                 </ul>
                 <div class="tab-content card pt-3" id="myTabContentJust">
-                  <div class="tab-pane fade show active px-4" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
+                  <div class="tab-pane fade px-4" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
 
                    <table id="example" class="display nowrap" style="width:100%">
                         <thead>
@@ -68,7 +64,7 @@
                         </tfoot>
                     </table>
                   </div>
-                  <div class="tab-pane fade px-4" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
+                  <div class="tab-pane fade show active px-4" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
                   <form id="set_template">
                    <div class="row">
                       <div class="col-md-12">
@@ -78,21 +74,21 @@
                                 <label for="staticEmail" class="t3 text-right  col-sm-3 col-form-label font-weight-bold">Salary grade<sup class="a1">*</sup></label>
                               
                                 <div class="col-md-9">
-                                <input type="text" required="" name="salary_grade" class="enter form-control"placeholder="Enter Salary grade">
+                                <input type="text" required="" value="<?=$template_details[0]['salary_grade']?>" name="salary_grade" class="enter form-control"placeholder="Enter Salary grade">
                               </div>
                             </div>
                             <div class="form-group row">
                                 <label for="staticEmail" class="t3 text-right  col-sm-3 col-form-label font-weight-bold">Basic salary<sup class="a1">*</sup></label>
                               
                                 <div class="col-md-9">
-                                <input type="number" required="" name="basic_salary" value="0" class="enter form-control total_last" id="basic_salary" placeholder="Enter Basic Salary">
+                                <input type="number" required="" value="<?=$template_details[0]['basic_salary']?>" name="basic_salary" value="0" class="enter form-control total_last" id="basic_salary" placeholder="Enter Basic Salary">
                               </div>
                             </div>
                             <div class="form-group row">
                                 <label for="staticEmail" class="t3 text-right  col-sm-3 col-form-label font-weight-bold">Overtime rate(per hour)</label>
                               
                                 <div class="col-md-9">
-                                <input type="text" required="" name="overtime_salary" class="enter form-control" placeholder="Enter Overtime Rate">
+                                <input type="text" required="" value="<?=$template_details[0]['overtime_salary']?>" name="overtime_salary" class="enter form-control" placeholder="Enter Overtime Rate">
                               </div>
                             </div>
                           </div>
@@ -109,19 +105,21 @@
                             <div class="col-md-6">
                               <span><strong>Allowances</strong></span> 
                              </div>
-                           <!--    <div class="col-md-6 text-right"><button class="btn btn-success rounded-0"><i class="fa fa-plus" aria-hidden="true"></i> Add Time Manually</button></div> -->
                           </div>
                        
-                   
+                          <?php
+                          $allower=0.0;
+                          foreach ($allowance as $allowances) {
+                            $allower=$allower+$allowances['allowance_value'];
+                            ?>
                             <div class="form-group">
-                                  <input type="text" readonly value="House Rent Allowance" class=" font-weight-bold label_allow">
-                                  <input type="number" value="0" class="form-control total_last">
-                              </div>
-                     
-                            <div class="form-group">
-                                  <input type="text" readonly value="Medical Allowance" class=" font-weight-bold label_allow">
-                                  <input type="number" value="0" class="form-control total_last">
+                                  <input type="text" value="<?=$allowances['allowance_label']?>" class=" font-weight-bold label_allow">
+                                  <input type="number" value="<?=$allowances['allowance_value']?>" class="form-control total_last">
                             </div>
+
+                           <?php
+                          }
+                          ?>
                             <div class="form-group allowance">
 
                             </div>
@@ -135,18 +133,20 @@
                               <div class="col-md-6">
                                 <span><strong>Deduction</strong></span> 
                                </div>
-                             <!--    <div class="col-md-6 text-right"><button class="btn btn-success rounded-0"><i class="fa fa-plus" aria-hidden="true"></i> Add Time Manually</button></div> -->
-                            </div>
-                       
-                          
+
+                            </div>              
+                          <?php
+                          $deducter=0.0;
+                          foreach ($deduction as $deductions) {
+                          $deducter=$deducter+$deductions['deduction_value'];
+                          ?>
                             <div class="form-group">
-                                  <input type="text" readonly value="Provident Fund" class=" font-weight-bold label_deduct">
-                                  <input type="number" value="0" class="form-control total_deduct">
+                                  <input type="text" value="<?=$deductions['deduction_label']?>" class=" font-weight-bold label_deduct">
+                                  <input type="number" value="<?=$deductions['deduction_value']?>" class="form-control total_deduct">
                               </div>
-                               <div class="form-group">
-                                  <input type="text" readonly value="Tax Deduction" class=" font-weight-bold label_deduct">
-                                  <input type="number" value="0" class="form-control total_deduct">
-                                </div>
+                            <?php }
+
+                            ?>
                             <div class="form-group deduct">
 
                             </div>
@@ -171,25 +171,25 @@
                                             <th class=" vertical-td">Gross Salary :
                                             </th>
                                             <td class="">
-                                                <input name="" disabled="" value="" id="total" class="form-control" data-parsley-id="18" type="text">
+                                                <input name="" disabled="" value="<?php echo $gross_salary=$template_details[0]['basic_salary']+$allower ?>" id="total" class="form-control" data-parsley-id="18" type="text">
                                             </td>
                                         </tr> <!-- / Sub total -->
                                         <tr><!-- Total tax -->
                                             <th class="c vertical-td">Total Deduction :</th>
                                             <td class="">
-                                                <input name="" disabled="" value="" id="deduc" class="form-control" data-parsley-id="20" type="text">
+                                                <input name="" disabled="" value="<?=$deducter?>" id="deduc" class="form-control" data-parsley-id="20" type="text">
                                             </td>
                                         </tr><!-- / Total tax -->
                                         <tr><!-- Grand Total -->
                                             <th class="vertical-td">Net Salary :
                                             </th>
                                             <td class="">
-                                                <input name="" disabled="" required="" value="" id="net_salary" class="form-control" data-parsley-id="22" type="text">
+                                                <input name="" disabled="" required="" value="<?php echo $gross_salary-$deducter?>" id="net_salary" class="form-control" data-parsley-id="22" type="text">
                                             </td>
                                         </tr><!-- Grand Total -->
                                   
                                   </table><!-- Order Total table list start -->
-                                  <button type="submit" class="btn btn-primary float-right">Save</button>
+                                  <button type="submit" class="btn btn-primary float-right">Update</button>
                                 </div>
                             </div>
                         </div><!-- ****************** Total Salary Details End  *******************-->
@@ -396,13 +396,15 @@ $("#set_template").submit(function(e){
           alert("Please Fill All Fields");
          }else{
          value_allowances.shift();
+         var templater=<?=$template_id?>;
          var formData= new FormData($(this)[0]);
          formData.append('allowance_label',label_allowances);
          formData.append('allowance_value',value_allowances);
          formData.append('deduction_label',label_deductions);
          formData.append('deduction_value',value_deductions);
+         formData.append('template_id',templater);
          $.ajax({
-             url:"<?=base_url()?>Payroll/set_template",
+             url:"<?=base_url()?>Payroll/update_template",
               type:"post",
               data:formData,
               contentType:false,
@@ -410,15 +412,13 @@ $("#set_template").submit(function(e){
               cache:false,
              success:function(response)
              {
-               var response=JSON.parse(response);
-               if(response.status==1){
-                 swal("Template Created Successfully!", "Created", "success");
-                 $("#example").load(location.href + " #example");
-                 //window.location.href='<?=base_url()?>Home';
-               }
-               else if(response.status=="0"){
-                swal(response.msg, "Already Exists", "error");
-              }
+              //console.log(response);
+                if(response==1){
+                  location.reload();
+                }
+                else{
+                  swal("OOPS!", "Something Went Wrong!", "error");
+                }
              }
          });
        }

@@ -19,6 +19,37 @@ class Payroll extends CI_Controller {
 		$this->load->view("pages/salary_template",$data);
 		$this->load->view("layout/footer");
 	}
+
+    public function edit_template(){
+        $id=$this->uri->segment(3);
+        $data['templates']=$this->Payroll_model->fetch_templates();
+        $data['template_details']=$this->Payroll_model->fetch_template_by_id($id);
+        $data['allowance']=$this->Payroll_model->fetch_allowance_by_id($id);
+        $data['deduction']=$this->Payroll_model->fetch_deduction_by_id($id);
+        $this->load->view('layout/header');
+        $this->load->view("pages/edit_template",$data);
+        $this->load->view("layout/footer");
+    }
+
+    public function delete_template(){
+        $template_id=$_POST['template_id'];
+        $delete=$this->Payroll_model->delete_template($template_id);
+        if($delete){
+            die(json_encode(array('status'=>'1','msg'=>'deleted')));
+        }
+        else{
+            die(json_encode(array('status'=>'0','msg'=>'failed')));
+        }
+    }
+
+    public function fetch_template(){
+        $id=$_POST['template_id'];
+        $template_details=$this->Payroll_model->fetch_template_by_id($id);
+        $allowance=$this->Payroll_model->fetch_allowance_by_id($id);
+        $deduction=$this->Payroll_model->fetch_deduction_by_id($id);
+        die(json_encode(array("template_details"=>$template_details,"allowance"=>$allowance,"deduction"=>$deduction)));
+    }
+
 	public function hourlyTemplate()
 	{
 		$data['templates']=$this->Payroll_model->fetch_hourly_templates();
@@ -26,6 +57,27 @@ class Payroll extends CI_Controller {
 		$this->load->view("pages/hourly_rate",$data);
 		$this->load->view("layout/footer");
 	}
+
+    public function update_template_ajax(){
+        $update=$this->Payroll_model->update_hourly($_POST);
+        if ($update) {
+            echo "1";
+        }
+        else{
+            echo "0";
+        }
+    }
+
+
+    public function update_hourly_template(){
+        $id=$this->uri->segment(3);
+        $data['templates']=$this->Payroll_model->fetch_hourly_templates();
+        $data['templater']=$this->Payroll_model->fetch_hourly_template_by_id($id);
+        $this->load->view('layout/header');
+        $this->load->view("pages/edit_hourly_rate",$data);
+        $this->load->view("layout/footer");
+    }
+
 	public function manageSalary()
 	{
 		$data['departments']=$this->Payroll_model->fetch_departments();
@@ -33,6 +85,32 @@ class Payroll extends CI_Controller {
 		$this->load->view("pages/manage_salary",$data);
 		$this->load->view("layout/footer");
 	}
+
+    public function update_salary_details(){
+        $user_id = $this->input->post('user_id', TRUE);
+
+        $hourly_status = $this->input->post('hourly_status', TRUE);
+        $hourly_rate_id = $this->input->post('hourly_rate_id', TRUE);
+
+        $monthly_status = $this->input->post('monthly_status', TRUE);
+        $salary_template_id = $this->input->post('salary_template_id', TRUE);
+        foreach ($user_id as $user) {
+            $update_null=$this->Payroll_model->update_null_payroll($user);
+        }
+        foreach($hourly_status as $hourly){
+            $hourly_user=$hourly;
+            $user_index=array_search($hourly,$user_id);
+            $hourly_index=$hourly_rate_id[$user_index];
+            $update_hourly=$this->Payroll_model->update_hourly_model($hourly_user,$hourly_index);
+        }
+        foreach($monthly_status as $monthly){
+            $monthly_user=$monthly;
+            $user_index=array_search($monthly,$user_id);
+            $monthly_index=$salary_template_id[$user_index];
+            $update_monthly=$this->Payroll_model->update_monthly_model($monthly_user,$monthly_index);
+        }
+        redirect('Payroll/empSalary');
+    }
 
 	public function fetch_department_data(){
 		$dept_id=$this->uri->segment(3);
@@ -43,6 +121,7 @@ class Payroll extends CI_Controller {
 		$this->load->view('layout/header');
 		$this->load->view("pages/manage_salary_num",$data);
 		$this->load->view("layout/footer");
+        //die(json_encode($data['department']));
 	}
 
 	public function empSalary()
@@ -82,6 +161,43 @@ class Payroll extends CI_Controller {
 			die(json_encode(array('status'=>'0','data'=>'no data')));
 		}
 	}
+
+    public function update_template(){
+        //print_r($_POST);
+        $data=array('salary_grade' => $_POST['salary_grade'],
+                    'basic_salary' => $_POST['basic_salary'],
+                    'overtime_salary' => $_POST['overtime_salary']);
+        $update_template=$this->Payroll_model->update_template($data,$_POST['template_id']);
+        $deleter=$this->Payroll_model->delete_allowances_deductions($_POST['template_id']);
+        $allowance_label=explode(",", $_POST['allowance_label']);
+        $allowance_value=explode(",",$_POST['allowance_value']);
+        $i=0;
+        foreach ($allowance_label as $allowance) {
+            if($allowance_value[$i]!=0){
+                $new_data=array();
+                $new_data=array('salary_template_id' => $_POST['template_id'], 
+                                'allowance_label' => $allowance,
+                                'allowance_value' => $allowance_value[$i]);
+                $allowance_insert=$this->Payroll_model->set_template_allowance($new_data);
+            }
+            $i++;
+        }
+        $deduction_label=explode(",",$_POST['deduction_label']);
+        $deduction_value=explode(",", $_POST['deduction_value']);
+        $z=0;
+        foreach ($deduction_label as $deduction) {
+            if($deduction_value[$z]!=0){
+                $new_data=array();
+                $new_data=array('salary_template_id' => $_POST['template_id'], 
+                                'deduction_label' => $deduction,
+                                'deduction_value' => $deduction_value[$z]);
+                $deduction_insert=$this->Payroll_model->set_template_deduction($new_data);
+            }
+            $z++;
+        }
+        echo "1";
+    }
+
 
 	public function set_template(){
 		$data=array('salary_grade' => $_POST['salary_grade'],
