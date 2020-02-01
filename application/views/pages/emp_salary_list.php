@@ -19,12 +19,7 @@
           <div class="row mt-4">
             <div class="col-md-12">
               <div class="card p-2">
-           <!--      <div class="card-header row border-bottom py-1">
-                  <div class="col-md-6">
-                    <span><strong>Employee Salary List</strong></span> 
-                   </div>
-                    <div class="col-md-6 text-right"><button class="btn btn-success rounded-0"><i class="fa fa-plus" aria-hidden="true"></i> Add Time Manually</button></div>
-                </div> -->
+
               <div class="p-2">
               <table id="example" class="display nowrap" style="width:100%">
                         <thead>
@@ -34,8 +29,7 @@
                                 <th>Salary Type</th>
                                 <th>Basic Salary</th>
                                 <th>Overtime(Per Hour)</th>
-                                <th>Action</th>
-                               
+                                <th>Action</th> 
                             </tr>
                         </thead>
                         <tbody>

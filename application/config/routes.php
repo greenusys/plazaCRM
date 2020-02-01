@@ -56,3 +56,5 @@ $route['Payroll/manageSalary'] = 'Payroll/manageSalary';
 $route['Payroll/manageSalary/(:num)'] = 'Payroll/fetch_department_data';
 $route['Payroll/makePayment/(:any)/(:any)/(:any)'] = "Payroll/make_payment_pay/$1/$2/$3";
 $route['Payroll/generatePaySlip/(:any)/(:any)/(:any)'] = "Payroll/make_payment_pay/$1/$2/$3";
+$route['Payroll/salaryTemplate/(:num)'] = "Payroll/edit_template/$1";
+$route['Payroll/hourlyTemplate/(:num)'] = "Payroll/update_hourly_template/$1";

@@ -5,7 +5,7 @@
  *
  * @author NaYeM
  */
-class Transactions_Model extends MY_Model
+class Transactions_model extends MY_Model
 {
 
     public $_table_name;
@@ -29,6 +29,15 @@ class Transactions_Model extends MY_Model
             }
         }
         return $deposits;
+    }
+
+    public function fetch_transactions(){
+        $this->db->select('*');
+        $this->db->from('tbl_transactions');
+        $this->db->join('tbl_account_details', 'tbl_transactions.account_id=tbl_account_details.user_id');
+        $query_result = $this->db->get();
+        $result = $query_result->result();
+        return $result;
     }
 
     public function get_expense($filterBy = null, $type = null)
