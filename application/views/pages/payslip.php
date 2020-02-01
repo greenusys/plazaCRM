@@ -9,7 +9,7 @@
 // echo"--------------------------------------------";
 // print_r($salary_details);
 // echo"--------------------------------------------";
-// print_r($salary_deduction);
+// print_r($salOvertime);
 ?>
 
           <div class="row mt-4" >
@@ -57,16 +57,31 @@
                           <td><strong>Amount</strong></td>
                         </tr>
                         <?php 
-                        $grossTotal =0;
-                    
+                      
                           foreach ($salary_details as $earning) { 
-                              $grossTotal = $grossTotal+$earning->salary_payment_details_value;
-
+                              //$grossTotal = $grossTotal+$earning->salary_payment_details_value;
+                            switch ($earning->salary_payment_details_label) {
+                              case 'Overtime Hour': ?>
+                                      <tr>
+                                        <td><strong><?=$earning->salary_payment_details_label?> : </strong></td>
+                                        <td><?=$salOvertime['overtimeHour']?></td>
+                                      </tr>
+                            <?php    break;
+                              case 'Overtime Amount': ?>
+                                      <tr>
+                                        <td><strong><?=$earning->salary_payment_details_label?> : </strong></td>
+                                        <td><?=$salOvertime['overTimeAmmount']?></td>
+                                      </tr>
+                            <?php    break;
+                              default: ?>
+                                     <tr>
+                                      <td><strong><?=$earning->salary_payment_details_label?> : </strong></td>
+                                      <td><?=$earning->salary_payment_details_value?></td>
+                                    </tr>
+                            <?php    break;
+                            }
                             ?>
-                              <tr>
-                                <td><strong><?=$earning->salary_payment_details_label?> : </strong></td>
-                                <td><?=$earning->salary_payment_details_value?></td>
-                              </tr>
+                              
 
                      <?php     }
                         ?>
@@ -81,9 +96,8 @@
                           <td><strong>Amount</strong></td>
                         </tr>
                             <?php 
-                            $deductionTotal =0;
+                         
                           foreach ($salary_deduction as $deduction) { 
-                             $deductionTotal = $deductionTotal + $deduction->salary_payment_deduction_value;
                             ?>
                               <tr>
                                 <td><strong><?=$deduction->salary_payment_deduction_label?> : </strong></td>
@@ -100,19 +114,19 @@
                   <table class="table er_table"  cellspacing="0" cellpadding="4" style="width: 100%">
                         <tr >
                           <td><strong>Gross Salary : </strong></td>
-                          <td><?=number_format($grossTotal,2)?></td>
+                          <td><?=number_format($salOvertime['grossSalary'],2)?></td>
                         </tr>
                         <tr>
                           <td><strong>Total Deduction : </strong></td>
-                          <td> <?=number_format($deductionTotal,2)?></td>
+                          <td> <?=number_format($salOvertime['totalDeduction'],2)?></td>
                         </tr>
                        <tr>
                           <td><strong>Net Salary :</strong></td>
-                          <td><?= number_format(($grossTotal-$deductionTotal),2)?></td>
+                          <td><?= number_format($salOvertime['netSalary'],2)?></td>
                         </tr>
                         <tr >
                           <td style="border-top:1px solid black"><strong>Paid Amount : </strong></td>
-                          <td style="border-top:1px solid black"> <strong> <?= number_format(($grossTotal-$deductionTotal),2)?> </strong></td>
+                          <td style="border-top:1px solid black"> <strong> <?= number_format($salOvertime['paidAmount'],2)?> </strong></td>
                         </tr>
                         
                       </table>

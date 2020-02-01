@@ -379,4 +379,15 @@ class Payroll_Model extends MY_Model
            $res = $this->db->query("select * from tbl_salary_payment_deduction where salary_payment_id = '$salary_payment_id'")->result();
            return $res;
     }
+    public function overTime($user_id){
+        $condition =array('user_id'=>$user_id,'status'=>'approved');
+        $this->db->where($condition);
+       return  $this->db->get('tbl_overtime')->result();
+    }
+
+
+    public function fetch_salary_allowance_details($salary_payment_id){
+           $res = $this->db->query("select * from tbl_salary_payment_allowance where salary_payment_id = '$salary_payment_id'")->result();
+           return $res;
+    }
 }
