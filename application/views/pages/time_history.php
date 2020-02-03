@@ -168,7 +168,12 @@
                             </div>
                         </nav>
 
-                      
+                      <script>
+                          // $(document).ready(function(){
+                          //   var year="nav-<?=$year?>";
+
+                          // });
+                      </script>
                         <div class="tab-content" id="nav-tabContent">
                           <?php
                             if (!empty($mytime_info))
@@ -184,7 +189,7 @@
                                   }
                                   ?>
 
-                                    <div class="tab-pane fade show active" id="nav-<?=$year?>" role="tabpanel" aria-labelledby="nav-home-tab">
+                                    <div class="tab-pane fade  active" id="nav-<?=$year?>" role="tabpanel" aria-labelledby="nav-home-tab">
                                       <div class="p-2">
                                         <div class="accordion" id="accordionExample">
                                           <?php
@@ -196,12 +201,16 @@
                                                   }else{
                                                     $show="";
                                                   }
-
+                                                    // if(date('Y')==$year){
+                                                        $dd="";
+                                                    // }else{
+                                                    //   $dd="d-none";
+                                                    // }
                                                   // print_r( $time_info);
                                                   ?>
-                                                    <div class="card mt-2">
+                                                    <div class="card mt-2 <?=$dd?>">
                                                       <div class="card-header" data-toggle="collapse" data-target="#collapse<?=$week?>" aria-expanded="true">     
-                                                          <span class="title pl-3">Week : <?=$week?></span>
+                                                          <span class="title pl-3">Week : <?=$week   ?></span>
                                                           <span class="accicon"><i class="fas fa-angle-down rotate-icon"></i></span>
                                                       </div>
 

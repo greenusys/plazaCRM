@@ -17,7 +17,8 @@
         //  print_r($attArray);
             $conditionArr=array("user_id"=>$id,"date_in"=>date('Y-m-d'));
             $this->db->where($conditionArr);
-            if(count($res=$this->db->get('tbl_attendance')->result())==0){
+            $res=$this->db->get('tbl_attendance')->result();
+            if(count($res)==0){
                 if($this->db->insert('tbl_attendance',$attArray)){
                     $insert_id = $this->db->insert_id();
                     return $insert_id;
@@ -26,12 +27,18 @@
                 }
             }else{
                 // echo 'Already Hai';
-                $this->db->where('user_id',$id);
-                if($this->db->update('tbl_attendance',$attArray)){
-                   return $res[0]->attendance_id;
+                // print_r($res);
+                if($res[0]->date_out==""){
+                    $this->db->where('user_id',$id);
+                    if($this->db->update('tbl_attendance',$attArray)){
+                       return $res[0]->attendance_id;
+                    }else{
+                        return false;
+                    }
                 }else{
-                    return false;
+                    return $res[0]->attendance_id;
                 }
+                
             }
         }
         public function getClock($st){
