@@ -39,16 +39,40 @@
                             <tr>
                               <td><?=$emp_data->employment_id?></td>
                               <td><?=$emp_data->fullname?></td>
-                                <td>TO BE CHANGED</td>
-                                <td><?=$emp_data->basic_salary?></td>
-                                <td><?=$emp_data->overtime_salary?></td>
+                                <td>
+                                  <?php
+                                  if ($emp_data->salary_template_id!=null) {
+                                    echo $emp_data->salary_grade." (Monthly)";
+                                  }
+                                  else{
+                                    echo "(Hourly)";
+                                  }
+                                  ?>
+                                </td>
+                                <td><?php
+                                if($emp_data->basic_salary!=null){
+                                  echo $emp_data->basic_salary;
+                                }
+                                else{
+                                  echo "0,00 (Per Hour)";
+                                }
+                                ?>
+                                  
+                                </td>
+                                <td><?php
+                                if($emp_data->overtime_salary!=null){
+                                  echo $emp_data->overtime_salary;
+                                }else{
+                                  echo "0";
+                                }
+                                  ?>
+                                  </td>
                                 <td>
                                     <div class="">
-                                      <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                      <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                       <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
+<!--                                       <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a> -->
+                                      <span class="sele_staus bg-danger p-1 text-white delete_payroll" payroll_id="<?=$emp_data->payroll_id?>"><i class="far fa-trash-alt"></i></span>
+<!--                                        <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span> -->
                                     </div>
-
                                 </td>
                             </tr>  
                             <?php
@@ -74,3 +98,25 @@
     
         </section>
       </div>
+<script type="text/javascript">
+$(document).on('click','.delete_payroll',function(){
+  var payroll_id=$(this).attr('payroll_id');
+  if(confirm("Are you sure to delete this record?")){
+    $.ajax({
+      type:'POST',
+      data:{
+        payroll_id:payroll_id,
+      },
+      url:'<?=base_url()?>Payroll/delete_payroll',
+      success:function(response){
+        if(response==1){
+          location.reload();
+        }
+        else{
+          alert("Something Went wrong");
+        }
+      }
+    })
+  }
+})
+</script>

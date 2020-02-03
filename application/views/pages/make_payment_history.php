@@ -219,7 +219,7 @@
                           <!-- <div class="col-md-6 text-right bg-red text-white"><i class="fas fa-print"></i></div> -->
                       </div>
                       <div class="p-3">
-                        <form method="POST">
+                        <form method="POST" action="<?=base_url()?>Payroll/get_payment">
                            
                               <label> Gross Salary
                                 <input type="text" name="house_rent_allowance" disabled value="<?php
@@ -244,6 +244,26 @@
                                 echo $net_salary = $gross - $deduction;
                                 ?>" class="salary form-control">
                               </label>
+                                                          <?php
+                            $total_award = 0;
+                            if (!empty($award_info)): foreach ($award_info as $v_award_info) :
+                                ?>
+                                <?php if (!empty($v_award_info->award_amount)): ?>
+                                <div class="">
+                                    <label class="control-label"><?= lang('award') ?>
+                                        <small>( <?php echo $v_award_info->award_name; ?> )</small>
+                                    </label>
+                                    <input type="text" name="other_allowance" disabled id="award"
+                                           value="<?php echo $v_award_info->award_amount; ?>"
+                                           class="award form-control">
+                                    <input type="hidden" name="award_name[]" id="award"
+                                           value="<?php echo $total_award += $v_award_info->award_amount; ?>"
+                                           class="form-control">
+                                </div>
+                            <?php endif; ?>
+                            <?php endforeach; ?>
+                            <?php endif; ?>
+                            <input type="hidden" name="total_award" id="total_award" value="" class="form-control">
                                 <label> Fine Deduction
                                 <input type="text" data-parsley-type="number" name="fine_deduction" id="fine_deduction"
                                        value="<?php
@@ -257,8 +277,19 @@
                                        value="<?php echo $net_salary + $total_award; ?>"
                                        class="payment_amount form-control">
                               </label>  
+                          <input type="hidden" name="payment_amount"
+                                   value="<?php echo $net_salary + $total_award; ?>"
+                                   class="payment_amount form-control">
+                            <!-- Hidden Employee Id -->
+                            <input type="hidden" id="user_id" name="user_id"
+                                   value="<?php echo $employee_info->user_id; ?>" class="salary form-control">
+                            <input type="hidden" name="payment_month" value="<?php
+                            if (!empty($payment_month)) {
+                                echo $payment_month;
+                            }
+                            ?>" class="salary form-control">
                               <label>Payment Method <sub class="text-danger">*</sub></label>
-                              <select class="form-control" name="">
+                              <select class="form-control" name="payment_type">
                                 <option selected="" disabled="">Select Payment Method</option>
                                     <?php
                                     $all_payment_method = $this->db->get('tbl_payment_methods')->result();
@@ -282,11 +313,11 @@
                               </label>
                               <div class="d-flex"> 
                                <label class="float-left"> Deduct From Account <i class="fas fa-question-circle" title="This ammount will be deduct from your account. This account information only admin can see it."></i></label>
-                                  <input class=" float-right" type="checkbox" id="sclt_acnts" checked="" name="" style="width: 20px; height: 20px;">
+                                  <input class=" float-right" type="checkbox" id="sclt_acnts" checked="" name="deduct_from_account" style="width: 20px; height: 20px;">
                               </div>
                               <div class="acounts_sh">
                                 <label>Select Accounts</label>
-                                <select  name="imptask_status" class="form-control " id="select_accounts" style="width: 100%" required="">
+                                <select  name="account_id" class="form-control " id="select_accounts" style="width: 100%" required="">
                                   <option value="" selected="">Select Accounts</option>
                                                                           <?php
                                         $account_info = $this->db->order_by('account_id', 'DESC')->get('tbl_accounts')->result();
@@ -343,10 +374,6 @@
                                   </tr>
                               </thead>
                               <tbody>
-                            <?php
-                            foreach ($employee_info as $v_emp_info){
-                              print_r($v_emp_info);
-                            ?>
                                     <tr>
                                       <td></td>
                                       <td>2011/04/25</td>
@@ -361,27 +388,6 @@
                                         </span>
                                       </td>
                                   </tr>
-                                <?php } ?>
-<!--                                      <tr>
-                                      <td>Tiger Nixon</td>
-                                      <td>2011/04/25</td>
-                                      <td>Edinburgh</td>
-                                      <td>Edinburgh</td>
-                                      <td>Tiger Nixon</td>
-                                      <td>2011/04/25</td>
-                                      <td>Edinburgh</td>
-                                      <td>Edinburgh</td>
-                                  </tr>
-                                     <tr>
-                                      <td>Tiger Nixon</td>
-                                      <td>2011/04/25</td>
-                                      <td>Edinburgh</td>
-                                      <td>Edinburgh</td>
-                                      <td>Tiger Nixon</td>
-                                      <td>2011/04/25</td>
-                                      <td>Edinburgh</td>
-                                      <td>Edinburgh</td>
-                                  </tr> -->
                               </tbody>
                               <tfoot>
                                   <tr>
