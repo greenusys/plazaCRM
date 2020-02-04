@@ -13,6 +13,7 @@ class Payroll extends CI_Controller {
 		echo 'Payroll';
 	}
     public function paySlip($salary_payment_id)
+<<<<<<< HEAD
     {
 
        // check existing_recept_no by where
@@ -20,6 +21,49 @@ class Payroll extends CI_Controller {
         $paysl['payslipdata'] = $this->Payroll_model->generate_paySlip($salary_payment_id);
         $paysl['salary_details'] = $this->Payroll_model->fetch_salary_payment_details($salary_payment_id);
         $paysl['salary_deduction'] = $this->Payroll_model->fetch_sal_payment_deduction($salary_payment_id);
+=======
+    {   $basicSalary = 0;
+        $salDeduct = 0;
+        $time2 = "00:00";   
+        $salry_overtime='';
+    
+        $paysl['salary_deduction'] = $this->Payroll_model->fetch_sal_payment_deduction($salary_payment_id);
+              foreach ($paysl['salary_deduction'] as $salryDeduction) {
+                           $salDeduct=$salryDeduction->salary_payment_deduction_value+$salDeduct;
+              }
+         $paysl['payslipdata'] = $this->Payroll_model->generate_paySlip($salary_payment_id);
+         $paysl['salary_details'] = $this->Payroll_model->fetch_salary_payment_details($salary_payment_id);
+            foreach ($paysl['salary_details'] as $salryDetail) {
+                if($salryDetail->salary_payment_details_label=='overtime_salary'){
+                    $salry_overtime=$salryDetail->salary_payment_details_value;
+                }
+                if($salryDetail->salary_payment_details_label=='Basic Salary'){
+                    $basicSalary=$salryDetail->salary_payment_details_value;
+                }
+            }
+          $user_id =  $paysl['payslipdata']->user_id;
+         $paysl['overtime_details']= $this->Payroll_model->overTime($user_id);
+         // print_r($paysl['overtime_details']);
+         // die;
+        foreach ($paysl['overtime_details'] as $overtime) {
+            $selectedTime = $overtime->overtime_hours;
+            $secs = strtotime($time2)-strtotime("00:00");
+            $time2 = date("H:i",strtotime($selectedTime)+$secs);
+        }
+        
+         $timeexp = explode(":", $time2);
+         $thour = $timeexp[0] *$salry_overtime;
+         $tminute = ($salry_overtime/60) * $timeexp[1];
+         $totalOverTimeSalary = $thour +$tminute;
+         $grosSal = $basicSalary+$totalOverTimeSalary;
+         $paidSalary =$grosSal-$salDeduct;
+         $totalDetails=array('overtimeHour'=>$time2,'overTimeAmmount'=>$totalOverTimeSalary,'grossSalary'=>$grosSal,'totalDeduction'=>$salDeduct,'netSalary'=>$paidSalary,'paidAmount'=>$paidSalary); 
+        
+         $paysl['salOvertime']= $totalDetails;
+         $paysl['salary_allowance'] = $this->Payroll_model->fetch_salary_allowance_details($salary_payment_id);
+
+
+>>>>>>> 14ca3feb0af919577d0bc26fd30ad3d9796d9551
         $this->load->view('layout/header');
         $this->load->view("pages/payslip",$paysl);
         $this->load->view("layout/footer");

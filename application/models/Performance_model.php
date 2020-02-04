@@ -84,16 +84,23 @@ class Performance_Model extends MY_Model
     }
     public function create_indicator($data)
     {
-       $this->db->where($data);
+        $name=$data['designations_id'];
+       $designations_id = array(
+            "designations_id"=>$name
+        );
+        $this->db->where($designations_id);
         $check = $this->db->get("tbl_performance_indicator")->result_array();
         if(count($check) ==0 )
         {
             if($this->db->insert("tbl_performance_indicator",$data)){        
                 return true;
-            }else{
+            }
+            else
+            {
                 return false;
             }
-        }else{
+        }
+        else{
             return false;
         } 
     }
