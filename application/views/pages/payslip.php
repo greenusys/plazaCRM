@@ -25,7 +25,7 @@
                 <div class="">
                   <div class="" style="margin: 0 auto">
                       <h4 style="text-align: center;margin-bottom: 0px;margin-top:5px" >Payslip</h4>
-                      <h4 style="text-align: center">Salary Month : <?=date('F Y',strtotime($payslipdata->payment_month))?></h4>
+                      <h4 style="text-align: center">Salary Month : <?=date('F Y',strtotime($payslipdata['payment_month']))?></h4>
                   </div>  
                   <div class="">
                    <table class="table" style="width: 100%">
@@ -57,10 +57,10 @@
                           <td><strong>Amount</strong></td>
                         </tr>
                         <?php 
-                        $grossTotal =0;
-                    
+                        $grossTotal =0.0;
+                          // die(json_encode($salary_details));
                           foreach ($salary_details as $earning) { 
-                              $grossTotal = $grossTotal+$earning->salary_payment_details_value;
+                              $grossTotal=$grossTotal+$earning->salary_payment_details_value;
 
                             ?>
                               <tr>

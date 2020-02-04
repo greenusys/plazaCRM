@@ -58,7 +58,7 @@
                         </div>
                         <div class="col-md-4">
                           <div class="form-group"> 
-                            <select  name="imptask_status" class="form-control " id="imptask_status" style="width: 100%" required="">
+                            <select  name="imptask_status" class="form-control srch_type_status" id="imptask_status" style="width: 100%" required="">
                               <option value="" selected="" disabled="">Select Department</option>
                               <option value="1">By Employee</option>
                               <option value="2">By Month</option>
@@ -73,7 +73,7 @@
                             <label class="form-group">Employee Name<sup class="text-danger">*</sup></label>
                         </div>
                          <div class="col-md-4" >
-                            <select  name="imptask_tatus" class="form-control " id="srch_type_status" style="width: 100%" required="">
+                            <select  name="imptask_tatus" class="form-control" id="srch_type_status" style="width: 100%" required="">
                               <option value="" selected="">Select Department</option>
                               <option value="">IT / Collaborative</option>
                               <option value="">HR</option>
@@ -180,7 +180,7 @@
                             <!-- <div class="col-md-6 text-right"><button class="btn btn-success rounded-0"><i class="fa fa-plus" aria-hidden="true"></i> Add Time Manually</button></div> -->
                         </div>
                       <div class="pt-3">
-                     <table id="example" class="display nowrap " style="width:100%">
+<!--                      <table id="example" class="display nowrap " style="width:100%;display: none;">
                           <thead>
                               <tr>
                                   <th>Month</th>
@@ -249,7 +249,7 @@
                                 
                               </tr>
                           </tfoot>
-                      </table>
+                      </table> -->
                     </div>
                     </div>
                   </div>
@@ -266,4 +266,8 @@
           $("#imptask_status").select2();
           $("#srch_type_status").select2();
       });
+
+     $(document).on('change','.srch_type_status',function(){
+         console.log("working");
+     })
   </script>

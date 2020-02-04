@@ -65,6 +65,11 @@ class Payroll_Model extends MY_Model
         return true;
     }
 
+    public function delete_payroll($id){
+        $this->db->delete('tbl_employee_payroll',array('payroll_id'=>$id)); 
+        return true;
+    }
+
     public function set_hourly_template($data){
            $this->db->insert('tbl_hourly_rate', $data);
            return true;

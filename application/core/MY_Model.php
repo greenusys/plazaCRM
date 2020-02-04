@@ -40,9 +40,9 @@
             $method = 'result';
         }
 
-        if (!count($this->db->order_by($this->_order_by))) {
-            $this->db->order_by($this->_order_by);
-        }
+        // if (!count($this->db->order_by($this->_order_by))) {
+        //     $this->db->order_by($this->_order_by);
+        // }
         return $this->db->get($this->_table_name)->$method();
     }
 
