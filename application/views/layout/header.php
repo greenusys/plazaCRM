@@ -304,7 +304,7 @@ $myId=$session[0]->user_id;
                 
                 </ul>
             </li>
-
+            <li><a class="nav-link" href="<?=base_url('User/user_list')?>"><i class="fas fa-user"></i> <span>Users</span></a></li>
             <li><a class="nav-link" href="<?=base_url('Backupdatabase')?>"><i class="fas fa-database"></i> <span>Backup Database</span></a></li>
 
             <li><a class="nav-link" href="<?=base_url('Leavemanagement/index')?>"><i class="fab fa-telegram-plane"></i> <span>Leave Management</span> <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
