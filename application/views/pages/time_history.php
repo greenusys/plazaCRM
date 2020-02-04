@@ -189,7 +189,7 @@
                                   }
                                   ?>
 
-                                    <div class="tab-pane fade  active" id="nav-<?=$year?>" role="tabpanel" aria-labelledby="nav-home-tab">
+                                    <div class="tab-pane  <?=$cls?>" id="nav-<?=$year?>" role="tabpanel" aria-labelledby="nav-home-tab">
                                       <div class="p-2">
                                         <div class="accordion" id="accordionExample">
                                           <?php
@@ -239,7 +239,7 @@
 
                                                                           ?>
                                                                               <tr>
-                                                                              <td colspan="5"><?= $key ?></td>
+                                                                              <td colspan="5" style="background: gainsboro;"><?= $key ?></td>
                                                                               </tr>
                                                                               <tr>
                                                                               <td><?=$mytime->clockin_time?></td>
@@ -254,6 +254,8 @@
                                                                               </td>
                                                                               <td><?= $mytime->ip_address ?></td>
                                                                               <td><?php
+                                                                                $total_mm=0;
+                                                                                $total_hh=0;
                                                                                   if (!empty($mytime->clockout_time)) {
                                                                                       // calculate the start timestamp
                                                                                       $startdatetime = strtotime($vtimeinfo->date_in . " " . $mytime->clockin_time);
