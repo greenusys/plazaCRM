@@ -3,8 +3,6 @@
     width: 20px;
   }
  </style>
-
-        
           <div class="row mt-4">
             <div class="col-md-12">
               <div class="card p-2">
@@ -24,11 +22,9 @@
                           <input type="checkbox" name="" class="w_20 form-control"> &nbsp; Mark all  &nbsp; &nbsp;
                         </li>
                         <li>
-                                  <button class="btn btn-success rounded-0"><i class="fa fa-plus" aria-hidden="true"></i> Update</button>
+                          <button class="btn btn-success rounded-0"><i class="fa fa-plus" aria-hidden="true"></i> Check In</button>
                         </li>
                       </ul>
-                    
-             
                     </div>
                 </div>
               <div class="p-2">
@@ -39,8 +35,6 @@
                                 <th>EMP ID</th>
                                 <th> Name</th>
                                 <th>Clocking Hours</th>
-                           
-                             
                             </tr>
                         </thead>
                         <tbody>
@@ -52,7 +46,7 @@
                                   <tr>
                                     <td><input type="checkbox" name=" " class="h_22 form-control"></td>
                                       <td><?=$value->fullname?></td>
-                                      <td><button class="btn btn-success">Check In</td>
+                                      <td><a class="btn btn-success markAttendanceManually text-white" emp-Id="<?=$value->user_id?>">Check In</a></td>
                                   
                                   </tr>
                               <?php
@@ -91,6 +85,20 @@
         </section>
       </div>
   <script>
+    $(document).on('click','.markAttendanceManually',function(){
+      var empId=$(this).attr('emp-Id');
+      console.log('Employee Id: '+empId);
+      $.ajax({
+        url:"<?=base_url('Attendance/markAttendanceParticullary')?>",
+        type:"post",
+        data:{empId: empId},
+        success:function(response){
+                  console.log(response);
+                }
+      });
+    });
+
+                            
      $(document).ready(function() {
         $("#emply").select2();
       });

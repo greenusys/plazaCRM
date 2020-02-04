@@ -161,14 +161,7 @@ class Attendance extends CI_Controller {
         $year = date('Y', strtotime($date));
         $num = cal_days_in_month(CAL_GREGORIAN, $month, $year);
 		$data['employee_info'] = $this->ATND->get_employee_id_by_dept_id($departments_id);
-		$data['Employee']=$this->ATND->fetchEmployee();
-		$data['all_dept_info'] = $this->db->get('tbl_departments')->result();
-	 	// foreach ($data['all_dept_info'] as $v_dept_info) {
-        //     $data['all_department_info'][] = $this->Job_circular_model->get_add_department_by_id($v_dept_info->departments_id);
-        // }
-		$this->load->view('layout/header');
-		$this->load->view("pages/attendance_report",$data);
-		$this->load->view("layout/footer");
+		
 
         // $holidays = $this->global_model->get_holidays(); //tbl working Days Holiday
 
@@ -336,6 +329,11 @@ class Attendance extends CI_Controller {
 		// 	    [clock_In] => 9:48 AM
 		// 	    [clock_Out] => 6:43 PM
 		// 	)
+	}
+	public function markAttendanceParticullary(){
+		// print_r($_POST);
+		$employeeID=$this->input->post('empl_id');
+		
 	}
 	// public function addAttendanceData($data){
 	// 	return $this->ATND->insATNDData($data);
