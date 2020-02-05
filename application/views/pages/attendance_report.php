@@ -71,7 +71,7 @@
       </div>
       <div class="p-2">
         <form method="post " action="<?=base_url('Attendance/getattendanceReport')?>">
-          <div class="form-group pt-2">
+          <div class="form-group">
             <div class="row">
               <div class="offset-1 col-sm-2 text-right">
                 <label for="exampleInputEmail1" class="pt-2">Department<sup class="text-danger">*</sup></label>
@@ -95,7 +95,7 @@
               </div>
             </div>
           </div>
-          <div class="form-group pt-2">
+          <div class="form-group mb-0">
             <div class="row">
               <div class="offset-1 col-sm-2 text-right">
                   <label for="exampleInputEmail1" class="pt-2">Month<sup class="text-danger">*</sup></label>
@@ -110,8 +110,10 @@
               </div>
             </div>
           </div>
-          <div class="text-center">
-              <button type="submit" class="btn btn-success">Search</button>
+          <div class="row">
+            <div class="offset-3 col-sm-3">
+              <button type="submit" class="btn btn-primary">Search</button>
+            </div>
           </div>
         </form>
       </div>
