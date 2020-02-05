@@ -25,7 +25,6 @@ class User extends CI_Controller {
 		$this->load->view("layout/footer");
 	}
 	public function addUser(){
-		print_r($_POST);
-		
+		print_r($_POST);	
 	}
 }
