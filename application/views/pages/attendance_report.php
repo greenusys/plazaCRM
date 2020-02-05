@@ -239,7 +239,9 @@
                                   <td>  0 : 0 m
                                   </td>
                                 </tr>
-                            Total Working Hour :  0 : 0 m
+                            <tr>
+                              <td colspan="5">Total Working Hour :  0 : 0 m</td>
+                            </tr>
                           </tbody>
                         </table>
                       </div>  
@@ -353,8 +355,11 @@
                                   <td>  0 : 0 m
                                   </td>
                                 </tr>
-                            Total Working Hour :  0 : 0 m
+                            <tr>
+                              <td colspan="5">Total Working Hour :  0 : 0 m</td>
+                            </tr>
                           </tbody>
+
                         </table>
                       </div>  
                     </div>
