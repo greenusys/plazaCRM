@@ -20,7 +20,7 @@
                                 <select name="client_id" class="form-control" id="emply">
                                     <option selected="" disabled="" value="0">Select Employee</option>
                                     <?php
-                                      foreach($Employee as $empD){
+                                      foreach($Employee as $e mpD){
                                         // /print_r($empD);
                                         ?>
                                            <option value="<?=$empD->user_id?>"><?=$empD->fullname?> (<?=$empD->designations ?>) </option>   
