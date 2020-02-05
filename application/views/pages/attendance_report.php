@@ -252,11 +252,11 @@
           <div class="p-2">
                   <div class="accordion" id="accordionExample">
                     <div class="card mt-2 dd">
-                      <div class="card-header" data-toggle="collapse" data-target="#collapse5" aria-expanded="true">     
+                      <div class="card-header" data-toggle="collapse" data-target="#collapse6" aria-expanded="true">     
                           <span class="title pl-3">Week : 5</span>
                           <span class="accicon"><i class="fas fa-angle-down rotate-icon"></i></span>
                       </div>
-                      <div id="collapse5" clock_id="" class="collapse" data-parent="#accordionExample">
+                      <div id="collapse6" clock_id="" class="collapse" data-parent="#accordionExample">
                           <div class="card-body">
                               <table class=" table table-stripped table-bordered">
                                 <thead>
@@ -381,16 +381,4 @@
           format: 'MM/YYYY'
       });
   });
-</script>
-
-<script type="text/javascript">
-    function printEmp_report(printableArea) 
-    {
-        $('div.wrapper').find('.collapse').css('display', 'block');
-        var printContents = document.getElementById(printableArea).innerHTML;
-        var originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
-    }
 </script>
