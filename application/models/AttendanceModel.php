@@ -109,5 +109,18 @@
             $this->db->join('tbl_clock','tbl_clock.attendance_id=tbl_attendance.attendance_id');
             return $this->db->get('tbl_attendance')->result();
         }
+        public function get_employee_id_by_dept_id($departments_id)
+        {
+            $this->db->select('tbl_account_details.*', FALSE);
+            $this->db->select('tbl_designations.*', FALSE);
+            $this->db->select('tbl_departments.*', FALSE);
+            $this->db->from('tbl_account_details');
+            $this->db->join('tbl_designations', 'tbl_designations.designations_id = tbl_account_details.designations_id', 'left');
+            $this->db->join('tbl_departments', 'tbl_departments.departments_id = tbl_designations.departments_id', 'left');
+            $this->db->where('tbl_departments.departments_id', $departments_id);
+            $query_result = $this->db->get();
+            $result = $query_result->result();
+            return $result;
+        }
     } 
 ?>

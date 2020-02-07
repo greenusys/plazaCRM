@@ -148,4 +148,10 @@ class User extends CI_Controller {
 		$this->load->view("pages/user_list",$data);
 		$this->load->view("layout/footer");
 	}
+<<<<<<< HEAD
+=======
+	public function addUser(){
+		print_r($_POST);	
+	}
+>>>>>>> 8675d011c2d6e052f3dfe907a13be37b67621a9f
 }

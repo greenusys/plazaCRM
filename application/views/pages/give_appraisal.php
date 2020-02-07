@@ -231,10 +231,10 @@
     });
 </script>
  <script type="text/javascript">
-                          $(function () {
-                              $('#datetimepicker10').datetimepicker({
-                                  viewMode: 'years',
-                                  format: 'MM/YYYY'
-                              });
-                          });
-                      </script>
+  $(function () {
+      $('#datetimepicker10').datetimepicker({
+          viewMode: 'years',
+          format: 'MM/YYYY'
+      });
+  });
+</script>
