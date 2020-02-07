@@ -180,23 +180,59 @@
                             </tr>
                         </thead>
                         <tbody>
+                          <?php
+                          foreach ($all_tasks as $tasker) {
+                          ?>
                             <tr>
                               <td><input type="checkbox" name=" " class="h_22 form-control"></td>
-                                <td>Tiger Nixon</td>
-                                <td>2011/04/25</td>
-                                <td><span class="text-white bg-info sele_staus"> Not Started</span>
+                                <td><?=$tasker->task_name?></td>
+                                <td><?=$tasker->due_date?></td>
+                                <td>
+                                  <?php
+                                  if ($tasker->task_status=="completed") {
+                                    echo "<span class='text-white bg-success sele_staus'>Completed</span>";
+                                  }
+                                  elseif ($tasker->task_status=="deferred") {
+                                    echo "<span class='text-white bg-danger sele_staus'>Deferred</span>";
+                                  }
+                                  elseif ($tasker->task_status=="waiting_for_someone") {
+                                    echo "<span class='text-white bg-warning sele_staus'>Waiting For Someone</span>";
+                                  }
+                                  elseif ($tasker->task_status=="in_progress") {
+                                    echo "<span class='text-white bg-warning sele_staus'>In Progresse</span>";
+                                  }
+                                  else{
+                                    echo "<span class='text-white bg-danger sele_staus'>Not Started</span>";
+                                  }
+                                  ?>
+                                  
                                   <div class="btn-group open">
                                       <button class="btn btn-xs p-0 border btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> Change <span class="caret"></span></button>
                                       <ul class="dropdown-menu animated zoomIn">
-                                        <li><a href="">Waiting For Someone</a></li>
-                                        <li><a href="">Deferred</a></li>
-                                        <li><a href="">Completed</a></li>
-                                        <li><a href="">In Progress</a></li>
-                                        <li><a href="">Not Started</a></li>
+                                        <li><a href="<?=base_url()?>Task/update_tasks/<?=$tasker->task_id?>/waiting_for_someone">Waiting For Someone</a></li>
+                                        <li><a href="<?=base_url()?>Task/update_tasks/<?=$tasker->task_id?>/deferred">Deferred</a></li>
+                                        <li><a href="<?=base_url()?>Task/update_tasks/<?=$tasker->task_id?>/completed">Completed</a></li>
+                                        <li><a href="<?=base_url()?>Task/update_tasks/<?=$tasker->task_id?>/in_progress">In Progress</a></li>
+                                        <li><a href="<?=base_url()?>Task/update_tasks/<?=$tasker->task_id?>/not_started">Not Started</a></li>
                                       </ul>
                                   </div>
                                  </td>
-                                <td>Edinburgh <span data-toggle="modal" data-target="#assign_to"><i class="fa fa-plus" aria-hidden="true"></i></span></td>
+                                <td><?php
+                                if ($tasker->permission=="all") {
+                                  echo "Everyone";
+                                }
+                                else{
+                                  $user_data=json_decode($tasker->permission);
+                                  foreach ($user_data as $key => $value) {
+                                    $user_id=$key;
+                                    $checker=array('user_id'=>$user_id);
+                                    $this->db->where($checker);
+                                    $check = $this->db->get("tbl_account_details")->result_array();
+                                    // print_r($check);
+                                    echo '<img src="'.base_url().$check[0]['avatar'].'" style="height:28px;width:28px" class="rounded-circle ml-2 img-circle img-xs" title="'.$check[0]['fullname'].'" alt="'.$check[0]['fullname'].'">';
+                                  }
+                                }
+                                ?> <span class="ml-2" id="open_modal" task_id="<?=$tasker->task_id?>"><i class="fa fa-plus" aria-hidden="true"></i></span></td>
                                 <td>
                                     <div class="">
                                       <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
@@ -207,88 +243,7 @@
                                 </td>
                              
                             </tr>
-                            
-                            <tr>
-                              <td><input type="checkbox" name=" " class=" h_22 form-control"></td>
-                                <td>Shad Decker</td>
-                                 <td>2011/04/25</td>
-                                <td><span class="text-white bg-info sele_staus"> Not Started</span>
-                                  <div class="btn-group open">
-                                      <button class="btn btn-xs p-0 border btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> Change <span class="caret"></span></button>
-                                      <ul class="dropdown-menu animated zoomIn">
-                                        <li><a href="">Waiting For Someone</a></li>
-                                        <li><a href="">Deferred</a></li>
-                                        <li><a href="">Completed</a></li>
-                                        <li><a href="">In Progress</a></li>
-                                        <li><a href="">Not Started</a></li>
-                                      </ul>
-                                  </div>
-                                 </td>
-                                <td>Edinburgh</td>
-                                <td>
-                                    <div class="">
-                                      <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                      <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                       <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                    </div>
-
-                                </td>
-                             
-                            </tr>
-                            <tr>
-                              <td><input type="checkbox" name=" " class=" h_22 form-control"></td>
-                                <td>Michael Bruce</td>
-                                <td>2011/04/25</td>
-                                <td><span class="text-white bg-info sele_staus"> Not Started</span>
-                                  <div class="btn-group open">
-                                      <button class="btn btn-xs p-0 border btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> Change <span class="caret"></span></button>
-                                      <ul class="dropdown-menu animated zoomIn">
-                                        <li><a href="">Waiting For Someone</a></li>
-                                        <li><a href="">Deferred</a></li>
-                                        <li><a href="">Completed</a></li>
-                                        <li><a href="">In Progress</a></li>
-                                        <li><a href="">Not Started</a></li>
-                                      </ul>
-                                  </div>
-                                 </td>
-                                <td>Edinburgh</td>
-                                <td>
-                                    <div class="">
-                                      <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                      <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                       <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                    </div>
-
-                                </td>
-                             
-                            </tr>
-                            <tr>
-                              <td><input type="checkbox" name=" " class=" h_22 form-control"></td>
-                                <td>Donna Snider</td>
-                                <td>2011/04/25</td>
-                                <td><span class="text-white bg-info sele_staus"> Not Started</span>
-                                  <div class="btn-group open">
-                                      <button class="btn btn-xs p-0 border btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> Change <span class="caret"></span></button>
-                                      <ul class="dropdown-menu animated zoomIn">
-                                        <li><a href="">Waiting For Someone</a></li>
-                                        <li><a href="">Deferred</a></li>
-                                        <li><a href="">Completed</a></li>
-                                        <li><a href="">In Progress</a></li>
-                                        <li><a href="">Not Started</a></li>
-                                      </ul>
-                                  </div>
-                                 </td>
-                                <td>Edinburgh</td>
-                                <td>
-                                    <div class="">
-                                      <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                      <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                       <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                    </div>
-
-                                </td>
-                             
-                            </tr>
+                            <?php } ?>
                         </tbody>
                         <tfoot>
                              <tr>
@@ -494,7 +449,14 @@
                                        foreach ($users as $user) {
                                        ?>
 
-                                         <input type="checkbox" value="<?=$user['user_id']?>" class="chkPassport admind" ><?=$user['username']?><strong class="badge btn-danger">Admin</strong>
+                                         <input type="checkbox" value="<?=$user['user_id']?>" class="chkPassport admind" ><?=$user['username']?><?php 
+                                         if ($user['role_id']==1) {
+                                           echo "<strong class='badge btn-danger'>Admin</strong>";
+                                         }
+                                         else{
+                                          echo "<strong class='badge btn-primary'>Staff</strong>";
+                                         }
+                                         ?>
                                        <br>
                                        <div class="row dvPassport"  id="dvPassport<?=$count?>" style="display: none">
                                           <div class="col-md-3">
@@ -570,7 +532,7 @@
          if(Object.keys(permission).length==2){
           permission="all";
          }
-         if($('#everyone').is(':checked')) { permission="all"; }
+        // if($('#everyone').is(':checked')) { permission="all"; }
          var formData= new FormData($(this)[0]);
          formData.append('permission',permission);
          formData.append('task_description', CKEDITOR.instances.editor1.getData());
@@ -703,7 +665,8 @@
           </button>
       </div>
       <div class="modal-body">
-        <form method="POST">
+        <form id="updater">
+          <input type="hidden" value="" id="tasker_id" name="task_id">
         <div class="form-group">
           <div class="row">
             <div class="col-sm-3">
@@ -715,7 +678,7 @@
                               </div>
               <div class="checkbox c-radio needsclick">
                 <input type="radio" name="radio_admin" value=""  class="chkPassport"> Customise Permission<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
-                              </div>
+              </div>
             </div>
           </div>
         </div>
@@ -725,7 +688,36 @@
                 <label for="exampleInputEmail1">select Users<span class="text-danger">*</span></label>
               </div>
               <div class="col-sm-9">
-                 <input type="checkbox" name="vehicle1" value="Bike"  class="chkPassport1"> admin <strong class="badge btn-danger">Admin</strong>
+                                   <?php
+                   $count=1;
+                   foreach ($users as $user) {
+                   ?>
+
+                     <input type="checkbox" value="<?=$user['user_id']?>" class="chkPassport admindModal" ><?=$user['username']?><?php 
+                     if ($user['role_id']==1) {
+                       echo "<strong class='badge btn-danger'>Admin</strong>";
+                     }
+                     else{
+                      echo "<strong class='badge btn-primary'>Staff</strong>";
+                     }
+                     ?>
+                   <br>
+                   <div class="row dvPassport"  id="dvPassportModal<?=$count?>" style="display: none">
+                      <div class="col-md-3">
+                     <input type="checkbox" class="data" value="View"> Can View
+                    </div>
+                    <div class="col-md-3">
+                         <input type="checkbox" class="data" value="Edit" > Can Edit
+                    </div>
+                    <div class="col-md-3">
+                        <input type="checkbox" class="data" value="Delete"> Can Delete
+                    </div>
+                   </div>
+                   <?php
+                   $count++;
+                    }
+                   ?>
+<!--                  <input type="checkbox" name="vehicle1" value="Bike"  class="chkPassport1"> admin <strong class="badge btn-danger">Admin</strong>
                  <br>
                  <div class="row dvPassport1"  id="dvPassport1" style="display: none">
                     <div class="col-md-3">
@@ -751,11 +743,11 @@
                   <div class="col-md-3">
                       <input type="checkbox" name="admin2" value="delete" checked="checked" disabled="">Can Delete
                   </div>
-                 </div>
+                 </div> -->
               </div>
             </div>
           </div>
-          <div class="text-center" > <button type="button" class="btn btn-success" >Update</button></div>
+          <div class="text-center" > <button type="submit" class="btn btn-success" >Update</button></div>
         </form>
       </div>
       <div class="modal-footer">
@@ -766,6 +758,72 @@
 
   </div>
 </div>
+
+<script type="text/javascript">
+$(document).on('click','#open_modal',function(){
+    var task_id=$(this).attr('task_id');
+    $('#tasker_id').val(task_id);
+    $('#assign_to').modal('show');
+})
+
+        $("#updater").submit(function(e){
+         e.preventDefault();
+         var ar=[];
+           var count=1;
+           var obj = {};
+            $('.admindModal').each(function(){
+              var pass_id="#dvPassportModal"+count;
+              if($(this).is(':checked')){
+               var user_id=$(this).val();
+               var data=$(pass_id).find('.data');
+               data.each(function(){
+                if($(this).is(':checked')){
+                  ar.push($(this).val());
+                }
+               })
+               obj[user_id] = ar;
+               ar=[];
+               }
+               count++;
+            })
+         // var new_ar=[];
+         //  $('.song').each(function(){
+         //      if($(this).is(':checked'))
+         //      {
+         //          new_ar.push($(this).val()); 
+         //      }        
+         //  });
+         // var project_settings=JSON.stringify(new_ar);
+         var permission=JSON.stringify(obj);
+         if(Object.keys(permission).length==2){
+          permission="all";
+         }
+        // if($('#everyone').is(':checked')) { permission="all"; }
+         var formData= new FormData($(this)[0]);
+         formData.append('permission',permission);
+         $.ajax({
+             url:"<?=base_url()?>Task/task_updater",
+              type:"post",
+              data:formData,
+              contentType:false,
+              processData:false,
+              cache:false,
+             success:function(response)
+             {
+                //var response=JSON.parse(response);
+               if(response==1){
+                location.reload();
+                 // swal("Task Created Successfully!", "Created", "success");
+                 //window.location.href='<?=base_url()?>Home';
+               }
+               else{
+                swal("Error", "Error", "error");
+              }
+             }
+         });
+    });
+</script>
+
 <script>
   $(document).on('change','#related_to',function(){
     var related= $(this).val();

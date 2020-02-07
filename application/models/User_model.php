@@ -32,17 +32,57 @@ class User_model extends MY_Model
         return $result;
     }
 
+    public function insert_user($data){
+       $this->db->insert('tbl_users', $data);
+       $insert_id = $this->db->insert_id();
+       return  $insert_id;
+    }
+
+    public function insert_account($data){
+       $this->db->insert('tbl_account_details', $data);
+       return  true;
+    }
+
+    public function check_user($username,$email){
+        $this->db->select('*');
+        $this->db->from('tbl_users');
+        $this->db->where('username',$username);
+        $this->db->or_where('email',$email);
+        $query = $this->db->get();
+        if ( $query->num_rows() > 0 )
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     public function fetch_user(){
         $checker=array('role_id'=>'1',
                        'activated'=>'1',
                        'banned'=>'0');
+        $checker2=array('role_id'=>'3',
+                       'activated'=>'1',
+                       'banned'=>'0');
         $this->db->where($checker);
+        $this->db->or_where($checker2);
         $check = $this->db->get("tbl_users")->result_array();
         if(count($check)==0 ){
             return false;
         }else{
             return $check;
         } 
+    }
+
+    public function fetch_all_users(){
+        $this->db->select('*');
+        $this->db->from('tbl_users');
+        $this->db->join('tbl_account_details', 'tbl_users.user_id = tbl_account_details.user_id');
+        $query_result = $this->db->get();
+        $result = $query_result->result();
+        return $result;
+
     }
 
     public function fetch_user_by_id($id){

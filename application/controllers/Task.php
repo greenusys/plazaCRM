@@ -12,10 +12,30 @@ class Task extends CI_Controller {
 
 	public function index()
 	{
+		$data['all_tasks']=$this->Tasks_Model->fetch_all_task(null);
 		$data['users']=$this->User_model->fetch_user();
 		$this->load->view('layout/header');
 		$this->load->view("pages/tasks",$data);
 		$this->load->view("layout/footer");
+	}
+
+	public function task_updater(){
+		$task_id=$_POST['task_id'];
+		$permission=$_POST['permission'];
+		$updater=$this->Tasks_Model->update_permission($task_id,$permission);
+		if ($updater) {
+			echo "1";
+		}
+		else{
+			echo "0";
+		}
+	}
+
+	public function update_tasks($id,$string){
+		$task_id=$id;
+		$task_status=$string;
+		$update=$this->Tasks_Model->update_tasks($task_id,$task_status);
+		redirect('Task');
 	}
 
 	public function create_task(){

@@ -16,6 +16,61 @@ class Tasks_Model extends CI_Model{
 		} 
 	}
 
+	    public function get_permission($table, $where = null)
+    {
+        $role = $this->session->logged_user[0]->role_id;
+        $user_id = $this->session->logged_user[0]->user_id;
+        $this->db->from($table);
+        if (!empty($where)) {
+            $this->db->where($where);
+        }
+        if (!empty($_POST["length"]) && $_POST["length"] != -1) {
+            $this->db->limit($_POST['length'], $_POST['start']);
+        }
+
+        $query = $this->db->get();
+        $permission = $query->result();
+
+        $return_result = array();
+        if ($role != 1) {
+            if (!empty($permission)) {
+                foreach ($permission as $result) {
+                    if ($result->permission == 'all') {
+                        array_push($return_result, $result);
+                    } else {
+                        $get_permission = json_decode($result->permission);
+                        if (is_object($get_permission)) {
+                            foreach ($get_permission as $id => $v_permission) {
+                                if ($user_id == $id) {
+                                    array_push($return_result, $result);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            $return_result = $permission;
+        }
+        return $return_result;
+    }
+
+	    public function fetch_all_task($filterBy)
+    {
+        $tasks = array();
+        $all_tasks = array_reverse($this->get_permission('tbl_task'));
+        if (empty($filterBy)) {
+            return $all_tasks;
+        } else {
+            foreach ($all_tasks as $v_tasks) {
+                if ($v_tasks->task_status == $filterBy) {
+                    array_push($tasks, $v_tasks);
+                }
+            }
+        }
+        return $tasks;
+    }
+
 	public function fetch_task($id){
 		$checker=array('id'=>$id);
 		$this->db->where($checker);
@@ -27,11 +82,31 @@ class Tasks_Model extends CI_Model{
 		} 
 	}
 
+	public function update_tasks($task_id,$task_status){
+			$this->db->where('task_id', $task_id);
+    		if($this->db->update('tbl_task',array('task_status'=>$task_status))){
+    			return true;
+    		}
+    		else{
+    			return false;
+    		}
+	}
+
 	public function update_task($data){
 			$id=$data['id'];
 			unset($data['id']);
 			$this->db->where('id', $id);
     		if($this->db->update('tasks_',$data)){
+    			return true;
+    		}
+    		else{
+    			return false;
+    		}
+	}
+
+	public function update_permission($task_id,$permission){
+			$this->db->where('task_id', $task_id);
+    		if($this->db->update('tbl_task',array("permission"=>$permission))){
     			return true;
     		}
     		else{
