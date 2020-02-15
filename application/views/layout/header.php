@@ -2,7 +2,7 @@
   $session=$this->session->userdata('logged_user');
   // print_r($session);
 $myId=$session[0]->user_id;
-
+$role_id=$session[0]->role_id;
 
   $this->db->where('user_id',$myId);
   $attendaceData=$this->db->get('tbl_attendance')->result();
@@ -258,6 +258,7 @@ $myId=$session[0]->user_id;
                 <li><a class="nav-link" href="<?=base_url('Attendance/markAttendance')?>"><span><i class="far fa-file-alt"></i></span>Mark Attendance</a></li>
               </ul>
             </li>
+
              <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-dollar-sign"></i> <span>Payroll</span></a>
                 <ul class="dropdown-menu">
@@ -274,6 +275,48 @@ $myId=$session[0]->user_id;
                   <li><a class="nav-link" href="<?=base_url('Payroll/overTime')?>"><span><i class="far fa-clock"></i></span>Overtime</a></li>
                   <li><a class="nav-link" href="<?=base_url('Payroll/employeeAward')?>"><span><i class="fas fa-trophy"></i></span>Employee Award</a></li>
                   
+                </ul>
+            </li>
+            <?php
+            if($role_id==3){
+              ?>
+                <li class="nav-item dropdown">
+                  <a href="#" class="nav-link has-dropdown"><i class="fa fa-lock"></i> <span>Permission</span></a>
+                  <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?=base_url('Permission')?>"><span><i class="fa fa-lock"></i></span>Set Permiss  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
+                    
+                   
+                    
+                  </ul>
+                </li>
+              <?php
+            }
+            ?>
+             <li class="nav-item dropdown">
+                  <a href="#" class="nav-link has-dropdown"><i class="fa fa-briefcase"></i> <span>Designation</span></a>
+                  <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?=base_url('Designation')?>"><span><i class="fa fa-briefcase"></i></span>Designation  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
+                    
+                   
+                    
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a href="#" class="nav-link has-dropdown"><i class="fa fa-legal"></i> <span>Department</span></a>
+                  <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?=base_url('Department')?>"><span><i class="fa fa-legal"></i></span>Department  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
+                    
+                   
+                    
+                  </ul>
+                </li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fab fa-dribbble"></i> <span>Performance</span></a>
+                <ul class="dropdown-menu">
+                  <li><a class="nav-link" href="<?=base_url('Performance/indicator')?>"><span> <i class="fas fa-random"></i></span>Indicator<i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
+                  <li><a class="nav-link" href="<?=base_url('Performance/giveAppraisal')?>"><span><i class="fas fa-plus"></i></span>Give Appraisal</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Performance/performanceReport')?>"><span><i class="far fa-calendar"></i></span>Performance Report</a></li>
+                
                 </ul>
             </li>
              <li class="nav-item dropdown">
@@ -295,15 +338,7 @@ $myId=$session[0]->user_id;
                    <li><a class="nav-link" href="<?=base_url('Transaction/BankAndCash')?>"><span><i class="far fa-money-bill-alt"></i></span>Bank & Cash</a></li>
                 </ul>
             </li>
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fab fa-dribbble"></i> <span>Performance</span></a>
-                <ul class="dropdown-menu">
-                  <li><a class="nav-link" href="<?=base_url('Performance/indicator')?>"><span> <i class="fas fa-random"></i></span>Indicator<i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
-                  <li><a class="nav-link" href="<?=base_url('Performance/giveAppraisal')?>"><span><i class="fas fa-plus"></i></span>Give Appraisal</a></li>
-                  <li><a class="nav-link" href="<?=base_url('Performance/performanceReport')?>"><span><i class="far fa-calendar"></i></span>Performance Report</a></li>
-                
-                </ul>
-            </li>
+            
             <li><a class="nav-link" href="<?=base_url('User/user_list')?>"><i class="fas fa-user"></i> <span>Users</span></a></li>
             <li><a class="nav-link" href="<?=base_url('Backupdatabase')?>"><i class="fas fa-database"></i> <span>Backup Database</span></a></li>
 
