@@ -302,9 +302,9 @@ $role_id=$session[0]->role_id;
                   </ul>
                 </li>
                 <li class="nav-item dropdown">
-                  <a href="#" class="nav-link has-dropdown"><i class="fa fa-legal"></i> <span>Department</span></a>
+                  <a href="#" class="nav-link has-dropdown"><i class="fa fa-user"></i> <span>Department</span></a>
                   <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="<?=base_url('Department')?>"><span><i class="fa fa-legal"></i></span>Department  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
+                    <li><a class="nav-link" href="<?=base_url('Department')?>"><span><i class="fa fa-user"></i></span>Department  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
                     
                    
                     
