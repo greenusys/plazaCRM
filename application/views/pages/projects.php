@@ -326,7 +326,7 @@ $(document).ready(function(){
                                         echo "Everyone";
                                       }
                                       else{
-                                        echo $pr[$i]->fullname;
+                                        // echo $pr[$i]->fullname;
                                       }
                                    }
                                   }
