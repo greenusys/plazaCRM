@@ -280,13 +280,13 @@
               <div class="col-sm-9">
                 <div class="input-group">
                   <select name="client_id" class="form-control" id="related_to">
-                      <option value="">None</option>
-                      <option value="opportunities">Opportunities</option>
-                      <option value="bug">Bugs</option>
+                      <option value="" selected>None</option>
+<!--                       <option value="opportunities">Opportunities</option> -->
+<!--                       <option value="bug">Bugs</option> -->
                       <option value="project">Projects</option>
-                      <option value="leads">Leads</option>
+<!--                       <option value="leads">Leads</option>
                       <option value="goal">Goal Tracking</option>
-                      <option value="task">Tasks</option>
+                      <option value="task">Tasks</option> -->
                   </select>
                 </div>
               </div>
