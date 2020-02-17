@@ -8,19 +8,33 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+		
 		$(document).on('click','#ditDept',function(){
 			var depId=$(this).attr('d-id');
 			var depName=$(this).attr('d-name');
+			$('#edit_dept_id').val(depId);
 			$('#edit_dept_name').val(depName);
 		});
 
-		$(document).on('submit','#updDe',function(){
+		$(document).on('submit','#updDe',function(e){
+			e.preventDefault();
+			var depId=$('#edit_dept_id').val();
+			
+			var depName=$('#edit_dept_name').val();
 			$.ajax({
 				url:"<?=base_url('Department/updateDeptName')?>",
 				type:"post",
-				data:{depId:depId, depName:depName},
+				data:{dptId:depId, dptName:depName},
 				success:function(response){
 					console.log(response);
+					response=JSON.parse(response);
+					if(response.code==1){
+						// swal('Success')
+						swal("Good job!", response.data, "success");
+					}else{
+						swal("Oops!", response.data, "warning");
+					}
+					setInterval(function(){ location.reload()}, 2000);
 				}
 			})
 		});
@@ -116,22 +130,29 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form id="updDe">
 			<div class="form-group">
 				<div class="row">
 					<div class="col-sm-4">
 						<label for="exampleInputEmail1">Edit Departments <span class="text-danger">*</span></label>
 					</div>
 					<div class="col-sm-8">
+						
+						<input type="text" class="form-control" id="edit_dept_id" aria-describedby="emailHelp" placeholder="IT/Collaborative">
 						<input type="text" class="form-control" id="edit_dept_name" aria-describedby="emailHelp" placeholder="IT/Collaborative">
 					</div>
+
 				</div>
-			</div>  
+				<div class="form-group">
+					<button type="sumbit" class="btn btn-primary">Update</button>
+				</div>
+			</div> 
+
 		</form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Update</button>
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        
       </div>
     </div>
   </div>
