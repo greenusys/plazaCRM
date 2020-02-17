@@ -345,7 +345,13 @@ $role_id=$session[0]->role_id;
 
             <li><a class="nav-link" href="<?=base_url('Leavemanagement/index')?>"><i class="fab fa-telegram-plane"></i> <span>Leave Management</span> <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
             <li><a class="nav-link" href="<?=base_url('Announcement/')?>"><i class="fas fa-bullhorn"></i> <span>Announcements </span>  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
-
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe-europe"></i> <span>Utilities </span></a>
+                <ul class="dropdown-menu">
+                  <li><a class="nav-link" href="<?=base_url('Utilities/holiday')?>"><span> <i class="fas fa-ticket-alt"></i></span>Holiday<i class="fa fa-check" aria-hidden="true" style="color:orange"></i> </a></li>
+                  <li><a class="nav-link" href="<?=base_url('Utilities/gaolTracking')?>"><span><i class="far fa-compass"></i></span>Goal Tracking</a></li>
+                </ul>
+            </li>
              <li><a class="nav-link" href=""><i class="fas fa-envelope"></i> <span>Private Chat </span></a></li>
             </ul>
         </aside>

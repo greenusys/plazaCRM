@@ -343,7 +343,7 @@
 }*/
 </style>
 <body class="bg-light">
-    <div class="  mb-5">
+    <div class="mb-5">
         <div>
             <div class="row p-3 mt-5 " style="background-color:#1B344E">
                 <div class="col-sm-4">
