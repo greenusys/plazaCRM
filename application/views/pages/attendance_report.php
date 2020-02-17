@@ -110,7 +110,7 @@
               </div>
               <div class="col-sm-7">
                 <div class='input-group date form-group' id='datetimepicker10'>
-                  <input type='text' class="form-control" name="date"/>
+                  <input type='text' class="form-control" name="date" autocomplete="off"/>
                     <span class="input-group-addon">
                       <span ><i class="fa fa-calendar"></i></span>
                   </span>
