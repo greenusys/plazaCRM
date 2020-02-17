@@ -13,6 +13,17 @@
 			var depName=$(this).attr('d-name');
 			$('#edit_dept_name').val(depName);
 		});
+
+		$(document).on('submit','#updDe',function(){
+			$.ajax({
+				url:"<?=base_url('Department/updateDeptName')?>",
+				type:"post",
+				data:{depId:depId, depName:depName},
+				success:function(response){
+					console.log(response);
+				}
+			})
+		});
 	</script>
 	<div class="line"></div>
 	<div class="row pd-5 mt-4">

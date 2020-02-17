@@ -1,7 +1,6 @@
 <?php
 	
-	class Department extends CI_Controller
-	{
+	class Department extends MY_Controller{
 		
 		function __construct()
 		{
@@ -31,6 +30,15 @@
 		public function getDesignations($departments_id){
 			// $this->db->where('');
 			return $this->DPT->getDesignations($departments_id);
+		}
+		public function updateDeptName (){
+			$name=$this->input->post('dptName');
+			$id=$this->input->post('dptId');
+			if($this->DPT->updateDeptName($name, $id)){
+				die(json_encode(array("code"=>1, "data"=>"Department Name Updated Successfully.")));
+			}else{
+				die(json_encode(array("code"=>0, "data"=>"Failed To Update Department Name")));
+			}
 		}
 
 	}

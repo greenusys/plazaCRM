@@ -317,7 +317,7 @@ $role_id=$session[0]->role_id;
                 </ul>
             </li>
             <?php
-            if($role_id==3){
+            if($role_id!=3){
               ?>
                 <li class="nav-item dropdown">
                   <a href="#" class="nav-link has-dropdown"><i class="fa fa-lock"></i> <span>Permission</span></a>
