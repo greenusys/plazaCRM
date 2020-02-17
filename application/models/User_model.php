@@ -159,5 +159,108 @@ class User_model extends MY_Model
         return $users;
     }
 
+    public function fetch_user_data($id){
+        $this->db->select('tbl_users.*', FALSE);
+         $this->db->select('tbl_account_details.*', FALSE);
+        $this->db->from('tbl_users');
+        $this->db->join('tbl_account_details', 'tbl_account_details.user_id=tbl_users.user_id');
+        $this->db->where('tbl_users.user_id',$id);
+        $res = $this->db->get()->result();
+         return $res;   
+    }
 
+    public function update_user_data($data){
+        //print_r($data);
+        $condition =array("user_id"=>$data['user_id']);
+        $this->db->where($condition);
+        $ct =$this->db->get('tbl_account_details')->row();
+        if(count($ct)>0){
+            $this->db->where($condition);
+            $res = $this->db->update('tbl_account_details',$data);
+            if($res){
+                return true;
+            }else{
+               return false;
+            }
+        }else{
+            return false;
+        }
+    }
+     public function update_user_email($data){
+        $condition =array("user_id"=>$data['user_id'],"password"=>$data['password']);
+        $this->db->where($condition);
+        $ct =$this->db->get('tbl_users')->row();
+        if(count($ct)>0){
+            $dta = array('email'=>$data['email']);
+                $this->db->where($condition);
+                $res = $this->db->update('tbl_users',$dta);
+            if($res){
+                return true;
+            }else{
+               return false;
+            }
+        }else{
+            return false;
+        }
+     }
+
+    public function update_user_password($data){
+        $condition =array("user_id"=>$data['user_id'],"password"=>$data['oldpassword']);
+        $this->db->where($condition);
+        $ct =$this->db->get('tbl_users')->row();
+        if(count($ct)>0){
+            $dta = array('password'=>$data['newpassword']);
+                $this->db->where($condition);
+                $res = $this->db->update('tbl_users',$dta);
+            if($res){
+                return true;
+            }else{
+               return false;
+            }
+        }else{
+           return false;
+        }
+     }
+
+     public function add_user_reports($data){
+            if($this->db->insert('tbl_reports', $data)){
+                return  true;
+            }else{
+                return  false;
+            } 
+     }
+     function fetch_report_list($user_id){
+       
+         $this->db->select('tbl_users.*', FALSE);
+         $this->db->select('tbl_reports.*', FALSE);
+        $this->db->from('tbl_users');
+        $this->db->join('tbl_reports', 'tbl_reports.user_id=tbl_users.user_id');
+        $this->db->where('tbl_users.user_id',$user_id);
+        $res = $this->db->get()->result();
+        return $res;
+      
+     }
+
+         function fetch_report_data($data){
+              $condition =array("rpt_id"=>$data['rpt_id']);
+        $this->db->where($condition);
+        $ct =$this->db->get('tbl_reports')->row();
+       // print_r($ct);
+        if(count($ct)>0){
+            $this->db->select('tbl_users.*', FALSE);
+            $this->db->select('tbl_reports.*', FALSE);
+            $this->db->select('tbl_account_details.*', FALSE);
+            $this->db->from('tbl_users');
+            $this->db->join('tbl_reports', 'tbl_reports.user_id=tbl_users.user_id');   
+         
+          $this->db->join('tbl_account_details', 'tbl_account_details.user_id=tbl_users.user_id');
+            $new_cond=array("tbl_reports.rpt_id"=>$data['rpt_id'],'tbl_users.user_id'=>$ct->user_id);
+             $this->db->where($new_cond);
+             return $this->db->get()->row();
+                
+        }else{
+            return false;
+        }  
+     }
 }
+?>

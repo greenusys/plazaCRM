@@ -82,6 +82,77 @@ class Projects extends MY_Controller {
 		 }
 	}
 
+	public function upload_project(){
+ 
+      $data = array();
+
+      // Count total files
+      $countfiles = count($_FILES['files']['name']);
+ 
+      // Looping all files
+      for($i=0;$i<$countfiles;$i++){
+ 
+        if(!empty($_FILES['files']['name'][$i])){
+ 
+          // Define new $_FILES array - $_FILES['file']
+          $_FILES['file']['name'] = $_FILES['files']['name'][$i];
+          $_FILES['file']['type'] = $_FILES['files']['type'][$i];
+          $_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i];
+          $_FILES['file']['error'] = $_FILES['files']['error'][$i];
+          $_FILES['file']['size'] = $_FILES['files']['size'][$i];
+
+          // Set preference
+          $config['upload_path'] = 'uploads/project_uploads/'; 
+          $config['allowed_types'] = '*';
+          //$config['max_size'] = '5000'; // max_size in kb
+          $config['file_name'] = $_FILES['files']['name'][$i];
+ 
+          //Load upload library
+          $this->load->library('upload',$config); 
+ 
+          // File upload
+          if($this->upload->do_upload('file')){
+            // Get data about the file
+            $uploadData = $this->upload->data();
+            $filename = $uploadData['file_name'];
+
+            // Initialize array
+            $uploaded_files[] = $filename;
+          }
+          // else{
+          // 	$error = array('error' => $this->upload->display_errors());
+          // 	print_r($error);
+          // }
+        }
+ 
+      }
+        $file_list=implode(',',$uploaded_files);
+        $project_id=$_POST['project_id'];
+        $fetch_project=$this->Projects_Model->fetch_project($project_id);
+        if ($fetch_project[0]['uploads']==NULL) {
+        	$result=$this->Projects_Model->upload_project($project_id,$file_list);
+        	if ($result) {
+        		die(json_encode(array('status'=>'1','msg'=>'Uploaded Successfully')));
+        	}
+        	else{
+        		die(json_encode(array('status'=>'0','msg'=>'Something Went Wrong')));
+        	}
+        }
+        else{
+        	$old_uploads=$fetch_project[0]['uploads'];
+        	$xplode=explode(',',$old_uploads);
+        	$fnal_files=array_merge($uploaded_files,$xplode);
+        	$final_files=implode(',',$fnal_files);
+    		$result=$this->Projects_Model->upload_project($project_id,$final_files);
+        	if ($result) {
+        		die(json_encode(array('status'=>'1','msg'=>'Uploaded Successfully')));
+        	}
+        	else{
+        		die(json_encode(array('status'=>'0','msg'=>'Something Went Wrong')));
+        	}
+        }
+	}
+
 	public function fetch_all_projects(){
 		$projects=$this->Projects_Model->fetch_projects();
 		die(json_encode(array('status' =>'1' ,"data"=>$projects )));
@@ -117,6 +188,43 @@ class Projects extends MY_Controller {
 		else{
 			die(json_encode(array('status' =>'0' ,'msg'=>'Failed')));
 		}
+	}
+
+	public function downloader(){
+		$project_id= $this->uri->segment(3);
+		$result=$this->Projects_Model->fetch_project($project_id);
+		$files=$result[0]['uploads'];
+		$main_files=explode(",",$files);
+		// foreach ($main_files as $filer) {
+		// 	$path="./uploads/project_uploads/".$filer;
+		// 	$this->file_download($path);
+		// }
+		$zip = new ZipArchive();
+		$zip_name = "uploads/project_uploads/".time().".zip"; // Zip name
+		$zip->open($zip_name,  ZipArchive::CREATE);
+		foreach ($main_files as $file) {
+		  $path = "./uploads/project_uploads/".$file;
+		  if(file_exists($path)){
+		  $zip->addFromString(basename($path),  file_get_contents($path));  
+		  }
+		  else{
+		   echo"file does not exist";
+		  }
+		}
+		$zip->close();
+		$this->file_download($zip_name);
+	}
+
+	public function file_download($file_name)
+    {
+        
+        $this->load->helper('download');
+        force_download($file_name, NULL);
+       //  $data = file_get_contents($file_name);
+       // // $name = 'My_new_name.pdf'; // custom file name for your download
+
+       //  //force_download($name, $data);
+       //  force_download($file_name, NULL); //will get the file name for you
 	}
 
 }

@@ -19,22 +19,66 @@
 		$(document).on('submit','#updDe',function(e){
 			e.preventDefault();
 			var depId=$('#edit_dept_id').val();
+			var depHead=$('#dp_head').val();
+			if($depHead==0){
+				alert("Please Select Department Head.");
+			}
 			
 			var depName=$('#edit_dept_name').val();
 			$.ajax({
 				url:"<?=base_url('Department/updateDeptName')?>",
 				type:"post",
-				data:{dptId:depId, dptName:depName},
+				data:{dptId:depId, dptName:depName,depHead:depHead},
 				success:function(response){
 					console.log(response);
 					response=JSON.parse(response);
 					if(response.code==1){
 						// swal('Success')
 						swal("Good job!", response.data, "success");
+						setInterval(function(){ location.reload()}, 2000);
 					}else{
 						swal("Oops!", response.data, "warning");
+						setInterval(function(){ location.reload()}, 2000);
 					}
-					setInterval(function(){ location.reload()}, 2000);
+					
+				}
+			})
+		});
+		$(document).on('click','.deleteDepartment',function(){
+			var depId=$(this).attr('d-id');
+			$.ajax({
+				url:"<?=base_url('Department/deleteDepartment')?>",
+				type:"post",
+				data:{depID:depId},
+				success:function(response){
+					response=JSON.parse(response);
+					if(response.code==1){
+						swal("Good job!", response.data, "success");
+						setInterval(function(){ location.reload()}, 2000);
+					}else{
+						swal("Oops!", response.data, "warning");
+						setInterval(function(){ location.reload()}, 2000); 
+					}
+					
+				}
+			})
+		});
+		$(document).on('click','.deleteDesignation',function(){
+			var desID=$(this).attr('d-id');
+			$.ajax({
+				url:"<?=base_url('Department/deleteDesignation')?>",
+				type:"post",
+				data:{desID:desID},
+				success:function(response){
+					response=JSON.parse(response);
+					if(response.code==1){
+						swal("Good job!", response.data, "success");
+						setInterval(function(){ location.reload()}, 2000);
+					}else{
+						swal("Oops!", response.data, "warning");
+						setInterval(function(){ location.reload()}, 2000); 
+					}
+					
 				}
 			})
 		});
@@ -50,11 +94,11 @@
 					<div class="row">
 						<div class="col-md-9">
 							<h5 class="mt-2 text-dark font-weight-bold"><?=$value['Dept_name']?></h5>
-				   			<h6>Department head:<span class="text-info"> Jonathan Tornil Grasa</span></h6>		
+				   			<h6>Department head:<span class="text-info"><?=$value['fullname']?></span></h6>		
 						</div>
 						<div class="col-md-3">
 						   <a href="javascript:void(0)" class="btn btn-primary fs " id="ditDept"  data-toggle="modal" data-target="#updateDepartment" d-id="<?=$value['Dept_id']?>" d-name="<?=$value['Dept_name']?>"><i class="fas fa-edit"></i></a>
-						   <a href="javascript:void(0)" class="btn btn-danger fs" data-toggle="tooltip" data-placement="top" title="Delete"><i class="far fa-trash-alt"></i></a>
+						   <a href="javascript:void(0)" class="btn btn-danger fs deleteDepartment" d-id="<?=$value['Dept_id']?>" data-toggle="tooltip" data-placement="top" title="Delete"><i class="far fa-trash-alt"></i></a>
 						</div>
 					</div>
 					<div class="row">
@@ -79,7 +123,7 @@
 													<td scope="row" >
 													    <a href="departmentform.php"><button type="button" class="btn btn-primary fs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></button></a>
 														
-														<button type="button" class="btn btn-danger fs " data-toggle="tooltip" data-placement="top" title="Delete"><i class="far fa-trash-alt"></i></button>
+														<a href="javascript:void(0)" type="button" class="btn btn-danger fs deleteDesignation" d-id="<?=$desg->designations_id?>" data-toggle="tooltip" data-placement="top" title="Delete"><i class="far fa-trash-alt"></i></a>
 													</td>
 												</tr>
 											<?php
@@ -138,8 +182,20 @@
 					</div>
 					<div class="col-sm-8">
 						
-						<input type="text" class="form-control" id="edit_dept_id" aria-describedby="emailHelp" placeholder="IT/Collaborative">
+						<input type="hidden" class="form-control" id="edit_dept_id" aria-describedby="emailHelp" placeholder="IT/Collaborative">
 						<input type="text" class="form-control" id="edit_dept_name" aria-describedby="emailHelp" placeholder="IT/Collaborative">
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="col-sm-4">
+						<label for="exampleInputEmail1">Select Dept. Head <span class="text-danger">*</span></label>
+					</div>
+					<div class="col-sm-8">
+						<select class="form-control" name="dp_head" id="dp_head">
+							<option value="0"> Select</option>
+							<option value="22">RA</option>
+						</select>
 					</div>
 
 				</div>

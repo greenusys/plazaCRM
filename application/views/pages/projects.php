@@ -285,10 +285,12 @@ $(document).ready(function(){
                                 <th>End Date</th>
                                 <th>Status</th>
                                 <th>Assigned To</th>
+                                <th>Downloads</th>
                                 <th>Action</th>
                              
                             </tr>
                         </thead>
+
                         <tbody>
                           <?php
                           foreach ($project as $pr) {
@@ -319,8 +321,8 @@ $(document).ready(function(){
                                 <td>
                                   <?php
                                   $total = count((array)$pr);
-                                  if($total>7){
-                                    $total=$total-7;
+                                  if($total>8){
+                                    $total=$total-8;
                                     for($i=0;$i<$total;$i++){
                                       if($pr[$i]=="Everyone "){
                                         echo "Everyone";
@@ -335,6 +337,16 @@ $(document).ready(function(){
                                   }
                                   //print_r($pr[0]->fullname);
                                  
+                                  ?>
+                                </td>
+                                <td>
+                                  <?php
+                                  if ($pr['project_uploads']==null) {
+                                    echo "No Downloads";
+                                  }
+                                  else{
+                                    echo "<a href='".base_url()."Projects/downloader/".$pr['project_id']."'>Download Now</a>";
+                                  }
                                   ?>
                                 </td>
                                 <td>
@@ -663,83 +675,38 @@ $(document).ready(function(){
 </script>
                   </div>
                   <div class="tab-pane fade show px-4" id="imp_project" role="tabpanel" aria-labelledby="import_project">
-                    <div class="text-right">
+<!--                     <div class="text-right">
                       <button class="btn btn-success rounded-0"><i class="fa fa-download" aria-hidden="true"></i> Download Sample</button>
-                    </div>
+                    </div> -->
                     <div class="row">
-                      <form method="" class="w-100">
+                      <form id="upload_project" class="w-100">
                        <div class="col-md-12 card p-4">
                           <div class="col-md-5 offset-md-1 mt-3">
-                       
-                                <div class="form-group  row">
-                                  <label for="staticEmail" class="text-right col-sm-3 col-form-label font-weight-bold">Choose File <sup class="a1">*</sup></label>
+                                                       <div class="form-group row">
+                                  <label for="staticEmail" class="text-right col-sm-3 col-form-label font-weight-bold">Select Project <sup class="a1">*</sup></label>
                                   <div class="col-sm-8">
-                                      <input type="file" class="text-right form-control border-0 d-none" id="img" placeholder="">
-                                  <label for="img" class="border w-50 pl-3">Select File</label>
-                                  </div>
-                                </div>
-                                <div class="form-group row">
-                                  <label for="staticEmail" class="text-right col-sm-3 col-form-label font-weight-bold">Task Status <sup class="a1">*</sup></label>
-                                  <div class="col-sm-8">
-                                     <select  name="task_status" class="form-control " id="task_status" style="width: 100%" required="">
-                                      <option value="" selected="">select</option>
-                                      <option value="">GMAP</option>
-                                      <option value="">HR</option>
-                                      <option value="">IT</option>
+
+                                     <select  name="project_id" class="form-control " id="task_status" style="width: 100%" required="">
+                                      <option value="" selected="" disabled="">Select Project</option>
+                                      <?php
+                                      foreach ($project as $pr) {
+                                      ?>
+                                      <option value="<?=$pr['project_id']?>"><?=$pr['project_name']?></option>
+                                    <?php } ?>
                                      </select>            
                                   </div>
                               </div>
-                            <div class="form-group row">
-              <label for="staticEmail" class="text-right col-sm-3 col-form-label font-weight-bold">Assigned To  <sup class="a1">*</sup></label>
-              <div class="col-sm-9">
-                <div class="checkbox c-radio needsclick">
-                  <input type="radio" checked="checked" name="cln_rad" value="" class="btn1"> Everyone<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
-                </div>
-                <div class="checkbox c-radio needsclick">
-                  <input type="radio" name="cln_rad" value=""  class="chkPassport" > Customise Permission<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
-                </div>
-              </div>
-            </div>
+                                <div class="form-group  row">
+                                  <label for="staticEmail" class="text-right col-sm-3 col-form-label font-weight-bold">Choose Files <sup class="a1">*</sup></label>
+                                  <div class="col-sm-8">
+                                      <input type="file" name="files[]" multiple class="text-right form-control border-0 d-none" id="img" placeholder="">
+                                  <label for="img" class="border w-50 pl-3">Select Files</label>
+                                  </div>
+                                </div>
         
-          </div>
-          <div class="form-group dvPassport"  id="dvPassport" style="display: none">
-              <div class="row">
-              <div class="col-sm-3">
-                <label for="exampleInputEmail1">select Users<span class="text-danger">*</span></label>
-              </div>
-              <div class="col-sm-9">
-                 <input type="checkbox" name="vehicle1" value="Bike"   class="chkPassport1"> admin <strong class="badge btn-danger">Admin</strong>
-                 <br>
-                 <div class="row dvPassport1"  id="dvPassport1" style="display: none">
-                    <div class="col-md-3">
-                   <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> View
-                  </div>
-                  <div class="col-md-3">
-                       <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Edit
-                  </div>
-                  <div class="col-md-3">
-                      <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Delete
-                  </div>
-                 </div>
-                 
-                   <input type="checkbox" name="vehicle2" value="Car" class="chkPassport2" > adminko <strong class="badge btn-danger">Admin</strong>
-                 <br>
-                 <div class="row dvPassport2"  id="dvPassport2" style="display: none">
-                    <div class="col-md-3">
-                   <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> View
-                  </div>
-                  <div class="col-md-3">
-                       <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Edit
-                  </div>
-                  <div class="col-md-3">
-                      <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Delete
-                  </div>
-                 </div>
-              </div>
-            </div>
-          </div>
+                               </div>
                                 <div class="" style="padding-left: 26%">
-                                  <button type="submit" class="btn btn-primary">upload</button>
+                                  <button type="submit" class="btn btn-primary">Upload</button>
                               </div>  
                                </div>
                             </form>   
@@ -755,7 +722,34 @@ $(document).ready(function(){
           </div>
         </section>
       </div>
-
+<script type="text/javascript">
+      $("#upload_project").submit(function(e){
+       e.preventDefault();
+          var formData= new FormData($(this)[0]);
+          $.ajax({
+            url:"<?=base_url()?>Projects/upload_project",
+            type:"post",
+             data:formData,
+             contentType:false,
+             processData:false,
+             cache:false,
+            success:function(response)
+            {
+              //console.log(response);
+              var response=JSON.parse(response);
+              if(response.status==1)
+              {
+                swal("Uploaded", "success", "success");
+                location.reload();
+              }
+              else if(response.status=="0")
+              {
+               swal("OOPS", "Something Went Wrong", "error");
+              }
+            }
+         });
+    });
+</script>
   <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content style">

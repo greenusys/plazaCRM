@@ -139,9 +139,9 @@ $role_id=$session[0]->role_id;
             <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
             <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
           </ul>
-          <div class="search-element">
+         <!--  <div class="search-element">
             <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
-            <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+            <button class="btn" type="submit"><i class="fas fa-search"></i></button> -->
             <!-- <div class="search-backdrop"></div>
             <div class="search-result">
               <div class="search-header">
@@ -200,7 +200,7 @@ $role_id=$session[0]->role_id;
                 </a>
               </div>
             </div> -->
-          </div>
+          <!-- </div> -->
         </form>
 
         <ul class="navbar-nav navbar-right">
@@ -256,16 +256,17 @@ $role_id=$session[0]->role_id;
             </div>
           </li>
           <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-            <img alt="image" src="../assetsd/img/avatar/avatar-1.png" onerror="this.src='<?=base_url()?>assets/img/avatar/avatar-5.png';" class="rounded-circle mr-1">
+          
+            <img alt="image" src=" <?=base_url().'uploads/profile_pic/'.$session[0]->avatar?>" onerror="this.src='<?=base_url()?>assets/img/avatar/avatar-5.png';" class="rounded-circle mr-1">
             <div class="d-sm-none d-lg-inline-block">Hi, <?=$session[0]->fullname?></div></a>
-            <div class="dropdown-menu dropdown-menu-right">
+            <div class="dropdown-menu dropdown-menu-right ml-n5">
               <div class="dropdown-title">Logged in 5 min ago</div>
               <a href="<?=base_url('User/userProfile')?>" class="dropdown-item has-icon">
                 <i class="far fa-user"></i> Profile
               </a>
-              <a href="features-activities.html" class="dropdown-item has-icon">
+            <!--   <a href="features-activities.html" class="dropdown-item has-icon">
                 <i class="fas fa-bolt"></i> Activities
-              </a>
+              </a> -->
               <a href="features-settings.html" class="dropdown-item has-icon">
                 <i class="fas fa-cog"></i> Settings
               </a>
@@ -377,11 +378,27 @@ $role_id=$session[0]->role_id;
                    <li><a class="nav-link" href="<?=base_url('Transaction/BankAndCash')?>"><span><i class="far fa-money-bill-alt"></i></span>Bank & Cash</a></li>
                 </ul>
             </li>
-            
+             
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe-europe"></i> <span>GenerateReports </span></a>
+                <ul class="dropdown-menu">
+                  <li><a class="nav-link" href="<?=base_url('User/generateReport')?>"><span> <i class="fas fa-ticket-alt"></i></span>Daily Reports </a></li>
+                  <li><a class="nav-link" href="<?=base_url('User/reportList')?>"><span><i class="far fa-compass"></i></span>View Report</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Utilities/gaolTracking')?>"><span><i class="far fa-compass"></i></span>Monthly Report</a></li>
+                </ul>
+            </li>
             <li><a class="nav-link" href="<?=base_url('User/user_list')?>"><i class="fas fa-user"></i> <span>Users</span></a></li>
             <li><a class="nav-link" href="<?=base_url('Backupdatabase')?>"><i class="fas fa-database"></i> <span>Backup Database</span></a></li>
 
-            <li><a class="nav-link" href="<?=base_url('Leavemanagement/index')?>"><i class="fab fa-telegram-plane"></i> <span>Leave Management</span> <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fab fa-dribbble"></i> <span>Leave</span></a>
+                <ul class="dropdown-menu">
+                  <li><a class="nav-link" href="<?=base_url('Leavemanagement/LeaveYearySection')?>"><i class="fab fa-telegram-plane"></i> <span>Leave Yearly</span> <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
+                <li><a class="nav-link" href="<?=base_url('Leavemanagement/LeavePolicySection')?>"><i class="fab fa-telegram-plane"></i> <span>Leave Policy</span> <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
+                <li><a class="nav-link" href="<?=base_url('Leavemanagement/index')?>"><i class="fab fa-telegram-plane"></i> <span>Leave Management</span> <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
+                </ul>
+            </li>
+           
             <li><a class="nav-link" href="<?=base_url('Announcement/')?>"><i class="fas fa-bullhorn"></i> <span>Announcements </span>  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe-europe"></i> <span>Utilities </span></a>
@@ -390,6 +407,8 @@ $role_id=$session[0]->role_id;
                   <li><a class="nav-link" href="<?=base_url('Utilities/gaolTracking')?>"><span><i class="far fa-compass"></i></span>Goal Tracking</a></li>
                 </ul>
             </li>
+
+
              <li><a class="nav-link" href=""><i class="fas fa-envelope"></i> <span>Private Chat </span></a></li>
             </ul>
         </aside>

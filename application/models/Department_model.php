@@ -41,21 +41,8 @@ class Department_Model extends MY_Model
         return $result;
     }
     public function getAllDeppartments(){
-        // $this->db->join('tbl_designations', 'tbl_departments.departments_id = tbl_designations.departments_id', 'left');
-        // $All_details=array();
-        // $deatils=array();
+        $this->db->join('tbl_account_details', 'tbl_departments.department_head_id = tbl_account_details.user_id');
         $dpt= $this->db->get('tbl_departments')->result();
-        // foreach ($dpt as $dDe) {
-        //     $departments[]=$dDe;
-        //     // print_r($dDe);
-        //     if(count($data=$this->getDesignations($dDe->departments_id))>0){
-        //         foreach ($data as $d) {
-        //             $deatils[]=$d;
-        //         }
-        //     }
-        // }
-        // array_push($All_details,array("Departments"=>$departments,"Designation"=>$deatils));
-        // print_r($All_details);
         return $dpt;
 
     }
@@ -63,11 +50,69 @@ class Department_Model extends MY_Model
         $this->db->where('departments_id',$dpt_id);
         return $this->db->get('tbl_designations')->result();
     }
-    public function updateDeptName($name, $id){
+
+    public function fetch_designation($id){
+        $this->db->where('designations_id',$id);
+        return $this->db->get('tbl_designations')->result();
+    }
+
+    public function updateDeptName($name, $id, $depHead){
         $this->db->where('departments_id',$id);
-        $toupdate=array("deptname"=>$name);
+        $toupdate=array("deptname"=>$name,"department_head_id"=>$depHead);
         // psrint_r($toupdate);
         if($this->db->update('tbl_departments', $toupdate)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public function createDepartment($newDep,$newDesig){
+        $condition=array("deptname"=>$newDep);
+        $this->db->where($condition);
+        if(count($this->db->get('tbl_departments')->result())==0){
+            if($this->db->insert('tbl_departments',$condition)){
+                $this->db->order_by('departments_id','desc');
+                $this->db->limit(1);
+                $lst_entry=$this->db->get('tbl_departments')->row();
+                $dat=array("departments_id"=>$lst_entry->departments_id,"designations"=>$newDesig,"permission"=>"");
+                if($this->db->insert('tbl_designations',$dat)){
+                    return true;
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+    public function createDesignation($dep_id,$newDesig){
+        
+        $dat=array("departments_id"=>$dep_id,"designations"=>$newDesig);
+        $this->db->where($dat);
+        if(count($this->db->get('tbl_designations')->result())==0){
+            if($this->db->insert('tbl_designations',$dat)){
+                return true;
+            }else{
+                return false;
+            }  
+        }else{
+            return false;
+        }
+         
+    }
+    public function deleteDepartment($depId){
+        $this->db->where('departments_id',$depId);
+        if($this->db->delete('tbl_departments')){
+            return true;
+        }else{
+            return false;
+        }
+    }
+     public function deleteDesignation($desID){
+        $this->db->where('designations_id',$desID);
+        if($this->db->delete('tbl_designations')){
             return true;
         }else{
             return false;

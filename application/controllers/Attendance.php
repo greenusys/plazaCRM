@@ -15,7 +15,8 @@ class Attendance extends MY_Controller {
 		$session=$this->session->userdata('logged_user');
 		$my_Id=$session[0]->user_id;
 		
-		$my_time=$this->input->post('d_time');
+		// $my_time=$this->input->post('d_time');
+		$my_time=date('h:i:s');
 		$type=$this->input->post('type');
 		$ip=$this->input->ip_address();
 		$date_=date('Y-m-d');
@@ -104,7 +105,7 @@ class Attendance extends MY_Controller {
 			//insert or update tbl_clock
 			
 		}else{
-			die(json_encode(array("code"=>0,"msg"=>"Failed to Mark Attendance.","data"=>$attendanceId)));
+			die(json_encode(array("code"=>0,"msg"=>"Failed to Mark Attendance.")));
 		}
 	}
 	public function checkForExistenceIntblClock($st){

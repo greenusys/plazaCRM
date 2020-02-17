@@ -17,9 +17,9 @@ class Projects_Model extends CI_Model{
 	}
 
 	public function fetch_project($id){
-		$checker=array('id'=>$id);
+		$checker=array('project_id'=>$id);
 		$this->db->where($checker);
-		$check = $this->db->get("projects_")->result_array();
+		$check = $this->db->get("tbl_project")->result_array();
 		if(count($check)==0 ){
 			return false;
 		}else{
@@ -28,7 +28,7 @@ class Projects_Model extends CI_Model{
 	}
 
 	public function fetch_projects(){
-		$this->db->select('project_id, project_name,progress,end_date,project_status,permission,tbl_client.name as client_name');
+		$this->db->select('project_id,tbl_project.uploads as project_uploads, project_name,progress,end_date,project_status,permission,tbl_client.name as client_name');
 		$this->db->join('tbl_client', 'tbl_client.client_id = tbl_project.client_id');
 		$check = $this->db->get("tbl_project")->result_array();
 		if(count($check)==0 ){
@@ -45,6 +45,16 @@ class Projects_Model extends CI_Model{
 		}else{
 			return $check;
 		} 
+	}
+
+	public function upload_project($project_id,$file_list){
+			$this->db->where('project_id', $project_id);
+    		if($this->db->update('tbl_project',array('uploads'=>$file_list))){
+    			return true;
+    		}
+    		else{
+    			return false;
+    		}
 	}
 
 	public function update_project($data){

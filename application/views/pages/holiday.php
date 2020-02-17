@@ -86,7 +86,7 @@
               </div>
               <div class="col-md-2">
                 <div class="text-right">
-                  <button class="btn btn-info" id="advn_salry"><i class="fas fa-undo-alt"></i> Switch</button>
+                  <!-- <button class="btn btn-info" id="advn_salry"><i class="fas fa-undo-alt"></i> Switch</button> -->
                   <!-- <button class="btn btn-purple" style="display:none" id="advn_salry_reprt"><i class="fas fa-undo-alt"></i> Switch</button> -->
                 </div>
               </div>

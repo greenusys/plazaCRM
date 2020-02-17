@@ -150,8 +150,11 @@ class User extends MY_Controller {
 	}
 
 	public function userProfile(){
+		$session=$this->session->userdata('logged_user');
+		$user_id=$session[0]->user_id;
+		 $data['user_info']=$this->User_model->fetch_user_data($user_id);
 		$this->load->view('layout/header');
-		$this->load->view("pages/update_profile");
+		$this->load->view("pages/update_profile",$data);
 		$this->load->view("layout/footer");
 	}
 	public function addTodoList(){
@@ -160,9 +163,137 @@ class User extends MY_Controller {
 		$this->load->view("layout/footer");
 	}
 	public function userDetails(){
+		
 		$this->load->view('layout/header');
 		$this->load->view("pages/userDetails");
 		$this->load->view("layout/footer");
+	}
+
+	public function updateUserInfo(){
+		if($_FILES["file"]['name'] !=""){
+			$image = rand(0000,9999).'-'.$_FILES["file"]['name'];
+			$config['upload_path']          = './uploads/profile_pic/';
+	        $config['allowed_types']        = 'jpg|png|jpeg';
+	        $config['file_name'] = $image;
+	            $this->load->library('upload', $config);
+
+	        if (!$this->upload->do_upload('file')) {
+	           
+	        	$this->session->set_flashdata('msg','Error In Uploading Image');
+	           // $this->load->view('files/upload_form', $error);
+	        	$this->userProfile();
+	        } else {
+	        	$rss = $this->upload->data();
+	        	$_POST['avatar']=$rss['file_name'];
+		 		if($this->User_model->update_user_data($_POST)){
+		    		$this->session->set_flashdata('msg','Successfully Updated');
+		    		$this->userProfile();
+		    	}else{
+		    		$this->session->set_flashdata('msg','Server Error, Please Try Again');
+		    		$this->userProfile();
+		    	}
+	        }
+	    }else{
+	    	
+	    	if($this->User_model->update_user_data($_POST)){
+	    		$this->session->set_flashdata('msg','Successfully Updated');
+	    		$this->userProfile();
+	    	}else{
+	    		$this->session->set_flashdata('msg','Server Error, Please Try Again');
+	    		$this->userProfile();
+	    	}
+	    }
+
+	}
+
+	public function updateEmail(){
+		//print_r($_POST);
+		if($this->User_model->update_user_email($_POST)){
+			$this->session->set_flashdata('msg','Successfully Updated');
+	    		$this->userProfile();
+		}else{
+			$this->session->set_flashdata('msg','Server Error, Please Try Again');
+	    		$this->userProfile();
+		}
+	}
+
+	public function updatePassword(){
+	//print_r($_POST);
+	//die();
+		if($this->User_model->update_user_password($_POST)){
+			die(json_encode(array('error'=>0,'msg'=>'Successfully Updated')));
+		}else{
+			die(json_encode(array('error'=>1,'msg'=>'Password Doesn\'t Matched')));
+		}
+	}
+	function generateReport(){
+		$this->load->view('layout/header');
+		$this->load->view("pages/generate_report");
+		$this->load->view("layout/footer");
+	}
+
+	function addReport(){
+//		print_r($_POST);
+//print_r($_FILES);
+		if($_FILES["myfile"]['name'] !=""){
+			 $cpt = count($_FILES['myfile']['name']);
+		    for($i=0; $i<$cpt; $i++)
+		    {   
+		    	$ext = pathinfo($_FILES['myfile']['name'][$i], PATHINFO_EXTENSION);        
+		        $_FILES['file']['name']=  "report-".date("Y-m-d-H-i-s").$i.".".$ext;
+		        $_FILES['file']['type']= $_FILES['myfile']['type'][$i];
+		        $_FILES['file']['tmp_name']= $_FILES['myfile']['tmp_name'][$i];
+		        $_FILES['file']['error']= $_FILES['myfile']['error'][$i];
+		        $_FILES['file']['size']= $_FILES['myfile']['size'][$i];    
+		         $uploadPath = 'uploads/report_images/';
+	                $config['upload_path'] = $uploadPath;
+	                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+		        $this->load->library('upload',$config); 
+		        $this->upload->initialize($config);
+		        $this->upload->do_upload('file');
+		        $dataInfo[] = $this->upload->data();
+		        $images[]=$_FILES['file']['name'];
+
+		    }	
+		      $pics=implode(",",$images);
+	          $_POST['rpt_images']=$pics;
+	         	if($this->User_model->add_user_reports($_POST)){
+					$this->session->set_flashdata('msg','Added Successfully ssaa' );
+			    		redirect(base_url('User/generateReport'));
+				}else{
+					$this->session->set_flashdata('msg','Server Error, Please Try Again');
+			    	redirect(base_url('User/generateReport'));
+				}
+
+		}else{
+			if($this->User_model->add_user_reports($_POST)){
+					$this->session->set_flashdata('msg','Added Successfully 88uj7u');
+			    		redirect(base_url('User/generateReport'));
+			}else{
+				$this->session->set_flashdata('msg','Server Error, Please Try Again');
+		    	redirect(base_url('User/generateReport'));
+			}	
+		}
+	}
+
+	function reportList(){
+		$session=$this->session->userdata('logged_user');
+		$user_id=$session[0]->user_id;
+		 $data['reports_list']=$this->User_model->fetch_report_list($user_id);
+		$this->load->view('layout/header');
+		$this->load->view("pages/view_reports",$data);
+		$this->load->view("layout/footer");
+	}	
+
+	function fetchReport(){
+		//print_r($_POST);
+		$res = $this->User_model->fetch_report_data($_POST);
+		if($res != false){
+			die(json_encode(array("error"=>0,"data"=>$res)));
+		}else{
+			die(json_encode(array("error"=>1,"data"=>$res)));
+		}
+
 	}
 }
 ?>

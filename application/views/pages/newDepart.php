@@ -82,11 +82,40 @@
 </style>
 <script type="text/javascript">
 	$(document).on('change','#selDept',function(){
-		$('#newDpe').hide();
+		
+		if($(this).val()==0){
+			$('#newDpe').show();
+		}else{
+			$('#newDpe').hide();
+		}
+	});
+	$(document).on('submit','#addDeptDesig',function(e){
+		e.preventDefault();
+		var formData=new FormData($(this)[0]);
+		$.ajax({
+			url:"<?=base_url('Department/addNewDep')?>",
+			type:"post",
+			cache:false,
+			contentType:false,
+			processData:false,
+			data:formData,
+			success:function(response){
+				// console.log(response);
+				response=JSON.parse(response);
+				if(response.code==1){
+					// swal('Success')
+					swal("Good job!", response.msg, "success");
+				}else{
+					swal("Oops!", response.msg, "warning");
+				}
+				setInterval(function(){ location.reload()}, 2000);
+			}
+
+		});
 	});
 </script>
 <div class="container bg-white mt-5" id="ticket">
-    <div class="row">
+    <!-- <div class="row">
 		<div class="col-md-8">
 		   <h6 class="mt font-weight-bold">New Department</h6>
 		</div>
@@ -96,11 +125,11 @@
 		<div class="col-md-3">
 		   <button type="button" class="btn btn-primary mt1" id="email">Save & Add More</button>
 		</div>
-	</div>
+	</div> -->
 	<div class="line mt-2"></div>
 	<div class="row mt-5">
 	    <div class="col-sm-12">
-	        <form>
+	        <form id="addDeptDesig">
 			    <div class="row">
 				    <div class="col-md-12">
 						<div class="form-group">
@@ -110,7 +139,7 @@
 								</div>
 								<div class="col-sm-6">
 									<select class=" form-control" name="department" id="selDept">
-										<option>Select Department</option>
+										<option value="0">Select Department</option>
 										<?php
 											foreach ($Depart as $dept) {
 												# code...
@@ -130,19 +159,23 @@
 									<label for="exampleInputEmail1"> New Department </label>
 								</div>
 								<div class="col-sm-6">
-									<input type="text" class="form-control" id="designation" aria-describedby="emailHelp" >
+									<input type="text" class="form-control" name="newDepartment" aria-describedby="emailHelp" >
 								</div>
 							</div>
 						</div>
+						
 						<div class="form-group">
 							<div class="row">
 								<div class="offset-2 col-sm-2">
 									<label for="exampleInputEmail1"> Designation <span class="text-danger">*</span> </label>
 								</div>
 								<div class="col-sm-6">
-									<input type="text" class="form-control" id="designation" aria-describedby="emailHelp" >
+									<input type="text" class="form-control" name="designation" aria-describedby="emailHelp" >
 								</div>
 							</div>
+						</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-primary mt1" >Save</button>
 						</div>
 				    </div>
 			    </div>	
