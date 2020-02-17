@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Utilities extends CI_Controller { 
+class Utilities extends MY_Controller { 
 
 	public function holiday(){
 		$this->load->view('layout/header');
