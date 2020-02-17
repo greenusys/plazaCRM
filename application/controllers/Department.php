@@ -40,6 +40,12 @@
 				die(json_encode(array("code"=>0, "data"=>"Failed To Update Department Name")));
 			}
 		}
+		public function newDepartment(){
+			$data['Depart']=$this->DPT->getAllDeppartments();
+			$this->load->view('layout/header');
+			$this->load->view('pages/newDepart',$data);
+			$this->load->view('layout/footer');
+		}
 
 	}
 

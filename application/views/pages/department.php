@@ -4,7 +4,7 @@
 		   <h6 class="mt">All Department</h6>
 		</div>
 		<div class="col-md-2">
-		   <a href="newdepartment.php" class="text-dark"><h6 class="mt">New Department</h6></a>
+		   <a href="<?=base_url('Department/newDepartment')?>" class="text-dark"><h6 class="mt">New Department</h6></a>
 		</div>
 	</div>
 	<script type="text/javascript">
