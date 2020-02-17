@@ -40,6 +40,52 @@
 				die(json_encode(array("code"=>0, "data"=>"Failed To Update Department Name")));
 			}
 		}
+		public function newDepartment(){
+			$data['Depart']=$this->DPT->getAllDeppartments();
+			$this->load->view('layout/header');
+			$this->load->view('pages/newDepart',$data);
+			$this->load->view('layout/footer');
+		}
+		public function addNewDep(){
+			$dep_id=$this->input->post('department');
+			$newDep=$this->input->post('newDepartment');
+			$newDesig=$this->input->post('designation');
+			if($dep_id==0){
+				// echo 'Create Department';
+				if($this->DPT->createDepartment($newDep,$newDesig)){
+					die(json_encode(array("code"=>1,"msg"=>"Department Added Successfully.")));
+				}else{
+					die(json_encode(array("code"=>0,"msg"=>"Failed To Add Department")));
+				}
+				//create Designation
+			}else{
+				// echo 'Create Designation';
+				if($this->DPT->createDesignation($dep_id,$newDesig)){
+					die(json_encode(array("code"=>1,"msg"=>"Designation Added Successfully.")));
+				}else{
+					die(json_encode(array("code"=>0,"msg"=>"Failed To Add Designation")));
+				}
+				// create Department
+			}
+		}
+		public function deleteDepartment(){
+			// $this->input->post('depId')
+			if($this->DPT->deleteDepartment($this->input->post('depID'))){
+				die(json_encode(array("code"=>1, "data"=>"Department Delete Successfully.")));
+			}else{
+				die(json_encode(array("code"=>0, "data"=>"Failed To Delete Department")));
+			}
+		}
+		public function deleteDesignation(){
+			// $this->input->post('depId')
+			if($this->DPT->deleteDesignation($this->input->post('desID'))){
+				die(json_encode(array("code"=>1, "data"=>"Designation Delete Successfully.")));
+			}else{
+				die(json_encode(array("code"=>0, "data"=>"Failed To Delete Designation")));
+			}
+		}
+		
+		
 
 	}
 

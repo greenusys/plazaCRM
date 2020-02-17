@@ -6,6 +6,8 @@ class Attendance extends MY_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->load->model('AttendanceModel','ATND');
+		$this->load->model('Global_Model');
+
 	}
 	public function markMyAttendance(){
 		// echo $_SESSION['clocked']=0;
@@ -102,7 +104,7 @@ class Attendance extends MY_Controller {
 			//insert or update tbl_clock
 			
 		}else{
-			die(json_encode(array("code"=>0,"msg"=>"Failed to Mark Attendance.","data"=>$attendanceId)));
+			die(json_encode(array("code"=>0,"msg"=>"Failed to Mark Attendance.")));
 		}
 	}
 	public function checkForExistenceIntblClock($st){
@@ -143,10 +145,11 @@ class Attendance extends MY_Controller {
 	public function attendanceReport()
 	{
 		$data['Employee']=$this->ATND->fetchEmployee();
-		$data['all_dept_info'] = $this->db->get('tbl_departments')->result();
+		$data['all_department'] = $this->db->get('tbl_departments')->result();
 	 	// foreach ($data['all_dept_info'] as $v_dept_info) {
         //     $data['all_department_info'][] = $this->Job_circular_model->get_add_department_by_id($v_dept_info->departments_id);
-        // }
+        //
+
 		$this->load->view('layout/header');
 		$this->load->view("pages/attendance_report",$data);
 		$this->load->view("layout/footer");
@@ -238,6 +241,87 @@ class Attendance extends MY_Controller {
 
 
 
+	 public function get_report()
+	    {
+	        $departments_id = $this->input->post('departments_id', TRUE);
+	        $date = $this->input->post('date', TRUE);
+
+	        $month = date('n', strtotime($date));
+	        $year = date('Y', strtotime($date));
+	        $num = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+	        $data['employee_info'] = $this->ATND->get_employee_id_by_dept_id($departments_id);
+
+	        $holidays = $this->Global_Model->get_holidays(); //tbl working Days Holiday
+
+	        if ($month >= 1 && $month <= 9) {
+	            $yymm = $year . '-' . '0' . $month;
+	        } else {
+	            $yymm = $year . '-' . $month;
+	        }
+
+	        $public_holiday = $this->Global_Model->get_public_holidays($yymm);
+
+	        //tbl a_calendar Days Holiday
+	        if (!empty($public_holiday)) {
+	            foreach ($public_holiday as $p_holiday) {
+	                $p_hday = $this->ATND->GetDays($p_holiday->start_date, $p_holiday->end_date);
+	            }
+	        }
+
+	        foreach ($data['employee_info'] as $sl => $v_employee) {
+	            $key = 1;
+	            $x = 0;
+	            for ($i = 1; $i <= $num; $i++) {
+
+	                if ($i >= 1 && $i <= 9) {
+	                    $sdate = $yymm . '-' . '0' . $i;
+	                } else {
+	                    $sdate = $yymm . '-' . $i;
+	                }
+	                $day_name = date('l', strtotime("+$x days", strtotime($year . '-' . $month . '-' . $key)));
+
+	                $data['week_info'][date('W', strtotime($sdate))][$sdate] = $sdate;
+
+	                // get leave info
+	                if (!empty($holidays)) {
+	                    foreach ($holidays as $v_holiday) {
+	                        if ($v_holiday->day == $day_name) {
+	                            $flag = 'H';
+	                        }
+	                    }
+	                }
+	                if (!empty($p_hday)) {
+	                    foreach ($p_hday as $v_hday) {
+	                        if ($v_hday == $sdate) {
+	                            $flag = 'H';
+	                        }
+	                    }
+	                }
+	                if (!empty($flag)) {
+	                    $data['attendace_info'][date('W', strtotime($sdate))][$sdate][$v_employee->user_id] = $this->ATND->attendance_report_by_empid($v_employee->user_id, $sdate, $flag);
+	                } else {
+	                    $data['attendace_info'][date('W', strtotime($sdate))][$sdate][$v_employee->user_id] = $this->ATND->attendance_report_by_empid($v_employee->user_id, $sdate);
+	                }
+	                $key++;
+	                $flag = '';
+	            }
+	        }
+	        $data['title'] = lang('attendance_report');
+            $this->db->order_by("departments_id", "desc"); 
+	        $data['all_department'] = $this->db->get('tbl_departments')->result();
+	        // $data['all_department'] = $this->ATND->get();
+	        $data['departments_id'] = $this->input->post('departments_id', TRUE);
+	        $data['date'] = $this->input->post('date', TRUE);
+	        $where = array('departments_id' => $departments_id);
+        	$this->db->where($where);
+	        $data['dept_name'] = $this->db->get('tbl_departments')->result();
+
+	        $data['month'] = date('F-Y', strtotime($yymm));
+
+	       	$this->load->view('layout/header');
+			$this->load->view("pages/attendance_report",$data);
+			$this->load->view("layout/footer");
+	    }
 
 
 

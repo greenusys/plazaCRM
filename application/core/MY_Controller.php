@@ -10,6 +10,10 @@ class MY_Controller extends CI_Controller
         //     'unread_notifications' => count($this->db->where(array('to_user_id' => $this->session->userdata('user_id'), 'read' => 0))->get('tbl_notifications')->result()),
         //     'd_currency' => $this->db->where('code', config_item('default_currency'))->get('tbl_currencies')->row()->symbol,
         // );
+        if(!$this->session->userdata('logged_user')){
+        	$this->session->set_flashdata('msg','Invalid Username Or Password');
+			redirect('Login');
+        }
 		$session=$this->session->userdata('logged_user');
 		$my_Id=$session[0]->user_id;
         $auto_loaded_vars = array(

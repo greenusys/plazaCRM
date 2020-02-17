@@ -1,5 +1,8 @@
 <?php
     class AttendanceModel extends CI_Model{
+        public $_table_name;
+        public $_order_by;
+        public $_primary_key;
         public function fetchEmployee(){
          $this->db->where('tbl_users.role_id',3);
          $this->db->join('tbl_account_details','tbl_account_details.user_id=tbl_users.user_id');
@@ -120,5 +123,29 @@
             $result = $query_result->result();
             return $result;
         }
+         public function attendance_report_by_empid($user_id = null, $sdate = null, $flag = NULL, $leave = NULL)
+        {
+        $this->db->select('tbl_attendance.*', FALSE);
+        $this->db->select('tbl_clock.*', FALSE);
+        $this->db->select('tbl_account_details.user_id', FALSE);
+        $this->db->from('tbl_attendance');
+        $this->db->join('tbl_clock', 'tbl_clock.attendance_id  = tbl_attendance.attendance_id', 'left');
+        $this->db->join('tbl_account_details', 'tbl_attendance.user_id  = tbl_account_details.user_id', 'left');
+        $this->db->where('tbl_attendance.user_id', $user_id);
+        $this->db->where('tbl_attendance.date_in', $sdate);
+        //$this->db->where('tbl_attendance.date_out <=', $sdate);
+
+        $query_result = $this->db->get();
+        $result = $query_result->result();
+
+        if (empty($result)) {
+            //$val['attendance_status'] = $leave;
+            $val['attendance_status'] = $flag;
+            $val['date'] = $sdate;
+            $result[] = (object)$val;
+        }
+        return $result;
+    }
+
     } 
 ?>
