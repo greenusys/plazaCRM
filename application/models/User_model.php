@@ -85,6 +85,28 @@ class User_model extends MY_Model
 
     }
 
+    public function fetch_all_employees(){
+        $checker=array('tbl_users.role_id'=>'3');
+        $this->db->select('*');
+        $this->db->from('tbl_users');
+        $this->db->join('tbl_account_details', 'tbl_users.user_id = tbl_account_details.user_id');
+        $this->db->where($checker);
+        $query_result = $this->db->get();
+        $result = $query_result->result();
+        return $result;
+    }
+
+    public function fetch_all_employees_admin(){
+        $checker=array('2');
+        $this->db->select('*');
+        $this->db->from('tbl_users');
+        $this->db->join('tbl_account_details', 'tbl_users.user_id = tbl_account_details.user_id');
+        $this->db->where_not_in('tbl_users.role_id',$checker);
+        $query_result = $this->db->get();
+        $result = $query_result->result();
+        return $result;
+    }
+
     public function fetch_user_by_id($id){
         $checker=array('tbl_users.user_id'=>$id);
         $this->db->select('tbl_users.user_id as userid,fullname,avatar');

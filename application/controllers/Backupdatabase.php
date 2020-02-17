@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Backupdatabase extends CI_Controller {
+class Backupdatabase extends MY_Controller {
 
 	public function index()
 	{

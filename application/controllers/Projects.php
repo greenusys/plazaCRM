@@ -1,13 +1,15 @@
 <?php
+date_default_timezone_set('Asia/Kolkata');
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Projects extends CI_Controller {
+class Projects extends MY_Controller {
 
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('Projects_Model');
 		$this->load->model('Client_Model');
 		$this->load->model('User_model');
+		$this->load->model('Notification_model');
 		}
 
 	public function index()
@@ -38,12 +40,41 @@ class Projects extends CI_Controller {
 	}
 
 	public function create_project(){
+		$date=date('Y-m-d H:i:s');
 		unset($_POST['everyone']);
 		unset($_POST['vehicle2']);
 		unset($_POST['vehicle1']);
 		unset($_POST['editor1']);
+		$permission=$_POST['permission'];
+		$session=$this->session->userdata('logged_user');
+		$user_id=$session[0]->user_id;
 		 $result = $this->Projects_Model->create_project($_POST);
 		 if($result == TRUE){
+		 	if ($permission=="all") {
+		 		$fetch_users=$this->User_model->fetch_all_employees_admin();
+		 		foreach ($fetch_users as $users) {
+		 			$emp_id=$users->user_id;
+		 			$new_data=array('date'=>$date,
+		 							'description'=>'Project',
+		 							'from_user_id'=>$user_id,
+		 							'to_user_id'=>$emp_id,
+		 							'link'=>'Projects',
+		 							'value'=>$_POST['project_name']);
+		 			$notify=$this->Notification_model->insert_notification($new_data);
+		 		}
+		 	}
+		 	else{
+		 		$new=json_decode($permission);
+				foreach($new as $key => $value){
+					$new_data=array('date'=>$date,
+		 							'description'=>'Project',
+		 							'from_user_id'=>$user_id,
+		 							'to_user_id'=>$key,
+		 							'link'=>'Projects',
+		 							'value'=>$_POST['project_name']);
+		 			$notify=$this->Notification_model->insert_notification($new_data);
+				 }
+		 	}
 		 	die(json_encode(array('status' =>'1','msg'=>'Project Created Successfully')));
 		 }
 		 else{

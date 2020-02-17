@@ -1,4 +1,5 @@
 <?php
+
   $session=$this->session->userdata('logged_user');
   // print_r($session);
 $myId=$session[0]->user_id;
@@ -115,6 +116,16 @@ $role_id=$session[0]->role_id;
       font-size: 16px;
       font-weight: bold;
     }
+    .dropdown-list
+    {
+      left:unset !important;
+    }
+    .badge-notify{
+   background:red;
+   position:relative;
+   top: -16px;
+   left: -10px;
+}
   </style>
 </head>
 
@@ -191,25 +202,52 @@ $role_id=$session[0]->role_id;
             </div> -->
           </div>
         </form>
+
         <ul class="navbar-nav navbar-right">
           
-          <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
+          <li class="dropdown dropdown-list-toggle " >
+            <a href="javascript:void(0)" data-toggle="dropdown"  class="nav-link notification-toggle nav-link-lg"><i class="far fa-bell"></i>
+              <?php
+              if($this->load->get_var('unread_notifications')!=0){
+              ?>
+            <span class="badge badge-notify"><?=$this->load->get_var('unread_notifications')?></span>
+          <?php } ?>
+          </a>
             <div class="dropdown-menu dropdown-list dropdown-menu-right">
               <div class="dropdown-header">Notifications
                 <div class="float-right">
-                  <a href="#">Mark All As Read</a>
+                  <a id="change_badge" href="#">Mark All As Read</a>
                 </div>
               </div>
               <div class="dropdown-list-content dropdown-list-icons">
-                <a href="#" class="dropdown-item dropdown-item-unread">
+
+    <?php
+    $user_notifications = $this->global_model->get_user_notifications(false);
+    if (!empty($user_notifications)) {
+        foreach ($user_notifications as $notification) { ?>
+                <!-- list item-->
+                <!-- list item-->
+                <?php if (!empty($notification->link)) {
+                    $link = base_url() . $notification->link;
+                } else {
+                    $link = '#';
+                }
+                ?>
+                <a href="<?php echo base_url() . $notification->link; ?>"
+                   class="dropdown-item dropdown-item-unread';
+                   } ?>">
                   <div class="dropdown-item-icon bg-primary text-white">
                     <i class="fas fa-code"></i>
                   </div>
                   <div class="dropdown-item-desc">
-                    Template update is available now!
-                    <div class="time text-primary">2 Min Ago</div>
+                    <?=$notification->value?>
+                    <div class="time text-primary"><?php echo $notification->date; ?></div>
                   </div>
+
                 </a>
+        <?php }
+    }
+    ?>
              
               </div>
               <div class="dropdown-footer text-center">
@@ -279,7 +317,7 @@ $role_id=$session[0]->role_id;
                 </ul>
             </li>
             <?php
-            if($role_id==3){
+            if($role_id!=3){
               ?>
                 <li class="nav-item dropdown">
                   <a href="#" class="nav-link has-dropdown"><i class="fa fa-lock"></i> <span>Permission</span></a>
@@ -482,4 +520,18 @@ $role_id=$session[0]->role_id;
 			// var dif_=(now_.getTime())-old_time.getTime();
 			// console.log(" Difference : "+dif_);
 		}
+ </script>
+ <script>   
+
+    $(document).on('click','#change_badge',function(){
+      $.ajax({
+        type:'POST',
+        url:'<?=base_url()?>Test/update_notification',
+        success:function(response){
+          if(response=="1"){
+            $('.badge').hide();
+          }
+        }
+      })
+    })
 		</script>
