@@ -149,5 +149,20 @@ class User extends CI_Controller {
 		$this->load->view("layout/footer");
 	}
 
-	
+	public function userProfile(){
+		$this->load->view('layout/header');
+		$this->load->view("pages/update_profile");
+		$this->load->view("layout/footer");
+	}
+	public function addTodoList(){
+		$this->load->view('layout/header');
+		$this->load->view("pages/todo_list");
+		$this->load->view("layout/footer");
+	}
+	public function userDetails(){
+		$this->load->view('layout/header');
+		$this->load->view("pages/userDetails");
+		$this->load->view("layout/footer");
+	}
 }
+?>
