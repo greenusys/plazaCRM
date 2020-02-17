@@ -1,4 +1,5 @@
 <?php
+
   $session=$this->session->userdata('logged_user');
   // print_r($session);
 $myId=$session[0]->user_id;
@@ -19,6 +20,7 @@ $role_id=$session[0]->role_id;
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
   <!-- CSS Libraries -->
   <!-- <link rel="stylesheet" href="../node_modules/jqvmap/dist/jqvmap.min.css"> -->
   <!-- <link rel="stylesheet" href="../node_modules/summernote/dist/summernote-bs4.css"> -->
@@ -114,6 +116,16 @@ $role_id=$session[0]->role_id;
       font-size: 16px;
       font-weight: bold;
     }
+    .dropdown-list
+    {
+      left:unset !important;
+    }
+    .badge-notify{
+   background:red;
+   position:relative;
+   top: -16px;
+   left: -10px;
+}
   </style>
 </head>
 
@@ -190,25 +202,52 @@ $role_id=$session[0]->role_id;
             </div> -->
           </div>
         </form>
+
         <ul class="navbar-nav navbar-right">
           
-          <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
+          <li class="dropdown dropdown-list-toggle " >
+            <a href="javascript:void(0)" data-toggle="dropdown"  class="nav-link notification-toggle nav-link-lg"><i class="far fa-bell"></i>
+              <?php
+              if($this->load->get_var('unread_notifications')!=0){
+              ?>
+            <span class="badge badge-notify"><?=$this->load->get_var('unread_notifications')?></span>
+          <?php } ?>
+          </a>
             <div class="dropdown-menu dropdown-list dropdown-menu-right">
               <div class="dropdown-header">Notifications
                 <div class="float-right">
-                  <a href="#">Mark All As Read</a>
+                  <a id="change_badge" href="#">Mark All As Read</a>
                 </div>
               </div>
               <div class="dropdown-list-content dropdown-list-icons">
-                <a href="#" class="dropdown-item dropdown-item-unread">
+
+    <?php
+    $user_notifications = $this->global_model->get_user_notifications(false);
+    if (!empty($user_notifications)) {
+        foreach ($user_notifications as $notification) { ?>
+                <!-- list item-->
+                <!-- list item-->
+                <?php if (!empty($notification->link)) {
+                    $link = base_url() . $notification->link;
+                } else {
+                    $link = '#';
+                }
+                ?>
+                <a href="<?php echo base_url() . $notification->link; ?>"
+                   class="dropdown-item dropdown-item-unread';
+                   } ?>">
                   <div class="dropdown-item-icon bg-primary text-white">
                     <i class="fas fa-code"></i>
                   </div>
                   <div class="dropdown-item-desc">
-                    Template update is available now!
-                    <div class="time text-primary">2 Min Ago</div>
+                    <?=$notification->value?>
+                    <div class="time text-primary"><?php echo $notification->date; ?></div>
                   </div>
+
                 </a>
+        <?php }
+    }
+    ?>
              
               </div>
               <div class="dropdown-footer text-center">
@@ -221,7 +260,7 @@ $role_id=$session[0]->role_id;
             <div class="d-sm-none d-lg-inline-block">Hi, <?=$session[0]->fullname?></div></a>
             <div class="dropdown-menu dropdown-menu-right">
               <div class="dropdown-title">Logged in 5 min ago</div>
-              <a href="features-profile.html" class="dropdown-item has-icon">
+              <a href="<?=base_url('User/userProfile')?>" class="dropdown-item has-icon">
                 <i class="far fa-user"></i> Profile
               </a>
               <a href="features-activities.html" class="dropdown-item has-icon">
@@ -278,7 +317,7 @@ $role_id=$session[0]->role_id;
                 </ul>
             </li>
             <?php
-            if($role_id==3){
+            if($role_id!=3){
               ?>
                 <li class="nav-item dropdown">
                   <a href="#" class="nav-link has-dropdown"><i class="fa fa-lock"></i> <span>Permission</span></a>
@@ -352,7 +391,13 @@ $role_id=$session[0]->role_id;
             </li>
            
             <li><a class="nav-link" href="<?=base_url('Announcement/')?>"><i class="fas fa-bullhorn"></i> <span>Announcements </span>  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
-
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe-europe"></i> <span>Utilities </span></a>
+                <ul class="dropdown-menu">
+                  <li><a class="nav-link" href="<?=base_url('Utilities/holiday')?>"><span> <i class="fas fa-ticket-alt"></i></span>Holiday<i class="fa fa-check" aria-hidden="true" style="color:orange"></i> </a></li>
+                  <li><a class="nav-link" href="<?=base_url('Utilities/gaolTracking')?>"><span><i class="far fa-compass"></i></span>Goal Tracking</a></li>
+                </ul>
+            </li>
              <li><a class="nav-link" href=""><i class="fas fa-envelope"></i> <span>Private Chat </span></a></li>
             </ul>
         </aside>
@@ -483,4 +528,18 @@ $role_id=$session[0]->role_id;
 			// var dif_=(now_.getTime())-old_time.getTime();
 			// console.log(" Difference : "+dif_);
 		}
+ </script>
+ <script>   
+
+    $(document).on('click','#change_badge',function(){
+      $.ajax({
+        type:'POST',
+        url:'<?=base_url()?>Test/update_notification',
+        success:function(response){
+          if(response=="1"){
+            $('.badge').hide();
+          }
+        }
+      })
+    })
 		</script>

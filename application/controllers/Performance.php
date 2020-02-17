@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Performance extends CI_Controller 
+class Performance extends MY_Controller 
 {
 
 	function __construct(){
