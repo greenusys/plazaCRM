@@ -275,13 +275,27 @@
                       </thead>
             
                     <tbody>
+                      <?php
+                      foreach ($to_do as $todo) {
+                      ?>
                         <tr>
                             <td class="sorter"></td>
-                            <td>Row 1</td>
-                            <td>Record 1</td>
-                            <td>Record 1</td>
+                            <td><?=$todo->title?></td>
+                            <td><?php
+                            if ($todo->status==1) {
+                             echo "In Progress";
+                            }
+                            elseif ($todo->status==2) {
+                              echo "On Hold";
+                            }
+                            else{
+                              echo "Done";
+                            }
+                            ?></td>
+                            <td><?=$todo->due_date?></td>
                         </tr>
-                        <tr>
+                      <?php } ?>
+<!--                         <tr>
                             <td class="sorter"></td>
                             <td>Row 2</td>
                             <td>Record 2</td>
@@ -304,7 +318,7 @@
                             <td>Row 5</td>
                             <td>Record 5</td>
                             <td>Record 5</td>
-                        </tr>
+                        </tr> -->
                     </tbody>
               <!--       <tfoot>
                         <tr>
@@ -330,28 +344,33 @@
         <div class=" mt-4">
           <div class="card ">
           
-              <form>
+              <form method="POST" action="<?=base_url()?>Test/add_todo">
                 <div class="row form-group">
                   <div class="col-md-3 text-right"><label>Users <sup class="text-danger">*</sup></label> </div>
                   <div class="col-md-9">
-                    <select class="form-control" name="todouser" placeholder="">
+                    <select class="form-control" name="user_id" placeholder="">
                       <option selected="" disabled="">Select User</option>
+                      <?php
+                      foreach ($admin_employee as $emp) {
+                      ?>
+                      <option value="<?=$emp->user_id?>"><?=$emp->fullname?></option>
+                    <?php } ?>
                     </select>
                   </div>
                 </div>
                 <div class="row form-group">
                   <div class="col-md-3 text-right"><label>What To DO <sup class="text-danger">*</sup></label> </div>
                   <div class="col-md-9">
-                   <textarea class="form-control" row="4"></textarea>
+                   <textarea class="form-control" name="title" row="4"></textarea>
                   </div>
                 </div>
                 <div class="row form-group">
                   <div class="col-md-3 text-right"><label>Status <sup class="text-danger">*</sup></label> </div>
                   <div class="col-md-9">
-                    <select class="form-control" name="todouser" placeholder="">
-                      <option selected="" disabled="">In Process</option>
-                      <option value="">On Hold</option>
-                      <option value="">Done</option>
+                    <select class="form-control" name="status" placeholder="">
+                      <option selected="" value="1">In Process</option>
+                      <option value="2">On Hold</option>
+                      <option value="3">Done</option>
                     </select>
                   </div>
                 </div>
@@ -359,13 +378,14 @@
                   <div class="col-md-3 text-right"><label>Due Date <sup class="text-danger">*</sup></label> </div>
                   <div class="col-md-9">
                    <div class='input-group date datetimepicker1' id='datetimepicker1'>
-                        <input type='text' name="task_start_date" class="form-control" />
+                        <input type='text' name="due_date" class="form-control" />
                         <span class="input-group-addon">
                             <span ><i class="fa fa-calendar"></i></span>
                         </span>
                     </div>
                   </div>
                 </div>
+                <button  type="submit" class="btn btn-primary">Submit</button>
               </form>
           </div>
         </div>

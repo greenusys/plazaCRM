@@ -124,6 +124,19 @@ class Tasks_Model extends CI_Model{
 			}
 	}
 
+    public function add_todo($data){
+       $this->db->insert('tbl_todo', $data);
+       return  true;
+    }
+
+    public function fetch_todo(){
+        $this->db->select('*');
+        $this->db->from('tbl_todo');
+        $query_result = $this->db->get();
+        $result = $query_result->result();
+        return $result;
+    }
+
 }
 
 ?>
