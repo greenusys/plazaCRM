@@ -258,9 +258,9 @@
               <div class="card card-height">
                 <div class="card-header row border-bottom py-1">
                   <div class="col-md-6">
-                    <span><strong>TO DO List</strong></span> | <a href="" >View All</a>
+                    <span><strong>TO DO List</strong></span> | <a href="<?=base_url('User/addTodoList')?>" >View All</a>
                    </div>
-                    <div class="col-md-6 text-right"><button class="btn btn-success rounded-0">Add New</button></div>
+                    <div class="col-md-6 text-right"><button class="btn btn-success rounded-0" data-toggle="modal" data-target="#addTodoModal" > Add New</button></div>
                 </div>
                 <div class="">
                   <table class="table table-striped display nowrap" id="table2">
@@ -275,13 +275,27 @@
                       </thead>
             
                     <tbody>
+                      <?php
+                      foreach ($to_do as $todo) {
+                      ?>
                         <tr>
                             <td class="sorter"></td>
-                            <td>Row 1</td>
-                            <td>Record 1</td>
-                            <td>Record 1</td>
+                            <td><?=$todo->title?></td>
+                            <td><?php
+                            if ($todo->status==1) {
+                             echo "In Progress";
+                            }
+                            elseif ($todo->status==2) {
+                              echo "On Hold";
+                            }
+                            else{
+                              echo "Done";
+                            }
+                            ?></td>
+                            <td><?=$todo->due_date?></td>
                         </tr>
-                        <tr>
+                      <?php } ?>
+<!--                         <tr>
                             <td class="sorter"></td>
                             <td>Row 2</td>
                             <td>Record 2</td>
@@ -304,7 +318,7 @@
                             <td>Row 5</td>
                             <td>Record 5</td>
                             <td>Record 5</td>
-                        </tr>
+                        </tr> -->
                     </tbody>
               <!--       <tfoot>
                         <tr>
@@ -315,6 +329,74 @@
                   </table>
                 </div>
               </div>
+              <!-----------todo add modal----------->
+<div class="modal fade" id="addTodoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add TODO</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="line mt-2"></div>
+      <div class="modal-body">
+        <div class=" mt-4">
+          <div class="card ">
+          
+              <form method="POST" action="<?=base_url()?>Test/add_todo">
+                <div class="row form-group">
+                  <div class="col-md-3 text-right"><label>Users <sup class="text-danger">*</sup></label> </div>
+                  <div class="col-md-9">
+                    <select class="form-control" name="user_id" placeholder="">
+                      <option selected="" disabled="">Select User</option>
+                      <?php
+                      foreach ($admin_employee as $emp) {
+                      ?>
+                      <option value="<?=$emp->user_id?>"><?=$emp->fullname?></option>
+                    <?php } ?>
+                    </select>
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <div class="col-md-3 text-right"><label>What To DO <sup class="text-danger">*</sup></label> </div>
+                  <div class="col-md-9">
+                   <textarea class="form-control" name="title" row="4"></textarea>
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <div class="col-md-3 text-right"><label>Status <sup class="text-danger">*</sup></label> </div>
+                  <div class="col-md-9">
+                    <select class="form-control" name="status" placeholder="">
+                      <option selected="" value="1">In Process</option>
+                      <option value="2">On Hold</option>
+                      <option value="3">Done</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <div class="col-md-3 text-right"><label>Due Date <sup class="text-danger">*</sup></label> </div>
+                  <div class="col-md-9">
+                   <div class='input-group date datetimepicker1' id='datetimepicker1'>
+                        <input type='text' name="due_date" class="form-control" />
+                        <span class="input-group-addon">
+                            <span ><i class="fa fa-calendar"></i></span>
+                        </span>
+                    </div>
+                  </div>
+                </div>
+                <button  type="submit" class="btn btn-primary">Submit</button>
+              </form>
+          </div>
+        </div>
+      </div>
+ <!--      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+    </div>
+  </div>
+</div>
             </div>
             <div class="col-lg-6">
               <div class="card p-2">
@@ -392,4 +474,10 @@
           
         </section>
       </div>
-      
+   
+<script type="text/javascript">
+     $(function () {
+          $('.datetimepicker1').datetimepicker();
+      });
+  
+</script>
