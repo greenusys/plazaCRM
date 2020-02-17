@@ -7,6 +7,13 @@
 		   <a href="newdepartment.php" class="text-dark"><h6 class="mt">New Department</h6></a>
 		</div>
 	</div>
+	<script type="text/javascript">
+		$(document).on('click','#ditDept',function(){
+			var depId=$(this).attr('d-id');
+			var depName=$(this).attr('d-name');
+			$('#edit_dept_name').val(depName);
+		});
+	</script>
 	<div class="line"></div>
 	<div class="row pd-5 mt-4">
 		<?php
@@ -16,13 +23,13 @@
 			?>
 				<div class="col-sm-6">
 					<div class="row">
-						<div class="col-md-10">
+						<div class="col-md-9">
 							<h5 class="mt-2 text-dark font-weight-bold"><?=$value['Dept_name']?></h5>
 				   			<h6>Department head:<span class="text-info"> Jonathan Tornil Grasa</span></h6>		
 						</div>
-						<div class="col-md-2">
-						   <a href="javascript:void(0)" class="btn btn-primary fs"  data-toggle="modal" data-target="#exampleModal"><i class="fa fa-pencil-square-o"></i></a>
-						   <a href="javascript:void(0)" class="btn btn-danger fs" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash-o"></i></a>
+						<div class="col-md-3">
+						   <a href="javascript:void(0)" class="btn btn-primary fs " id="ditDept"  data-toggle="modal" data-target="#updateDepartment" d-id="<?=$value['Dept_id']?>" d-name="<?=$value['Dept_name']?>"><i class="fas fa-edit"></i></a>
+						   <a href="javascript:void(0)" class="btn btn-danger fs" data-toggle="tooltip" data-placement="top" title="Delete"><i class="far fa-trash-alt"></i></a>
 						</div>
 					</div>
 					<div class="row">
@@ -45,9 +52,9 @@
 													<td scope="row" class="text-info"><?=$j?></td>
 													<td scope="row" ><?=$desg->designations?></td>
 													<td scope="row" >
-													    <a href="departmentform.php"><button type="button" class="btn btn-primary fs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil-square-o"></i></button></a>
+													    <a href="departmentform.php"><button type="button" class="btn btn-primary fs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></button></a>
 														
-														<button type="button" class="btn btn-danger fs " data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash-o"></i></button>
+														<button type="button" class="btn btn-danger fs " data-toggle="tooltip" data-placement="top" title="Delete"><i class="far fa-trash-alt"></i></button>
 													</td>
 												</tr>
 											<?php
@@ -87,11 +94,11 @@
 	    </div>
 	</div>
 </div>
-<div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal" id="updateDepartment" tabindex="-1" role="dialog" aria-labelledby="updateDepartmentLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Departments</h5>
+        <h5 class="modal-title" id="updateDepartmentLabel">Edit Departments</h5>
 		<div class="line"></div>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -105,7 +112,7 @@
 						<label for="exampleInputEmail1">Edit Departments <span class="text-danger">*</span></label>
 					</div>
 					<div class="col-sm-8">
-						<input type="text" class="form-control" id="new" aria-describedby="emailHelp" placeholder="IT/Collaborative">
+						<input type="text" class="form-control" id="edit_dept_name" aria-describedby="emailHelp" placeholder="IT/Collaborative">
 					</div>
 				</div>
 			</div>  
