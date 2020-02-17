@@ -207,6 +207,7 @@
                                                     //   $dd="d-none";
                                                     // }
                                                   // print_r( $time_info);
+                                                  $curMont=date('m');
                                                   ?>
                                                     <div class="card mt-2 <?=$dd?>">
                                                       <div class="card-header" data-toggle="collapse" data-target="#collapse<?=$week?>" aria-expanded="true">     
@@ -215,6 +216,19 @@
                                                       </div>
 
                                                       <div id="collapse<?=$week?>" clock_id="" class="collapse <?=$show?>" data-parent="#accordionExample">
+                                                          
+
+                                                        <?php
+                                                        // print_r($time_info);
+                                                            // foreach($time_info as $key => $value){
+                                                            //   // echo $key.'||';
+                                                            //   $tm=explode(':',$key);
+                                                            //   echo $tm[0].'||';
+                                                            
+                                                            
+
+                                                        ?>
+
                                                           <div class="card-body">
                                                               <table class=" table table-stripped table-bordered">
                                                                   <thead>
@@ -236,11 +250,30 @@
                                                                       $this->db->where(array('attendance_id' => $vtimeinfo->attendance_id));
                                                                       $timeinfo = $this->db->get('tbl_clock')->result();
                                                                       foreach ($timeinfo as $mytime){
+                                                                            // print_r($key);
+                                                                            
+                                                                            $tiArr=explode(":",$key);
+                                                                            $dInArr=explode('.',$tiArr[0]);
+                                                                            $day_=trim($dInArr[1]);
+                                                                            $month_=trim($dInArr[0]);
+                                                                            $year_=trim($dInArr[2]);
+                                                                            $dayIn_day=strftime("%b %d %A", mktime(20, 0, 0, $month_, $day_, $year_));
+                                                                            $dOutArr=explode('.',$tiArr[1]);
+                                                                            $day_2=trim($dOutArr[1]);
+                                                                            $month_2=trim($dOutArr[0]);
+                                                                            $year_2=trim($dOutArr[2]);
+                                                                            $dayOut_day=strftime("%b %d %A", mktime(20, 0, 0, $month_2, $day_2, $year_2));
+                                                                            if($curMont==$dInArr[0]){
 
+                                                                            
                                                                           ?>
                                                                               <tr>
-                                                                              <td colspan="5" style="background: gainsboro;"><?= $key ?></td>
+                                                                              
+                                                                              <td colspan="2" style="background: gainsboro;">Day In:  <?=$dayIn_day?></td>
+                                                                              <td colspan="3" style="background: gainsboro;">Day Out: <?=$dayOut_day ?></td>
+                                                                              <!-- <td colspan="5" style="background: gainsboro;"><?=date('d M, D', strtotime($key)) ?></td> -->
                                                                               </tr>
+                                                                              
                                                                               <tr>
                                                                               <td><?=$mytime->clockin_time?></td>
                                                                               <td>
@@ -283,6 +316,7 @@
                                                                               </tr>
 
                                                                           <?php
+                                                                            }
                                                                       }
                                                                       }else if ($vtimeinfo->attendance_status == 0){
                                                                         echo 'Absent';
@@ -296,11 +330,14 @@
                                                                   </tbody>
                                                               </table>
                                                           </div>
+
+
                                                       </div>
                                                   
                                                       
                                                     </div>
                                                   <?php
+                                                  // }
                                                 }
                                               }
                                             } 

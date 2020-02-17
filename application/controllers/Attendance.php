@@ -6,7 +6,6 @@ class Attendance extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->load->model('AttendanceModel','ATND');
-		$this->load->model('Job_circular_model');
 	}
 	public function markMyAttendance(){
 		// echo $_SESSION['clocked']=0;
@@ -116,6 +115,8 @@ class Attendance extends CI_Controller {
 	{
 		
 		$data['Employee']=$this->ATND->fetchEmployee();
+		// print_r($data['Employee']);
+		
 		$this->load->view('layout/header');
 		$this->load->view("pages/time_history",$data);
 		$this->load->view("layout/footer");
@@ -261,13 +262,14 @@ class Attendance extends CI_Controller {
             foreach ($attendance_info as $v_info) {
             	
             	
-                if ($v_info->date_in == $v_info->date_out) {
-                	// echo ' ****** ';
-                    $date = strftime("%m.%d.%Y", strtotime($v_info->date_in));
-                    // print_r($date);
-                } else {
-                    $date = 'Day In'. ' : ' . strftime("%m.%d.%Y", strtotime($v_info->date_in)) . ', ' . 'Day Out'. ': ' . strftime("%m.%d.%Y", strtotime($v_info->date_out));
-                }
+                // if ($v_info->date_in == $v_info->date_out) {
+                // 	// echo ' ****** ';
+                //     $date = strftime("%m.%d.%Y", strtotime($v_info->date_in));
+                //     // print_r($date);
+                // } else {
+                //     $date = 'Day In'. ' : ' . strftime("%m.%d.%Y", strtotime($v_info->date_in)) . ', ' . 'Day Out'. ': ' . strftime("%m.%d.%Y", strtotime($v_info->date_out));
+				// }
+				$date = strftime("%m.%d.%Y", strtotime($v_info->date_in)) . ' : ' . strftime("%m.%d.%Y", strtotime($v_info->date_out));
                 // echo $v_info->attendance_id;
                 $details_=$this->get_result($v_info->attendance_id);
                 // print_r($details_);

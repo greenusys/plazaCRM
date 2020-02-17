@@ -1,12 +1,10 @@
 <?php
     class AttendanceModel extends CI_Model{
         public function fetchEmployee(){
-            $this->db->join('tbl_users','tbl_users.user_id=tbl_account_details.user_id');
-            // $this->db->join('tbl_designations','tbl_designations.designations_id=tbl_user_role');
-    $this->db->join('tbl_user_role','tbl_user_role.user_role_id=tbl_users.role_id');
-    $this->db->join('tbl_designations','tbl_designations.designations_id=tbl_user_role.designations_id');
-    // $this->db->join('tbl_designations','tbl_designations.designations_id=tbl_user_role.designations_id');
-            return $this->db->get('tbl_account_details')->result();
+         $this->db->where('tbl_users.role_id',3);
+         $this->db->join('tbl_account_details','tbl_account_details.user_id=tbl_users.user_id');
+         $this->db->join('tbl_designations','tbl_designations.designations_id=tbl_account_details.designations_id');
+         return $this->db->get('tbl_users')->result();   
         }
         public function getLastAttendanceId(){
             $this->db->limit(1);
