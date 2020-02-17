@@ -104,7 +104,7 @@ class Attendance extends MY_Controller {
 			//insert or update tbl_clock
 			
 		}else{
-			die(json_encode(array("code"=>0,"msg"=>"Failed to Mark Attendance.","data"=>$attendanceId)));
+			die(json_encode(array("code"=>0,"msg"=>"Failed to Mark Attendance.")));
 		}
 	}
 	public function checkForExistenceIntblClock($st){

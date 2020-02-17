@@ -35,39 +35,43 @@ class Login extends CI_Controller {
 				echo 'It is Empty';
 				$myAttendanceDetail=$this->updateAttendance($attendanceId);
 				if($myAttendanceDetail){
-					echo 'Attendance Updated...';
+					// echo 'Attendance Updated...';
 						if($this->updateTbl_clock($attendanceId)){
 							echo 'Now You Can Log Out';
-
+// 
 							if($this->updateLoginStatus()){
-								// redirect(base_url());
+								redirect(base_url());
 							}else{
-								// redirect(base_url());
+								redirect(base_url());
 							}
 						}else{
-							echo 'Some Thing Is Wrong. You Can Not Log out.';
+							// echo 'Some Thing Is Wrong. You Can Not Log out.';
+							redirect(base_url());
 						}
 					// print_r($myAttendanceDetail);
 				}else{
-					echo 'Attnedance Not Found.';
+					// echo 'Attnedance Not Found.';
+					redirect(base_url());
 				}
 				// 
 			}else{
-				echo 'Not Empty';
+				// echo 'Not Empty';
 				if($this->updateTbl_clock($attendanceId)){
-					echo 'Now You Can Log Out';
+					// echo 'Now You Can Log Out';
 
 					if($this->updateLoginStatus()){
-						// redirect(base_url());
+						redirect(base_url());
 					}else{
-						// redirect(base_url());
+						redirect(base_url());
 					}
 				}else{
-					echo 'Some Thing Is Wrong. You Can Not Log out.';
+					// echo 'Some Thing Is Wrong. You Can Not Log out.';
+					redirect(base_url());
 				}
 			}	
 		}else{
-			echo 'Attendance Not Set';
+			// echo 'Attendance Not Set';
+			redirect(base_url());
 		}
 		
 		// $sess_array = array();
