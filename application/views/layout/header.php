@@ -342,7 +342,15 @@ $role_id=$session[0]->role_id;
             <li><a class="nav-link" href="<?=base_url('User/user_list')?>"><i class="fas fa-user"></i> <span>Users</span></a></li>
             <li><a class="nav-link" href="<?=base_url('Backupdatabase')?>"><i class="fas fa-database"></i> <span>Backup Database</span></a></li>
 
-            <li><a class="nav-link" href="<?=base_url('Leavemanagement/index')?>"><i class="fab fa-telegram-plane"></i> <span>Leave Management</span> <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fab fa-dribbble"></i> <span>Leave</span></a>
+                <ul class="dropdown-menu">
+                  <li><a class="nav-link" href="<?=base_url('Leavemanagement/LeaveYearySection')?>"><i class="fab fa-telegram-plane"></i> <span>Leave Yearly</span> <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
+                <li><a class="nav-link" href="<?=base_url('Leavemanagement/LeavePolicySection')?>"><i class="fab fa-telegram-plane"></i> <span>Leave Policy</span> <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
+                <li><a class="nav-link" href="<?=base_url('Leavemanagement/index')?>"><i class="fab fa-telegram-plane"></i> <span>Leave Management</span> <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
+                </ul>
+            </li>
+           
             <li><a class="nav-link" href="<?=base_url('Announcement/')?>"><i class="fas fa-bullhorn"></i> <span>Announcements </span>  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
 
              <li><a class="nav-link" href=""><i class="fas fa-envelope"></i> <span>Private Chat </span></a></li>

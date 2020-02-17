@@ -263,10 +263,10 @@
                                     <select name="client_id" class="form-control" id="customer_group">
                                         <option value="0">Select a Payer</option>
                                         <option value="1">GMAP</option>
-                    <option value="2">HR</option>
-                    <option value="3">IT</option>
-                    <option value="4">BI</option>
-                    <option value="5">Marketing ( Uro-Onco)</option>
+                                        <option value="2">HR</option>
+                                        <option value="3">IT</option>
+                                        <option value="4">BI</option>
+                                        <option value="5">Marketing ( Uro-Onco)</option>
                                                                                                                        
                                     </select>
                               </div>

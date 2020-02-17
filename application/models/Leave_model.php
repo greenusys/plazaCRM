@@ -19,6 +19,17 @@ class Leave_Model extends CI_Model
 			return 0;
 		}
 	}
+	public function addYearlyLeaveData($data)
+	{
+	  
+		if($this->db->insert('tbl_leave_yearly',$data))
+		{
+			return 1;
+			
+		}else{
+			return 0;
+		}
+	}
 	public function updateData($data,$condition){
 		$this->db->where($condition);
 		if($this->db->update('tbl_leave_application',$data)){
@@ -39,6 +50,26 @@ class Leave_Model extends CI_Model
 	public function fetchLeaveCategoryData()
 	{
 	    return $this->db->get('tbl_leave_category')->result();
+	    
+	}
+	public function fetchDepartmentforLeave()
+	{
+	    return $this->db->get('tbl_departments')->result();
+	    
+	}
+	public function fetchDesignationforLeaveById($dept_id)
+	{
+		$this->db->where('departments_id',$dept_id);
+	    return $this->db->get('tbl_designations')->result();
+	    
+	}
+	public function fetchLeaveYearlyData()
+	{
+		$this->db->select('*')
+         ->from('tbl_leave_yearly')
+         ->join('tbl_departments', 'tbl_departments.departments_id = tbl_leave_yearly.department_id');
+		return $this->db->get()->result();
+	    // return $this->db->get('tbl_leave_yearly')->result();
 	    
 	}
 }

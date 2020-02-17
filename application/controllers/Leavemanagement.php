@@ -16,6 +16,69 @@ class Leavemanagement extends CI_Controller {
 		$this->load->view("pages/leave_management",$data);
 		$this->load->view("layout/footer");
 	}
+	public function LeavePolicySection()
+	{
+		
+		
+		$data['fetch_Department_data']=$this->leave->fetchDepartmentforLeave();
+		$data['leave_category_data']=$this->leave->fetchLeaveCategoryData();
+		$data['fetch_Yearly_data']=$this->leave->fetchLeaveYearlyData();
+		$this->load->view('layout/header');
+		$this->load->view("pages/leave_policy",$data);
+		$this->load->view("layout/footer");	
+	}
+	public function fetchDesignationById()
+	{
+		$dept_id=$this->input->post('dept_id');
+		$data=$this->leave->fetchDesignationforLeaveById($dept_id);
+		die(json_encode(array('code'=>1,'data'=>$data)));
+
+
+	}
+	
+	public function LeaveYearySection()
+	{
+		$data['fetch_Department_data']=$this->leave->fetchDepartmentforLeave();
+		$data['fetch_Yearly_data']=$this->leave->fetchLeaveYearlyData();
+
+		$this->load->view('layout/header');
+		$this->load->view("pages/leave_yearlyassign",$data);
+		$this->load->view("layout/footer");	
+	}
+	public function addYearlyLeave()
+	{ 
+		$dept=$this->input->post('dept_id');
+		$total_leave=$this->input->post('totalleave'); 	 
+		$data = array(
+        	'department_id'=>$dept,
+        	'total_Yearlyleave'=>$total_leave
+        );
+   
+        $result=$this->leave->addYearlyLeaveData($data);
+		if($result){
+			die(json_encode(array('status' =>'1' ,'msg'=>'Added Successfully')));
+		}
+		else{
+			die(json_encode(array('status' =>'0' ,'msg'=>'Error')));
+		}
+	}
+	public function addLeavePolicyData()
+	{ 
+		$dept=$this->input->post('dept_id');
+		$total_leave=$this->input->post('totalleave'); 	 
+		$data = array(
+        	'department_id'=>$dept,
+        	'total_Yearlyleave'=>$total_leave
+        );
+   
+        $result=$this->leave->addYearlyLeaveData($data);
+		if($result){
+			die(json_encode(array('status' =>'1' ,'msg'=>'Added Successfully')));
+		}
+		else{
+			die(json_encode(array('status' =>'0' ,'msg'=>'Error')));
+		}
+	}
 	public function addleavecategory()
 	{
 		$leave_category=$this->input->post('leave_category');
