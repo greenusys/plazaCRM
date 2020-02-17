@@ -30,7 +30,7 @@
               ?>
                   <tr>
                     <td class="text-capitalize text-center"><img style="height: 50px" src="<?=base_url().$user->avatar?>"></td>
-                    <td class="text-capitalize text-center"><?=$user->fullname?></td>
+                    <td class="text-capitalize text-center"><a href="<?=base_url()?>User/userDetails" ><?=$user->fullname?></a></td>
                     <td class="text-capitalize text-center"><?=$user->username?></td>
                     <td class="text-capitalize text-center"><input type="checkbox" checked disabled=""></td>
                     <td class="text-capitalize text-center"><?php
