@@ -4,16 +4,20 @@
 			    <div class="card bg-white shadow p-3">
 				    <h6>Update Profile</h6>
 		            <div class="line mt-2"></div>
-					<form>
+					<form action="<?=base_url('User/updateUserInfo')?>" method="post" enctype="multipart/form-data">
+						<?php 
+
+						//print_r($user_info);
+						?>
 						<div class="row">
 						    <div class="offset-1 col-md-11">
 								<div class="form-group">
 									<div class="row">
 										<div class="offset-1 col-sm-3">
-											<label for="exampleInputEmail1">Full Name<span class="text-danger">*</span></label>
+											<label for="fullname">Full Name<span class="text-danger">*</span></label>
 										</div>
 										<div class="col-sm-8">
-											<input type="text" class="form-control" id="fullname" aria-describedby="emailHelp" placeholder="Adminko">
+											<input type="text" name="fullname" class="form-control" id="fullname" value="<?=$user_info[0]->fullname?>" placeholder="Adminko">
 										</div>
 									</div>
 								</div>
@@ -21,20 +25,20 @@
 								<div class="form-group">
 									<div class="row">
 										<div class="offset-1 col-sm-3">
-											<label for="exampleInputEmail1">phone</label>
+											<label for="phone">phone</label>
 										</div>
 										<div class="col-sm-8">
-											<input type="text" class="form-control" id="phone" aria-describedby="emailHelp" >
+											<input type="text" class="form-control" name="phone" id="phone" value="<?=$user_info[0]->phone?>" >
 										</div>
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="row">
 										<div class="offset-1 col-sm-3">
-											<label for="exampleInputEmail1">Language</label>
+											<label for="language">Language</label>
 										</div>
 										<div class="col-sm-8">
-											<select name="language" class="form-control">
+											<select name="language" id="language" class="form-control">
                                                 <option value="english" selected="selected">English</option>
                                             </select>
 										</div>
@@ -47,7 +51,7 @@
 											<label for="exampleInputEmail1">Locale</label>
 										</div>
 										<div class="col-sm-8">
-											<select class="  form-control" name="locale">
+											<select class=" form-control" name="locale">
 											    <option value="aa_DJ">English (United States)</option>
 												<option value="aa_DJ">Afar (Djibouti)</option>
 												<option value="aa_ER">Afar (Eritrea)</option>
@@ -62,33 +66,38 @@
 								<div class="form-group">
 									<div class="row">
 										<div class="offset-1 col-sm-3">
-											<label for="exampleInputEmail1">Profile Photo</label>
+											<label for="imgup">Profile Photo</label>
 										</div>
 										<div class="col-sm-4">
-											<img id="blah" src="#" alt="your image" />
-											<input type='file' onchange="readURL(this);" />
+											<img id="blah" src="<?=base_url()?>uploads/profile_pic/<?=$user_info[0]->avatar?>" alt="your image" onerror="this.src='<?=base_url()?>assets/img/avatar/avatar-2.png'" class="w-100" />
+											<input type='file' name="file" id="imgup" onchange="readURL(this);" />
 										</div>
 									</div>
+									<input type="hidden" value="<?=$user_info[0]->user_id?>" name="user_id">
 									<div class="row mt-4">
 									    <div class="offset-4 col-sm-8">
-									        <button type="button" class="btn btn-dark">Update Profile</button>
+									        <button type="submit" class="btn btn-dark">Update Profile</button>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-									
+					</form>	
+					<?php if($this->session->flashdata('msg')){
+						echo "<div class='alert-info alert'>".$this->session->flashdata('msg')."</div>";
+					}?>		
 						<h6 class="mt-4">Change Email</h6>
 		                <div class="line mt-2"></div>
+		                <form action="<?=base_url('User/updateEmail')?>" method="post">
 						<div class="row mt-5">
 						    <div class="offset-1 col-md-11">
 								<div class="form-group">
 									<div class="row">
 										<div class="offset-1 col-sm-3">
-											<label for="exampleInputEmail1">Password</label>
+											<label for="password">Current Password</label>
 										</div>
 										<div class="col-sm-8">
-											<input type="text" class="form-control" id="password" aria-describedby="emailHelp" placeholder="Password Current Password">
+											<input type="text" class="form-control" name="password" id="password" placeholder="Enter Current Password">
 										</div>
 									</div>
 								</div>
@@ -96,16 +105,17 @@
 								<div class="form-group">
 									<div class="row">
 										<div class="offset-1 col-sm-3">
-											<label for="exampleInputEmail1">New Email</label>
+											<label for="userEmail">New Email</label>
 										</div>
 										<div class="col-sm-8">
-											<input type="text" class="form-control" id="newname" aria-describedby="emailHelp" placeholder="New Email">
+											<input type="text" name="email" class="form-control" id="userEmail" value="<?=$user_info[0]->email?>" placeholder="New Email">
 										</div>
 									</div>
 								</div>
+								<input type="hidden" value="<?=$user_info[0]->user_id?>" name="user_id">
 								<div class="row mt-4">
 									<div class="offset-4 col-sm-8">
-										<button type="button" class="btn btn-dark">Change Email</button>
+										<button type="submit" class="btn btn-dark">Change Email</button>
 									</div>
 								</div>
 								

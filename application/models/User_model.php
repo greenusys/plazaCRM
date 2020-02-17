@@ -159,5 +159,46 @@ class User_model extends MY_Model
         return $users;
     }
 
+    public function fetch_user_data($id){
+        $this->db->select('tbl_users.*', FALSE);
+         $this->db->select('tbl_account_details.*', FALSE);
+        $this->db->from('tbl_users');
+        $this->db->join('tbl_account_details', 'tbl_account_details.user_id=tbl_users.user_id');
+        $this->db->where('tbl_users.user_id',$id);
+        $res = $this->db->get()->result();
+         return $res;   
+    }
 
+    public function update_user_data($data){
+        //print_r($data);
+        $condition =array("user_id"=>$data['user_id']);
+        $this->db->where($condition);
+        $ct =$this->db->get('tbl_account_details')->row();
+        if(count($ct)>0){
+            $res = $this->db->update('tbl_account_details',$data);
+            if($res){
+                return true;
+            }else{
+               return false;
+            }
+        }else{
+            return false;
+        }
+    }
+     public function update_user_email($data){
+        $condition =array("user_id"=>$data['user_id'],"password"=>$data['password']);
+        $this->db->where($condition);
+        $ct =$this->db->get('tbl_users')->row();
+        if(count($ct)>0){
+                $res = $this->db->update('tbl_users',$data);
+            if($res){
+                return true;
+            }else{
+               return false;
+            }
+        }else{
+            return false;
+        }
+     }
 }
+?>
