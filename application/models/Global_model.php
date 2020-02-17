@@ -171,8 +171,10 @@ class Global_Model extends MY_Model
     public function get_user_notifications($read = 1, $no_limit = null)
     {
         $total = 15;
-        $total_unread = count($this->db->where(array('to_user_id' => $this->session->userdata('user_id'), 'read' => $read))->get('tbl_notifications')->result());
-        $total_unread_inline = count($this->db->where(array('to_user_id' => $this->session->userdata('user_id'), 'read_inline' => $read))->get('tbl_notifications')->result());
+        $session=$this->session->userdata('logged_user');
+        $my_Id=$session[0]->user_id;
+        $total_unread = count($this->db->where(array('to_user_id' => $my_Id, 'read' => $read))->get('tbl_notifications')->result());
+        $total_unread_inline = count($this->db->where(array('to_user_id' => $my_Id, 'read_inline' => $read))->get('tbl_notifications')->result());
 
         if (is_numeric($read)) {
             $this->db->where('read', $read);
@@ -184,7 +186,7 @@ class Global_Model extends MY_Model
             $_diff = $total_unread_inline - $total;
             $total = $_diff + $total;
         }
-        $this->db->where('to_user_id', $this->session->userdata('user_id'));
+        $this->db->where('to_user_id', $my_Id);
         if (empty($no_limit)) {
             $this->db->limit(10);
         }

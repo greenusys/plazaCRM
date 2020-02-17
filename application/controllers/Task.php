@@ -1,11 +1,13 @@
 <?php
+date_default_timezone_set('Asia/Kolkata');
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Task extends CI_Controller {
+class Task extends MY_Controller {
 
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('Tasks_Model');
+		$this->load->model('Notification_model');
 		$this->load->model('User_model');
 		}
 
@@ -39,11 +41,40 @@ class Task extends CI_Controller {
 	}
 
 	public function create_task(){
+		$date=date('Y-m-d H:i:s');
+		$permission=$_POST['permission'];
+		$session=$this->session->userdata('logged_user');
+		$user_id=$session[0]->user_id;
 		unset($_POST['client_id']);
 		unset($_POST['radio_admin']);
 		unset($_POST['editor1']);
 		 $result = $this->Tasks_Model->create_task($_POST);
 		 if($result == TRUE){
+		 	    if ($permission=="all") {
+		 		$fetch_users=$this->User_model->fetch_all_employees_admin();
+		 		foreach ($fetch_users as $users) {
+		 			$emp_id=$users->user_id;
+		 			$new_data=array('date'=>$date,
+		 							'description'=>'Task',
+		 							'from_user_id'=>$user_id,
+		 							'to_user_id'=>$emp_id,
+		 							'link'=>'Task',
+		 							'value'=>$_POST['task_name']);
+		 			$notify=$this->Notification_model->insert_notification($new_data);
+		 		}
+		 	}
+		 	else{
+		 		$new=json_decode($permission);
+				foreach($new as $key => $value){
+					$new_data=array('date'=>$date,
+		 							'description'=>'Task',
+		 							'from_user_id'=>$user_id,
+		 							'to_user_id'=>$key,
+		 							'link'=>'Task',
+		 							'value'=>$_POST['task_name']);
+		 			$notify=$this->Notification_model->insert_notification($new_data);
+				 }
+		 	}
 		 	die(json_encode(array('status' =>'1','msg'=>'Task Created Successfully')));
 		 }
 		 else{
