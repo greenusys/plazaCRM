@@ -13,6 +13,18 @@
             $this->load->view("layout/footer");
         }
 
+        public function add_todo(){
+        	$_POST['created_date']=date('Y-m-d H:i:s');
+        	$_POST['order'] = '1';
+        	$due_date=$_POST['due_date'];
+			$myTime = strtotime($due_date); 
+			$_POST['due_date']=date("Y-m-d", $myTime);
+			$result=$this->Tasks_Model->add_todo($_POST);
+			if ($result) {
+				redirect('Dashboard');
+			}
+        }
+
         public function update_notification(){
 			$session=$this->session->userdata('logged_user');
 			$user_id=$session[0]->user_id;
