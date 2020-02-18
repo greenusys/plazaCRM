@@ -92,16 +92,27 @@ class Leave_Model extends CI_Model
 		    }
 	}
 
-	public function addYearlyLeaveData($data)
+	public function addYearlyLeaveData($data,$dept)
 	{
-	  
-		if($this->db->insert('tbl_leave_yearly',$data))
+			$this->db->where('department_id',$dept);
+		$re=$this->db->get('tbl_leave_yearly')->result();
+		if(count($re)==0)
 		{
-			return 1;
-			
-		}else{
-			return 0;
+			$results=$this->db->insert('tbl_leave_yearly',$data);
+			if($results)
+			{
+				return 1;
+			}
+			else
+			{
+				return 0;
+			}
+
 		}
+		else
+		{
+			return 2;
+	    }
 	}
 	public function addLeavePolicyData($data)
 	{
