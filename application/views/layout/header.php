@@ -370,7 +370,7 @@ $role_id=$session[0]->role_id;
                 <a href="#" class="nav-link has-dropdown"><i class="fab fa-dribbble"></i> <span>Transaction</span></a>
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href="<?=base_url('Transaction/expense')?>"><span> <i class="far fa-circle"></i></span>Expense</a></li>
-                  <li><a class="nav-link" href="<?=base_url('Transaction/deposite')?>"><span><i class="far fa-circle"></i></span>Deposit</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Transaction/deposit')?>"><span><i class="far fa-circle"></i></span>Deposit</a></li>
                   <li><a class="nav-link" href="<?=base_url('Transaction/transfer')?>"><span><i class="far fa-circle"></i></span>Transfer</a></li>
                   <li><a class="nav-link" href="<?=base_url('Transaction/TransactionReport')?>"><span><i class="far fa-circle"></i></span>Transaction Report</a></li>
                   <li><a class="nav-link" href="<?=base_url('Transaction/TransferReport')?>"><span><i class="far fa-circle"></i></span>Transfer Report</a></li>

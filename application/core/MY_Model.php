@@ -14,7 +14,7 @@
         parent::__construct();
     }
 
-    // CURD FUNCTION
+    // CURD FUNCTION 
 
     public function array_from_post($fields)
     {
