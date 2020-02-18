@@ -72,6 +72,18 @@ class Client_Model extends CI_Model{
 				return FALSE;
 			}
 	}
+	public function getClientDetails(){
+		$this->db->order_by('tbl_client.client_id', 'Desc');
+		// $this->db->join('tbl_customer_group','tbl_customer_group.customer_group_id=tbl_client.customer_group_id','full');
+	
+		$check = $this->db->get("tbl_client")->result();
+		
+		if(count($check)==0 ){
+			return false;
+		}else{
+			return $check;
+		} 
+	}
 
 }
 
