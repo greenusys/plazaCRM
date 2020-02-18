@@ -18,6 +18,16 @@
 			$this->db->join('tbl_account_details','tbl_account_details.user_id=tbl_announcements.user_id');
 			return $this->db->get('tbl_announcements')->result();
 		}
+
+		public function update_permissions($permission,$designations_id){
+			$this->db->where('designations_id', $designations_id);
+    		if($this->db->update('tbl_designations',array('permission'=>$permission))){
+    			return true;
+    		}
+    		else{
+    			return false;
+    		}
+		}
 	
 	}
 

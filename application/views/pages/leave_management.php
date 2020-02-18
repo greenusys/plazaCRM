@@ -1,4 +1,20 @@
-
+<style>
+.modal-style
+{ 
+    width: 1025px;
+    /*height: 370px;*/
+    margin-left: -85px;
+}
+@media only screen and (max-width: 600px) 
+{
+    .modal-style
+    { 
+        width:100%;
+        height:auto
+        margin-left:0px;
+   }
+}
+</style>
 
         <div class="row mt-4">
             <div class="col-lg-12">
@@ -26,7 +42,7 @@
                             <a class="nav-link" id="apply_leave_tab" data-toggle="tab" href="#apply_leave" role="tab" aria-controls="apply_leave" aria-selected="false">Apply Leave</a>
                         </li>
                     </ul>
-                    <div class="tab-content card pt-5" id="myTabContentJust">
+                    <div class="tab-content card pt-5 refreshlocation"  id="myTabContentJust ">
                         <div class="tab-pane fade show active px-4" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
 
                             <table id="example" class="display nowrap" style="width:100%">
@@ -47,7 +63,8 @@
                                         // print_r($leaseAllData);
                                     ?>
                                         <tr>
-                                            <td><?=$leaseAllData->fullname?></td>
+                
+           <td><a href="<?=base_url('Leavemanagement/Leave_Modal_Detailss/').$leaseAllData->leave_application_id?>"  LeaveApp_id="<?=$leaseAllData->leave_application_id?>" class="Applicationdata "data-toggle="modal" data-target="#leaveapplicationsection"><?=$leaseAllData->fullname?></a></td>
                                             <td><?=$leaseAllData->leave_category?></td>
                                             <td><?=$leaseAllData->leave_start_date.' '.$leaseAllData->leave_end_date?></td>
                                             
@@ -55,24 +72,24 @@
                                             <?php
                                             if($leaseAllData->application_status==1)
                                             {?>
-                                              <td>Pending</td>
+                                              <td><span class="btn-warning" style="width:1%;height:100%;">Pending</span></td>
                                               <?php
                                             }
                                             elseif($leaseAllData->application_status==2)
                                             {?>
-                                            <td>Accepted</td>
+                                            <td><span class="btn-success" style="width:1%;height:100%;">Accepted</span></td>
                                             <?php 
                                             }
                                             else
                                             {?>
-                                                <td>Rejected</td>
+                                                <td><span class="btn-danger" style="width:1%;height:100%;">Rejected</span></td>
                                                 <?php
                                             }?>
                                           
                                             <td>
                                                 <div class="">
-                                                    <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                                    <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
+                                                    <!--<a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>-->
+                                                    <a href="javascript:void(0)" leave_app_id="<?=$leaseAllData->leave_application_id?>" class="deletetPendingApplication"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
                                                     <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
                                                 </div>
     
@@ -96,7 +113,9 @@
                                 <!--</tfoot>-->
                             </table>
                         </div>
-                        <div class="tab-pane fade px-4" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
+                         
+                        <!--MY LEAVE STARTING-->
+                        <div class="tab-pane fade px-4 refreshmyleave" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
                             <table id="example2" class="display nowrap" style="width:100%">
                                 <thead>
                                     <tr>
@@ -109,59 +128,65 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Tittle</td>
-
-                                        <td>System Architect</td>
-                                        <td>$320,800</td>
-                                        <td>2011/04/25</td>
-                                        <td>61</td>
-
-                                        <td>
-                                            <div class="">
-                                                <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                                <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                                <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                            </div>
-
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Tittle</td>
-
-                                        <td>System Architect</td>
-                                        <td>$320,800</td>
-                                        <td>2011/04/25</td>
-                                        <td>61</td>
-
-                                        <td>
-                                            <div class="">
-                                                <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                                <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                                <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                            </div>
-
-                                        </td>
-                                    </tr>
+                                     <?php
+                                    foreach($fetch_Myleave_data as $MyleaveAllData)
+                                    {
+                                        // print_r($leaseAllData);
+                                    ?>
+                                        <tr>
+                                            <td><a href="<?=base_url('Leavemanagement/Leave_Modal_Detailss/').$MyleaveAllData->leave_application_id?>"  LeaveApp_id="<?=$MyleaveAllData->leave_application_id?>" class="Applicationdata "data-toggle="modal" data-target="#leaveapplicationsection"><?=$MyleaveAllData->fullname?></a></td>
+                                            <td><?=$MyleaveAllData->leave_category?></td>
+                                            <td><?=$MyleaveAllData->leave_start_date.' '.$leaseAllData->leave_end_date?></td>
+                                            
+                                            <td><?=$MyleaveAllData->hours?></td>
+                                            <?php
+                                            if($MyleaveAllData->application_status==1)
+                                            {?>
+                                              <td><span class="btn-warning" style="width:1%;height:100%;">Pending</span></td>
+                                              <?php
+                                            }
+                                            elseif($MyleaveAllData->application_status==2)
+                                            {?>
+                                            <td><span class="btn-success" style="width:1%;height:100%;">Accepted</span></td>
+                                            <?php 
+                                            }
+                                            else
+                                            {?>
+                                                <td><span class="btn-danger" style="width:1%;height:100%;">Rejected</span></td>
+                                                <?php
+                                            }?>
+                                          
+                                            <td>
+                                                <div class="">
+                                                    <!--<a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>-->
+                                                     <a href="javascript:void(0)" myleave_id="<?=$MyleaveAllData->leave_application_id?>" class="deletetMyleave"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+                                                    <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
+                                                </div>
+    
+                                            </td>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>
+                           
 
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Leave Category</th>
-                                        <th>Date</th>
-                                        <th>Duration</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </tfoot>
+                                <!--<tfoot>-->
+                                <!--    <tr>-->
+                                <!--        <th>Name</th>-->
+                                <!--        <th>Leave Category</th>-->
+                                <!--        <th>Date</th>-->
+                                <!--        <th>Duration</th>-->
+                                <!--        <th>Status</th>-->
+                                <!--        <th>Action</th>-->
+                                <!--    </tr>-->
+                                <!--</tfoot>-->
                             </table>
                         </div>
                         <div class="tab-pane fade show px-4" id="all_leave" role="tabpanel" aria-labelledby="all_leave">
                             <table id="allLeave" class="display nowrap" style="width:100%">
                                 <thead>
-                                    <tr>
+                                     <tr>
                                         <th>Name</th>
                                         <th>Leave Category</th>
                                         <th>Date</th>
@@ -171,53 +196,57 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Tittle</td>
-
-                                        <td>System Architect</td>
-                                        <td>$320,800</td>
-                                        <td>2011/04/25</td>
-                                        <td>61</td>
-
-                                        <td>
-                                            <div class="">
-                                                <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                                <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                                <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                            </div>
-
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Tittle</td>
-
-                                        <td>System Architect</td>
-                                        <td>$320,800</td>
-                                        <td>2011/04/25</td>
-                                        <td>61</td>
-
-                                        <td>
-                                            <div class="">
-                                                <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                                <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                                <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                            </div>
-
-                                        </td>
-                                    </tr>
-
+                                    <?php
+                                    foreach($fetch_leave_data as $leaseAllData)
+                                    {
+                                        // print_r($leaseAllData);
+                                    ?>
+                                        <tr>
+                                            <td><a href="<?=base_url('Leavemanagement/Leave_Modal_Detailss/').$leaseAllData->leave_application_id?>"  LeaveApp_id="<?=$leaseAllData->leave_application_id?>" class="Applicationdata "data-toggle="modal" data-target="#leaveapplicationsection"><?=$leaseAllData->fullname?></a></td>
+                                            <td><?=$leaseAllData->leave_category?></td>
+                                            <td><?=$leaseAllData->leave_start_date.' '.$leaseAllData->leave_end_date?></td>
+                                            
+                                            <td><?=$leaseAllData->hours?></td>
+                                            <?php
+                                            if($leaseAllData->application_status==1)
+                                            {?>
+                                              <td><span class="btn-warning" style="width:1%;height:100%;">Pending</span></td>
+                                              <?php
+                                            }
+                                            elseif($leaseAllData->application_status==2)
+                                            {?>
+                                            <td><span class="btn-success" style="width:1%;height:100%;">Accepted</span></td>
+                                            <?php 
+                                            }
+                                            else
+                                            {?>
+                                                <td><span class="btn-danger" style="width:1%;height:100%;">Rejected</span></td>
+                                                <?php
+                                            }?>
+                                          
+                                            <td>
+                                                <div class="">
+                                                    <!--<a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>-->
+                                                   <a href="javascript:void(0)" leave_app_id="<?=$leaseAllData->leave_application_id?>" class="deletetAllLeaveApplication"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+                                                    <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
+                                                </div>
+    
+                                            </td>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Leave Category</th>
-                                        <th>Date</th>
-                                        <th>Duration</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </tfoot>
+                                <!--<tfoot>-->
+                                <!--    <tr>-->
+                                <!--        <th>Name</th>-->
+                                <!--        <th>Leave Category</th>-->
+                                <!--        <th>Date</th>-->
+                                <!--        <th>Duration</th>-->
+                                <!--        <th>Status</th>-->
+                                <!--        <th>Action</th>-->
+                                <!--    </tr>-->
+                                <!--</tfoot>-->
                             </table>
                         </div>
                         <div class="tab-pane fade show px-4" id="leave_report" role="tabpanel" aria-labelledby="leave_report">
@@ -243,7 +272,7 @@
                                                             foreach($fetch_users_data as $usersdata)
                                                             {
                                                             ?>
-                                                        <option  value="<?=$usersdata->user_id?>"><?=$usersdata->fullname?></option>';
+                                                        <option  value="<?=$usersdata->user_id?>"><?=$usersdata->full_name?></option>';
                                                         <?php
                                                             }
                                                             ?>
@@ -277,7 +306,7 @@
                                                  <div class="col-sm-1">
                                                     <button type="button" class="btn btn-light butn" data-toggle="modal" data-target="#myModal" title="New Client"><i class="fa fa-plus"></i></button>
                                                 </div>
-                                            </div>id="datetimepicker2"
+                                            </div>
                                         </div>
 
                                         <div class="form-group">
@@ -369,9 +398,9 @@
                                                 </div>
 
                                                 <div class="col-md-9">
-                                                     <div class="form-group inputDnD">
+                                                     <div class="form-group ">
         <label class="sr-only" for="inputFile">File Upload</label>
-        <input type="file" name="files[]"class="form-control-file text-primary font-weight-bold" id="inputFile" accept="image/*" multiple onchange="readUrl(this)" data-title="Drag and drop a file or Click">
+        <input type="file" name="files[]" class="form-control" multiple>
       </div>
                                                 </div>
                                             </div>
@@ -421,6 +450,7 @@
     </section>
 </div>
 
+
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -461,6 +491,468 @@
 
     </div>
 </div>
+<!--start detail modal-->
+<div class="modal leaveappss_div" id="leaveapplicationsection" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-style">
+            <div class="container-fluid">
+                <div class="row mt-2">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-md-11 col-10">
+
+                               <h5><span id="fullname"></span><span class="text-danger" id="leavestartdate"></span>to<span class="text-danger" id="leaveenddate"></span></h5>
+                            </div>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="">
+                            <div class="line"></div>
+                            <form>
+                                <div class="container">
+                                    <div class="row mt-3">
+                                        <div class="col-sm-8">
+                                            <div class=" col-md-12">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="offset-1 col-sm-4 col-4" >
+                                                            <label for="exampleInputEmail1"><strong>Leave Category :</strong></label>
+                                                        </div>
+                                                        <div class="col-sm-7 col-7">
+                                                            <label for="exampleInputEmail1"><strong><span id="leave_category"></span></strong></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="offset-2 col-sm-3 col-3">
+                                                            <label for="exampleInputEmail1"><strong>Date :</strong></label>
+                                                        </div>
+                                                        <div class="col-sm-7 col-7">
+                                                            <label for="exampleInputEmail1"><strong ><span id="dateleavestartdate"></span><b> to </b><span id="dateleaveenddate"></span></strong></label>
+                                                        
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="offset-1 col-sm-4 col-4">
+                                                            <label for="exampleInputEmail1"><strong>Duration :</strong></label>
+                                                        </div>
+                                                        <div class="col-sm-7 col-7">
+                                                            <label for="exampleInputEmail1"><strong><span id="Duration"></span></strong></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="offset-1 col-sm-4 col-4">
+                                                            <label for="exampleInputEmail1"><strong>Applied On :</strong></label>
+                                                        </div>
+                                                        <div class="col-sm-7 col-7">
+                                                            <label for="exampleInputEmail1"><strong><span id="Applieddate"></span></strong></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                                                                                        
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="offset-1 col-sm-4 col-4">
+                                                            <label for="exampleInputEmail1"><strong>Reason :</strong></label>
+                                                        </div>
+                                                        <div class="col-sm-6 border col-6">
+                                                            <label for="exampleInputEmail1"><strong><span id="reason"></span></strong></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                    <div class="form-group">
+                                            <div class="row">
+                                                <div class="offset-1 col-sm-4 col-4">
+                                                    <label for="exampleInputEmail1"><strong>Attachment :</strong></label>
+                                                </div>
+                                                <div class="col-sm-4 col-6">
+                                                    
+                                                <img style="width:6em;height:6em;" id="leave_image" src="" alt="" />
+                                                
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="offset-1 col-sm-4">
+                                                            <label for="exampleInputEmail1"><strong>Change Status:</strong></label>
+                                                        </div>
+                                                        <!-- jjf -->
+     
+                                                         <!-- jjj -->
+                                                        <div class="col-sm-7">
+                                                            <div class="row">
+        <div class="col-sm-7 col-7">
+            <a href="javascript:void(0)" class="btn btn-success acceptleave" d-aplId=""><i class="fa fa-thumbs-up"></i>Approved</a>
+        </div>
+         <div class="col-sm-5 col-5">
+              <a href="javascript:void(0)" class="btn btn-danger rejectleave" d-aplId=""><i class="fa fa-thumbs-up"></i>Reject</a>
+        </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 card shadow mb-5">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                   <h6>Details Of Adminko</h6>
+                                                </div>
+                                            </div>
+                                            <div class="">
+                                                <div class="line mt-2"></div>
+                                                <form>
+                                                    <div class="offset-1 col-sm-11">
+                                                        <div class="form-group">
+                                                            <div class="row">
+                                                                <div class="offset-1 col-sm-4 col-4">
+                                                                    <label for="exampleInputEmail1">Sick :</label>
+                                                                </div>
+                                                                <div class="col-sm-7 col-7">
+                                                                    <label for="exampleInputEmail1">0/2</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="form-group">
+                                                            <div class="row">
+                                                                <div class=" col-sm-6 col-6">
+                                                                    <label for="exampleInputEmail1">Marriage :</label>
+                                                                </div>
+                                                                <div class="col-sm-6 col-6">
+                                                                    <label for="exampleInputEmail1">0/3</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="form-group">
+                                                            <div class="row">
+                                                                <div class="offset-1 col-sm-5 col-5">
+                                                                    <label for="exampleInputEmail1">:</label>
+                                                                </div>
+                                                                <div class="col-sm-6 col-6">
+                                                                    <label for="exampleInputEmail1">0/0</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="form-group">
+                                                            <div class="row">
+                                                                <div class=" col-sm-6 col-6">
+                                                                    <label for="exampleInputEmail1">Emergency:</label>
+                                                                </div>
+                                                                <div class="col-sm-6 col-6">
+                                                                    <label for="exampleInputEmail1">0/0</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group bg-dark p-1 text-white">
+                                                            <div class="row">
+                                                                <div class=" col-sm-6 col-6">
+                                                                    <label for="exampleInputEmail1">Total:</label>
+                                                                </div>
+                                                                <div class="col-sm-6 col-6">
+                                                                    <label for="exampleInputEmail1">0/5</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>                                  
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> -->
+<!--end detail modal-->
+<script type="text/javascript">
+     $(document).ready(function(){
+          $('.acceptleave').on('click',function(){ 
+               var leave_id=$(this).attr("d-aplId");
+              $.ajax({
+                url:'<?=base_url('Leavemanagement/changeLeaveStatus')?>',
+                type:"post",
+                data:{leave_id:leave_id},
+                 success:function(response)
+                    {
+                        response=JSON.parse(response);
+                        // console.log(response.data);
+                        if(response.data==1)
+                        {
+                        
+                    swal("Application", "Approve", "success");
+
+                         }
+                            $(".refreshlocation").load(location.href + " .refreshlocation");
+
+                    }
+              });
+           });
+      });
+    </script>
+
+    <script type="text/javascript">
+     $(document).ready(function(){
+          $('.rejectleave').on('click',function(){ 
+               var leave_id=$(this).attr("d-aplId");
+               // alert(leave_id);
+              $.ajax({
+                url:'<?=base_url('Leavemanagement/RejectLeaveStatus')?>',
+                type:"post",
+                data:{leave_id:leave_id},
+                 success:function(response)
+                    {
+                        response=JSON.parse(response);
+                        // console.log(response.data);
+                        if(response.data==1)
+                        {
+                             
+                        
+                    swal("Application", "Rejected", "error");
+
+                         }
+                            $(".refreshlocation").load(location.href + " .refreshlocation");
+
+                    }
+              });
+           });
+      });
+    </script>
+ <script type="text/javascript">
+  window.onload = function() {
+  $(".leaveappss_div").hide();
+};
+        $(document).ready(function(){
+          $('.Applicationdata').on('click',function(){ 
+               var leaveapp_id=$(this).attr("LeaveApp_id");
+            //   alert(leaveapp_id);
+            //   $(".leaveappss_div").show();
+            $.ajax({
+            url:'<?=base_url('Leavemanagement/Leave_Modal_Detailss')?>',
+            type:"post",
+            data:{leaveapp_id:leaveapp_id},
+          // dataType:'JSON',
+         
+            success:function(response)
+            {
+                      $(".leaveappss_div").show();
+                    //  $('#expensemodalreset')[0].reset();  
+                    //   $(this).prev('span').remove();
+                     $("#fullname").html("");
+                    //  $("#leavedate").html("");
+                     $("#leave_category").html("");
+                     $("#Duration").html("");
+                     $("#Applieddate").html(""); 
+                     $("#reason").html("");
+                     $("#leavestartdate").html("");
+                     $("#leaveenddate").html("");
+                     $("#leave_image").html("");
+                     $("#dateleavestartdate").html("");
+                     $("#dateleaveenddate").html("");
+
+                    
+                    //  $("#client_name").html("");
+                    //  $("#paymethod").html("");
+                    //  $("#notes").html("");
+                    //   $("#transstatus").html("");
+                    //   $("#transamount").html("");
+                    //   $("#trans_image").html("");
+                    //  $(".Expense_div").empty();
+                    //  $("#reference").empty();
+                    //  $("#transname").empty(;
+                    //  $("#account_name").empty(;
+                    //  $("#exdate").empty();
+                    //  $("#expense_name").empty();
+                    //  $("#paidby").empty();
+                    //  $("#paymethod").empty();
+                    //  $("#notes").empty();
+                    //  $("#transstatus").empty();
+                    //  $("#transamount").empty();
+                    //  $("#reference").empty();
+    
+                response=JSON.parse(response);
+                 console.log(response);
+                var fullname=response.data[0].fullname;
+                // var leavedate=response.data[0].leave_start_date;
+                var leavecategory=response.data[0].leave_category;
+                 var duration=response.data[0].hours;
+                var applieddate=response.data[0].created;
+                var reason=response.data[0].reason;
+                var leavestartdate=response.data[0].leave_start_date;
+                var leaveendate=response.data[0].leave_end_date;
+                 var leave_image='<?=base_url("assets/uploads/leave/")?>'+response.data[0].attachment;
+                 var leave_application_id=response.data[0].leave_application_id;
+                    $('.acceptleave').attr('d-aplId',leave_application_id);
+                    $('.rejectleave').attr('d-aplId',leave_application_id);
+
+                //  alert(leavestartdate);
+                //   alert(leaveendate);
+                
+    //             var paidby=response.data[0].clientname;
+    //             var paymentmethod=response.data[0].method_name;
+    //             var notes=response.data[0].notes;
+    //             var trans_status=response.data[0].transaction_status;
+    //            
+    //             // alert(paidby);
+                 $("#fullname").append(fullname);
+                // $("#leavedate").append(leavedate);
+                 $("#leave_category").append(leavecategory);
+                 $("#Duration").append(duration);
+                 $("#Applieddate").append(applieddate);
+                 $("#reason").append(reason);
+                  $("#leavestartdate").append(leavestartdate);
+                   $("#leaveenddate").append(leaveendate);
+                    $("#dateleavestartdate").append(leavestartdate);
+                   $("#dateleaveenddate").append(leaveendate);
+                    $("#leave_application_id").val(leave_application_id);
+                    // $('#leave_image').attr('src',leave_image  );
+                     $('#leave_image').attr('src',   leave_image  );
+
+    //              $("#paymethod").append(paymentmethod);
+    //              $("#notes").append(notes);
+                //  $("#transstatus").append(trans_status);
+                //   $("#transamount").append(transamount);
+                //   $("#trans_image").attr('src',trans_image);
+                //   $('#trans_image').attr('src',   trans_image  );
+                //  $("#trans_image").append(trans_image);
+            }              
+        });
+            
+          });
+        }); 
+        
+  </script>
+
+<!--<script type="text/javascript">-->
+<!--window.onload = function() {-->
+<!--  $("#leavesection").hide();};-->
+
+
+<!--    $(document).on('click','.leaveDetails',function(){-->
+<!--         $("#leavesection").show();-->
+        
+<!--    });-->
+    
+<!--    </script>-->
+<script type="text/javascript">
+        $(document).ready(function(){
+          $('.deletetPendingApplication').on('click',function(){ 
+             var leave_app_id=$(this).attr("leave_app_id");
+             // alert(owner_id);
+           if(confirm("Are you Sure want to delete this record?") ==true)
+            {       
+            // alert(owner_id);         
+                $.ajax({
+                  url:"<?=base_url('Leavemanagement/DeletePendingLeaveData')?>",
+                  type:"post",
+                  data:{leave_app_id:leave_app_id},
+                  success:function(response)
+                  {   
+                  response=JSON.parse(response);             
+                     if (response==1)
+                      {
+                   alert('Record Delete successfully');
+                    location.reload();
+                    
+                       }
+                  }
+                 })                           
+             // userPreference = "Data Delete successfully!";
+
+             }
+             else 
+             {
+              userPreference = "Save Canceled!";
+              }
+              
+          })
+        })  
+      </script>
+      <script type="text/javascript">
+        $(document).ready(function(){
+          $('.deletetMyleave').on('click',function(){ 
+             var myleave_id=$(this).attr("myleave_id");
+             // alert(owner_id);
+           if(confirm("Are you Sure want to delete this record?") ==true)
+            {       
+            // alert(owner_id);         
+                $.ajax({
+                  url:"<?=base_url('Leavemanagement/DeleteMyLeaveData')?>",
+                  type:"post",
+                  data:{myleave_id:myleave_id},
+                  success:function(response)
+                  {   
+                  response=JSON.parse(response);             
+                     if (response==1)
+                      {
+                   alert('Record Delete successfully');
+                    // $(".refreshmyleave").load(location.href + " .refreshmyleave");
+                     location.reload();
+                    
+                       }
+                  }
+                 })                           
+             // userPreference = "Data Delete successfully!";
+
+             }
+             else 
+             {
+              userPreference = "Save Canceled!";
+              }
+              
+          })
+        })  
+      </script>
+      <script type="text/javascript">
+        $(document).ready(function(){
+          $('.deletetAllLeaveApplication').on('click',function(){ 
+             var leave_app_id=$(this).attr("leave_app_id");
+             // alert(owner_id);
+           if(confirm("Are you Sure want to delete this record?") ==true)
+            {       
+            // alert(owner_id);         
+                $.ajax({
+                  url:"<?=base_url('Leavemanagement/DeleteAllLeaveData')?>",
+                  type:"post",
+                  data:{leave_app_id:leave_app_id},
+                  success:function(response)
+                  {   
+                  response=JSON.parse(response);             
+                     if (response==1)
+                      {
+                   alert('Record Delete successfully');
+                    location.reload();
+                    
+                       }
+                  }
+                 })                           
+             // userPreference = "Data Delete successfully!";
+
+             }
+             else 
+             {
+              userPreference = "Save Canceled!";
+              }
+              
+          })
+        })  
+      </script>
 <script type="text/javascript">
     $(document).ready(function() {
         $('#example2').DataTable({

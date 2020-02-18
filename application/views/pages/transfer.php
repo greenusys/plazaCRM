@@ -37,67 +37,70 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php
+                                foreach($All_Transfer_Data as $ATD)
+                                {
+                                    //   print_r($ATD);
+                                ?>
                             <tr>
-                              <td>Tittle</td>
-                              
-                                <td>System Architect</td>
-                                <td>$320,800</td>
-                                <td>2011/04/25</td>
-                                <td>61</td>
                                
+                              <td><?=$ATD->account_name?></td>
+                                <td><?=$ATD->account_name?></td>
+                               <td><?=$ATD->amount?></td>
+                                <td><?=$ATD->date?></td>
+                                <td><a href="">Download</a></td>
+                           
                                 <td>
                                     <div class="">
-                                      <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                      <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
+                                     <a href="#" class="bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                      <a href="javascript:void(0)" transactions_id="<?=$ATD->transfer_id?>" class="deletettransfertransaction"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
                                        <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                    </div>
+                                    </disessionv>
 
                                 </td>
-                            </tr>
-                            
-                            <tr>
-                              <td>Tittle</td>
-                              
-                                <td>System Architect</td>
-                                <td>$320,800</td>
-                                <td>2011/04/25</td>
-                                <td>61</td>
                                
-                                <td>
-                                    <div class="">
-                                      <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                      <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                       <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                    </div>
-
-                                </td>
                             </tr>
-                              
-                        </tbody>
-                        <tfoot>
-                             <tr>
-                                <th>From Account</th>
-                                <th>To Account</th>
-                                <th>Ammount</th>
-                                <th>Date</th>
-                                <th>Attachment</th>
-                                <th>Action</th>
-                            </tr>
-                        </tfoot>
+                             <?php
+                                }?>
+                     </tbody>
+                        <!--<tfoot>-->
+                        <!--     <tr>-->
+                        <!--        <th>From Account</th>-->
+                        <!--        <th>To Account</th>-->
+                        <!--        <th>Ammount</th>-->
+                        <!--        <th>Date</th>-->
+                        <!--        <th>Attachment</th>-->
+                        <!--        <th>Action</th>-->
+                        <!--    </tr>-->
+                        <!--</tfoot>-->
                     </table>
                   </div>
                   <div class="tab-pane fade px-4" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
                     <div class="row">
         <div class="offset-1 col-sm-8 cl-md-8 col-lg-8">
-            <form>
+             <?php
+                  if($this->session->flashdata('msg'))
+                  {
+                    echo '<div class="alert alert-info">'.$this->session->flashdata('msg').'</div>';
+                  }
+                ?>
+            <form action="<?=base_url('Transaction/AddTransferData')?>" method="post" enctype="multipart/form-data">
           <div class="form-group row">
               <div class="col-sm-3 text-right">
                 <label for="exampleInputEmail1">From Account <sub class="text-danger">*</sub></label>
               </div>
               <div class="col-sm-8">
                 <div class="input-group">
-                      <select name="client_id" class="form-control" id="account">
-                          <option value=""></option>
+                       <select name="From_Account_id" class="form-control" id="customer_group">
+                          <option value="0">Select Account</option>
+                          <?php
+                          foreach($fetch_Account_Data as $AccData)
+                          {
+                          ?>
+                         <option class="fetchusersbalance" users_balance="<?=$AccData->account_id?>" value="<?=$AccData->account_id?>"><?=$AccData->account_name ?></option>
+                          <?php   
+                          }
+                          ?>
                       </select>
                 </div>
               </div>
@@ -109,8 +112,16 @@
               </div>
               <div class="col-sm-8">
                 <div class="input-group">
-                      <select name="client_id" class="form-control" id="to_account">
-                          <option value=""></option>
+                       <select name="To_Account_id" class="form-control" id="customer_group">
+                          <option value="0">Select Account</option>
+                          <?php
+                          foreach($fetch_Account_Data as $AccData)
+                          {
+                          ?>
+                         <option class="fetchusersbalance" users_balance="<?=$AccData->account_id?>" value="<?=$AccData->account_id?>"><?=$AccData->account_name ?></option>
+                          <?php   
+                          }
+                          ?>
                       </select>
                 </div>
               </div>
@@ -124,7 +135,7 @@
               </div>
               <div class="col-sm-8">
                 <div class='input-group date' id='datetimepicker1'>
-                    <input type='text' class="form-control" />
+                      <input type='date' name="transferdate"class="form-control" />
                     <span class="input-group-addon">
                     <span ><i class="fa fa-calendar"></i></span>
                     </span>
@@ -139,7 +150,7 @@
                 <label for="exampleInputEmail1">Notes  </label>
               </div>
               <div class="col-sm-8">
-                <textarea class="form-control" name="short_note"></textarea>
+               <textarea class="form-control" name="short_note"></textarea>
               </div>
             </div>
           </div>
@@ -149,7 +160,7 @@
                 <label for="exampleInputEmail1">Amount  <span class="text-danger">*</span></label>
               </div>
               <div class="col-sm-6">
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+               <input type="number" name="transfer_amount"class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
               </div>
             </div>
           </div>
@@ -161,13 +172,16 @@
               </div>
               <div class="col-sm-8">
                   <div class="input-group">
-                        <select name="client_id" class="form-control" id="customer_group">
+                        <select name="payment_methods_id" class="form-control" id="customer_group">
                             <option value="0">Select payment method</option>
-                            <option value="5" >Cash </option>
-                            <option value="4" >Bank Transfer</option>
-                            <option value="3" >Payoneer</option>
-                            <option value="2" >PayPal</option>
-                            <option value="1" >Online</option>
+                            <?php
+                          foreach($fetch_Method_Data as $MethodData)
+                          {
+                          ?>
+                         <option value="<?=$MethodData->payment_methods_id?>"><?=$MethodData->method_name ?></option>
+                          <?php   
+                          }
+                          ?>
                         </select>
                   </div>
               </div>
@@ -179,7 +193,7 @@
                 <label for="exampleInputEmail1">Reference  </label>
               </div>
               <div class="col-sm-8">
-                <input type="number"  value="" class="form-control" placeholder="e.g. Transection Id, Check No" name="estimate_hours" data-parsley-id="23">
+                <input type="text" name="transferreference" value="" class="form-control" placeholder="e.g. Transection Id, Check No" name="estimate_hours" data-parsley-id="23">
               </div>
             </div>
           </div>
@@ -191,7 +205,7 @@
               <div class="col-sm-8">
                 <div class="form-group files">
                   <!--<label>Upload Your File </label>--->
-                  <input type="file" class="form-control" multiple="">
+                   <input type="file" name="files[]" class="form-control" multiple>
                 </div>
               </div>
               </div>
@@ -204,19 +218,19 @@
               </div>
               <div class="col-sm-9">
                 <div class="checkbox c-radio needsclick ">
-                  <input type="radio" name="gender" value="male" class="btn1"> Everyone<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
+                  <input type="radio" name="permission" value="all" class="btn1"> Everyone<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
                                 </div>
                 <div class="checkbox c-radio needsclick">
-                  <input type="radio" name="gender" value="male" id="chkPassport" onclick="ShowHideDiv(this)" > Customise Permission<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
+                  <input type="radio" name="permission" value="" id="chkPassport" onclick="ShowHideDiv(this)" > Customise Permission<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
                                 </div>
               </div>
             </div>
           </div>
-          <div class="form-group"  id="dvPassport" style="display: none">
-              <div class="row">
-              <div class="col-sm-3">
-                <label for="exampleInputEmail1">select Users<span class="text-danger">*</span></label>
-              </div>
+          <!--<div class="form-group"  id="dvPassport" style="display: none">-->
+          <!--    <div class="row">-->
+          <!--    <div class="col-sm-3">-->
+          <!--      <label for="exampleInputEmail1">select Users<span class="text-danger">*</span></label>-->
+          <!--    </div>-->
               <!--<div class="col-sm-9">
                  <input type="checkbox" name="vehicle1" value="Bike"  id="chkPassport1" onclick="ShowHideDiv(this)"> admin <strong class="badge btn-danger">Admin</strong>
                  <br>
@@ -246,9 +260,16 @@
                   </div>
                  </div>
               </div>--->
+             
             </div>
           </div>
-          </form>
+          <div class="row mt-3">
+        <div class="offset-11 col-md-1">
+         <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+      </form>
+         
         </div>
     </div>
                   </div>
@@ -299,6 +320,40 @@
           </div>
         </section>
       </div>
+        <script type="text/javascript">
+        $(document).ready(function(){
+          $('.deletettransfertransaction').on('click',function(){ 
+             var transactions_id=$(this).attr("transactions_id");
+             // alert(owner_id);
+           if(confirm("Are you Sure want to delete this record?") ==true)
+            {       
+            // alert(owner_id);         
+                $.ajax({
+                  url:"<?=base_url('Transaction/DeleteTranferTransaction')?>",
+                  type:"post",
+                  data:{transactions_id:transactions_id},
+                  success:function(response)
+                  {   
+                  response=JSON.parse(response);             
+                     if (response==1)
+                      {
+                   alert('Delete Record successfully');
+                    location.reload();
+                    
+                       }
+                  }
+                 })                           
+             // userPreference = "Data Delete successfully!";
+
+             }
+             else 
+             {
+              userPreference = "Save Canceled!";
+              }
+              
+          })
+        })  
+      </script>
  <script>
         $(document).ready(function() {
       

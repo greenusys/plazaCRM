@@ -8,9 +8,12 @@ class Leavemanagement extends MY_Controller {
 	}
 	public function index()
 	{
+		$usersdetail=$this->session->logged_user;
+	    $formyleave=$usersdetail[0]->user_id;
 		$data['fetch_leave_data']=$this->leave->fetchLeaveDetails();
 		$data['fetch_users_data']=$this->leave->fetchUserForApplyLeave();
 		$data['fetch_leave_category_data']=$this->leave->fetchLeaveCategoryData();
+		$data['fetch_Myleave_data']=$this->leave->fetchMyLeaveDetails($formyleave);
 // 		print_r($data['fetch_leave_data']);
 		$this->load->view('layout/header');
 		$this->load->view("pages/leave_management",$data);
@@ -63,15 +66,18 @@ class Leavemanagement extends MY_Controller {
 		}
 	}
 	public function addLeavePolicyData()
-	{ 
-		$dept=$this->input->post('dept_id');
-		$total_leave=$this->input->post('totalleave'); 	 
+	{ 	  
 		$data = array(
-        	'department_id'=>$dept,
-        	'total_Yearlyleave'=>$total_leave
-        );
+        	'lpolicy_name'=>$this->input->post('lpolicy_name'),
+			'lpolicy_department_id'=>$this->input->post('lpolicy_department_id'),
+			'lpolicy_designation_id'=>$this->input->post('lpolicy_designation_id'),
+			'lpolicy_category_id'=>$this->input->post('lpolicy_category_id'),
+			'lpolicy_days'=>$this->input->post('lpolicy_days'),
+			'lpolicy_gender'=>$this->input->post('lpolicy_gender'),
+			'lpolicy_effective_date'=>$this->input->post('lpolicy_effective_date'),
+			'lpolicy_activate'=>$this->input->post('lpolicy_activate'));
    
-        $result=$this->leave->addYearlyLeaveData($data);
+        $result=$this->leave->addLeavePolicyData($data);
 		if($result){
 			die(json_encode(array('status' =>'1' ,'msg'=>'Added Successfully')));
 		}
@@ -118,6 +124,13 @@ class Leavemanagement extends MY_Controller {
 		}
 		
 	}
+	public function Leave_Modal_Detailss()
+	{
+	   $leave_id=$this->input->post('leaveapp_id');
+	   $data=$this->leave->fetchleaveDataByIdToModal($leave_id);
+	   die(json_encode(array('msg'=>1,'data'=>$data)));
+	   //print_r($transid);
+	}
 	public function addleaveapplication()
 	{
 	   // print_r($_POST);
@@ -151,7 +164,7 @@ class Leavemanagement extends MY_Controller {
 		                $_FILES['file']['error']     = $_FILES['files']['error'][$i];
 		                $_FILES['file']['size']     = $_FILES['files']['size'][$i];
 		                // File upload configuration
-	            $uploadPath = 'assets/uploads/leave/';
+	            $uploadPath = './uploads/leave/';
 		                $config['upload_path'] = $uploadPath;
 		                $config['allowed_types'] = 'jpg|jpeg|png|gif';
 	 
@@ -166,6 +179,10 @@ class Leavemanagement extends MY_Controller {
 		                    $fileData = $this->upload->data();
 		                    $uploadData[$i]['file_name'] = $fileData['file_name'];
 		                    $uploadData[$i]['uploaded_on'] = date("Y-m-d H:i:s");
+		                }
+		                else
+		                {
+		                	echo"";
 		                }
 		                $attach[]=$_FILES['file']['name'];	
     	            
@@ -243,6 +260,38 @@ class Leavemanagement extends MY_Controller {
 			die(json_encode(array("code"=>0,"data"=>"No Data Found.")));
 		}
 		
+	}
+	public function changeLeaveStatus()
+	{
+		$applictaion_status=2;
+		$leave_id=$this->input->post('leave_id');
+		$data=array('application_status'=>$applictaion_status);
+		$dataaa=$this->leave->changeleavestatusByid($leave_id,$data);
+		if($dataaa)
+		{
+			die(json_encode(array('code'=>1,'data'=>$dataaa)));
+		}
+		else
+		{
+			die(json_encode(array('code'=>0,'data'=>"Error try again")));
+		}
+
+	}
+	public function RejectLeaveStatus()
+	{
+		$applictaion_status=3;
+		$leave_id=$this->input->post('leave_id');
+		$data=array('application_status'=>$applictaion_status);
+		$dataaa=$this->leave->rejectleavestatusByid($leave_id,$data);
+		if($dataaa)
+		{
+			die(json_encode(array('code'=>1,'data'=>$dataaa)));
+		}
+		else
+		{
+			die(json_encode(array('code'=>0,'data'=>"Error try again")));
+		}
+
 	}
 }
 ?>

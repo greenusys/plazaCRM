@@ -6,14 +6,17 @@
 		{
 			parent::__construct();
 			$this->load->model('Department_model','DPT');
+			$this->load->model('AttendanceModel','ATND');
 		}
 		public function index(){
 			$data['Depart']=$this->DPT->getAllDeppartments();
+			$data['Employee']=$this->ATND->fetchEmployee();
 			// print_r($data['Depart']);
 			$dp=$data['Depart'];
 			foreach ($dp as $department ) {
 				// print_r($department);
 				// print_r($department->departments_id);
+				$d['fullname']=$department->fullname;
 				$d['Dept_id']=$department->departments_id;
 				$d['Dept_head']=$department->department_head_id;
 				$d['Dept_name']=$department->deptname;
@@ -27,20 +30,36 @@
 			$this->load->view('pages/department',$data);
 			$this->load->view('layout/footer');
 		}
+
 		public function getDesignations($departments_id){
 			// $this->db->where('');
 			return $this->DPT->getDesignations($departments_id);
 		}
+
+		public function getDesignations_ajax(){
+			$departments_id=$_POST['dept_id'];
+			$result=$this->DPT->getDesignations($departments_id);
+			die(json_encode(array('status'=>'1','data'=>$result)));
+		}
+
+		public function fetch_designation(){
+			$designation_id=$_POST['desig_id'];
+			$result=$this->DPT->fetch_designation($designation_id);
+			echo $result[0]->permission;
+		}
+
 		public function updateDeptName (){
 			$name=$this->input->post('dptName');
 			$id=$this->input->post('dptId');
-			if($this->DPT->updateDeptName($name, $id)){
+			$depHead=$this->input->post('depHead');
+			if($this->DPT->updateDeptName($name, $id, $depHead)){
 				die(json_encode(array("code"=>1, "data"=>"Department Name Updated Successfully.")));
 			}else{
 				die(json_encode(array("code"=>0, "data"=>"Failed To Update Department Name")));
 			}
 		}
 		public function newDepartment(){
+			$data['Employee']=$this->ATND->fetchEmployee();
 			$data['Depart']=$this->DPT->getAllDeppartments();
 			$this->load->view('layout/header');
 			$this->load->view('pages/newDepart',$data);
@@ -49,6 +68,7 @@
 		public function addNewDep(){
 			$dep_id=$this->input->post('department');
 			$newDep=$this->input->post('newDepartment');
+			// $departmentHead=$this->input->post('departmentHead');
 			$newDesig=$this->input->post('designation');
 			if($dep_id==0){
 				// echo 'Create Department';

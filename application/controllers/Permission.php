@@ -11,14 +11,27 @@ class Permission extends MY_Controller
 		$this->load->model('Tasks_Model');
 		$this->load->model('User_model');
 		$this->load->model('Performance_model');
+		$this->load->model('AnnouncementModel');
 	}
 	public function index(){
-		$data['Employee']=$this->ATND->fetchEmployee();
-		$data['Designation']=$this->db->get('tbl_designations')->result();
+		//$data['Employee']=$this->ATND->fetchEmployee();
+		$data['Designation']=$this->db->get('tbl_departments')->result();
 		
 		$this->load->view('layout/header');
 		$this->load->view("pages/set_perm",$data);
 		$this->load->view("layout/footer");
+	}
+
+	public function add_permission(){
+		$permission = $_POST['permission'];
+		$designations_id=$_POST['desig_id'];
+		$result=$this->AnnouncementModel->update_permissions($permission,$designations_id);
+		if($result){
+			echo "1";
+		}
+		else{
+			echo "0";
+		}
 	}
 
 }
