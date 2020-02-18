@@ -19,12 +19,16 @@
 		$(document).on('submit','#updDe',function(e){
 			e.preventDefault();
 			var depId=$('#edit_dept_id').val();
+			var depHead=$('#dp_head').val();
+			if($depHead==0){
+				alert("Please Select Department Head.");
+			}
 			
 			var depName=$('#edit_dept_name').val();
 			$.ajax({
 				url:"<?=base_url('Department/updateDeptName')?>",
 				type:"post",
-				data:{dptId:depId, dptName:depName},
+				data:{dptId:depId, dptName:depName,depHead:depHead},
 				success:function(response){
 					console.log(response);
 					response=JSON.parse(response);
@@ -90,7 +94,7 @@
 					<div class="row">
 						<div class="col-md-9">
 							<h5 class="mt-2 text-dark font-weight-bold"><?=$value['Dept_name']?></h5>
-				   			<h6>Department head:<span class="text-info"> Jonathan Tornil Grasa</span></h6>		
+				   			<h6>Department head:<span class="text-info"><?=$value['fullname']?></span></h6>		
 						</div>
 						<div class="col-md-3">
 						   <a href="javascript:void(0)" class="btn btn-primary fs " id="ditDept"  data-toggle="modal" data-target="#updateDepartment" d-id="<?=$value['Dept_id']?>" d-name="<?=$value['Dept_name']?>"><i class="fas fa-edit"></i></a>
@@ -180,6 +184,18 @@
 						
 						<input type="hidden" class="form-control" id="edit_dept_id" aria-describedby="emailHelp" placeholder="IT/Collaborative">
 						<input type="text" class="form-control" id="edit_dept_name" aria-describedby="emailHelp" placeholder="IT/Collaborative">
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="col-sm-4">
+						<label for="exampleInputEmail1">Select Dept. Head <span class="text-danger">*</span></label>
+					</div>
+					<div class="col-sm-8">
+						<select class="form-control" name="dp_head" id="dp_head">
+							<option value="0"> Select</option>
+							<option value="22">RA</option>
+						</select>
 					</div>
 
 				</div>

@@ -41,21 +41,8 @@ class Department_Model extends MY_Model
         return $result;
     }
     public function getAllDeppartments(){
-        // $this->db->join('tbl_designations', 'tbl_departments.departments_id = tbl_designations.departments_id', 'left');
-        // $All_details=array();
-        // $deatils=array();
+        $this->db->join('tbl_account_details', 'tbl_departments.department_head_id = tbl_account_details.user_id');
         $dpt= $this->db->get('tbl_departments')->result();
-        // foreach ($dpt as $dDe) {
-        //     $departments[]=$dDe;
-        //     // print_r($dDe);
-        //     if(count($data=$this->getDesignations($dDe->departments_id))>0){
-        //         foreach ($data as $d) {
-        //             $deatils[]=$d;
-        //         }
-        //     }
-        // }
-        // array_push($All_details,array("Departments"=>$departments,"Designation"=>$deatils));
-        // print_r($All_details);
         return $dpt;
 
     }
@@ -63,9 +50,9 @@ class Department_Model extends MY_Model
         $this->db->where('departments_id',$dpt_id);
         return $this->db->get('tbl_designations')->result();
     }
-    public function updateDeptName($name, $id){
+    public function updateDeptName($name, $id, $depHead){
         $this->db->where('departments_id',$id);
-        $toupdate=array("deptname"=>$name);
+        $toupdate=array("deptname"=>$name,"department_head_id"=>$depHead);
         // psrint_r($toupdate);
         if($this->db->update('tbl_departments', $toupdate)){
             return true;
