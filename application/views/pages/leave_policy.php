@@ -71,20 +71,33 @@
       </div>
       <div class="p-2">
         <form id="policydata">
+           <div class="form-group mb-0">
+            <div class="row">
+              <div class="offset-1 col-sm-2 text-right">
+                  <label for="exampleInputEmail1" class="pt-2">Policy Name<sup class="text-danger">*</sup></label>
+              </div>
+              <div class="col-sm-7">
+                <div class='input-group date form-group' id=''>
+                   <input type="text" class="form-control" name="lpolicy_name">
+                    
+               </div>
+              </div>
+            </div>
+          </div>
           <div class="form-group">
             <div class="row">
               <div class="offset-1 col-sm-2 text-right">
-                <label for="exampleInputEmail1" class="pt-2">Policy Name<sup class="text-danger">*</sup></label>
+                <label for="exampleInputEmail1" class="pt-2">Deparments<sup class="text-danger">*</sup></label>
               </div>
               <div class="col-sm-7">
                 <div class="input-group">
-                  <select name="dept_id" class="form-control " id="emply">
+                  <select name="lpolicy_department_id" class="form-control fetchdeptid" id="emply">
                     <option selected="" disabled="" value="0">Select Department</option>
                      <?php
                                         foreach($fetch_Department_data as $deptdata)
                                         {
                                         ?>
-              <option  class="fetchdesignation" departmend_id="<?=$deptdata->departments_id?>" value="<?=$deptdata->departments_id?>"><?=$deptdata->deptname?></option>;
+              <option  value="<?=$deptdata->departments_id?>"><?=$deptdata->deptname?></option>;
                                     <?php
                                         }
                                         ?>
@@ -93,6 +106,7 @@
               </div>
             </div>
           </div>
+                        
           <div class="form-group">
             <div class="row">
               <div class="offset-1 col-sm-2 text-right">
@@ -100,7 +114,7 @@
               </div>
               <div class="col-sm-7">
                 <div class="input-group">
-                  <select name="designation_id" class="form-control" id="designationforleave">
+                  <select name="lpolicy_designation_id" class="form-control" id="designationforleave">
                     <option selected="" disabled="" value="0">Select Designation</option>
                      </select>
                 </div>
@@ -114,7 +128,7 @@
               </div>
               <div class="col-sm-7">
                 <div class='input-group date form-group' id=''>
-                   <select name="dept_id" class="form-control " id="emply">
+                   <select name="lpolicy_category_id" class="form-control " id="emply">
                     <option selected="" disabled="" value="0">Select Category</option>
                      <?php
                                         foreach($leave_category_data as $LCdata)
@@ -137,7 +151,7 @@
               </div>
               <div class="col-sm-7">
                 <div class='input-group date form-group' id=''>
-                   <input type="number" class="form-control" name="days">
+                   <input type="number" class="form-control" name="lpolicy_days">
                     
                </div>
               </div>
@@ -150,13 +164,13 @@
               </div>
               <div class="col-sm-7">
                 <div class='input-group date form-group' id=''>
-                  <select name="designation_id" class="form-control" id="emply">
+                  <select name="lpolicy_gender" class="form-control" id="emply">
                     <option selected="" disabled="" value="0">Select</option>
                      <option  value="1">ALL</option>
                       <option  value="2">Male</option>
                        <option  value="3">Female</option>
                     
-                                       
+                                             
              
                                     
                   </select>
@@ -172,7 +186,7 @@
               </div>
               <div class="col-sm-7">
                 <div class='input-group date form-group' id=''>
-                   <input type="date" class="form-control" name="effectivedate">
+                   <input type="date" class="form-control" name="lpolicy_effective_date">
                     
                </div>
               </div>
@@ -185,7 +199,7 @@
               </div>
               <div class="col-sm-2">
                 <div class='input-group date form-group' id=''>
-                   <input type="checkbox" name="activate" value="1" class="form-control form-control">
+                   <input type="checkbox" name="lpolicy_activate" value="1" class="form-control form-control">
                   
                     
                </div>
@@ -199,9 +213,7 @@
               </div>
               <div class="col-sm-7">
                 <div class='input-group date form-group' id=''>
-                   <input type="text"  class="w_20 form-control">
-                  
-                    
+                   <input type="text"  class="w_20 form-control">     
                </div>
               </div>
             </div>
@@ -216,7 +228,7 @@
   </div>
 </div>
 </section>
-<div class="row mt-4">
+<!-- <div class="row mt-4">
   <div class="col-md-12">
   <div class="card p-2">
  <section id="tabs" class="project-tab p-3">
@@ -255,7 +267,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         
 </section>          
     </div>
@@ -278,9 +290,9 @@
 </script>
 
  <script>
-       
-          $(document).on('change',function(){
-            var dept_id=$('.fetchdesignation').attr('departmend_id');
+        // $('.checkagain').on('click',function(){
+          $('.fetchdeptid').on('change',function(){
+            var dept_id=$(this).val();
              // alert(dept_id);
             $.ajax({
               url:"<?=base_url('Leavemanagement/fetchDesignationById')?>",
@@ -290,7 +302,7 @@
               {
                 //   console.log(response.data);
                   response=JSON.parse(response);
-                   // console.log(response.data);
+                   console.log(response.data);
                   if(response.code==1)
                   {
                     $("#designationforleave").empty();
@@ -298,7 +310,7 @@
                     for (var i = 0; i <response.data.length; i++) 
                     {
                         var html;
-                        // console.log(response.data[i].name);
+                         console.log(response.data[i].designations);
                         html+='<option value="'+response.data[i].designations_id+'">'+response.data[i].designations+'</option>';
                         // html+="<option value="'+response.data[i].id+'">" + response.data[i].name + "</option>";
                        
