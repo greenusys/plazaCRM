@@ -22,5 +22,8 @@
 		public function getOverDueTask(){
 			die(json_encode($this->Demo->get_over_due_task()));
 		}
+		public function fetchOnlineUser(){
+			die(json_encode($this->Demo->get_online_user()));
+		}
 	}
 ?>

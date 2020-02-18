@@ -10,11 +10,11 @@ class Login extends CI_Controller {
 
 	public function index()
 	{
-		if($this->session->userdata('logged_user')){
-			redirect('Dashboard');
-		}else{
+		// if($this->session->userdata('logged_user')){
+		// 	redirect('Dashboard');
+		// }else{
 			$this->load->view('pages/auth-login');
-		}
+		// }
 		
 	}
 	public function validateLogin(){
@@ -22,7 +22,9 @@ class Login extends CI_Controller {
 		$data=array("user_name_"=>$this->input->post('user_name'),"password_"=>$this->input->post('pass_code'));
 		if($res=$this->Login->verifyThisUser($data)){
 			$this->session->set_userdata('logged_user',$res);
-			redirect('Dashboard');
+			//update login status
+			$this->updateLoginStatus(1);
+			// redirect('Dashboard');
 		}else{
 			$this->session->set_flashdata('msg','Invalid Username Or Password');
 			redirect('Login');
@@ -37,48 +39,54 @@ class Login extends CI_Controller {
 		if(count($da)>0){
 			$attendanceId=$da[0]->attendance_id;
 			if($da[0]->date_out==""){
-				echo 'It is Empty';
+				echo ' || It is Empty';
 				$myAttendanceDetail=$this->updateAttendance($attendanceId);
 				if($myAttendanceDetail){
-					// echo 'Attendance Updated...';
+					echo ' || Attendance Updated...';
 						if($this->updateTbl_clock($attendanceId)){
-							echo 'Now You Can Log Out';
+							echo ' || Now You Can Log Out';
 // 
-							if($this->updateLoginStatus()){
-								redirect(base_url());
+							if($this->updateLoginStatus(0)){
+								// redirect(base_url());
 							}else{
-								redirect(base_url());
+								 // redirect(base_url());
 							}
 						}else{
-							// echo 'Some Thing Is Wrong. You Can Not Log out.';
-							redirect(base_url());
+							echo ' || Some Thing Is Wrong. You Can Not Log out.';
+							// redirect(base_url());
 						}
 					// print_r($myAttendanceDetail);
 				}else{
-					// echo 'Attnedance Not Found.';
-					redirect(base_url());
+					echo ' || Attnedance Not Found.';
+					// redirect(base_url());
 				}
 				// 
 			}else{
-				// echo 'Not Empty';
+				echo ' || Not Empty';
 				if($this->updateTbl_clock($attendanceId)){
-					// echo 'Now You Can Log Out';
+					echo ' || Now You Can Log Out';
 
-					if($this->updateLoginStatus()){
-						redirect(base_url());
+					if($this->updateLoginStatus(0)){
+						// redirect(base_url());
 					}else{
-						redirect(base_url());
+						// redirect(base_url());
 					}
 				}else{
-					// echo 'Some Thing Is Wrong. You Can Not Log out.';
-					redirect(base_url());
+					echo ' || Some Thing Is Wrong. You Can Not Log out.';
+					// redirect(base_url());
 				}
 			}	
 		}else{
 			// echo 'Attendance Not Set';
-			redirect(base_url());
+			if($this->markAttendanceZero($condition)){
+				//Perfect
+			}else{
+				//Failure
+			}
+			// redirect(base_url());
 		}
 		
+		 redirect(base_url());
 		// $sess_array = array();
 		
 		// $this->session->sess_destroy();
@@ -93,13 +101,45 @@ class Login extends CI_Controller {
 		}
 		// return $this->db->get('tbl_attendance')->result();
 	}
-	public function updateLoginStatus(){
-		// if($this->db->update('users',array('login_Status'=>0))){
-			$this->session->unset_userdata('clocked');
+	public function updateLoginStatus($var){
+		$session=$this->session->userdata('logged_user');
+		// print_r($session);
+		// die;
+		$my_Id=$session[0]->user_id;
+		$condition=array('user_id'=>$my_Id);
+		if($var==1){
+			// echo 'log in';
+			 redirect('Dashboard');
+			// 2020-02-05 22:37:01
+			$dTime=date('Y-m-d h:i:s');
+			$data=array('online_time'=>1,"last_ip"=>$this->input->ip_address(),"last_login"=>$dTime);
+			$this->db->where($condition);
+			if($this->db->update('tbl_users',$data)){
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			// echo 'log out';
+			$data=array('online_time'=>0);
+			$this->db->where($condition);
+			if($this->db->update('tbl_users',$data)){
+				$this->session->unset_userdata('clocked');
+				
+				$this->session->sess_destroy();
+				$this->session->set_flashdata('msg','Successfully Logout');
+			}
+			// return true;
 			
-			$this->session->sess_destroy();
-			$this->session->set_flashdata('msg','Successfully Logout');
-			return true;
+		}
+		
+		// $this->db->where($condition);
+		// if($this->db->update('users',$data)){
+		// 	$this->session->unset_userdata('clocked');
+			
+		// 	$this->session->sess_destroy();
+		// 	$this->session->set_flashdata('msg','Successfully Logout');
+		// 	return true;
 			
 		// }else{
 		// 	return false;
@@ -140,9 +180,37 @@ class Login extends CI_Controller {
 				}
 			}
 		}else{
-			echo '====ERrerer';
+			// echo '====ERrerer';
 			return false;
 		}
 	}
-	
+	public function markAttendanceZero($array){
+		$data_for_attendance=array('user_id'=>$array['user_id'],'date_out'=>date('Y-m-d'),'date_in'=>date('Y-m-d'),'attendance_status'=>1);
+		$this->db->where($data_for_attendance);
+		if($this->db->insert('tbl_attendance',$data_for_attendance)){
+			$this->db->where('user_id',$array['user_id']);
+			$this->db->order_by('attendance_id','desc');
+			$attendanceDetails=$this->db->get('tbl_attendance')->result();
+			if($this->markAttendanceTblClockZero($attendanceDetails[0]->attendance_id)){
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
+	public function markAttendanceTblClockZero($attendanceId){
+		$dat=array(
+			'clockout_time'=>date('h:i:s'),
+			"clockin_time"=>date('h:i:s'), 
+			"attendance_id"=>$attendanceId,
+			"clocking_status"=>1,
+			"ip_address"=>$this->input->ip_address());
+		if($this->db->insert('tbl_clock',$dat)){
+			return true;
+		}else{
+			return false;
+		}
+	}
 }
