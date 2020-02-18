@@ -261,6 +261,10 @@ class Payments_model extends MY_Model
         }
         return true;
     }
+    public function fetchMethodData()
+    {
+         return $this->db->get('tbl_payment_methods')->result();
+    }
 
 
 }
