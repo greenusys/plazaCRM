@@ -97,7 +97,7 @@
 											<label for="password">Current Password</label>
 										</div>
 										<div class="col-sm-8">
-											<input type="text" class="form-control" name="password" id="password" placeholder="Enter Current Password">
+											<input type="password" class="form-control" name="password" id="password" placeholder="Enter Current Password">
 										</div>
 									</div>
 								</div>
@@ -128,16 +128,27 @@
 			    <div class="card bg-white shadow p-3">
 				    <h6>Change Password</h6>
 		            <div class="line mt-2"></div>
-					<form>
+					<form method="post" id="updatePassword" >
 						<div class="row">
 						    <div class="offset-1 col-md-11">
 								<div class="form-group">
 									<div class="row">
 										<div class="offset-1 col-sm-3">
-											<label for="exampleInputEmail1">Old Password<span class="text-danger">*</span></label>
+											<label for="oldpassword">Old Password<span class="text-danger">*</span></label>
 										</div>
 										<div class="col-sm-8">
-											<input type="text" class="form-control" id="oldpassword" aria-describedby="emailHelp" placeholder="Enter Your Old Password">
+											<input type="password" name="password" class="form-control" id="oldpassword" placeholder="Enter Your Old Password">
+										</div>
+									</div>
+								</div>
+									<input type="hidden" value="<?=$user_info[0]->user_id?>" id="user_id" name="user_id">
+								<div class="form-group">
+									<div class="row">
+										<div class="offset-1 col-sm-3">
+											<label for="newpassword">New Password<span class="text-danger">*</span></label>
+										</div>
+										<div class="col-sm-8">
+											<input type="password" name="new_password" class="form-control" id="newpassword" placeholder="Enter Your new Password">
 										</div>
 									</div>
 								</div>
@@ -145,34 +156,61 @@
 								<div class="form-group">
 									<div class="row">
 										<div class="offset-1 col-sm-3">
-											<label for="exampleInputEmail1">New Password<span class="text-danger">*</span></label>
+											<label for="confirmpassword">Confirm Password<span class="text-danger">*</span></label>
 										</div>
 										<div class="col-sm-8">
-											<input type="text" class="form-control" id="newpassword" aria-describedby="emailHelp" placeholder="Enter Your new Password">
+											<input type="password" name="confirm_password" class="form-control" id="confirmpassword" placeholder="Enter Your confirm Password">
+											<p class="text-danger" style="display: none" id="passalert">Password Doen't matched.</p>
 										</div>
 									</div>
-								</div>
-								
-								<div class="form-group">
-									<div class="row">
-										<div class="offset-1 col-sm-3">
-											<label for="exampleInputEmail1">Confirm Password<span class="text-danger">*</span></label>
-										</div>
-										<div class="col-sm-8">
-											<input type="text" class="form-control" id="confirmpassword" aria-describedby="emailHelp" placeholder="Enter Your confirm Password">
-										</div>
-									</div>
+									
 								</div>
 								<div class="row mt-4">
 									<div class="offset-4 col-sm-8">
-										<button type="button" class="btn btn-dark">Change Password</button>
+										<button type="submit" class="btn btn-dark">Change Password</button>
 									</div>
 								</div>
 							</div>
 						</div>
-									
+						</form>
+<script>
+$(document).on('submit','#updatePassword',function(e){
+			e.preventDefault();
+			var newpassword=$('#newpassword').val();
+			var oldpassword = $('#oldpassword').val();
+			var user_id = $('#user_id').val();
+			var confirmpassword=$('#confirmpassword').val();
+			
+			if(newpassword==confirmpassword){
+				$.ajax({
+					url:"<?=base_url('User/updatePassword')?>",
+					type:"post",
+					data:{newpassword:newpassword, oldpassword:oldpassword,user_id:user_id},
+					success:function(response){
+						//console.log(response);
+						response=JSON.parse(response);
+						if(response.error==0){
+							// swal('Success')
+							swal("Good job!", response.msg, "success");
+							
+						}else{
+							swal("Oops!", response.msg, "warning");
+							
+						}
+						
+					}
+				})
+			}else{
+				$("#passalert").show("slow");
+				//$("#passalert").fadeOut("slow");
+  				$("#passalert").fadeOut(5000);
+			}
+		});
+</script>
+
 						<h6 class="mt-4">Change Username</h6>
 		                <div class="line mt-2"></div>
+		                <form>		
 						<div class="row mt-5">
 						    <div class="offset-1 col-md-11">
 								<div class="form-group">
