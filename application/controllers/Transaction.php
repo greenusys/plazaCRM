@@ -132,7 +132,7 @@ class Transaction extends MY_Controller {
 		                $_FILES['file']['error']     = $_FILES['files']['error'][$i];
 		                $_FILES['file']['size']     = $_FILES['files']['size'][$i];
 		                // File upload configuration
-	            $uploadPath = 'assets/uploads/expense/';
+	            $uploadPath = './uploads/expense/';
 		                $config['upload_path'] = $uploadPath;
 		                $config['allowed_types'] = 'jpg|jpeg|png|gif';
 	 
@@ -142,12 +142,14 @@ class Transaction extends MY_Controller {
 	            
 	            // Upload file to server
 	            if($this->upload->do_upload('file'))
-		                {
-		                    // Uploaded file data
-		                    $fileData = $this->upload->data();
-		                    $uploadData[$i]['file_name'] = $fileData['file_name'];
-		                    $uploadData[$i]['uploaded_on'] = date("Y-m-d H:i:s");
-		                }
+	            {
+	                    // Uploaded file data
+	                    $fileData = $this->upload->data();
+	                    $uploadData[$i]['file_name'] = $fileData['file_name'];
+	                    $uploadData[$i]['uploaded_on'] = date("Y-m-d H:i:s");
+	            }else{
+	            	echo 'not ';
+	            }
 		                $attach[]=$_FILES['file']['name'];	
     	            
 		        }
@@ -175,7 +177,7 @@ class Transaction extends MY_Controller {
                         'attachement'=>$expenseFiles,
                         );
 	       //	print_r($data);
-	        $results=$this->Expenses->addExpenseData($data);
+	        	$results=$this->Expenses->addExpenseData($data);
     	        	  switch ($results) 
     				{
     					case 0:$this->session->set_flashdata('msg','Error');
