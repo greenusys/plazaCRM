@@ -32,6 +32,11 @@ class Transaction extends MY_Controller {
 		$this->load->view("layout/footer");
 	}
 	public function deposit(){
+		$data['fetch_Account_Data']=$this->Accounts->AllAccountData();
+        $data['fetch_Expenses_Category']=$this->Expenses->fetchExpensesCategory();
+        $data['fetch_Client_Data']=$this->Client->getClientDetails();
+        $data['fetch_Method_Data']=$this->Payments->fetchMethodData();
+        $data['All_expense_Data']=$this->Transaction->fetchAllDepositTransactionData();
 		$this->load->view('layout/header');
 		$this->load->view("pages/deposit");
 		$this->load->view("layout/footer");
@@ -281,7 +286,7 @@ class Transaction extends MY_Controller {
 		                $_FILES['file']['error']     = $_FILES['files']['error'][$i];
 		                $_FILES['file']['size']     = $_FILES['files']['size'][$i];
 		                // File upload configuration
-	            $uploadPath = 'assets/uploads/deposit/';
+		                 $uploadPath = './uploads/deposit/';
 		                $config['upload_path'] = $uploadPath;
 		                $config['allowed_types'] = 'jpg|jpeg|png|gif';
 	 

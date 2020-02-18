@@ -57,12 +57,15 @@ class Leavemanagement extends MY_Controller {
         	'total_Yearlyleave'=>$total_leave
         );
    
-        $result=$this->leave->addYearlyLeaveData($data);
-		if($result){
+        $result=$this->leave->addYearlyLeaveData($data,$dept);
+		if($result==1){
 			die(json_encode(array('status' =>'1' ,'msg'=>'Added Successfully')));
 		}
-		else{
+		elseif($result==0){
 			die(json_encode(array('status' =>'0' ,'msg'=>'Error')));
+		}
+		else{
+			die(json_encode(array('status' =>'2' ,'msg'=>'already exist')));
 		}
 	}
 	public function addLeavePolicyData()
