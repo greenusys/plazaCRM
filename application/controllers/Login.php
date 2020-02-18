@@ -10,7 +10,12 @@ class Login extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('pages/auth-login');
+		if($this->session->userdata('logged_user')){
+			redirect('Dashboard');
+		}else{
+			$this->load->view('pages/auth-login');
+		}
+		
 	}
 	public function validateLogin(){
 		// print_r($_POST);
