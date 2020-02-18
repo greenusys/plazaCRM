@@ -50,6 +50,12 @@ class Department_Model extends MY_Model
         $this->db->where('departments_id',$dpt_id);
         return $this->db->get('tbl_designations')->result();
     }
+
+    public function fetch_designation($id){
+        $this->db->where('designations_id',$id);
+        return $this->db->get('tbl_designations')->result();
+    }
+
     public function updateDeptName($name, $id, $depHead){
         $this->db->where('departments_id',$id);
         $toupdate=array("deptname"=>$name,"department_head_id"=>$depHead);

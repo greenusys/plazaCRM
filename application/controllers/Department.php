@@ -30,10 +30,24 @@
 			$this->load->view('pages/department',$data);
 			$this->load->view('layout/footer');
 		}
+
 		public function getDesignations($departments_id){
 			// $this->db->where('');
 			return $this->DPT->getDesignations($departments_id);
 		}
+
+		public function getDesignations_ajax(){
+			$departments_id=$_POST['dept_id'];
+			$result=$this->DPT->getDesignations($departments_id);
+			die(json_encode(array('status'=>'1','data'=>$result)));
+		}
+
+		public function fetch_designation(){
+			$designation_id=$_POST['desig_id'];
+			$result=$this->DPT->fetch_designation($designation_id);
+			echo $result[0]->permission;
+		}
+
 		public function updateDeptName (){
 			$name=$this->input->post('dptName');
 			$id=$this->input->post('dptId');
