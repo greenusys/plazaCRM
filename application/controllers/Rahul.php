@@ -42,5 +42,11 @@
 			date_default_timezone_set('Asia/Kolkata');
     		echo $timestamp = date('H:i:s');
 		}
+		public function getUserChats(){
+		$resultOne=$this->db->query("select * from ");
+		$this->db->where('tbl_users.user_id',$this->input->post('user_id'));
+		$this->db->join('tbl_account_details','tbl_account_details.user_id=tbl_users.user_id');
+		die(json_encode($this->db->get('tbl_users')->result()));
+	}
 	}
 ?>

@@ -11,7 +11,7 @@
                 <div class="col-md-9">
                     <div class="card-wrap text-center">
                       <div class="card-header">
-                        <h4>0</h4>
+                        <h4><?=count($in_progress_project)?></h4>
                       </div>
                       <div class="card-body">
                        In Progress Projects<br>
@@ -34,10 +34,10 @@
                  <div class="col-md-9">
                     <div class="card-wrap text-center">
                       <div class="card-header">
-                        <h4>0</h4>
+                        <h4><?=count($in_progress_task)?></h4>
                       </div>
                       <div class="card-body">
-                       In Progress Projects<br>
+                       In Progress Task<br>
                     <span><a href="">More Info <i class="fas fa-arrow-circle-right"></i></a></span>
                       </div>
                     </div>
@@ -111,11 +111,11 @@
                 <ul class="nav nav-tabs nav-justified md-tabs indigo" id="myTabJust" role="tablist">
                   <li class="nav-item">
                     <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
-                      aria-selected="true">Overdue Projects(8)</a>
+                      aria-selected="true">Overdue Projects(<?=count($over_due_project)?>)</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
-                      aria-selected="false">Overdue Tasks(10)</a>
+                      aria-selected="false">Overdue Tasks(<?=count($over_due_task)?>)</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" id="contact-tab-just" data-toggle="tab" href="#contact-just" role="tab" aria-controls="contact-just"
@@ -127,48 +127,18 @@
                    <table id="example" class="display nowrap" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th>Project Name</th>
+                                <th>Client</th>
+                                <th>End Date</th>
+                                <th>Status</th>
+                                <th>Assigned To</th>
+                                <th>Downloads</th>
+                                <th>Action</th>
+                             
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
-                            </tr>
-                            
-                            <tr>
-                                <td>Shad Decker</td>
-                                <td>Regional Director</td>
-                                <td>Edinburgh</td>
-                                <td>51</td>
-                                <td>2008/11/13</td>
-                                <td>$183,000</td>
-                            </tr>
-                            <tr>
-                                <td>Michael Bruce</td>
-                                <td>Javascript Developer</td>
-                                <td>Singapore</td>
-                                <td>29</td>
-                                <td>2011/06/27</td>
-                                <td>$183,000</td>
-                            </tr>
-                            <tr>
-                                <td>Donna Snider</td>
-                                <td>Customer Support</td>
-                                <td>New York</td>
-                                <td>27</td>
-                                <td>2011/01/25</td>
-                                <td>$112,000</td>
-                            </tr>
+                          
                         </tbody>
                         <tfoot>
                             <tr>

@@ -132,6 +132,12 @@ class Leave_Model extends CI_Model
 	    return $this->db->get('tbl_departments')->result();
 	    
 	}
+	public function fetchtotalLeaveById($dept_id)
+	{
+		$this->db->where('department_id',$dept_id);
+	    return $this->db->get('tbl_leave_yearly')->result();
+	    
+	}
 	public function fetchDesignationforLeaveById($dept_id)
 	{
 		$this->db->where('departments_id',$dept_id);
@@ -216,6 +222,19 @@ class Leave_Model extends CI_Model
 			{
 				return 0;
 		    }
+	}
+	public function checkAvailableleave($dept_id)
+ 	{
+        $this->db->select('lpolicy_days')->from('tbl_leave_policy');
+		$this->db->where('lpolicy_department_id',$dept_id);
+		$query= $this->db->get();
+		$days_array = array();
+		foreach ($query->result_array() as $row)
+		{
+		  $days_array[] = intval($row['lpolicy_days']); //can it be float also?
+		}
+		return $total = array_sum($days_array);
+		 
 	}
 }
 
