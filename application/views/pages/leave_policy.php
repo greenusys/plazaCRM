@@ -68,10 +68,11 @@
         <div class="col-md-6">
           <span><strong>Leave Policy</strong></span>
         </div>
+         
       </div>
       <div class="p-2">
         <form id="policydata">
-           <div class="form-group mb-0">
+          <!--  <div class="form-group mb-0">
             <div class="row">
               <div class="offset-1 col-sm-2 text-right">
                   <label for="exampleInputEmail1" class="pt-2">Policy Name<sup class="text-danger">*</sup></label>
@@ -83,7 +84,7 @@
                </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="form-group">
             <div class="row">
               <div class="offset-1 col-sm-2 text-right">
