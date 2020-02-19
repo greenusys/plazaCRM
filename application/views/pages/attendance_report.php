@@ -237,7 +237,7 @@
                                         $total_minutes += $total_mm;
 
                                         if ($total_hh != 0 || $total_mm != 0) {
-                                            echo $total_hh . " : " . $total_mm . " m" .' '. $hourly_leave;
+                                            echo $total_hh . " h " . $total_mm . " m" .' '. $hourly_leave;
                                         } elseif (!empty($holiday)) {
                                             echo '<span style="font-size: 12px;" class="label label-info std_p">Holiday</span>';
                                         } elseif (!empty($leave)) {
@@ -245,7 +245,7 @@
                                         } elseif (!empty ($absent)) {
                                             echo '<span style="font-size: 12px;" class="label label-danger std_p">Absent</span>';
                                         } else {
-                                            echo $total_hh . " : " . $total_mm . " m";
+                                            echo $total_hh . " h " . $total_mm . " m";
                                         }
                                         ?>
                                     </td>

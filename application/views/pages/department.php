@@ -1,14 +1,27 @@
 <div class="container bg-white  mt-5" id="ticket">
     <div class="row">
 		<div class="col-md-10">
-		   <h6 class="mt">All Department</h6>
+		   <h6 class="mt">All Department : <?=date('d-M-Y')?><div id="timestamp"><?=date('H:i:s')?></div></h6>
 		</div>
 		<div class="col-md-2">
+
 		   <a href="<?=base_url('Department/newDepartment')?>" class="text-dark"><h6 class="mt">New Department</h6></a>
 		</div>
 	</div>
+
 	<script type="text/javascript">
-		
+		$(document).ready(function() {
+		    setInterval(timestamp, 1000);
+		});
+
+		function timestamp() {
+		    $.ajax({
+		        url: "<?=base_url('Rahul/getTime')?>",
+		        success: function(data) {
+		            $('#timestamp').html(data);
+		        },
+		    });
+		}
 		$(document).on('click','#ditDept',function(){
 			var depId=$(this).attr('d-id');
 			var depName=$(this).attr('d-name');

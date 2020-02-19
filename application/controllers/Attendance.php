@@ -7,6 +7,7 @@ class Attendance extends MY_Controller {
 		parent::__construct();
 		$this->load->model('AttendanceModel','ATND');
 		$this->load->model('Global_Model');
+		
 
 	}
 	public function markMyAttendance(){
@@ -16,7 +17,7 @@ class Attendance extends MY_Controller {
 		$my_Id=$session[0]->user_id;
 		
 		// $my_time=$this->input->post('d_time');
-		$my_time=date('h:i:s');
+		$my_time=date('H:i:s');
 		$type=$this->input->post('type');
 		$ip=$this->input->ip_address();
 		$date_=date('Y-m-d');

@@ -28,33 +28,25 @@
 		}
 		public function createBackUp(){
 			$path = './application/';
-
 			$this->zip->read_dir($path);
 			$path = './assets/';
-
 			$this->zip->read_dir($path);
 			$path = './uploads/';
-
 			$this->zip->read_dir($path);
 			$path = './dB/';
-
 			$this->zip->read_dir($path);
-
-
 			// Download the file to your desktop. Name it "my_backup.zip"
 			$this->zip->download('my_project_backup.zip');
-			// $name = base_url();
-			// $data = 'I was born in an elevator...';
-
-			// $this->zip->add_data($name, $data);
-			// $zip_file = $this->zip->get_zip();
-
-			// $this->zip->clear_data();
-
-			// $name = 'photo.jpg';
-			// $this->zip->read_file("/path/to/photo.jpg"); // Read the file's contents
-
-			// $this->zip->download('myphotos.zip');
 		}
+		public function getTime(){
+			date_default_timezone_set('Asia/Kolkata');
+    		echo $timestamp = date('H:i:s');
+		}
+		public function getUserChats(){
+		$resultOne=$this->db->query("select * from ");
+		$this->db->where('tbl_users.user_id',$this->input->post('user_id'));
+		$this->db->join('tbl_account_details','tbl_account_details.user_id=tbl_users.user_id');
+		die(json_encode($this->db->get('tbl_users')->result()));
+	}
 	}
 ?>
