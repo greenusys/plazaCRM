@@ -295,5 +295,20 @@ class User extends MY_Controller {
 		}
 
 	}
+	function TaskReport(){
+		$this->load->view('layout/header');
+		$this->load->view("pages/TaskReport");
+		$this->load->view("layout/footer");
+	}
+	// function TaskReport(){
+	// 	$this->load->view('layout/header');
+	// 	$this->load->view("pages/taskreport");
+	// 	$this->load->view("layout/footer");
+	// }
+	function ProjectReport(){
+		$this->load->view('layout/header');
+		$this->load->view("pages/projectreport");
+		$this->load->view("layout/footer");
+	}
 }
 ?>
