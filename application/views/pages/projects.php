@@ -306,15 +306,33 @@ $(document).ready(function(){
                               </td>
                                 <td><?=$pr['client_name']?></td>
                                 <td><?=$pr['end_date']?></td>
-                                <td><span class="text-white bg-info sele_staus"><?=$pr['project_status']?></span>
+                                <td>
+                                <td>
+                                  <?php
+                                  if ($pr['project_status']=="completed") {
+                                    echo "<span class='text-white bg-success sele_staus'>Completed</span>";
+                                  }
+                                  elseif ($pr['project_status']=="deferred") {
+                                    echo "<span class='text-white bg-danger sele_staus'>Deferred</span>";
+                                  }
+                                  elseif ($pr['project_status']=="waiting_for_someone") {
+                                    echo "<span class='text-white bg-warning sele_staus'>Waiting For Someone</span>";
+                                  }
+                                  elseif ($pr['project_status']=="in_progress") {
+                                    echo "<span class='text-white bg-warning sele_staus'>In Progresse</span>";
+                                  }
+                                  else{
+                                    echo "<span class='text-white bg-danger sele_staus'>Not Started</span>";
+                                  }
+                                  ?>
                                   <div class="btn-group open">
                                       <button class="btn btn-xs p-0 border btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> Change <span class="caret"></span></button>
                                       <ul class="dropdown-menu animated zoomIn">
-                                        <li><a href="">Waiting For Someone</a></li>
-                                        <li><a href="">Deferred</a></li>
-                                        <li><a href="">Completed</a></li>
-                                        <li><a href="">In Progress</a></li>
-                                        <li><a href="">Not Started</a></li>
+                                        <li><a href="<?=base_url()?>Projects/update_projecter/<?=$pr['project_id']?>/waiting_for_someone">Waiting For Someone</a></li>
+                                        <li><a href="<?=base_url()?>Projects/update_projecter/<?=$pr['project_id']?>/deferred">Deferred</a></li>
+                                        <li><a href="<?=base_url()?>Projects/update_projecter/<?=$pr['project_id']?>/completed">Completed</a></li>
+                                        <li><a href="<?=base_url()?>Projects/update_projecter/<?=$pr['project_id']?>/in_progress">In Progress</a></li>
+                                        <li><a href="<?=base_url()?>Projects/update_projecter/<?=$pr['project_id']?>/Not_Started">Not Started</a></li>
                                       </ul>
                                   </div>
                                  </td>

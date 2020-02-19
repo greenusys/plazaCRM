@@ -179,6 +179,13 @@ class Projects extends MY_Controller {
 		}
 	}
 
+	public function update_projecter($id,$string){
+		$project_id=$id;
+		$project_status=$string;
+		$update=$this->Projects_Model->update_projecter($project_id,$project_status);
+		redirect('Projects');
+	}
+
 	public function delete_project(){
 		$id=$_POST['project_id'];
 		$result=$this->Projects_Model->delete_project($id);

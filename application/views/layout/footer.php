@@ -328,11 +328,11 @@ $(document).on("click",".chat_close",function(){
 })  
 function getConversation(frndId){
   $.ajax({
-    url:"<?=base_url('User/getUserByDetails')?>",
+    url:"<?=base_url('Rahul/getUserChats')?>",
       type:"post",
       data:{user_id:frnd_id},
       success:function(response){
-        
+
       }
   });
   var msgs='<li class="w-75 m-2">'+
