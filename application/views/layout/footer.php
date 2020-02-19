@@ -326,6 +326,25 @@ $(document).on("click",".chat_close",function(){
   $("#chat_list").hide();
 
 })  
+function getConversation(frndId){
+  $.ajax({
+    url:"<?=base_url('Rahul/getUserChats')?>",
+      type:"post",
+      data:{user_id:frnd_id},
+      success:function(response){
+
+      }
+  });
+  var msgs='<li class="w-75 m-2">'+
+              '<div class="  "><span class="p-1 px-2 rounded bg-primary text-white">hi</span></div>'+
+              '<div class="chat_time" >5:40 PM</span>'+
+            '</li>'+
+            '<li class="w-75 m-2 text-right float-right">'+
+              '<div class=""><span class="p-1 px-2 rounded  bg-success text-white">hi</span></div>'+
+              '<div class="chat_time" >5:40 PM</span>'+
+            '</li>';
+  return msgs;
+}
 $(document).ready(function(){
   var left =0;
   $(document).on("click",".opn_chat",function(){
@@ -341,30 +360,23 @@ $(document).ready(function(){
           var frndName=response[0].fullname;
           // console.log("Full Name : "+frndName);
           if(left < 859){
-          var div =   '<div class="chat_box" id="chat__" style="left:'+frndName+'px">'+
-                        '<div class="d-flex bg-info text-white p-2">'+
-                          '<div class=" "><h6>'+frndName+'</h6></div>'+
-                          '<div class="chat_close"><i class="fas fa-times"></i></div>'+
-                        '</div>'+
+          var div = '<div class="chat_box" id="chat__" style="left:'+frndName+'px">'+
+                      '<div class="d-flex bg-info text-white p-2">'+
+                        '<div class=" "><h6>'+frndName+'</h6></div>'+
+                        '<div class="chat_close"><i class="fas fa-times"></i></div>'+
+                      '</div>'+
+                      '<div class="">'+
                         '<div class="">'+
-                          '<div class="">'+
-                            '<ul class="m-0 list-unstyled">'+
-                            '<li class="w-75 m-2">'+
-                              '<div class="  "><span class="p-1 px-2 rounded bg-primary text-white">hi</span></div>'+
-                              '<div class="chat_time" >5:40 PM</span>'+
-                            '</li>'+
-                            '<li class="w-75 m-2 text-right float-right">'+
-                              '<div class=""><span class="p-1 px-2 rounded  bg-success text-white">hi</span></div>'+
-                              '<div class="chat_time" >5:40 PM</span>'+
-                            '</li>'+
-                          '</ul>'+
-                          '</div>'+
-                          '<div class="cht_inpt" style="">'+
-                            '<input type="text" placeholder="Enter Message" name="" class="form-control">'+
-                            '<span><i class="fab fa-telegram-plane"></i></span>'+
-                          '</div>'+
+                          '<ul class="m-0 list-unstyled">'+
+                          getConversation(response[0].user_id)
+                        '</ul>'+
                         '</div>'+
-                    '</div>';
+                        '<div class="cht_inpt" style="">'+
+                          '<input type="text" placeholder="Enter Message" name="" class="form-control">'+
+                          '<span><i class="fab fa-telegram-plane"></i></span>'+
+                        '</div>'+
+                      '</div>'+
+                  '</div>';
            $(".pop_list").append(div);
 
           left = left+286;
@@ -385,7 +397,7 @@ $(document).ready(function(){
                         '</div>'+
                         '<div class="">'+
                           '<div class="">'+
-                            
+                            getConversation(response[0].user_id)
                           '</div>'+
                           '<div class="cht_inpt" style="">'+
                             '<input type="text" placeholder="Enter Message" name="" class="form-control">'+

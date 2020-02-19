@@ -14,6 +14,7 @@ class Leavemanagement extends MY_Controller {
 		$data['fetch_users_data']=$this->leave->fetchUserForApplyLeave();
 		$data['fetch_leave_category_data']=$this->leave->fetchLeaveCategoryData();
 		$data['fetch_Myleave_data']=$this->leave->fetchMyLeaveDetails($formyleave);
+		$data['fetch_Department_data']=$this->leave->fetchDepartmentforLeave();
 // 		print_r($data['fetch_leave_data']);
 		$this->load->view('layout/header');
 		$this->load->view("pages/leave_management",$data);
@@ -25,10 +26,17 @@ class Leavemanagement extends MY_Controller {
 		
 		$data['fetch_Department_data']=$this->leave->fetchDepartmentforLeave();
 		$data['leave_category_data']=$this->leave->fetchLeaveCategoryData();
-		$data['fetch_Yearly_data']=$this->leave->fetchLeaveYearlyData();
+		// $data['fetch_Yearly_data']=$this->leave->fetchLeaveYearlyData();
 		$this->load->view('layout/header');
 		$this->load->view("pages/leave_policy",$data);
 		$this->load->view("layout/footer");	
+	}
+	public function Fetchtotalleave()
+	{
+		$dept_id=$this->input->post('dept_id');
+		$data=$this->leave->fetchtotalLeaveById($dept_id);
+		die(json_encode(array('code'=>1,'data'=>$data)));
+
 	}
 	public function fetchDesignationById()
 	{
@@ -106,6 +114,13 @@ class Leavemanagement extends MY_Controller {
 		die(json_encode($results));
 
 	}
+	public function checkAvailableleave()
+	{
+		$dept_id=$this->input->post('dept_id');
+		$data=$this->leave->checkAvailableleave($dept_id);
+		die(json_encode(array('code'=>1,'data'=>$data)));
+		
+	}
 	public function addLeavePolicyData()
 	{ 	  
 		$data = array(
@@ -129,12 +144,14 @@ class Leavemanagement extends MY_Controller {
 	{
 		$leave_category=$this->input->post('leave_category');
 		$leave_quota=$this->input->post('leave_quota');
-		$data = array(
+		$dept_id=$this->input->post('dept_id');	
+			$data = array(
         	'leave_category'=>$leave_category,
-        	'leave_quota'=>$leave_quota
+        	'leave_quota'=>$leave_quota,
+        	'leave_cat_dept_id'=>$dept_id
         );
    
-        $result=$this->leave->addData($data);
+        $result=$this->leave->addleaveCategoryData($data);
 		if($result){
 			die(json_encode(array('status' =>'1' ,'msg'=>'Leave Category added Successfully')));
 		}
