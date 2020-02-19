@@ -108,7 +108,7 @@
     border-right-color: transparent;
     /*line-height: 1.42857143;*/
     color: white;
-    background: #f90;
+    background: #6777ef;
     border: none;
     text-decoration: none;
     border-radius: 0px;
@@ -123,7 +123,7 @@
     border-right-color: transparent;
    line-height: 1.42857143;
  color: white;
-    background: #f90;
+    background: #6777ef;
     border: none;
     border-radius: 0px;
     text-decoration: none;
@@ -145,7 +145,7 @@
     border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
   
-  border-left: 10px solid #f90;
+  border-left: 10px solid #6777ef;
     display: block;
     width: 0;}
 </style>
@@ -210,7 +210,7 @@
                   <div class="line mt-2"></div>
                   <div class="row pd-4 mt-4">
                       <div class="offset-1 col-sm-9">
-                          <form>
+                          <form method="post" action="<?=base_url('Backupdatabase/')?>">
                         <div class="form-group">
                           <div class="row">
                             <div class="col-sm-3">
@@ -258,15 +258,15 @@
                             </div>
                             <div class="col-sm-9">
                               <div class="input-group">
-                                                  <select name="client_id" class="form-control" id="customer_group">
-                                                      <option value="0">Selected Country</option>
-                                                      <option value="5" >France </option>
-                                                      <option value="4" >Other Countries</option>
-                                                      <option value="3" >Afganistan</option>
-                                                      <option value="2" >Aringland Islands</option>
-                                                      <option value="1" >Albania</option>
-                                                  </select>
-                                            </div>
+                                    <select name="client_id" class="form-control" id="customer_group">
+                                        <option value="0">Selected Country</option>
+                                        <option value="5" >France </option>
+                                        <option value="4" >Other Countries</option>
+                                        <option value="3" >Afganistan</option>
+                                        <option value="2" >Aringland Islands</option>
+                                        <option value="1" >Albania</option>
+                                    </select>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -330,7 +330,7 @@
                             </div>
                           </div>
                         </div>
-                          </form>
+                      </form>
                     </div>
                   </div>
                   <div class="row mt-3">
