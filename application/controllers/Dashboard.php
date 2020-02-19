@@ -20,12 +20,13 @@ class Dashboard extends MY_Controller {
 		$data['in_progress_task']=$this->Demo->get_in_progress_task();
 		$data['over_due_project']=$this->Demo->get_over_due_project();
 		$data['over_due_task']=$this->Demo->get_over_due_task();
+		// $data['over_due_task']=$this->Demo->get_online_user();
 		$this->load->view('layout/header');
 		$this->load->view('pages/index',$data);
 		$this->load->view('layout/footer');
 	}
 	public function getInProgressProject(){
-			die(json_encode($this->Demo->get_in_progress_project()));
+		die(json_encode($this->Demo->get_in_progress_project()));
 	}
 	public function getOverDueProject(){
 		die(json_encode($this->Demo->get_over_due_project()));
@@ -35,6 +36,9 @@ class Dashboard extends MY_Controller {
 	}
 	public function getOverDueTask(){
 		die(json_encode($this->Demo->get_over_due_task()));
+	}
+	public function fetchOnlineUser(){
+		die(json_encode($this->Demo->get_online_user()));
 	}
 }
 ?>

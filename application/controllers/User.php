@@ -310,5 +310,10 @@ class User extends MY_Controller {
 		$this->load->view("pages/projectreport");
 		$this->load->view("layout/footer");
 	}
+	public function getUserByDetails(){
+		$this->db->where('tbl_users.user_id',$this->input->post('user_id'));
+		$this->db->join('tbl_account_details','tbl_account_details.user_id=tbl_users.user_id');
+		die(json_encode($this->db->get('tbl_users')->result()));
+	}
 }
 ?>
