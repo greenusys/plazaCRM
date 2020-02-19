@@ -68,10 +68,47 @@ class Leavemanagement extends MY_Controller {
 			die(json_encode(array('status' =>'2' ,'msg'=>'already exist')));
 		}
 	}
+	public function Edit_Yearlyleave($id)
+	{
+	    $data['fetch_leave_yearly']=$this->leave->EditYearlyleave($id);
+	   $data['fetch_Department_data']=$this->leave->fetchDepartmentforLeave();
+	    // print_r( $data['fetch_leave_yearly']);
+    	$this->load->view('layout/header');
+		$this->load->view("pages/edityearly_leave",$data);
+		$this->load->view("layout/footer");	
+	
+	}
+	public function updateYearlyleave()
+	{
+		$leaveyearid=$this->input->post('year_leaveid');
+		$dept=$this->input->post('dept_id');
+		$total_leave=$this->input->post('totalleave'); 	 
+		$data = array(
+        	'department_id'=>$dept,
+        	'total_Yearlyleave'=>$total_leave
+        );
+   
+        $result=$this->leave->UpdateYearlyLeaveData($data,$leaveyearid);
+		if($result==1){
+			die(json_encode(array('status' =>'1' ,'msg'=>'Update Successfully')));
+		}
+		elseif($result==0){
+			die(json_encode(array('status' =>'0' ,'msg'=>'Error')));
+		}
+		else{
+			die(json_encode(array('status' =>'2' ,'msg'=>'Try Again')));
+		}
+	}
+	public function Deleteyearlyleave()
+	{
+		$data=array('year_leaveid'=>$this->input->post('lyear_id'));
+		$results=$this->leave->Deleteyearlyleave($data);
+		die(json_encode($results));
+
+	}
 	public function addLeavePolicyData()
 	{ 	  
 		$data = array(
-        	'lpolicy_name'=>$this->input->post('lpolicy_name'),
 			'lpolicy_department_id'=>$this->input->post('lpolicy_department_id'),
 			'lpolicy_designation_id'=>$this->input->post('lpolicy_designation_id'),
 			'lpolicy_category_id'=>$this->input->post('lpolicy_category_id'),
