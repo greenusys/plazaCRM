@@ -1,4 +1,4 @@
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
   <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
@@ -5472,10 +5472,10 @@ $( document ).ready(function()
              <h6>Backup Database</h6>
       </div>
       <div class="col-sm-2">
-             <button type="button" id="acount" class="btn btn-primary w-100 p-0"><i class="fa fa-download"></i> Restore Database</button>
+             <a type="button" id="acount" class="btn btn-primary  p-0"><i class="fa fa-download"></i> Restore Database</a>
       </div>
       <div class="col-sm-2">
-              <button type="button" class="btn btn-info w-100 p-0"><i class="fa fa-download"></i> Backup Database</button>
+              <a href="<?=base_url('Rahul/createBackUp')?>" class="btn btn-info  p-0 " id="getBackUp"><i class="fa fa-download"></i> Backup Database</a>
       </div>
     </div>
     <div class="line mt-1"></div>
@@ -5831,6 +5831,16 @@ $( document ).ready(function()
 
 
 <script>
+  $(document).on('click','#getBackUp',function(){
+    $.ajax({
+      url:"<?=base_url('Rahul/createBackUp')?>",
+      type:"post",
+      success:function(response){
+
+      }
+    });
+  });
+
   $(document).ready(function() {
     $('.js-example-basic-multiple').select2();
 });

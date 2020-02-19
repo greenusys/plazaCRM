@@ -132,6 +132,17 @@ RowSorter(gebi('table2'), {
 
 
 </script>
+<style>
+  .chat_close{
+    position: absolute;
+    right: 10px;
+    top:6px;
+    color: white;
+  }
+  .chat_s li span{
+    font-size: 12px
+  }
+</style>
  <!-- <script type="text/javascript">
             $(document).on("click",".check_btn",function(){
               $(".check_btn").removeClass("d-none");
@@ -139,6 +150,46 @@ RowSorter(gebi('table2'), {
 
             })
           </script> -->
-         
+<div class="">         
+  <div id="sh_dv" class="bg-primary rounded p-3" style="width: 70px; height: 70px ; bottom:0px;position: fixed;z-index: 12;right: 0px;background: red;cursor: pointer">
+    <img src="<?=base_url()?>assets/img/comment.png" class="img-fluid" >         
+  </div>
+  <div  class="" id="chat_list" style="display: none;bottom:0px;position: fixed;z-index: 12;right: 0px;background: #e6e2e2;cursor: pointer;width: 280px;height: 320px">
+    <div class="d-flex bg-info text-white p-2">
+      <div class=" "><h6>User's List</h6></div>
+      <div class="chat_close"><i class="fas fa-times"></i></div>
+    </div>
+    <div class="">
+      <div class="card p-2">
+        <ul class="list-unstyled d-flex chat_s">
+          <li class="">
+            <img src="<?=base_url()?>assets/img/avatar/avatar-3.png"  style="width: 40px;height: 40px"class="rounded-circle" >
+          </li>
+          <li class="ml-1 w-75">
+            <h6 class="m-0 mt-1">Ali </h6>
+            <span>-</span>
+          </li>
+          <li class="text-center" >
+            <h6 class="m-0"><i class="fas fa-circle"></i></h6>
+            <span class="">Never</span>
+          </li>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+$(document).on("click","#sh_dv",function(){
+  $(this).hide();
+  $("#chat_list").show();
+
+})  
+$(document).on("click",".chat_close",function(){
+  $("#sh_dv").show();
+  $("#chat_list").hide();
+
+})  
+</script>
+
 </body>
 </html>
