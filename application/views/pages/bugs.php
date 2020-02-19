@@ -1,26 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Project form</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <link href="css/style.css" rel="stylesheet">
-  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
-  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-  <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-</head> -->
 <style>
 	.tabcontent 
 	{
@@ -68,9 +45,12 @@
 					<th>Action</th>
 				</thead>
 				<tbody>
+					<?php
+					foreach ($all_bugs_info as $buggy) {
+					?>
 					<tr>
-						<td><a href="#">Edit mode not displaying all the item</a></td>
-						<td>07.30.2019 10:30</td>
+						<td><a href="#"><?=$buggy->bug_title?></a></td>
+						<td><?=$buggy->created_time?></td>
 						<td>
 							<div class="row">
 								<div class="col-sm-4">
@@ -98,6 +78,7 @@
 						</td>
 				
 					</tr>
+				<?php } ?>
 				</tbody>
 				<!--<tfoot>-->
 				<!--   <tr>-->
@@ -165,14 +146,14 @@
 			<div id="new" class="tabcontent">
 			    <div class="row mt-3">
 				    <div class="col-md-12">
-				    	<form>
+				    	<form id="add_bug">
 					    	<div class="form-group">
 								<div class="row">
 									<div class="offset-2 col-sm-2">
 										<label for="exampleInputEmail1" class="ml-5 label-style" >Issue # <span class="text-danger">*</span></label>
 									</div>
 									<div class="col-sm-3">
-										<input type="text" class="form-control" id="designation" aria-describedby="emailHelp" placeholder="ITOWEK8">
+										<input type="text" name="issue_no" required="" class="form-control" id="designation" aria-describedby="emailHelp">
 									</div>
 								</div>
 							</div>
@@ -182,7 +163,7 @@
 										<label for="exampleInputEmail1" class="ml-5 label-style">Bug Title  <span class="text-danger">*</span></label>
 									</div>
 									<div class="col-sm-5">
-										<input type="text" class="form-control" id="designation" aria-describedby="emailHelp" >
+										<input type="text" class="form-control" required="" name="bug_title" id="designation" aria-describedby="emailHelp" >
 									</div>
 								</div>
 							</div>
@@ -192,25 +173,39 @@
 										<label for="exampleInputEmail1" class="ml-5 label-style">Related To </label>
 									</div>
 									<div class="col-sm-5">
-										<select class=" form-control" name="department">
-											<option value="none">None</option>
+										<select class=" form-control" required="" id="related_to">
+											<option value="" selected="" disabled="">None</option>
 											<option value="project">Projects</option>
 											<option value="oppor">Opportunities</option>
 										</select>
 									</div>
 								</div>
 							</div>
-
+							<div class="project_opportunity">
+								
+							</div>
 							<div class="form-group">
 								<div class="row">
 									<div class="offset-2 col-sm-2">
 										<label for="exampleInputEmail1" class="ml-5 label-style">Reporter  <span class="text-danger">*</span></label>
 									</div>
 									<div class="col-sm-5">
-										<select class=" form-control" name="department">
-											<option value="admin">Adminko(admin)</option>
-											<option value="admin1">ravish beg(staff)</option>
-											<option value="admin2">rahul Kumar(staff)</option>
+										<select class=" form-control" name="reporter">
+											<?php
+											foreach ($admin_staff as $reporter) {
+											?>
+											<option value="<?=$reporter->user_id?>"><?php
+											if ($reporter->role_id=='1') {
+												$namer="(Admin)";
+											}elseif ($reporter->role_id=='2') {
+												$namer="(Client)";
+											}
+											else{
+												$namer="(Staff)";
+											}
+											echo $reporter->full_name.$namer;
+											?></option>
+										<?php } ?>
 										</select>
 									</div>
 								</div>
@@ -222,7 +217,7 @@
 										<label for="exampleInputEmail1" class="ml-5 label-style">Priority  <span class="text-danger">*</span></label>
 									</div>
 									<div class="col-sm-5">
-										<select class=" form-control" name="department">
+										<select class=" form-control" name="priority">
 											<option value="high">High</option>
 											<option value="medium">Medium</option>
 											<option value="low">Low</option>
@@ -237,7 +232,7 @@
 										<label for="exampleInputEmail1" class="ml-5 label-style">Severity  <span class="text-danger">*</span></label>
 									</div>
 									<div class="col-sm-5">
-										<select class=" form-control" name="department">
+										<select class=" form-control" name="severity">
 											<option value="minor">Minor</option>
 											<option value="major">Major</option>
 											<option value="show">Show Stopper</option>
@@ -253,7 +248,7 @@
 										<label for="exampleInputEmail1" class=" label-style">Description</label>
 									</div>
 									<div class="col-sm-7">
-										<textarea name="remarks" id="reset1" cols="70" rows="1">
+										<textarea id="reset1" cols="70" rows="1">
 						  							
 										</textarea>
 										<script>
@@ -268,7 +263,7 @@
 										<label for="exampleInputEmail1" class=" label-style">Reproducibility</label>
 									</div>
 									<div class="col-sm-7">
-										<textarea name="remarks" id="reproduct" cols="70" rows="1">
+										<textarea id="reproduct" cols="70" rows="1">
 						  							
 										</textarea>
 										<script>
@@ -283,7 +278,7 @@
 										<label for="exampleInputEmail1" class=" label-style">Bug Status  <span class="text-danger">*</span></label>
 									</div>
 									<div class="col-sm-5">
-										<select class=" form-control" name="department">
+										<select class=" form-control" name="bug_status">
 											<option value="unconform">Unconfirmed</option>
 											<option value="conform">Confirmed</option>
 											<option value="in">In Progress</option>
@@ -293,59 +288,60 @@
 									</div>
 								</div>
 							</div>
-							
-							<div class="form-group">
-								<div class="row">
-									<div class="offset-2 col-sm-2">
-										<label for="exampleInputEmail1" class=" label-style">Assigned To <span class="text-danger">*</span></label>
-									</div>
-									<div class="col-sm-7">
-									
-										<div class="checkbox c-radio needsclick ">
-											<input type="radio" name="gender" value="male" class="btn1"> Everyone<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
-										</div>
-										<div class="checkbox c-radio needsclick">
-											<input type="radio" name="gender" value="male" id="chkPassport" onclick="ShowHideDiv(this)" > Customise Permission<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
-										</div>
-									</div>
-								</div>
-						    </div>
-							<div class="form-group"  id="dvPassport" style="display: none">
-						        <div class="row">
-									<div class="offset-2 col-sm-2">
-										<label for="exampleInputEmail1" class="label-style">select Users<span class="text-danger">*</span></label>
-									</div>
-									<div class="col-sm-8">
-										 <input type="checkbox" name="vehicle1" value="Bike"  id="chkPassport1" onclick="ShowHideDiv(this)"> admin <strong class="badge btn-danger">Admin</strong>
-										 <br>
-										 <div class="row"  id="dvPassport1" style="display: none">
-										    <div class="col-md-3">
-											 <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> View
-											</div>
-											<div class="col-md-3">
-											     <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Edit
-											</div>
-											<div class="col-md-3">
-											    <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Delete
-											</div>
-										 </div>
-										 
-		                                 <input type="checkbox" name="vehicle2" value="Car"  id="chkPassport2" onclick="ShowHideDiv(this)" > adminko <strong class="badge btn-danger">Admin</strong>
-										 <br>
-										 <div class="row"  id="dvPassport2" style="display: none">
-										    <div class="col-md-3">
-											 <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> View
-											</div>
-											<div class="col-md-3">
-											     <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Edit
-											</div>
-											<div class="col-md-3">
-											    <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Delete
-											</div>
-										 </div>
-									</div>
-							    </div>
-						    </div>
+						              <div class="form-group">
+              <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">Assigned To <span class="text-danger">*</span></label>
+              </div>
+              <div class="col-sm-9">
+                <div class="checkbox c-radio needsclick">
+                  <input type="radio" value="" id="everyone" class="btn1"> Everyone<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
+                </div>
+                <div class="checkbox c-radio needsclick">
+                  <input type="radio" value="" class="customize_permission"> Customise Permission<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group dvPassport"  style="display: none">
+              <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">Select Users<span class="text-danger">*</span></label>
+              </div>
+              <div class="col-sm-9">
+                 <?php
+                 $count=1;
+                 foreach ($users as $user) {
+                 ?>
+
+                   <input type="checkbox" value="<?=$user['user_id']?>" class="chkPassport admind" > <?=$user['username']?> 
+                   <?php
+                   if ($user['role_id']=='1') {
+                   echo '<strong class="badge btn-danger">Admin</strong>';
+                   }
+                   else{
+                   	echo '<strong class="badge btn-primary">Staff</strong>';
+                   }
+                   ?>
+                 <br>
+                 <div class="row dvPassport"  id="dvPassport<?=$count?>" style="display: none">
+                    <div class="col-md-3">
+                   <input type="checkbox" class="data" value="View" > View
+                  </div>
+                  <div class="col-md-3">
+                       <input type="checkbox" class="data" value="Edit" > Edit
+                  </div>
+                  <div class="col-md-3">
+                      <input type="checkbox" class="data" value="Delete"> Delete
+                  </div>
+                 </div>
+                 <?php
+                 $count++;
+                  }
+                 ?>
+              </div>
+            </div>
+          </div>
 						    <div class="row mt-5">
 				               <div class="offset-4 col-sm-4">
 				                 <button type="submit" class="btn bg-color m-auto text-center w-50">Save</button>
@@ -357,7 +353,135 @@
 			</div>
 		</div> 
 	</div>
-	
+<script type="text/javascript">
+$(document).ready(function(){
+  $(".btn1").click(function(){
+    $(".dvPassport").hide();
+  });
+ 
+});
+
+    $(function () {
+        $(".customize_permission").click(function () {
+            if ($(this).is(":checked")) {
+                $(".dvPassport").show();
+            } else {
+                $(".dvPassport").hide();
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+        $("#add_bug").submit(function(e){
+         e.preventDefault();
+         var ar=[];
+           var count=1;
+           var obj = {};
+            $('.admind').each(function(){
+              var pass_id="#dvPassport"+count;
+              if($(this).is(':checked')){
+               var user_id=$(this).val();
+               var data=$(pass_id).find('.data');
+               data.each(function(){
+                if($(this).is(':checked')){
+                  ar.push($(this).val());
+                }
+               })
+               obj[user_id] = ar;
+               ar=[];
+               }
+               count++;
+            })
+         var new_ar=[];
+          $('.song').each(function(){
+              if($(this).is(':checked'))
+              {
+                  new_ar.push($(this).val()); 
+              }        
+          });
+         var project_settings=JSON.stringify(new_ar);
+         var permission=JSON.stringify(obj);
+         if(Object.keys(permission).length==2){
+          permission="all";
+         }
+         if($('#everyone').is(':checked')) { permission="all"; }
+         var formData= new FormData($(this)[0]);
+         formData.append('permission',permission);
+         formData.append('reproducibility', CKEDITOR.instances.reproduct.getData());
+         formData.append('bug_description', CKEDITOR.instances.reset1.getData());
+         $.ajax({
+             url:"<?=base_url()?>Bugs/add_bug",
+              type:"post",
+              data:formData,
+              contentType:false,
+              processData:false,
+              cache:false,
+             success:function(response)
+             {
+             	//console.log(response);
+                //var response=JSON.parse(response);
+               if(response==1){
+                 swal("Bug Added Successfully!", "Created", "success");
+                 location.reload();
+                 //window.location.href='<?=base_url()?>Home';
+               }
+               else{
+                swal('OOPS', "Something Went Wrong", "error");
+              }
+             }
+         });
+    });
+</script>
+
+	<script type="text/javascript">
+	$(document).on('change','#related_to',function(){
+		var related_to=$(this).val();
+		if (related_to=="project") {
+			var name="project_id";
+			var label="Select Project";
+		}
+		else{
+			var name="opportunities_id";
+			var label="Select Opportunity";
+		}
+		$.ajax({
+			type:'POST',
+			data:{
+				related_to:related_to,
+			},
+			url:'<?=base_url()?>Bugs/fetch_bugs_projects_oppor',
+			success:function(response){
+				var response=JSON.parse(response);
+				//console.log(response.data['1'].project_id);
+				var html="";
+				html+='<div class="form-group">';
+				html+=	'<div class="row">';
+				html+=			'<div class="offset-2 col-sm-2">';
+				html+=				'<label for="exampleInputEmail1" class="ml-5 label-style">'+label+'</label>';
+				html+=			'</div>';
+				html+=			'<div class="col-sm-5">';
+				html+=				'<select class=" form-control" name="'+name+'">';
+				html+=					'<option value="" selected="" disabled="">'+label+'</option>';
+				if(response.status==1){
+						for(var i=0;i<response.data.length;i++){
+				html+=			'<option value="'+response.data[i].project_id+'">'+response.data[i].project_name+'</option>';
+								}
+							}
+							else{
+						for(var i=0;i<response.data.length;i++){
+				html+=			'<option value="'+response.data[i].opportunities_id+'">'+response.data[i].opportunity_name+'</option>';
+								}
+							}
+				html+=		'</select>';
+				html+=			'</div>';
+				html+=		'</div>';
+				html+=	'</div>';
+				$('.project_opportunity').empty();
+				$('.project_opportunity').append(html);
+			}
+		})
+	})
+</script>
 	
     <script>
 		function openCity(evt, cityName) {
