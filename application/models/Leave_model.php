@@ -177,6 +177,46 @@ class Leave_Model extends CI_Model
 				return 0;
 		    }
 	}
+
+	public function Deleteyearlyleave($data)
+	{
+		$this->db->where($data);
+		 $results=$this->db->delete('tbl_leave_yearly');
+		 if($results)
+			{
+				return 1;
+			}
+	
+			else
+			{
+				return 0;
+		    }
+	}
+	public function EditYearlyleave($id)
+	{
+		$this->db->select('*')
+         ->from('tbl_leave_yearly')
+         ->join('tbl_departments', 'tbl_departments.departments_id = tbl_leave_yearly.department_id')
+         ->where('tbl_leave_yearly.year_leaveid',$id);
+		return $this->db->get()->result();
+	    // return $this->db->get('tbl_leave_yearly')->result();
+	    
+	}
+	public function UpdateYearlyLeaveData($data,$leaveyearid)
+	{
+		$this->db->where('year_leaveid',$leaveyearid);
+		 $results=$this->db->update('tbl_leave_yearly',$data);
+		
+			if($results)
+			{
+				return 1;
+			}
+	
+			else
+			{
+				return 0;
+		    }
+	}
 }
 
 ?>

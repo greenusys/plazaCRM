@@ -155,6 +155,11 @@ class Global_Model extends MY_Model
         return $total;
     }
 
+    public function add_holiday($data){
+       $this->db->insert('tbl_holiday', $data);
+       return  true;
+    }
+
     public function get_attendance_info($id)
     {
 

@@ -6,6 +6,7 @@
           
             <div class="col-md-12">
                 <div class="p-2">
+                  
         <form  id="yearlyleave">
           <div class="form-group">
             <div class="row">
@@ -60,6 +61,7 @@
                                 <th>Department </th>
                                 <th>Yearly Leave</th>
                                 <th>Added On</th>
+                                  <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -75,6 +77,10 @@
                                       <td><?=$FYD->deptname?></td>
                                       <td><?=$FYD->total_Yearlyleave?></td>
                                    <td><?=$FYD->added_on?></td>
+                                   <td>
+                                    <a href="<?=base_url('Leavemanagement/Edit_Yearlyleave/').$FYD->year_leaveid?>" class="bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                    <a href="javascript:void(0)" lyear_id="<?=$FYD->year_leaveid?>" class="deletetleaveyearly"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+                                   </td>
                                   </tr>
                               <?php
                               $i++;
@@ -175,6 +181,40 @@
   });
 </script>
 
+<script type="text/javascript">
+        $(document).ready(function(){
+          $('.deletetleaveyearly').on('click',function(){ 
+             var lyear_id=$(this).attr("lyear_id");
+             // alert(owner_id);
+           if(confirm("Are you Sure want to delete this record?") ==true)
+            {       
+            // alert(owner_id);         
+                $.ajax({
+                  url:"<?=base_url('Leavemanagement/Deleteyearlyleave')?>",
+                  type:"post",
+                  data:{lyear_id:lyear_id},
+                  success:function(response)
+                  {   
+                  response=JSON.parse(response);             
+                     if (response==1)
+                      {
+                    swal("Policy", "Deleted", "success")
+                    location.reload();
+                    
+                       }
+                  }
+                 })                           
+             // userPreference = "Data Delete successfully!";
+
+             }
+             else 
+             {
+              userPreference = "Save Canceled!";
+              }
+              
+          })
+        })  
+      </script>
         
         <script>
       
@@ -198,15 +238,15 @@
                      console.log(obj.status);
                      if(obj.status==0)
                      {
-                      alert(obj.msg);
+                      swal("Policy", "Error", "error")
                      }
                      if(obj.status==1)
                      {
-                      alert(obj.msg);
+                       swal("Policy", "Added", "success")
                      }
                      if(obj.status==2)
                      {
-                      alert(obj.msg);
+                      swal("Policy", "Try Again", "error")
                      }
                      location.reload();
                     }

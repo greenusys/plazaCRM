@@ -9,6 +9,7 @@ class Dashboard extends MY_Controller {
 		$this->load->model('Tasks_Model');
 		$this->load->model('Notification_model');
 		$this->load->model('User_model');
+		$this->load->model('Rahul_Model','Demo');
 	}
 
 	public function index()
@@ -18,6 +19,18 @@ class Dashboard extends MY_Controller {
 		$this->load->view('layout/header');
 		$this->load->view('pages/index',$data);
 		$this->load->view('layout/footer');
+	}
+	public function getInProgressProject(){
+			die(json_encode($this->Demo->get_in_progress_project()));
+	}
+	public function getOverDueProject(){
+		die(json_encode($this->Demo->get_over_due_project()));
+	}
+	public function getInProgressTask(){
+		die(json_encode($this->Demo->get_in_progress_task()));
+	}
+	public function getOverDueTask(){
+		die(json_encode($this->Demo->get_over_due_task()));
 	}
 }
 ?>
