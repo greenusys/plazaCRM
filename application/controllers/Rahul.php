@@ -8,6 +8,7 @@
 		function __construct()
 		{
 			parent::__construct();
+			$this->load->library('zip');
 			$this->load->model('Rahul_Model','Demo');
 		}
 		public function getInProgressProject(){
@@ -24,6 +25,22 @@
 		}
 		public function fetchOnlineUser(){
 			die(json_encode($this->Demo->get_online_user()));
+		}
+		public function createBackUp(){
+			$path = './application/';
+			$this->zip->read_dir($path);
+			$path = './assets/';
+			$this->zip->read_dir($path);
+			$path = './uploads/';
+			$this->zip->read_dir($path);
+			$path = './dB/';
+			$this->zip->read_dir($path);
+			// Download the file to your desktop. Name it "my_backup.zip"
+			$this->zip->download('my_project_backup.zip');
+		}
+		public function getTime(){
+			date_default_timezone_set('Asia/Kolkata');
+    		echo $timestamp = date('H:i:s');
 		}
 	}
 ?>

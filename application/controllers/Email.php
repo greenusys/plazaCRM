@@ -22,16 +22,17 @@
 
 			$config = array(
 			    'protocol' => 'smtp', // 'mail', 'sendmail', or 'smtp'
-			    'smtp_host' => 'smtp.gmail.com',
-			    'smtp_port' => 465,
+			    'smtp_host' => 'ssl://smtp.gmail.com',
+			    'smtp_port' => '465',
 			    'smtp_user' => $this->mail,
 			    'smtp_pass' => $this->pwd,
-			    'smtp_crypto' => 'tls', //can be 'ssl' or 'tls' for example
+			    'smtp_crypto' => 'ssl', //can be 'ssl' or 'tls' for example
 			    'mailtype' => 'html', //plaintext 'text' mails or 'html'
-			    'smtp_timeout' => '1000', //in seconds
+			    'smtp_timeout' => '4', //in seconds
 			    'charset' => 'iso-8859-1',
 			    'wordwrap' => TRUE
 			);
+
 			$this->email->initialize($config);
 			// $this->load->library('email', $config);
 			// $this->email->set_newline("\r\n");

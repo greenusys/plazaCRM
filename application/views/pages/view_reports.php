@@ -42,7 +42,7 @@
                                         <div class="">
                                           <a href="javascript:void(0)" rpt_id = "<?=$report->rpt_id?>"class="sele_staus bg-info p-1 text-white view_rpts"><span><i class="far fa-edit"></i></span></a>
                                           <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                           <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
+                                          
                                         </div>
 
                                     </td>

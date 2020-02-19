@@ -97,4 +97,8 @@ class Transactions_model extends MY_Model
     {
         return $this->db->query("select tbl_transactions.*,tbl_accounts.*,tbl_accounts.account_name as accountholdername,tbl_expense_category.*,tbl_client.*,tbl_payment_methods.*,tbl_transactions.account_id as account_name,tbl_transactions.category_id as expense_category,tbl_transactions.name as transname from tbl_transactions join tbl_accounts on tbl_accounts.account_id=tbl_transactions.account_id  join  tbl_expense_category on tbl_expense_category.expense_category_id=tbl_transactions.category_id join tbl_client on tbl_client.client_id=tbl_transactions.paid_by join tbl_payment_methods on tbl_payment_methods.payment_methods_id=tbl_transactions.payment_methods_id where tbl_transactions.type='Expense'")->result();
     }
+    public function fetchAllDepositTransactionData()
+    {
+        return $this->db->query("select  tbl_transactions.*,tbl_accounts.*,tbl_accounts.account_name as accountholdername,tbl_expense_category.*,tbl_client.*,tbl_client.name as client_name,tbl_payment_methods.*,tbl_transactions.account_id as account_name,tbl_transactions.category_id as expense_category,tbl_transactions.name as depo_name from tbl_transactions join tbl_accounts on tbl_accounts.account_id=tbl_transactions.account_id  join  tbl_expense_category on tbl_expense_category.expense_category_id=tbl_transactions.category_id join tbl_client on tbl_client.client_id=tbl_transactions.paid_by join tbl_payment_methods on tbl_payment_methods.payment_methods_id=tbl_transactions.payment_methods_id where tbl_transactions.type='Income'")->result();
+    }
 }
