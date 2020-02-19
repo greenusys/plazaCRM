@@ -114,6 +114,17 @@ class Leave_Model extends CI_Model
 			return 2;
 	    }
 	}
+	public function addleaveCategoryData($data)
+	{
+	  
+		if($this->db->insert('tbl_leave_category',$data))
+		{
+			return 1;
+			
+		}else{
+			return 0;
+		}
+	}
 	public function addLeavePolicyData($data)
 	{
 	  

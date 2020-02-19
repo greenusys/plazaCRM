@@ -417,15 +417,15 @@
          console.log(obj.status);
          if(obj.status==0)
          {
-          alert(obj.msg);
+         swal("Policy", "Already Exist", "error")
          }
          if(obj.status==1)
          {
-          alert(obj.msg);
+          swal("Policy", "Added", "success")
          }
          if(obj.status==2)
          {
-          alert(obj.msg);
+          swal("Policy", "Try Again", "error")
          }
          location.reload();
         }

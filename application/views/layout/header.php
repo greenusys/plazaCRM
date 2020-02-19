@@ -126,7 +126,22 @@ $role_id=$session[0]->role_id;
    top: -16px;
    left: -10px;
 }
+
+.text-gray{
+  color: gray;
+}
+.bg-gray{
+background: #f3f3f3;
+}
+
+
   </style>
+<style type="text/css">
+  
+
+
+
+</style>
 </head>
 
 <body onload="startTime()">

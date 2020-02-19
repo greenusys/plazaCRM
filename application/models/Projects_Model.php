@@ -47,6 +47,16 @@ class Projects_Model extends CI_Model{
 		} 
 	}
 
+	public function update_projecter($task_id,$task_status){
+			$this->db->where('project_id', $task_id);
+    		if($this->db->update('tbl_project',array('project_status'=>$task_status))){
+    			return true;
+    		}
+    		else{
+    			return false;
+    		}
+	}
+
 	public function upload_project($project_id,$file_list){
 			$this->db->where('project_id', $project_id);
     		if($this->db->update('tbl_project',array('uploads'=>$file_list))){
