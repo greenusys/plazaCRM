@@ -366,6 +366,13 @@ $role_id=$session[0]->role_id;
                   <li><a class="nav-link" href="<?=base_url('Recruitment/jobsApplications')?>"><span><i class="far fa-compass"></i></span>Jobs Application</a></li>
                 </ul>
             </li>
+						<li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-bug"></i> <span>Bugs <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></span></a>
+                <ul class="dropdown-menu">
+                  <li><a class="nav-link" href="<?=base_url('Bugs/')?>"><span> <i class="fas fa-bug"></i></span>Bugs<i class="fa fa-check" aria-hidden="true" style="color:orange"></i> </a></li>
+                  <!-- <li><a class="nav-link" href="<?=base_url('B/jobsApplications')?>"><span><i class="far fa-compass"></i></span>Jobs Application</a></li> -->
+                </ul>
+            </li>
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fab fa-dribbble"></i> <span>Transaction</span></a>
                 <ul class="dropdown-menu">
