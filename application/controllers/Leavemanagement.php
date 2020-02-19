@@ -25,10 +25,17 @@ class Leavemanagement extends MY_Controller {
 		
 		$data['fetch_Department_data']=$this->leave->fetchDepartmentforLeave();
 		$data['leave_category_data']=$this->leave->fetchLeaveCategoryData();
-		$data['fetch_Yearly_data']=$this->leave->fetchLeaveYearlyData();
+		// $data['fetch_Yearly_data']=$this->leave->fetchLeaveYearlyData();
 		$this->load->view('layout/header');
 		$this->load->view("pages/leave_policy",$data);
 		$this->load->view("layout/footer");	
+	}
+	public function Fetchtotalleave()
+	{
+		$dept_id=$this->input->post('dept_id');
+		$data=$this->leave->fetchtotalLeaveById($dept_id);
+		die(json_encode(array('code'=>1,'data'=>$data)));
+
 	}
 	public function fetchDesignationById()
 	{
@@ -105,6 +112,13 @@ class Leavemanagement extends MY_Controller {
 		$results=$this->leave->Deleteyearlyleave($data);
 		die(json_encode($results));
 
+	}
+	public function checkAvailableleave()
+	{
+		$dept_id=$this->input->post('dept_id');
+		$data=$this->leave->checkAvailableleave($dept_id);
+		die(json_encode(array('code'=>1,'data'=>$data)));
+		
 	}
 	public function addLeavePolicyData()
 	{ 	  
