@@ -7,6 +7,7 @@ class Attendance extends MY_Controller {
 		parent::__construct();
 		$this->load->model('AttendanceModel','ATND');
 		$this->load->model('Global_Model');
+		
 
 	}
 	public function markMyAttendance(){
