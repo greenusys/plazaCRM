@@ -138,77 +138,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                           <?php
-                              foreach ($over_due_project as $pr) {
-                              ?>
-                                <tr>
-                                  <td>  
-                                    <?=$pr->project_name?>
-                                    <div class="progress">
-                                      <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:<?=$pr->progress?>">
-                                        <span class="sr-only">70% Complete</span>
-                                      </div>
-                                    </div>
-                                  </td>
-                                    <td><?=$pr->client_name?></td>
-                                    <td><?=$pr->end_date?></td>
-                                    <td><span class="text-white bg-info sele_staus"><?=$pr->project_status?></span>
-                                      <div class="btn-group open">
-                                          <button class="btn btn-xs p-0 border btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> Change <span class="caret"></span></button>
-                                          <ul class="dropdown-menu animated zoomIn">
-                                            <li><a href="">Waiting For Someone</a></li>
-                                            <li><a href="">Deferred</a></li>
-                                            <li><a href="">Completed</a></li>
-                                            <li><a href="">In Progress</a></li>
-                                            <li><a href="">Not Started</a></li>
-                                          </ul>
-                                      </div>
-                                     </td>
-                                    <td>
-                                      <?php
-                                      $total = count((array)$pr);
-                                      if($total>8){
-                                        $total=$total-8;
-                                        for($i=0;$i<$total;$i++){
-                                          if($pr[$i]=="Everyone "){
-                                            echo "Everyone";
-                                          }
-                                          else{
-                                            // echo $pr[$i]->fullname;
-                                          }
-                                       }
-                                      }
-                                      else{
-                                        echo "Everyone";
-                                      }
-                                      //print_r($pr[0]->fullname);
-                                     
-                                      ?>
-                                    </td>
-                                    <td>
-                                      <?php
-                                      if ($pr->project_uploads==null) {
-                                        echo "No Downloads";
-                                      }
-                                      else{
-                                        echo "<a href='".base_url()."Projects/downloader/".$pr->project_id."'>Download Now</a>";
-                                      }
-                                      ?>
-                                    </td>
-                                    <td>
-                                        <div class="">
-                                          <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                          <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                           <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                        </div>
-
-                                    </td>
-                                 
-                                </tr>
-                                <?php
-                                 }
-                                ?>
-                            
+                          
                         </tbody>
                         <tfoot>
                             <tr>
