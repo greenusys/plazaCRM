@@ -1,3 +1,8 @@
+<?php
+$session=$this->session->userdata('logged_user');
+  $myId=$session[0]->user_id;
+?>
+
 <footer class="main-footer">
         <div class="footer-left">
           Copyright &copy; 2019 
@@ -112,6 +117,13 @@ RowSorter(gebi('table2'), {
   .chat_time{
         font-size: 10px;
        margin-top: 3px;
+  }
+  .ch{
+        font-size: 9px;
+    height: 200px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background: fixed;
   }
 </style>
 <div class="pop_list">
@@ -235,23 +247,41 @@ $(document).on("click",".chat_close",function(){
 
 })  
 function getConversation(frndId){
+  
   $.ajax({
     url:"<?=base_url('Chat/getMessages_')?>",
       type:"post",
       data:{userId:frndId},
       success:function(response){
-        console.log(response);
-      }
-  });
-  var msgs='<li class="w-75 m-2">'+
-              '<div class="  "><span class="p-1 px-2 rounded bg-primary text-white">hi</span></div>'+
+        // console.log(response);
+        response=JSON.parse(response);
+        if(response.length>0){
+          for(let i=0; i<response.length;i++){
+              // console.log(" User ID: "+response[i].user_id);
+            var msg='';
+            if(response[i].sent_by==<?=$myId?>){
+
+
+              msg+='<li class="w-75 m-2">'+
+              '<div class="  "><span class="p-1 px-2 rounded bg-primary text-white">'+response[i].message+'</span></div>'+
               '<div class="chat_time" >5:40 PM</span>'+
-            '</li>'+
-            '<li class="w-75 m-2 text-right float-right">'+
-              '<div class=""><span class="p-1 px-2 rounded  bg-success text-white">hi</span></div>'+
+              '</li>';
+            }else{
+              msg+='<li class="w-75 m-2 text-right float-right">'+
+              '<div class=""><span class="p-1 px-2 rounded  bg-success text-white">'+response[i].message+'</span></div>'+
               '<div class="chat_time" >5:40 PM</span>'+
             '</li>';
-  return msgs;
+            }
+             $('#chat_box_id'+frndId).append(msg);
+          }
+
+        }
+      }
+
+  });
+ 
+
+  
 }
 $(document).ready(function(){
   var left =0;
@@ -268,23 +298,23 @@ $(document).ready(function(){
           var frndName=response[0].fullname;
           // console.log("Full Name : "+frndName);
           if(left < 859){
-          var div = '<div class="chat_box" id="chat__" style="left:'+frndName+'px">'+
+          var div = '<div class="chat_box" id="chat__'+frnd_id+'" style="left:'+frndName+'px">'+
                       '<div class="d-flex bg-info text-white p-2">'+
                         '<div class=" "><h6>'+frndName+'</h6></div>'+
                         '<div class="chat_close"><i class="fas fa-times"></i></div>'+
                       '</div>'+
                       '<div class="">'+
                         '<div class="">'+
-                          '<ul class="m-0 list-unstyled">'+
-                          getConversation(response[0].user_id)
-                        '</ul>'+
+                          '<ul class="m-0 list-unstyled ch" id="chat_box_id'+frnd_id+'">'+
+                          getConversation(response[0].user_id)+
+                          '</ul>'+
                         '</div>'+
                         '<div class="cht_inpt" style="">'+
                           '<input type="text" placeholder="Enter Message" name="" class="form-control">'+
                           '<span><i class="fab fa-telegram-plane"></i></span>'+
                         '</div>'+
                       '</div>'+
-                  '</div>';
+                    '</div>';
            $(".pop_list").append(div);
 
           left = left+286;
@@ -305,7 +335,9 @@ $(document).ready(function(){
                         '</div>'+
                         '<div class="">'+
                           '<div class="">'+
+                             '<ul class="m-0 list-unstyled ch" id="chat_box_id'+frnd_id+'">'+
                             getConversation(response[0].user_id)
+                          '</ul>'+
                           '</div>'+
                           '<div class="cht_inpt" style="">'+
                             '<input type="text" placeholder="Enter Message" name="" class="form-control">'+

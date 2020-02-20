@@ -71,7 +71,7 @@ class Chat_Model extends MY_Model
         // $this->db->where($conditionOne);
         // $this->db->where($conditionTwo);
         // $this->db->order_by("tbl_private_chat_messages.private_chat_messages_id", "DESC");
-       return $this->db->query("select * from tbl_private_chat_messages join tbl_private_chat_users on tbl_private_chat_users.private_chat_id = tbl_private_chat_messages.private_chat_id where tbl_private_chat_users.user_id='$user_id' and tbl_private_chat_users.to_user_id='$to_user_id' order by tbl_private_chat_messages.private_chat_messages_id DESC" )->result();
+       return $this->db->query("select tbl_private_chat_messages.* , tbl_private_chat_users.user_id as sent_by, tbl_private_chat_users.* from tbl_private_chat_messages join tbl_private_chat_users on tbl_private_chat_users.private_chat_id = tbl_private_chat_messages.private_chat_id where tbl_private_chat_users.user_id='$user_id' and tbl_private_chat_users.to_user_id='$to_user_id' order by tbl_private_chat_messages.private_chat_messages_id DESC" )->result();
         // return $this->db->get('tbl_private_chat_messages')->result();
         
     }
