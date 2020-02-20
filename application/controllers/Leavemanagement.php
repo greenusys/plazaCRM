@@ -8,13 +8,16 @@ class Leavemanagement extends MY_Controller {
 	}
 	public function index()
 	{
+		// print_r($this->session->logged_user);
+		// die();
 		$usersdetail=$this->session->logged_user;
+		$designation_id=$usersdetail[0]->designations_id;
 	    $formyleave=$usersdetail[0]->user_id;
 		$data['fetch_leave_data']=$this->leave->fetchLeaveDetails();
 		$data['fetch_users_data']=$this->leave->fetchUserForApplyLeave();
-		$data['fetch_leave_category_data']=$this->leave->fetchLeaveCategoryData();
+		$data['fetch_leave_category_data']=$this->leave->fetchLeaveCategoryData($designation_id);
 		$data['fetch_Myleave_data']=$this->leave->fetchMyLeaveDetails($formyleave);
-		$data['fetch_Department_data']=$this->leave->fetchDepartmentforLeave();
+		$data['fetch_Designation_data']=$this->leave->fetchDesignationforLeave();
 // 		print_r($data['fetch_leave_data']);
 		$this->load->view('layout/header');
 		$this->load->view("pages/leave_management",$data);
@@ -22,19 +25,21 @@ class Leavemanagement extends MY_Controller {
 	}
 	public function LeavePolicySection()
 	{
-		
+		$usersdetail=$this->session->logged_user;
+		$designation_id=$usersdetail[0]->designations_id;
+	    $formyleave=$usersdetail[0]->user_id;
 		
 		$data['fetch_Department_data']=$this->leave->fetchDepartmentforLeave();
-		$data['leave_category_data']=$this->leave->fetchLeaveCategoryData();
-		// $data['fetch_Yearly_data']=$this->leave->fetchLeaveYearlyData();
+		$data['fetch_leave_category_data']=$this->leave->fetchLeaveCategoryData($designation_id);
+		 $data['fetch_Yearly_data']=$this->leave->fetchLeaveYearlyData();
 		$this->load->view('layout/header');
 		$this->load->view("pages/leave_policy",$data);
 		$this->load->view("layout/footer");	
 	}
 	public function Fetchtotalleave()
 	{
-		$dept_id=$this->input->post('dept_id');
-		$data=$this->leave->fetchtotalLeaveById($dept_id);
+		$desig_id=$this->input->post('desig_id');
+		$data=$this->leave->fetchtotalLeaveById($desig_id);
 		die(json_encode(array('code'=>1,'data'=>$data)));
 
 	}
@@ -49,23 +54,26 @@ class Leavemanagement extends MY_Controller {
 	
 	public function LeaveYearySection()
 	{
-		$data['fetch_Department_data']=$this->leave->fetchDepartmentforLeave();
+		// print_r($this->session->logged_user);
+		//  die();
+		$data['fetch_Designation_data']=$this->leave->fetchDesignationforLeave();
+		
 		$data['fetch_Yearly_data']=$this->leave->fetchLeaveYearlyData();
-
+		// print_r($data['fetch_Designation_data']);
 		$this->load->view('layout/header');
 		$this->load->view("pages/leave_yearlyassign",$data);
 		$this->load->view("layout/footer");	
 	}
 	public function addYearlyLeave()
 	{ 
-		$dept=$this->input->post('dept_id');
+		$designation_id=$this->input->post('designation_id');
 		$total_leave=$this->input->post('totalleave'); 	 
 		$data = array(
-        	'department_id'=>$dept,
+        	'designation_id'=>$designation_id,
         	'total_Yearlyleave'=>$total_leave
         );
    
-        $result=$this->leave->addYearlyLeaveData($data,$dept);
+        $result=$this->leave->addYearlyLeaveData($data,$designation_id);
 		if($result==1){
 			die(json_encode(array('status' =>'1' ,'msg'=>'Added Successfully')));
 		}
@@ -116,8 +124,8 @@ class Leavemanagement extends MY_Controller {
 	}
 	public function checkAvailableleave()
 	{
-		$dept_id=$this->input->post('dept_id');
-		$data=$this->leave->checkAvailableleave($dept_id);
+		$desig_id=$this->input->post('desig_id');
+		$data=$this->leave->checkAvailableleave($desig_id);
 		die(json_encode(array('code'=>1,'data'=>$data)));
 		
 	}
@@ -144,11 +152,11 @@ class Leavemanagement extends MY_Controller {
 	{
 		$leave_category=$this->input->post('leave_category');
 		$leave_quota=$this->input->post('leave_quota');
-		$dept_id=$this->input->post('dept_id');	
+		$designation_id=$this->input->post('desig_id');	
 			$data = array(
         	'leave_category'=>$leave_category,
         	'leave_quota'=>$leave_quota,
-        	'leave_cat_dept_id'=>$dept_id
+        	'leave_cat_desig_id'=>$designation_id
         );
    
         $result=$this->leave->addleaveCategoryData($data);
@@ -190,8 +198,11 @@ class Leavemanagement extends MY_Controller {
 	}
 	public function addleaveapplication()
 	{
+		$usersdetail=$this->session->logged_user;
+		$designation_id=$usersdetail[0]->designations_id;
+	    $user_id=$usersdetail[0]->user_id;
 	   // print_r($_POST);
-		$user_id=$this->input->post('user_id');
+		// $user_id=$user_id;
 // 		$album_title=$this->input->post('alb_title');
 		$leave_category_id=$this->input->post('leave_category_id');
 		$reason=$this->input->post('editor1');
@@ -252,6 +263,7 @@ class Leavemanagement extends MY_Controller {
 				$uploadDate=date("Y-m-d H:i:s");
 				$data = array(
 	        	'user_id'=>$user_id,
+	        	'designation_id'=>$designation_id,
 	        	'leave_category_id'=>$leave_category_id,
 	        	'reason'=>$reason,
 	        	'leave_type'=>$leave_type,
