@@ -979,7 +979,15 @@
         $seconds = $init % 60;
         return "<ul class='timer'><li>" . $hours . "<span>" . lang('hours') . "</span></li>" . "<li class='dots'>" . ":</li><li>" . $minutes . "<span>" . lang('minutes') . "</span></li>" . "<li class='dots'>" . ":</li><li>" . $seconds . "<span>" . lang('seconds') . "</span></li></ul>";
     }
-
+    function get_time_spent_results($seconds)
+    {
+        $init = $seconds;
+        $hours = floor($init / 3600);
+        $minutes = floor(($init / 60) % 60);
+        $seconds = $init % 60;
+        return  "$hours:$minutes:$seconds";
+       
+    }
     function get_time_spent_pain_result($seconds)
     {
         $init = $seconds;
