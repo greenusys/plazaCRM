@@ -208,7 +208,7 @@ class User extends MY_Controller {
 		}
 	}
 
-<<<<<<< HEAD
+
 	// public function userDetails(){
 		
 	// 	$this->load->view('layout/header');
@@ -216,8 +216,6 @@ class User extends MY_Controller {
 	// 	$this->load->view("layout/footer");
 	// }
 
-=======
->>>>>>> 417d001ce338c7fc0ad7f183023a3c8fbd047384
 	public function update_todo(){
 		$result=$this->User_model->update_todo($_POST);
 		if($result){
