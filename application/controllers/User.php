@@ -7,11 +7,15 @@ class User extends MY_Controller {
 		$this->load->model('LoginModel','Login');
 		$this->load->model('Job_circular_model');
 		$this->load->model('User_model');
+<<<<<<< HEAD
+		$this->load->model('Tasks_Model');
+=======
 		$this->load->model('Global_Model');
 		$this->load->model('AttendanceModel','ATND');
         $this->load->model('Payroll_model');
     	$this->load->model('Utilities_model');
 
+>>>>>>> 8edd997d6609d8e70764ef860d959075602549f9
 	}
 
 	public function index()
@@ -164,10 +168,79 @@ class User extends MY_Controller {
 		$this->load->view("layout/footer");
 	}
 	public function addTodoList(){
+		$data['users']=$this->User_model->fetch_all_employees_admin();
+		if (isset($_POST['users'])) {
+			$user_id=$_POST['users'];
+			$data['fetch_to_do']=$this->Tasks_Model->fetch_todo($user_id);
+			$data['main_id']=$user_id;
+		}
+		else{
+		$session=$this->session->userdata('logged_user');
+		$user_id=$session[0]->user_id;
+		$data['fetch_to_do']=$this->Tasks_Model->fetch_todo($user_id);
+		$data['main_id']=$user_id;
+		}
 		$this->load->view('layout/header');
-		$this->load->view("pages/todo_list");
+		$this->load->view("pages/todo_list",$data);
 		$this->load->view("layout/footer");
 	}
+<<<<<<< HEAD
+
+	public function fetch_to_do_id(){
+		$todo_id=$_POST['todo_id'];
+		$result=$this->Tasks_Model->fetch_to_do_id($todo_id);
+		if ($result) {
+			die(json_encode(array('status'=>'1','data'=>$result)));
+		}
+		else{
+			die(json_encode(array('status'=>'0')));
+		}
+	}
+
+	public function update_todo_ajax(){
+		$session=$this->session->userdata('logged_user');
+		$user_id=$session[0]->user_id;
+		$_POST['assigned']=$user_id;
+		$due_date=$_POST['due_date'];
+		$myTime = strtotime($due_date); 
+		$_POST['due_date']=date("Y-m-d", $myTime);
+		$result=$this->Tasks_Model->update_task_ajax($_POST);
+		if ($result) {
+			echo "1";
+		}
+		else{
+			echo "0";
+		}
+	}
+
+	public function userDetails(){
+		
+		$this->load->view('layout/header');
+		$this->load->view("pages/userDetails");
+		$this->load->view("layout/footer");
+	}
+
+	public function update_todo(){
+		$result=$this->User_model->update_todo($_POST);
+		if($result){
+			echo "1";
+		}else{
+			echo "0";
+		}
+	}
+
+	public function delete_todo(){
+		$todo_id=$_POST['todo_id'];
+		$result=$this->User_model->delete_todo($todo_id);
+		if ($result) {
+			echo "1";
+		}
+		else{
+			echo "0";
+		}
+	}
+
+=======
 	 public function userDetails($id, $active = null)
     {
         if (isset($id)) 
@@ -421,6 +494,7 @@ class User extends MY_Controller {
             }
         }
     }
+>>>>>>> 8edd997d6609d8e70764ef860d959075602549f9
 	public function updateUserInfo(){
 		if($_FILES["file"]['name'] !=""){
 			$image = rand(0000,9999).'-'.$_FILES["file"]['name'];

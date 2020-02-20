@@ -15,8 +15,10 @@ class Dashboard extends MY_Controller {
 
 	public function index()
 	{
+		$session=$this->session->userdata('logged_user');
+		$user_id=$session[0]->user_id;
 		$data['admin_employee']=$this->User_model->fetch_all_employees_admin();
-		$data['to_do']=$this->Tasks_Model->fetch_todo();
+		$data['to_do']=$this->Tasks_Model->fetch_todo($user_id);
 		$data['in_progress_project']=$this->Demo->get_in_progress_project();
 		$data['in_progress_task']=$this->Demo->get_in_progress_task();
 		$data['over_due_project']=$this->Demo->get_over_due_project();
