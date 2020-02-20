@@ -188,9 +188,16 @@ public function __construct(){
 		}
 	}
 
-	function client_details(){
+	public function client_details($id){
+		$result=$this->Client->fetch_client($id);
+		if($result){
+			die(json_encode(array('status' =>'1' ,'data'=>$result )));
+		}
+		else{
+			die(json_encode(array('status' =>'0' ,'msg'=>'no data ')));
+		}
 		$this->load->view('layout/header');
-		$this->load->view("pages/client_details");
+		$this->load->view("pages/client_details",$data);
 		$this->load->view("layout/footer");
 	} 
 

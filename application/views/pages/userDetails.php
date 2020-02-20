@@ -342,6 +342,62 @@
     color:white;
 }*/
 </style>
+
+
+
+
+<?php
+$activities_info = $this->db->where(array('user' => $profile_info->user_id))->order_by('activity_date', 'DESC')->get('tbl_activities')->result();
+
+$user_info = $this->db->where('user_id', $profile_info->user_id)->get('tbl_users')->row();
+$designation = $this->db->where('designations_id', $profile_info->designations_id)->get('tbl_designations')->row();
+if (!empty($designation)) {
+    $department = $this->db->where('departments_id', $designation->departments_id)->get('tbl_departments')->row();
+}
+$all_project_info = $this->User_model->my_permission('tbl_project', $profile_info->user_id);
+$p_started = 0;
+$p_in_progress = 0;
+$p_completed = 0;
+$project_time = 0;
+$project_time = $this->User_model->my_spent_time($profile_info->user_id, true);
+
+if (!empty($all_project_info)) {
+    foreach ($all_project_info as $v_user_project) {
+        if ($v_user_project->project_status == 'started') {
+            $p_started += count($v_user_project->project_status);
+        }
+        if ($v_user_project->project_status == 'in_progress') {
+            $p_in_progress += count($v_user_project->project_status);
+        }
+        if ($v_user_project->project_status == 'completed') {
+            $p_completed += count($v_user_project->project_status);
+        }
+    }
+}
+
+$tasks_info = $this->User_model->my_permission('tbl_task', $profile_info->user_id);
+
+$t_not_started = 0;
+$t_in_progress = 0;
+$t_completed = 0;
+$t_deferred = 0;
+$t_waiting_for_someone = 0;
+$task_time = 0;
+$task_time = $this->User_model->my_spent_time($profile_info->user_id);
+if (!empty($tasks_info)):foreach ($tasks_info as $v_tasks):
+    if ($v_tasks->task_status == 'not_started') {
+        $t_not_started += count($v_tasks->task_status);
+    }
+    if ($v_tasks->task_status == 'in_progress') {
+        $t_in_progress += count($v_tasks->task_status);
+    }
+    if ($v_tasks->task_status == 'completed') {
+        $t_completed += count($v_tasks->task_status);
+    }
+
+endforeach;
+endif;
+?>
 <body class="bg-light">
     <div class="mb-5">
         <div>
@@ -349,28 +405,36 @@
                 <div class="col-sm-4">
                     <div class="row">
                         <div class="col-sm-6">
-                           <h6 class="text-white">1</h6>
+                           <h6 class="text-white"><?php
+                                    echo $p_in_progress + $p_started;
+                                    ?></h6>
                            <ul class="text-white p-0" style="list-style:none;font-size:13px">
                               <li class="text-light">Open Projects</li>
                               <a href="#" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
                            </ul>
                         </div>
                         <div class="col-sm-6">
-                           <h6 class="text-white">2</h6>
+                           <h6 class="text-white"><?php
+                                    echo $t_in_progress + $t_not_started;
+                                    ?></h6>
                            <ul class="text-white p-0" style="list-style:none;font-size:13px">
                               <li class="text-light">Open Tasks</li>
                               <a href="#" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
                            </ul>
                         </div>
                         <div class="col-sm-6">
-                           <h6 class="text-white">0</h6>
+                           <h6 class="text-white"><?php
+                                    echo $p_completed;
+                                    ?></h6>
                            <ul class="text-white p-0" style="list-style:none;font-size:13px">
                               <li class="text-light">Complete Projects</li>
                               <a href="#" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
                            </ul>
                         </div>
                         <div class="col-sm-6">
-                            <h6 class="text-white">1</h6>
+                            <h6 class="text-white"><?php
+                                    echo $t_in_progress;
+                                    ?></h6>
                             <ul class="text-white p-0" style="list-style:none;font-size:13px">
                               <li class="text-light">Complete Tasks</li>
                               <a href="#" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
@@ -379,38 +443,70 @@
                     </div>
                 </div>
                 <div class="col-sm-3 m-auto text-center">
-                    <img src="image/img2.jpg" alt="..." class="rounded-circle img-fluid w-50 img-style">
-                    <h4 class="text-white">Adminko</h4>
-                    <h6 class="text-white">EMP ID:</h6>
+                     <?php if ($profile_info->avatar): ?>
+                        <img src="<?= base_url() . $profile_info->avatar; ?>"
+                              class="rounded-circle img-fluid w-50 img-style">
+                    <?php else: ?>
+                        <img src="image/img2.jpg" alt="Employee_Image"
+                              class="rounded-circle img-fluid w-50 img-style">
+                        ;
+                    <?php endif; ?>
+                   <!--  <img src="image/img2.jpg" alt="..." class="rounded-circle img-fluid w-50 img-style"> -->
+                    <h4 class="text-white"><?= $profile_info->fullname ?></h4>
+                    <h6 class="text-white">EMP ID:<?=$profile_info->employment_id ?></h6>
                 </div>
                 <div class="offset-1 col-sm-4">
                     <div class="row">
                         <div class="row">
                             <div class="col-sm-6">
-                               <h6 class="text-white">1</h6>
+                               <h6 class="text-white"><?php
+                                    if (!empty($total_attendance)) {
+                                        echo $total_attendance;
+                                    } else {
+                                        echo '0';
+                                    }
+                                    ?> / <?php echo $total_days; ?></h6>
                                <ul class="text-white p-0" style="list-style:none;font-size:13px">
-                                  <li class="text-light">Open Projects</li>
+                                  <li class="text-light">Monthly Attendance</li>
                                   <a href="#" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
                                </ul>
                             </div>
                             <div class="col-sm-6">
-                               <h6 class="text-white">2</h6>
+                               <h6 class="text-white"><?php
+                                    if (!empty($total_absent)) {
+                                        echo $total_absent;
+                                    } else {
+                                        echo '0';
+                                    }
+                                    ?></h6>
                                <ul class="text-white p-0" style="list-style:none;font-size:13px">
-                                  <li class="text-light">Open Tasks</li>
+                                  <li class="text-light">Monthly Absent</li>
                                   <a href="#" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
                                </ul>
                             </div>
                             <div class="col-sm-6">
-                               <h6 class="text-white">0</h6>
+                               <h6 class="text-white"><?php
+                                    if (!empty($total_leave)) {
+                                        echo $total_leave;
+                                    } else {
+                                        echo '0';
+                                    }
+                                    ?></h6>
                                <ul class="text-white p-0" style="list-style:none;font-size:13px">
-                                  <li class="text-light">Complete Projects</li>
+                                  <li class="text-light">Monthly Leave</li>
                                   <a href="#" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
                                </ul>
                             </div>
                             <div class="col-sm-6">
-                                <h6 class="text-white">1</h6>
+                                <h6 class="text-white"><?php
+                                    if (!empty($total_award)) {
+                                        echo $total_award;
+                                    } else {
+                                        echo '0';
+                                    }
+                                    ?></h6>
                                 <ul class="text-white p-0" style="list-style:none;font-size:13px">
-                                  <li class="text-light">Complete Tasks</li>
+                                  <li class="text-light">Monthly Awards</li>
                                   <a href="#" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
                                </ul>
                             </div>
@@ -418,24 +514,70 @@
                     </div>
                 </div>
                 <div class="row text-center m-auto">
-                    <p class="text-white m-auto text-center">Undefined Department & Designation</p>
+                    <p class="text-white m-auto text-center"><?php
+                    if (!empty($department)) {
+                        $dname = $department->deptname;
+                    } else {
+                        $dname ='Undefined_department';
+                    }
+                    if (!empty($designation->designations)) {
+                        $des = ' &rArr; ' . $designation->designations;
+                    } else {
+                        $des = '& ' . 'designations';;
+                    }
+                    echo $dname . ' ' . $des;
+                    if (!empty($department->department_head_id) && $department->department_head_id == $profile_info->user_id) { ?></p>
+                     <strong
+                            class="label label-warning">Department Head</strong>
+                    <?php }
+                    ?>
                 </div>
             </div>
             <div class="row text-center bg-gray-dark p-3">
                 <div class="col-md-3">
-                    <h4 class="text-white">0:0:9</h4>
+                    <h4 class="text-white"><?= $this->User_model->get_time_spent_results($project_time) ?></h4>
                     <h6 class="text-white">Projects Hours</h6>
                 </div>      
                 <div class="col-md-3">
-                    <h4 class="text-white">0:0:9</h4>
+                    <h4 class="text-white"><?= $this->User_model->get_time_spent_results($task_time) ?></h4>
                     <h6 class="text-white">Tasks Hours</h6>
                 </div>  
                 <div class="col-md-3">
-                    <h4 class="text-white">0 : 42 m</h4>
+                    <h4 class="text-white"><?php
+                    $m_min = 0;
+                    $m_hour = 0;
+
+                    if (!empty($this_month_working_hour)) {
+                        foreach ($this_month_working_hour as $v_month_hour) {
+                            $m_min += $v_month_hour['minute'];
+                            $m_hour += $v_month_hour['hour'];
+                        }
+                    }
+                    if ($m_min >= 60) {
+                        $m_hour += intval($m_min / 60);
+                        $m_min = intval($m_min % 60);
+                    }
+                    echo round($m_hour) . " : " . round($m_min) . " m";;
+                    ?></h4>
                     <h6 class="text-white">This month Working Hours</h6>
                 </div>  
                 <div class="col-md-3">
-                    <h4 class="text-white">21 : 54 m</h4>
+                    <h4 class="text-white"><?php
+                    $min = 0;
+                    $hour = 0;
+                    if (!empty($all_working_hour)) {
+                        foreach ($all_working_hour as $v_all_hours) {
+                            $min += $v_all_hours['minute'];
+                            $hour += $v_all_hours['hour'];
+
+                        }
+                    }
+                    if ($min >= 60) {
+                        $hour += intval($min / 60);
+                        $min = intval($min % 60);
+                    }
+                    echo round($hour) . " : " . round($min) . " m";;
+                    ?></h4>
                     <h6 class="text-white">Working Hours</h6>
                 </div>                  
             </div>
@@ -493,11 +635,13 @@
                 <!----------basic Details------->
                 <div class="tab-pane active" id="base_details">
                     <div class="container bg-white card ">
-                        <div class="row">
-                            <div class="col-md-10"><h6 class="mt">User Name</h6></div>
-                            <div class="col-md-2 text-right"> 
+                        <div class="row pt-3">
+                            <div class="col-md-10"><h6 class="mt"><?= ucwords($profile_info->fullname) ?></h6></div>
+                            <?php if (!empty($edited)) { ?>
+                              <div class="col-md-2 text-right"> 
                                 <span class="text-primary font-weight-bold " data-toggle="modal" data-target="#updateUser" id="update">Update</span>
                             </div>
+                             <?php } ?>
                         </div>
                       <div class="line mt-2"></div>
                       <div class="row">
@@ -508,6 +652,7 @@
                                     <label for="exampleInputEmail1" class="font-weight-bold  label-style">EMP ID :</label>
                                 </div>
                                 <div class="col-sm-6">
+                                  <?= $profile_info->employment_id ?>
                                 </div>
                             </div>
                         </div>
@@ -517,7 +662,7 @@
                                     <label for="exampleInputEmail1" class="font-weight-bold  label-style">Username :</label>
                                 </div>
                                 <div class="col-sm-6">
-                                   <label for="exampleInputEmail1">adminko</label>
+                                   <label for="exampleInputEmail1"><?= $user_info->username ?></label>
                                 </div>
                             </div>
                         </div>
@@ -527,6 +672,9 @@
                                     <label for="exampleInputEmail1" class="font-weight-bold label-style">Joining Date:</label>
                                 </div>
                                 <div class="col-sm-6">
+                                   <?php if (!empty($profile_info->joining_date)) { ?>
+                                    <p class="form-control-static"><?php echo strftime(config_item('date_format'), strtotime($profile_info->joining_date)); ?></p>
+                                  <?php } ?>
                                 </div>
                             </div>
                         </div>
@@ -536,6 +684,9 @@
                                     <label for="exampleInputEmail1" class="font-weight-bold label-style">Date Of Birth:</label>
                                 </div>
                                 <div class="col-sm-6">
+                                   <?php if (!empty($profile_info->date_of_birth)) { ?>
+                                    <p class="form-control-static"><?php echo strftime(config_item('date_format'), strtotime($profile_info->date_of_birth)); ?></p>
+                                <?php } ?>
                                 </div>
                             </div>
                         </div>
@@ -545,6 +696,9 @@
                                     <label for="exampleInputEmail1" class="font-weight-bold label-style">Fathers Name:</label>
                                 </div>
                                 <div class="col-sm-6">
+                                     <?php if (!empty($profile_info->father_name)) { ?>
+                                    <p class="form-control-static"><?php echo "$profile_info->father_name"; ?></p>
+                                <?php } ?>
                                 </div>
                             </div>
                         </div>
@@ -554,7 +708,7 @@
                                     <label for="exampleInputEmail1" class="font-weight-bold label-style">Email :</label>
                                 </div>
                                 <div class="col-sm-6">
-                                    <label for="exampleInputEmail1">admin@admin.com</label>
+                                    <label for="exampleInputEmail1"><?=$user_info->email?></label>
                                 </div>
                             </div>
                         </div>
@@ -564,15 +718,17 @@
                                     <label for="exampleInputEmail1" class="font-weight-bold label-style">Mobile :</label>
                                 </div>
                                 <div class="col-sm-6">
+                                  <?php echo "$profile_info->mobile"; ?>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="row mt-2">
-                                <div class="offset-2 col-sm-4 text-right">
+                                <div class="offset-1 col-sm-5 text-right">
                                     <label for="exampleInputEmail1" class="font-weight-bold label-style">Present Address :</label>
                                 </div>
                                 <div class="col-sm-6">
+                                  <?php echo "$profile_info->present_address"; ?>
                                 </div>
                             </div>
                         </div>
@@ -584,7 +740,7 @@
                                     <label for="exampleInputEmail1" class="font-weight-bold label-style">Full Name :</label>
                                 </div>
                                 <div class="col-sm-6">
-                                    <label for="exampleInputEmail1">adminko</label>
+                                    <label for="exampleInputEmail1"><?= ucwords($profile_info->fullname) ?></label>
                                 </div>
                             </div>
                         </div>
@@ -594,7 +750,9 @@
                                     <label for="exampleInputEmail1" class="font-weight-bold label-style">Password :</label>
                                 </div>
                                 <div class="col-sm-6">
-                                    <label for="exampleInputEmail1" class="text-primary" data-toggle="modal" data-target="#exampleModal" id="reset">Reset Password</label>
+                                 <p class="form-control-static"><a data-toggle="modal" data-target="#myModal"
+                                                                      href="<?= base_url() ?>admin/user/reset_password/<?= $user_info->user_id ?>">Reset_password</a>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -604,7 +762,9 @@
                                     <label for="exampleInputEmail1" class="font-weight-bold label-style">Gender:</label>
                                 </div>
                                 <div class="col-sm-6">
-                                  
+                                   <?php if (!empty($profile_info->gender)) { ?>
+                                    <p class="form-control-static"><?php echo lang($profile_info->gender); ?></p>
+                                <?php } ?>
                                 </div>
                             </div>
                         </div>
@@ -614,7 +774,9 @@
                                     <label for="exampleInputEmail1" class="font-weight-bold label-style">Maratial Status:</label>
                                 </div>
                                 <div class="col-sm-6">
-                                   
+                                      <?php if (!empty($profile_info->maratial_status)) { ?>
+                                    <p class="form-control-static"><?php echo lang($profile_info->maratial_status); ?></p>
+                                <?php } ?>
                                 </div>
                             </div>
                         </div>
@@ -624,7 +786,9 @@
                                     <label for="exampleInputEmail1" class="font-weight-bold label-style">Mothers Name:</label>
                                 </div>
                                 <div class="col-sm-6">
-                                  
+                                    <?php if (!empty($profile_info->mother_name)) { ?>
+                                    <p class="form-control-static"><?php echo "$profile_info->mother_name"; ?></p>
+                                <?php } ?>
                                 </div>
                             </div>
                         </div>
@@ -634,7 +798,7 @@
                                     <label for="exampleInputEmail1" class="font-weight-bold label-style">Phone :</label>
                                 </div>
                                 <div class="col-sm-6">
-                                   
+                                    <p class="form-control-static"><?php echo "$profile_info->phone"; ?></p>
                                 </div>
                             </div>
                         </div>
@@ -644,7 +808,7 @@
                                     <label for="exampleInputEmail1" class="font-weight-bold label-style">Skype id :</label>
                                 </div>
                                 <div class="col-sm-6">
-                                    
+                                       <p class="form-control-static"><?php echo "$profile_info->skype"; ?></p>
                                 </div>
                             </div>
                         </div>
@@ -658,12 +822,17 @@
                 <!----------Bank Details------->
                 <div class="tab-pane " id="bank_details">
                     <div class="container bg-white card ">
-                        <div class="row">
+                        <div class="row pt-3">
                             <div class="col-md-10"><h6 class="mt">Bank Details</h6></div>
+                            <?php if (!empty($edited)) { ?>
                             <div class="col-md-2 text-right"> 
                                 <span class="text-primary font-weight-bold " data-toggle="modal" data-target="#bankModal" id="update">Update</span>
                             </div>
+                             <?php } ?>
                         </div>
+                         <?php
+                    $all_bank_info = $this->db->where('user_id', $profile_info->user_id)->get('tbl_employee_bank')->result();
+                    ?>
                       <div class="line mt-2"></div>
                       <div class="">
                             <table class="table table-striped border">
@@ -677,7 +846,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+                                   <?php if (!empty($all_bank_info)) {
+                                foreach ($all_bank_info as $v_bank_info) { ?>
+                                    <tr>
+                                        <td><?= $v_bank_info->bank_name ?></td>
+                                        <td><?= $v_bank_info->account_name ?></td>
+                                        <td><?= $v_bank_info->routing_number ?></td>
+                                        <td><?= $v_bank_info->account_number ?></td>
+                                        <td class="hidden-print">
+                                            <?= btn_edit_modal('admin/user/new_bank/' . $v_bank_info->user_id . '/' . $v_bank_info->employee_bank_id) ?>
+                                            <?= btn_delete('admin/user/delete_user_bank/' . $v_bank_info->user_id . '/' . $v_bank_info->employee_bank_id) ?>
+                                        </td>
+                                    </tr>
+                                <?php }
+                            } ?> 
                                 </tbody>
                             </table>
                       </div>
@@ -688,7 +870,7 @@
                 <!----------Document Details------->
                 <div class="tab-pane " id="docu_details">
                     <div class="container bg-white card ">
-                        <div class="row">
+                        <div class="row pt-3">
                             <div class="col-md-10"><h6 class="mt">User Document</h6></div>
                             <div class="col-md-2 text-right"> 
                                 <span class="text-primary font-weight-bold " data-toggle="modal" data-target="#documentModal" id="update">Update</span>
@@ -718,8 +900,8 @@
                <!----------Salary Details------->
                 <div class="tab-pane " id="salary_details">
                     <div class="container bg-white card ">
-                        <div class="row">
-                            <div class="col-md-10"><h6 class="mt">Bank Details</h6></div>
+                        <div class="row pt-3">
+                            <div class="col-md-10"><h6 class="mt">Salary Details</h6></div>
                             <div class="col-md-2 text-right"> 
                                 <span class="text-primary font-weight-bold " data-toggle="modal" data-target="#bankModal" id="update">Update</span>
                             </div>
@@ -749,8 +931,8 @@
                 <!----------Timecard Details------->
                 <div class="tab-pane " id="timecard_details">
                     <div class="container bg-white card ">
-                        <div class="row">
-                            <div class="col-md-10"><h6 class="mt">Bank Details</h6></div>
+                        <div class="row pt-3">
+                            <div class="col-md-10"><h6 class="mt">Timecard Details</h6></div>
                             <div class="col-md-2 text-right"> 
                                 <span class="text-primary font-weight-bold " data-toggle="modal" data-target="#bankModal" id="update">Update</span>
                             </div>
@@ -932,8 +1114,8 @@
 
                  <!----------Leave Details ------>
                     <div class="tab-pane " id="leave_details">
-                        <div class="card shadow p-3">
-                            <div class="row">
+                        <div class="container bg-white card ">
+                            <div class="row pt-3">
                                 <div class="col-sm-12">
                                    <h6 class="font-weight-bold">Leave Details Of Adminko</h6>
                                 </div>
@@ -999,8 +1181,8 @@
 
                   <!----------Provident fund ------>
                     <div class="tab-pane  " id="prov_fund">
-                        <div class="card shadow mb-4">
-                            <div class="row p-2">
+                        <div class="container bg-white card ">
+                            <div class="row pt-3">
                                 <div class="col-sm-10">
                                    <h6 class="font-weight-bold mt-2"><i class="fa fa-calendar"></i> Provident Fund 2020</h6>
                                 </div>
@@ -1057,8 +1239,8 @@
 
                   <!----------overtime Details ------>
                     <div class="tab-pane " id="overtime_details">
-                        <div class="card shadow mb-4">
-                            <div class="row p-2">
+                        <div class="container bg-white card ">
+                            <div class="row pt-3">
                                 <div class="col-sm-10">
                                    <h6 class="font-weight-bold mt-2"><i class="fa fa-calendar"></i> Provident Fund 2020</h6>
                                 </div>
@@ -1117,8 +1299,8 @@
 
                   <!----------tasks ------>
                     <div class="tab-pane " id="tasks">
-                        <div class="card shadow p-3">
-                            <div class="row">
+                        <div class="container bg-white card ">
+                            <div class="row pt-3">
                                 <div class="col-sm-12">
                                    <h6 class="font-weight-bold">Total Task Time Spent</h6>
                                 </div>
@@ -1150,8 +1332,8 @@
 
                   <!----------Projects ------>
                     <div class="tab-pane " id="projects">
-                        <div class="card shadow p-3">
-                            <div class="row">
+                        <div class="container bg-white card ">
+                            <div class="row pt-3">
                                 <div class="col-sm-12">
                                    <h6 class="font-weight-bold">Total Projects Time Spent</h6>
                                 </div>
@@ -1183,8 +1365,8 @@
 
                   <!----------Bugs ------>
                     <div class="tab-pane " id="bugs">
-                         <div class="card shadow p-3 mt-4">
-                            <div class="row">
+                         <div class="container bg-white card ">
+                            <div class="row pt-3">
                                 <div class="col-sm-12">
                                    <h6 class="font-weight-bold ">Bugs Reports</h6>
                                 </div>
