@@ -68,7 +68,7 @@
         <div class="col-md-6">
           <span><strong>Leave Policy</strong></span>
         </div>
-         
+
       </div>
       <div class="p-2">
         <form id="policydata">
@@ -213,8 +213,8 @@
                   <label for="exampleInputEmail1" class="pt-2">Available Leave<sup class="text-danger">*</sup></label>
               </div>
               <div class="col-sm-7">
-                <div class='input-group date form-group' id=''>
-                   <input type="text"  class="w_20 form-control">     
+                <div class='input-group date form-group' >
+                   <input type="text"  id="availableleave" class="w_20 form-control">     
                </div>
               </div>
             </div>
@@ -290,7 +290,7 @@
   });
 </script>
 
- <script>
+     <script>
         // $('.checkagain').on('click',function(){
           $('.fetchdeptid').on('change',function(){
             var dept_id=$(this).val();
@@ -331,6 +331,70 @@
    
        
       </script>
+      <!-- <script>
+        // $('.checkagain').on('click',function(){
+          $('.fetchdeptid').on('change',function(){
+            var dept_id=$(this).val();
+              // alert($dept_iddept_id);
+           
+            }); 
+      </script>  -->
+       <script>
+        // $('.checkagain').on('click',function(){
+          $('.fetchdeptid').on('change',function(){
+            var dept_id=$(this).val();
+               // alert($dept_iddept_id);
+            $.ajax({
+              url:"<?=base_url('Leavemanagement/Fetchtotalleave')?>",
+              type:"post",
+              data:{dept_id:dept_id},
+              success:function(response)
+              {
+                //   console.log(response.data);
+                  var response=JSON.parse(response);
+                   // console.log('fetchtotalleave',response.data);
+                    
+                   if(response.code==1)
+                   {
+                         $("#availableleave").empty();
+                        var totalleave=response.data[0].total_Yearlyleave;
+                        console.log('Total Leave',totalleave);
+                        // $('#availableleave').val(totalleave); 
+                        $.ajax({
+                        url:"<?=base_url('Leavemanagement/checkAvailableleave')?>",
+                        type:"post",
+                        data:{dept_id:dept_id},
+
+                        success:function(response)
+                        {
+                        //console.log(response.data);
+                        response=JSON.parse(response);
+                        console.log('Taken Leave',response.data);
+                         $("#availableleave").empty();
+                        var takenleave=response.data; 
+                        var availableleave=totalleave-takenleave;
+                        console.log(totalleave,takenleave);
+                        console.log('available leave',availableleave);
+                        
+                         $('#availableleave').val(availableleave);
+
+                        }    
+                        });
+                       
+                   }
+                   else
+                   {
+                    // console.log('no data',totalleave)
+                    $('#availableleave').val('no data found');
+                   }
+
+           
+              }    
+              });
+            });
+   
+       
+      </script>
 
 
 <script>
@@ -353,15 +417,15 @@
          console.log(obj.status);
          if(obj.status==0)
          {
-          alert(obj.msg);
+         swal("Policy", "Already Exist", "error")
          }
          if(obj.status==1)
          {
-          alert(obj.msg);
+          swal("Policy", "Added", "success")
          }
          if(obj.status==2)
          {
-          alert(obj.msg);
+          swal("Policy", "Try Again", "error")
          }
          location.reload();
         }

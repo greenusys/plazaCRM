@@ -187,5 +187,12 @@ public function __construct(){
 			die(json_encode(array('status' =>'0' ,'msg'=>'Failed')));
 		}
 	}
+
+	function client_details(){
+		$this->load->view('layout/header');
+		$this->load->view("pages/client_details");
+		$this->load->view("layout/footer");
+	} 
+
 }
 ?>

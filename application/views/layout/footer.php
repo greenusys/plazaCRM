@@ -1,3 +1,8 @@
+<?php
+$session=$this->session->userdata('logged_user');
+  $myId=$session[0]->user_id;
+?>
+
 <footer class="main-footer">
         <div class="footer-left">
           Copyright &copy; 2019 
@@ -19,101 +24,19 @@
     } );
 } );
 </script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('.alldatatable').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } );
+} );
+</script>
    <script type="text/javascript">
     //  $('tbody').sortable();
     </script>
-    <script>
-
-  document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
-      header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay'
-      },
-      defaultDate: '2019-08-12',
-      navLinks: true, // can click day/week names to navigate views
-      selectable: true,
-      selectMirror: true,
-      select: function(arg) {
-        var title = prompt('Event Title:');
-        if (title) {
-          calendar.addEvent({
-            title: title,
-            start: arg.start,
-            end: arg.end,
-            allDay: arg.allDay
-          })
-        }
-        calendar.unselect()
-      },
-      editable: true,
-      eventLimit: true, // allow "more" link when too many events
-      events: [
-        {
-          title: 'All Day Event',
-          start: '2019-08-01'
-        },
-        {
-          title: 'Long Event',
-          start: '2019-08-07',
-          end: '2019-08-10'
-        },
-        {
-          groupId: 999,
-          title: 'Repeating Event',
-          start: '2019-08-09T16:00:00'
-        },
-        {
-          groupId: 999,
-          title: 'Repeating Event',
-          start: '2019-08-16T16:00:00'
-        },
-        {
-          title: 'Conference',
-          start: '2019-08-11',
-          end: '2019-08-13'
-        },
-        {
-          title: 'Meeting',
-          start: '2019-08-12T10:30:00',
-          end: '2019-08-12T12:30:00'
-        },
-        {
-          title: 'Lunch',
-          start: '2019-08-12T12:00:00'
-        },
-        {
-          title: 'Meeting',
-          start: '2019-08-12T14:30:00'
-        },
-        {
-          title: 'Happy Hour',
-          start: '2019-08-12T17:30:00'
-        },
-        {
-          title: 'Dinner',
-          start: '2019-08-12T20:00:00'
-        },
-        {
-          title: 'Birthday Party',
-          start: '2019-08-13T07:00:00'
-        },
-        {
-          title: 'Click for Google',
-          url: 'http://google.com/',
-          start: '2019-08-28'
-        }
-      ]
-    });
-
-    calendar.render();
-  });
-
-</script>
 
 <script type="text/javascript">
 
@@ -204,6 +127,13 @@ RowSorter(gebi('table2'), {
   .chat_time{
         font-size: 10px;
        margin-top: 3px;
+  }
+  .ch{
+        font-size: 9px;
+    height: 200px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background: fixed;
   }
 </style>
 <div class="pop_list">
@@ -327,23 +257,41 @@ $(document).on("click",".chat_close",function(){
 
 })  
 function getConversation(frndId){
+  
   $.ajax({
-    url:"<?=base_url('User/getUserByDetails')?>",
+    url:"<?=base_url('Chat/getMessages_')?>",
       type:"post",
-      data:{user_id:frnd_id},
+      data:{userId:frndId},
       success:function(response){
-        
-      }
-  });
-  var msgs='<li class="w-75 m-2">'+
-              '<div class="  "><span class="p-1 px-2 rounded bg-primary text-white">hi</span></div>'+
+        // console.log(response);
+        response=JSON.parse(response);
+        if(response.length>0){
+          for(let i=0; i<response.length;i++){
+              // console.log(" User ID: "+response[i].user_id);
+            var msg='';
+            if(response[i].sent_by==<?=$myId?>){
+
+
+              msg+='<li class="w-75 m-2">'+
+              '<div class="  "><span class="p-1 px-2 rounded bg-primary text-white">'+response[i].message+'</span></div>'+
               '<div class="chat_time" >5:40 PM</span>'+
-            '</li>'+
-            '<li class="w-75 m-2 text-right float-right">'+
-              '<div class=""><span class="p-1 px-2 rounded  bg-success text-white">hi</span></div>'+
+              '</li>';
+            }else{
+              msg+='<li class="w-75 m-2 text-right float-right">'+
+              '<div class=""><span class="p-1 px-2 rounded  bg-success text-white">'+response[i].message+'</span></div>'+
               '<div class="chat_time" >5:40 PM</span>'+
             '</li>';
-  return msgs;
+            }
+             $('#chat_box_id'+frndId).append(msg);
+          }
+
+        }
+      }
+
+  });
+ 
+
+  
 }
 $(document).ready(function(){
   var left =0;
@@ -360,23 +308,23 @@ $(document).ready(function(){
           var frndName=response[0].fullname;
           // console.log("Full Name : "+frndName);
           if(left < 859){
-          var div = '<div class="chat_box" id="chat__" style="left:'+frndName+'px">'+
+          var div = '<div class="chat_box" id="chat__'+frnd_id+'" style="left:'+frndName+'px">'+
                       '<div class="d-flex bg-info text-white p-2">'+
                         '<div class=" "><h6>'+frndName+'</h6></div>'+
                         '<div class="chat_close"><i class="fas fa-times"></i></div>'+
                       '</div>'+
                       '<div class="">'+
                         '<div class="">'+
-                          '<ul class="m-0 list-unstyled">'+
-                          getConversation(response[0].user_id)
-                        '</ul>'+
+                          '<ul class="m-0 list-unstyled ch" id="chat_box_id'+frnd_id+'">'+
+                          getConversation(response[0].user_id)+
+                          '</ul>'+
                         '</div>'+
                         '<div class="cht_inpt" style="">'+
                           '<input type="text" placeholder="Enter Message" name="" class="form-control">'+
                           '<span><i class="fab fa-telegram-plane"></i></span>'+
                         '</div>'+
                       '</div>'+
-                  '</div>';
+                    '</div>';
            $(".pop_list").append(div);
 
           left = left+286;
@@ -397,7 +345,9 @@ $(document).ready(function(){
                         '</div>'+
                         '<div class="">'+
                           '<div class="">'+
+                             '<ul class="m-0 list-unstyled ch" id="chat_box_id'+frnd_id+'">'+
                             getConversation(response[0].user_id)
+                          '</ul>'+
                           '</div>'+
                           '<div class="cht_inpt" style="">'+
                             '<input type="text" placeholder="Enter Message" name="" class="form-control">'+
@@ -426,6 +376,8 @@ $(document).on("click",".chat_close",function(){
         });
 })
 </script>
-
+<script>
+    CKEDITOR.replace( 'editor' );
+</script>
 </body>
 </html>

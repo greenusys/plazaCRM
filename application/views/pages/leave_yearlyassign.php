@@ -238,7 +238,7 @@
                      console.log(obj.status);
                      if(obj.status==0)
                      {
-                      swal("Policy", "Error", "error")
+                      swal("Policy", "Already Exist", "error")
                      }
                      if(obj.status==1)
                      {
@@ -246,7 +246,7 @@
                      }
                      if(obj.status==2)
                      {
-                      swal("Policy", "Try Again", "error")
+                      swal("Policy", "Already Exist", "error")
                      }
                      location.reload();
                     }

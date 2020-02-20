@@ -485,8 +485,10 @@
 
     public function get_permission($table, $where = null)
     {
-        $role = $this->session->userdata('user_type');
-        $user_id = $this->session->userdata('user_id');
+        $session=$this->session->userdata('logged_user');
+        $user_id=$session[0]->user_id;
+        $role = $session[0]->role_id;
+        //$user_id = $this->session->userdata('user_id');
         $this->db->from($table);
         if (!empty($where)) {
             $this->db->where($where);

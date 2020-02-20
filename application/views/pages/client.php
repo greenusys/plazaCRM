@@ -189,7 +189,7 @@
                               ?>
                               <tr>
                             
-                                <td><?=$client->name?></td>
+                                <td><a href="<?=base_url('Client/client_details')?>" ><?=$client->name?></a></td>
                                 <td><?=$client->primary_contact?></td>
                                 <td><?=$client->mobile?></td>
                                 <td><?=$client->project_name?></td>
