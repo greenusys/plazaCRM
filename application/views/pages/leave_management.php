@@ -288,7 +288,7 @@
                                                     <label for="e2">Leave Category </label>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <div class="input-group">
+                                                    <div class="input-group refreshCatdiv">
                                                         <select name="leave_category_id" class="form-control" style="width: 100%" id="e2">
                                                             <option value="0">Leave Category</option>
                                                            <?php
@@ -462,13 +462,14 @@
             </div>
             <div class="line"></div>
             <div class="modal-body">
+                <form id="leave_newcategory" >
                 <div class="form-group">
                     <div class="row">
                         <div class="col-sm-3">
                             <label for="exampleInputEmail1"> Leave Category </label>
                         </div>
                         <div class="col-sm-9">
-                            <input type="text" value="" class="form-control" name="">
+                            <input type="text" value="" class="form-control" name="leave_category">
                         </div>
                     </div>
                 </div>
@@ -478,15 +479,38 @@
                             <label for="exampleInputEmail1"> Leave Quota </label>
                         </div>
                         <div class="col-sm-9">
-                            <input type="text" value="" class="form-control" name="">
+                            <input type="text" value="" class="form-control" name="leave_quota">
                         </div>
                     </div>
                 </div>
-
-            </div>
-            <div class="modal-footer">
+                 <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label for="exampleInputEmail1"> Departments </label>
+                        </div>
+                        <div class="col-sm-9">
+                             <select name="dept_id" class="form-control" id="emply">
+                    <option selected="" disabled="" value="0">Select Department</option>
+                    <?php
+                                        foreach($fetch_Department_data as $deptdata)
+                                        {
+                                        ?>
+              <option  value="<?=$deptdata->departments_id?>"><?=$deptdata->deptname?></option>;
+                                    <?php
+                                        }
+                                        ?>
+                  </select>
+                        </div>
+                    </div>
+                </div>
+                  <div class="modal-footer">
+                 <button type="submit"  class="btn btn-primary">Save</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
+            </form>
+
+            </div>
+          
         </div>
 
     </div>
@@ -681,6 +705,42 @@
 </div>
 <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> -->
 <!--end detail modal-->
+<script> 
+       $(document).on('submit','#leave_newcategory',function(e)
+       {
+            // $().submit(function(e){
+                e.preventDefault();
+                var formData= new FormData($(this)[0]);
+                // console.log(formData);
+                $.ajax({
+                    url:'<?=base_url('Leavemanagement/addleavecategory')?>',
+                     type:"POST",
+                     data:formData,
+                     contentType:false,
+                     processData:false,
+                     cache:false,
+
+                    success:function(response)
+                    {
+                     var response=JSON.parse(response)
+                     console.log(response);
+                     
+                    if(response.status==1)
+                    {
+                        swal("Category", "Added", "success")
+                        $(".refreshCatdiv").load(location.href + " .refreshCatdiv");
+                    
+                    }
+                    else
+                    {
+                       swal("Category", "Error", "error")
+                    }
+                }
+            
+
+        });
+       });
+    </script>
 <script type="text/javascript">
      $(document).ready(function(){
           $('.acceptleave').on('click',function(){ 

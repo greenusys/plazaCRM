@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class MY_Controller extends CI_Controller 
 {
+    public $my_id;
 	function __construct(){
 		parent::__construct();
 		$this->load->model('global_model');
@@ -20,10 +21,13 @@ class MY_Controller extends CI_Controller
             'unread_notifications' => count($this->db->where(array('to_user_id' => $my_Id, 'read' => 0))->get('tbl_notifications')->result())
         );
         $this->load->vars($auto_loaded_vars);
+        $session=$this->session->userdata('logged_user');
+        $this->my_id=$session[0]->user_id;
 	}
 	public function checkFunction(){
 		echo 'working Fine';
 	}
+
 }
 
 
