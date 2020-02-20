@@ -302,6 +302,7 @@
             success:function(response)
             {
               var response=JSON.parse(response);
+              console.log(response);
               if(response.status==1)
               {
                 location.reload();

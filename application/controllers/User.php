@@ -46,6 +46,7 @@ class User extends MY_Controller {
 	        $config['max_height'] = 1500;
 
 	        $this->load->library('upload', $config);
+	        $this->upload->initialize($config);
 
 	        if (!$this->upload->do_upload('profilephoto')) {
 	            $error = array('error' => $this->upload->display_errors());
