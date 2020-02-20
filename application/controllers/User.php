@@ -7,15 +7,11 @@ class User extends MY_Controller {
 		$this->load->model('LoginModel','Login');
 		$this->load->model('Job_circular_model');
 		$this->load->model('User_model');
-<<<<<<< HEAD
 		$this->load->model('Tasks_Model');
-=======
 		$this->load->model('Global_Model');
 		$this->load->model('AttendanceModel','ATND');
         $this->load->model('Payroll_model');
     	$this->load->model('Utilities_model');
-
->>>>>>> 8edd997d6609d8e70764ef860d959075602549f9
 	}
 
 	public function index()
@@ -184,7 +180,6 @@ class User extends MY_Controller {
 		$this->load->view("pages/todo_list",$data);
 		$this->load->view("layout/footer");
 	}
-<<<<<<< HEAD
 
 	public function fetch_to_do_id(){
 		$todo_id=$_POST['todo_id'];
@@ -213,13 +208,6 @@ class User extends MY_Controller {
 		}
 	}
 
-	public function userDetails(){
-		
-		$this->load->view('layout/header');
-		$this->load->view("pages/userDetails");
-		$this->load->view("layout/footer");
-	}
-
 	public function update_todo(){
 		$result=$this->User_model->update_todo($_POST);
 		if($result){
@@ -240,7 +228,6 @@ class User extends MY_Controller {
 		}
 	}
 
-=======
 	 public function userDetails($id, $active = null)
     {
         if (isset($id)) 
@@ -494,7 +481,6 @@ class User extends MY_Controller {
             }
         }
     }
->>>>>>> 8edd997d6609d8e70764ef860d959075602549f9
 	public function updateUserInfo(){
 		if($_FILES["file"]['name'] !=""){
 			$image = rand(0000,9999).'-'.$_FILES["file"]['name'];
