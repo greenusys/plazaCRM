@@ -34,7 +34,7 @@
 		</div>
 		<div class="row bg-white p-0">
 			<div id="all" class="tabcontent">
-			<table id="example" class="display nowrap" style="width:100%">
+			<table id="example" class="display nowrap table-responsive" style="width:100%">
 				<thead>
 					<th>Bug Title</th>
 					<th>Date</th>

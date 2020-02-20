@@ -126,7 +126,22 @@ $role_id=$session[0]->role_id;
    top: -16px;
    left: -10px;
 }
+
+.text-gray{
+  color: gray;
+}
+.bg-gray{
+background: #f3f3f3;
+}
+
+
   </style>
+<style type="text/css">
+  
+
+
+
+</style>
 </head>
 
 <body onload="startTime()">
@@ -221,33 +236,33 @@ $role_id=$session[0]->role_id;
               </div>
               <div class="dropdown-list-content dropdown-list-icons">
 
-    <?php
-    $user_notifications = $this->global_model->get_user_notifications(false);
-    if (!empty($user_notifications)) {
-        foreach ($user_notifications as $notification) { ?>
-                <!-- list item-->
-                <!-- list item-->
-                <?php if (!empty($notification->link)) {
-                    $link = base_url() . $notification->link;
-                } else {
-                    $link = '#';
+                <?php
+                $user_notifications = $this->global_model->get_user_notifications(false);
+                if (!empty($user_notifications)) {
+                    foreach ($user_notifications as $notification) { ?>
+                            <!-- list item-->
+                            <!-- list item-->
+                            <?php if (!empty($notification->link)) {
+                                $link = base_url() . $notification->link;
+                            } else {
+                                $link = '#';
+                            }
+                            ?>
+                            <a href="<?php echo base_url() . $notification->link; ?>"
+                               class="dropdown-item dropdown-item-unread';
+                               } ?>">
+                              <div class="dropdown-item-icon bg-primary text-white">
+                                <i class="fas fa-code"></i>
+                              </div>
+                              <div class="dropdown-item-desc">
+                                <?=$notification->value?>
+                                <div class="time text-primary"><?php echo $notification->date; ?></div>
+                              </div>
+
+                            </a>
+                    <?php }
                 }
                 ?>
-                <a href="<?php echo base_url() . $notification->link; ?>"
-                   class="dropdown-item dropdown-item-unread';
-                   } ?>">
-                  <div class="dropdown-item-icon bg-primary text-white">
-                    <i class="fas fa-code"></i>
-                  </div>
-                  <div class="dropdown-item-desc">
-                    <?=$notification->value?>
-                    <div class="time text-primary"><?php echo $notification->date; ?></div>
-                  </div>
-
-                </a>
-        <?php }
-    }
-    ?>
              
               </div>
               <div class="dropdown-footer text-center">

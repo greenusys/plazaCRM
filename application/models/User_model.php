@@ -96,6 +96,26 @@ class User_model extends MY_Model
         return $result;
     }
 
+    public function update_todo($data){
+        extract($data);
+        $new_data=array('status'=>$status);
+        $this->db->where(array('todo_id'=>$todo_id));
+        $res = $this->db->update('tbl_todo',$new_data);
+        if ($res) {
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+
+    public function delete_todo($todo){
+            $this->db->where('todo_id', $todo);
+            $this->db->delete('tbl_todo');
+            return true;
+    }
+
     public function fetch_all_employees_admin(){
         $checker=array('2');
         $this->db->select('*');

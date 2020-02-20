@@ -451,3 +451,113 @@
       });
   
 </script>
+    <script>
+$(document).ready(function(){
+  // document.addEventListener('DOMContentLoaded', function() {
+    var d = new Date();
+
+    var month = d.getMonth()+1;
+    var day = d.getDate();
+
+    var output = d.getFullYear() + '-' +
+        ((''+month).length<2 ? '0' : '') + month + '-' +
+        ((''+day).length<2 ? '0' : '') + day;
+
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      defaultDate: output,
+      navLinks: true, // can click day/week names to navigate views
+      selectable: true,
+      selectMirror: true,
+      select: function(arg) {
+        var title = prompt('Event Title:');
+        if (title) {
+          calendar.addEvent({
+            title: title,
+            start: arg.start,
+            end: arg.end,
+            allDay: arg.allDay
+          })
+        }
+        calendar.unselect()
+      },
+      editable: true,
+      eventLimit: true, // allow "more" link when too many events
+      events: [
+      <?php
+      foreach ($fetch_holiday as $holiday) {
+      ?>
+        {
+          title: '<?=$holiday->event_name?>',
+          start: '<?=$holiday->start_date?>',
+          end: '<?=$holiday->end_date?>'
+        },
+      <?php } ?>
+        // {
+        //   title: 'All Day Event',
+        //   start: '2019-08-01'
+        // },
+        // {
+        //   title: 'Long Event',
+        //   start: '2020-02-05',
+        //   end: '2020-02-10'
+        // },
+        // {
+        //   groupId: 999,
+        //   title: 'Repeating Event',
+        //   start: '2019-08-09T16:00:00'
+        // },
+        // {
+        //   groupId: 999,
+        //   title: 'Repeating Event',
+        //   start: '2019-08-16T16:00:00'
+        // },
+        // {
+        //   title: 'Conference',
+        //   start: '2019-08-11',
+        //   end: '2019-08-13'
+        // },
+        // {
+        //   title: 'Meeting',
+        //   start: '2019-08-12T10:30:00',
+        //   end: '2019-08-12T12:30:00'
+        // },
+        // {
+        //   title: 'Lunch',
+        //   start: '2019-08-12T12:00:00'
+        // },
+        // {
+        //   title: 'Meeting',
+        //   start: '2019-08-12T14:30:00'
+        // },
+        // {
+        //   title: 'Happy Hour',
+        //   start: '2019-08-12T17:30:00'
+        // },
+        // {
+        //   title: 'Dinner',
+        //   start: '2019-08-12T20:00:00'
+        // },
+        // {
+        //   title: 'Birthday Party',
+        //   start: '2019-08-13T07:00:00'
+        // },
+        // {
+        //   title: 'Click for Google',
+        //   url: 'http://google.com/',
+        //   start: '2019-08-28'
+        // }
+      ]
+    });
+
+    calendar.render();
+  // });
+})
+</script>

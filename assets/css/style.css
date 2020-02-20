@@ -3304,3 +3304,79 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
 .margl_65{
   margin-left: -65px !important;
 }
+
+
+.circular {
+  width: 150px;
+  height: 150px;
+  background: none;
+  position: relative;
+}
+
+.circular::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 6px solid #eee;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.circular>span {
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+
+.circular .circular-left {
+  left: 0;
+}
+
+.circular .circular-bar {
+  width: 100%;
+  height: 100%;
+  background: none;
+  border-width: 6px;
+  border-style: solid;
+  position: absolute;
+  top: 0;
+}
+
+.circular .circular-left .circular-bar {
+  left: 100%;
+  border-top-right-radius: 80px;
+  border-bottom-right-radius: 80px;
+  border-left: 0;
+  -webkit-transform-origin: center left;
+  transform-origin: center left;
+}
+
+.circular .circular-right {
+  right: 0;
+}
+
+.circular .circular-right .circular-bar {
+  left: -100%;
+  border-top-left-radius: 80px;
+  border-bottom-left-radius: 80px;
+  border-right: 0;
+  -webkit-transform-origin: center right;
+  transform-origin: center right;
+}
+
+.circular .circular-value {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+
+.rounded-lg {
+  border-radius: 1rem;
+}
+.progress {cursor: progress;}

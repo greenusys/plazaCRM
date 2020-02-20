@@ -28,6 +28,14 @@ class Global_Model extends MY_Model
         return $result;
     }
 
+    public function fetch_holidays(){
+        $this->db->select('*');
+        $this->db->from('tbl_holiday');
+        $query_result = $this->db->get();
+        $result = $query_result->result();
+        return $result;
+    }
+
     public function select_user_roll($designations_id)
     {
         $this->db->select('tbl_user_role.*', FALSE);

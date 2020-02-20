@@ -17,9 +17,9 @@ class Client_Model extends CI_Model{
 	}
 
 	public function fetch_client($id){
-		$checker=array('id'=>$id);
+		$checker=array('client_id'=>$id);
 		$this->db->where($checker);
-		$check = $this->db->get("client_")->result_array();
+		$check = $this->db->get("tbl_client")->result_array();
 		if(count($check)==0 ){
 			return false;
 		}else{
