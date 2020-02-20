@@ -47,6 +47,10 @@ class User extends MY_Controller {
 
 	        $this->load->library('upload', $config);
 	        $this->upload->initialize($config);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1574efa1abb51f6ae5b6565999896d097d36c088
 	        if (!$this->upload->do_upload('profilephoto')) {
 	            $error = array('error' => $this->upload->display_errors());
 	            die(json_encode(array('status'=>'0','msg'=>$error)));
