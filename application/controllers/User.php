@@ -40,19 +40,19 @@ class User extends MY_Controller {
 			$insert=$this->User_model->insert_user($data);
 			$user_id=$insert;
 	        $config['upload_path'] = './uploads/';
-	        $config['allowed_types'] = 'gif|jpg|png';
+	        $config['allowed_types'] = '*';
 	        $config['max_size'] = 2000;
 	        $config['max_width'] = 1500;
 	        $config['max_height'] = 1500;
 
 	        $this->load->library('upload', $config);
-
+	        $this->upload->initialize($config);
 	        if (!$this->upload->do_upload('profilephoto')) {
 	            $error = array('error' => $this->upload->display_errors());
 	            die(json_encode(array('status'=>'0','msg'=>$error)));
 	        } else {
 	        	$upload_data = $this->upload->data(); 
-				$file_name = "uploads/".$upload_data['file_name'];
+				echo $file_name = "uploads/".date('dmYhis').$upload_data['file_name'];
 				$new_data=array('user_id'=>$user_id,
 								'fullname'=>$full_name,
 								'employment_id'=>$employment_id,
