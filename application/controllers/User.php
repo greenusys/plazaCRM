@@ -231,8 +231,8 @@ class User extends MY_Controller {
                 }
             }
             // get public holiday
-            $public_holiday = count($this->total_attendace_in_month($id, TRUE));
-
+            // $public_holiday = count($this->total_attendace_in_month($id, TRUE));
+            $public_holiday=0;
             // get total days in a month
             $month = date('m');
             $year = date('Y');
