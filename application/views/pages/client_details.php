@@ -1,15 +1,20 @@
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 <style type="text/css">
-
+/*
 .tab 
 {
    overflow: hidden;
     background-color:white;
+}*/
+
+#con_list{
+  display: none;
 }
 
-.tab button 
+/*.tab button 
 {
     background-color: #f5f3f3;
     float: left;
@@ -20,16 +25,16 @@
     transition: 0.3s;
     font-size:12px;
 }
-
+*/
 .tab button:hover 
 {
    background-color: #ddd;
 }
-
+/*
 .tab button.active 
 {
    background-color: #ccc;
-}
+}*/
 
 .tabcontent 
 {
@@ -80,13 +85,14 @@
   border-bottom: none;
   border-right: 1px solid #ddd;
 }
-
+.chk_size{
+  width: 20px;
+  height: 20px;
+}
 .tabs-left>li {
   float: none;
  margin:0px;
  border-bottom:1px solid gray;
-
-  
 }
 .tabs-left li a{
 /*line-height: 1.42857143;*/
@@ -274,19 +280,19 @@ font-size: 35px;
                 <li class="w-100 side_br">
                     <a href="#reminder" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Reminder</a>
                 </li>
-                 <li class="w-100 side_br">
+             <!--     <li class="w-100 side_br">
                     <a href="#file_manager" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> File Manager</a>
                 </li>
                 <li class="w-100 side_br">
                     <a href="#maps" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Map</a>
-                </li>
+                </li> -->
               </ul>
            </div>
         </div>
 
         <div class="col-md-9">
             <div class="tab-content">
-                <!----------basic Details------->
+                <!---------- Details------->
                 <div class="tab-pane active" id="details">
                     <div class=" card ">
                         <div class="row m-0">
@@ -418,20 +424,34 @@ font-size: 35px;
 
 });
 </script>
-                <!----------basic Details End------->
-
-                <!----------Bank Details------->
+                <!---------- Details End------->
+<script>
+  $(document).on("click","#update",function(){
+    $(this).hide();
+     $("#con_table").hide();
+    $("#con_form").show();
+    $("#con_list").show();
+  })
+  $(document).on("click","#con_list",function(){
+    $(this).hide();
+     $("#con_table").show();
+    $("#con_form").hide();
+    $("#update").show();
+  })
+</script>
+                <!----------Contact Details------->
                 <div class="tab-pane " id="contacts">
                   <div class=" card ">
                         <div class="row m-0">
                             <div class="col-md-10">
                               <h6 class="m-0 mt-1">Contacts</h6></div>
                             <div class="col-md-2 text-right"> 
-                                <span class="text-primary font-weight-bold new_contact" id="update"><i class="far fa-edit"></i> New Contact</span>
+                                <a href="javascript:void(0)" class="text-primary font-weight-bold new_contact " id="update"><i class="far fa-edit"></i> New Contact</a>
+                                 <a href="javascript:void(0)" class="text-primary font-weight-bold new_contact " id="con_list"><i class="far fa-edit"></i> Return to List</a>
                             </div>
                         </div>
                       <div class="line mt-2"></div>
-                      <div class="">
+                      <div class="p-2" id="con_table">
                             <table id="example" class="display nowrap" style="width:100%">
                                 <thead>
                                     <tr>
@@ -449,519 +469,526 @@ font-size: 35px;
                                 </tbody>
                             </table>
                       </div>
+                      <div class="p-2" id="con_form" style="display: none">
+                        <form method="" action="">
+                        <div class="row">
+                          <div class="col-md-7">
+                                <div class="row form-group">
+                                  <label class="col-md-4 text-right">Full Name <sup class="text-danger">*</sup></label>
+                                  <div class="col-md-8">
+                                    <input type="text" name="" placeholder="Full Name" class="form-control">
+                                  </div>
+                                </div>
+                                <div class="row form-group">
+                                  <label class="col-md-4 text-right">Email<sup class="text-danger">*</sup></label>
+                                  <div class="col-md-8">
+                                    <input type="email" name="" placeholder="Email" class="form-control">
+                                  </div>
+                                </div>
+                                <div class="row form-group">
+                                  <label class="col-md-4 text-right">Phone </label>
+                                  <div class="col-md-8">
+                                    <input type="tel" name="" placeholder="Phone" maxlength="10" minlength="9" class="form-control">
+                                  </div>
+                                </div>
+                                
+                                <div class="row form-group">
+                                  <label class="col-md-4 text-right">Mobile <sup class="text-danger">*</sup></label>
+                                  <div class="col-md-8">
+                                    <input type="tel" name="" placeholder="Full Name"  maxlength="10" minlength="9" class="form-control">
+                                  </div>
+                                </div>
+                               
+                                <div class="row form-group">
+                                  <label class="col-md-4 text-right">Skype ID <sup class="text-danger">*</sup></label>
+                                  <div class="col-md-8">
+                                    <input type="text" name="" placeholder="Skype ID" class="form-control">
+                                  </div>
+                                </div>
+                                <div class="row form-group">
+                                    <label class="col-md-4 text-right">Language <sup class="text-danger">*</sup></label>
+                                    <div class="col-md-8">
+                                    <select name="" class="form-control">
+                                  
+                                      <option value="English">English</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="row form-group">
+                                    <label class="col-md-4 text-right">Locale <sup class="text-danger">*</sup></label>
+                                    <div class="col-md-8">
+                                      <select name="" class="form-control">
+                                      <option value="English">English</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                 <div class="row form-group">
+                                    <label class="col-md-4 text-right">Direction <sup class="text-danger">*</sup></label>
+                                    <div class="col-md-8">
+                                      <select name="" class="form-control">
+                                      <option value="LTR">LTR</option>
+                                      <option value="RTL">RTL</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="row form-group">
+                                  <label class="col-md-4 text-right">Username <sup class="text-danger">*</sup></label>
+                                  <div class="col-md-8">
+                                    <input type="text" name="" placeholder="Username" class="form-control">
+                                  </div>
+                                </div>
+                                <div class="row form-group">
+                                  <label class="col-md-4 text-right">Password <sup class="text-danger">*</sup></label>
+                                  <div class="col-md-8">
+                                    <input type="password" name="" placeholder="Password" class="form-control">
+                                  </div>
+                                </div>
+                                <div class="row form-group">
+                                  <label class="col-md-4 text-right">Confirm Password <sup class="text-danger">*</sup></label>
+                                  <div class="col-md-8">
+                                    <input type="password" name="" placeholder="Confirm Password" class="form-control">
+                                  </div>
+                                </div>
+                                <div class="row form-group">
+                                  <label class="col-md-4 text-right">Send Email Password</label>
+                                  <div class="col-md-8">
+                                    <input type="checkbox" name="" placeholder="" class="mt-n1 chk_size form-control">
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                               <h5>Permission</h5>
+                               <div class="form-group">
+                                  <label class="col-md-6 text-right">Dashboard</label>
+                                  <input type="checkbox" name="" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+                               </div>
+                               <div class="form-group">
+                                  <label class="col-md-6 text-right">File Manager</label>
+                                  <input type="checkbox" name="" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+                               </div>
+                               <div class="form-group">
+                                  <label class="col-md-6 text-right">Mailbox</label>
+                                  <input type="checkbox" name="" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+                               </div>
+                               <div class="form-group">
+                                  <label class="col-md-6 text-right">Projects</label>
+                                  <input type="checkbox" name="" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+                               </div>
+                               <div class="form-group">
+                                  <label class="col-md-6 text-right">Bugs</label>
+                                  <input type="checkbox" name="" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+                               </div>
+                               <div class="form-group">
+                                  <label class="col-md-6 text-right">Invoices</label>
+                                  <input type="checkbox" name="" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+                               </div>
+                               <div class="form-group">
+                                  <label class="col-md-6 text-right">Refund Item</label>
+                                  <input type="checkbox" name="" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+                               </div>
+                               <div class="form-group">
+                                  <label class="col-md-6 text-right">Estimates</label>
+                                  <input type="checkbox" name="" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+                               </div>
+                               <div class="form-group">
+                                  <label class="col-md-6 text-right">Payments</label>
+                                  <input type="checkbox" name="" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+                               </div>
+                               <div class="form-group">
+                                  <label class="col-md-6 text-right">Proposals</label>
+                                  <input type="checkbox" name="" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+                               </div>
+                               <div class="form-group">
+                                  <label class="col-md-6 text-right">Tickets</label>
+                                  <input type="checkbox" name="" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+                               </div>
+                               <div class="form-group">
+                                  <label class="col-md-6 text-right">Quotations</label>
+                                  <input type="checkbox" name="" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+                               </div>
+                               <div class="form-group">
+                                  <label class="col-md-6 text-right">Users</label>
+                                  <input type="checkbox" name="" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+                               </div>
+                               <div class="form-group">
+                                  <label class="col-md-6 text-right">Settings</label>
+                                  <input type="checkbox" name="" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+                               </div>
+                               <div class="form-group">
+                                  <label class="col-md-6 text-right">Private Chat</label>
+                                  <input type="checkbox" name="" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+                               </div>
+                               <div class="form-group">
+                                  <label class="col-md-6 text-right">Knowledge Base</label>
+                                  <input type="checkbox" name="" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+                               </div>
+                            </div>
+                          </div>
+                        </form>  
+                      </div>
                     </div>
                 </div>
-                <!----------Bank Details-End ------>
+                <!----------Contact Details-End ------>
 
-                <!----------Document Details------->
+                <!----------Notes ------>
                 <div class="tab-pane " id="notes">
-                    <div class="container bg-white card ">
-                        <div class="row">
-                            <div class="col-md-10"><h6 class="mt">User Document</h6></div>
+                    <div class=" card ">
+                        <div class="row m-0">
+                            <div class="col-md-10">
+                              <h6 class="m-0 mt-1">Notes</h6></div>
                             <div class="col-md-2 text-right"> 
-                                <span class="text-primary font-weight-bold " data-toggle="modal" data-target="#documentModal" id="update">Update</span>
+                                <span class="text-primary font-weight-bold pointer" id="new_notes">New Notes</span>
                             </div>
                         </div>
                       <div class="line mt-2"></div>
-                      <div class="">
-                           <!--  <table class="table table-striped border">
+                      <div class="p-2">
+                        <div style="display: none" class="mb-4" id="notes_togle">
+                          <form action="" method="POST">
+                            <textarea name="editor" rows="5" id="editor" name=""> </textarea>
+                            <div class="text-right">
+                              <button class="btn btn-info mt-2" type="submit">Save</button>
+                            </div>
+                          </form>
+                        </div>
+
+                            <table class="table table-striped border ">
                                 <thead>
                                     <tr>
-                                       <th scope="col" class="fs1">Bank</th>
-                                       <th scope="col" class="fs1">Name of Account</th>
-                                       <th scope="col" class="fs1">Routing Number</th>
-                                       <th scope="col" class="fs1"> Account Number</th>
-                                       <th scope="col" class="fs1"> Action</th>
+                                       <th scope="col" class="fs1">Description</th>
+                                       <th scope="col" class="fs1">Added by</th>
+                                       <th scope="col" class="fs1">Date</th>
+                                       <th scope="col" class="fs1">Action</th>
+                                  
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr>
+                                      <td>a</td>
+                                      <td>s</td>
+                                      <td>d</td>
+                                      <td>f</td>
                                     
-                                </tbody>
-                            </table> -->
-                      </div>
-                    </div>
-                </div>
-                <!----------Document Details-End ------>
-
-               <!----------Salary Details------->
-                <div class="tab-pane " id="invoices">
-                    <div class="container bg-white card ">
-                        <div class="row">
-                            <div class="col-md-10"><h6 class="mt">Bank Details</h6></div>
-                            <div class="col-md-2 text-right"> 
-                                <span class="text-primary font-weight-bold " data-toggle="modal" data-target="#bankModal" id="update">Update</span>
-                            </div>
-                        </div>
-                      <div class="line mt-2"></div>
-                      <div class="">
-                       <!--      <table class="table table-striped border">
-                                <thead>
-                                    <tr>
-                                       <th scope="col" class="fs1">Bank</th>
-                                       <th scope="col" class="fs1">Name of Account</th>
-                                       <th scope="col" class="fs1">Routing Number</th>
-                                       <th scope="col" class="fs1"> Account Number</th>
-                                       <th scope="col" class="fs1"> Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    
-                                </tbody>
-                            </table> -->
-                            <p>There is no data to display!</p>
-                      </div>
-                    </div>
-                </div>
-                <!----------Salary Details-End ------>
-
-                <!----------Timecard Details------->
-                <div class="tab-pane " id="payments">
-                    <div class="container bg-white card ">
-                        <div class="row">
-                            <div class="col-md-10"><h6 class="mt">Bank Details</h6></div>
-                            <div class="col-md-2 text-right"> 
-                                <span class="text-primary font-weight-bold " data-toggle="modal" data-target="#bankModal" id="update">Update</span>
-                            </div>
-                        </div>
-                      <div class="line mt-2"></div>
-                      <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="offset-2 col-sm-2">
-                                    <label for="exampleInputEmail1" class="label-style">Month <span class="text-danger">*</span></label>
-                                </div>
-                                <div class="col-sm-4">
-                                    <input type="text" id="datepicker" placeholder="2020-2" class="form-control">
-                                </div>
-                                <div class="col-sm-1">
-                                    <button type="button" id="acount" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
-                                </div>
-                                <div class="offset-1 col-sm-1">
-                                    <a href="timedetails.php"><button type="button" class="btn btn-primary butn  font-weight-bold">Go</button></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card shadow p-3 mt-4">
-                    <div class="row">
-                        <div class="col-sm-12">
-                           <h6 class="font-weight-bold">Works Hours Details of February-2020</h6>
-                        </div>
-                    </div>
-                    <div class="line"></div>
-                    <div class="">
-                        <div class="row mt-2">
-                           <div class="col-md-12">
-                              <h6 class="font-weight-bold text-color">Week : 05</h6>
-                           </div>
-                           <div class="col-md-12 line1"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-striped  table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" class="fs1">02.01.2020</th>
-                                            <th scope="col" class="fs1">02.02.2020</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td scope="row">
-                                                0 : 0 m
-                                            </td>
-                                            <td scope="row">
-                                                0 : 40 m  
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="row p-2">
-                            <h6><strong>Total Working Hour :</strong> 0 : 40 m</h6>
-                        </div>
-                    </div>
-                    
-                    <div class="">
-                        <div class="row mt-2">
-                           <div class="col-md-12">
-                              <h6 class="font-weight-bold text-color">Week : 06</h6>
-                           </div>
-                           <div class="col-md-12 line1"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-striped  table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" class="fs1">02.01.2020</th>
-                                            <th scope="col" class="fs1">02.02.2020</th>
-                                            <th scope="col" class="fs1">02.01.2020</th>
-                                            <th scope="col" class="fs1">02.02.2020</th>
-                                            <th scope="col" class="fs1">02.01.2020</th>
-                                            <th scope="col" class="fs1">02.02.2020</th>
-                                            <th scope="col" class="fs1">02.02.2020</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td scope="row">
-                                                0 : 0 m
-                                            </td>
-                                            <td scope="row">
-                                                0 : 40 m  
-                                            </td>
-                                            <td scope="row">
-                                                0 : 0 m
-                                            </td>
-                                            <td scope="row">
-                                                0 : 40 m  
-                                            </td>
-                                            <td scope="row">
-                                                0 : 0 m
-                                            </td>
-                                            <td scope="row">
-                                                0 : 40 m  
-                                            </td>
-                                            <td scope="row">
-                                                0 : 40 m  
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="row p-2">
-                            <h6><strong>Total Working Hour :</strong> 0 : 2 m</h6>
-                        </div>
-                    </div>
-                    
-                    <div class="">
-                        <div class="row mt-2">
-                           <div class="col-md-12">
-                              <h6 class="font-weight-bold text-color">Week : 07</h6>
-                           </div>
-                           <div class="col-md-12 line1"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-striped  table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" class="fs1">02.01.2020</th>
-                                            <th scope="col" class="fs1">02.02.2020</th>
-                                            <th scope="col" class="fs1">02.01.2020</th>
-                                            <th scope="col" class="fs1">02.02.2020</th>
-                                            <th scope="col" class="fs1">02.01.2020</th>
-                                            <th scope="col" class="fs1">02.02.2020</th>
-                                            <th scope="col" class="fs1">02.02.2020</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td scope="row">
-                                                <h6  class="bg-danger text-white text-center p-1">Active</h6>
-                                            </td>
-                                            <td scope="row">
-                                                0 : 40 m  
-                                            </td>
-                                            <td scope="row">
-                                                0 : 0 m
-                                            </td>
-                                            <td scope="row">
-                                                0 : 40 m  
-                                            </td>
-                                            <td scope="row">
-                                                0 : 0 m
-                                            </td>
-                                            <td scope="row">
-                                                0 : 40 m  
-                                            </td>
-                                            <td scope="row">
-                                                0 : 40 m  
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="row p-2">
-                            <h6><strong>Total Working Hour :</strong> 0 : 0 m</h6>
-                        </div>
-                    </div>
-                    
-                </div>
-                    </div>
-                </div>
-                <!----------Timecard Details-End ------>
-
-                 <!----------Leave Details ------>
-                    <div class="tab-pane " id="estimates">
-                        <div class="card shadow p-3">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                   <h6 class="font-weight-bold">Leave Details Of Adminko</h6>
-                                </div>
-                            </div>
-                            <div class="line"></div>
-                        <div class="row p-2">
-                            <table class="table table-striped  ">
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">
-                                            <h6 class="label-style">Sick</h6>
-                                        </th>
-                                        <td scope="row">
-                                            0/2 
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <h6 class="label-style">Marriage</h6>
-                                        </th>
-                                        <td scope="row">
-                                            0/3
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <h6 class="label-style">:</h6>
-                                        </th>
-                                        <td scope="row">
-                                            0/0
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <h6 class="label-style">emergency</h6>
-                                        </th>
-                                        <td scope="row">
-                                            0/0
-                                        </td>
-                                    </tr>
-                                    <tr class="bg-dark text-white">
-                                        <th scope="row">
-                                            <h6 class=" text-white">Total</h6>
-                                        </th>
-                                        <td scope="row">
-                                            0/5
-                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                        </div> 
-                         <div class="card shadow p-3 mt-4 h-50">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                   <h6 class="font-weight-bold">Leave Report</h6>
-                                </div>
-                            </div>
-                            <div class="line"></div>
-                        </div> 
+                      </div>
                     </div>
-                  <!----------Leave Details End ------>
+                </div>
+                <script>
+                  $(document).on("click","#new_notes",function(){
+                    $("#notes_togle").slideToggle("slow");
+                  })
+                </script>
+                <!----------Notes End ------>
 
-                  <!----------Provident fund ------>
+               <!----------Invoices Details------->
+                <div class="tab-pane " id="invoices">
+                     <div class=" card ">
+                        <div class="row m-0">
+                            <div class="col-md-10">
+                              <h6 class="m-0 mt-1">Invoices</h6></div>
+                            <div class="col-md-2 text-right"> 
+                                <a  href="" class="text-white bg-primary font-weight-bold px-1">New Invoice</a>
+                            </div>
+                        </div>
+                      <div class="line mt-2"></div>
+                      <div class="p-2">
+                            <table class="display nowrap alldatatable" style="width:100%">
+                                <thead>
+                                    <tr>
+                                       <th scope="col" class="fs1">Ref No</th>
+                                       <th scope="col" class="fs1">Date Issued</th>
+                                       <th scope="col" class="fs1">Due Date</th>
+                                       <th scope="col" class="fs1">Amount</th>
+                                     
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+                           
+                      </div>
+                    </div>
+                </div>
+                <!----------Invoices Details-End ------>
+
+                <!----------Payments------->
+                <div class="tab-pane " id="payments">
+                   <div class=" card ">
+                        <div class="row m-0">
+                            <div class="col-md-10">
+                              <h6 class="m-0 mt-1">Payments</h6></div>
+                            <div class="col-md-2 text-right"> 
+                                <!-- <span class="text-primary font-weight-bold " data-toggle="modal" data-target="#bankModal" id="update">Zip Payment</span> -->
+                            </div>
+                        </div>
+                      <div class="line mt-2"></div>
+                      <div class="p-2">
+                           <table class="table table-striped border ">
+                                <thead>
+                                    <tr>
+                                       <th scope="col" class="fs1">Payment Date</th>
+                                       <th scope="col" class="fs1">Invoice Date</th>
+                                       <th scope="col" class="fs1">Invoice</th>
+                                       <th scope="col" class="fs1">Amount</th>
+                                       <th scope="col" class="fs1">Payment Method</th>
+                                       <th scope="col" class="fs1">Action</th>
+                                  
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                      <td>a</td>
+                                      <td>s</td>
+                                      <td>d</td>
+                                      <td>f</td>
+                                      <td>d</td>
+                                      <td>f</td>
+                                    </tr>
+                                </tbody>
+                            </table>    
+                      </div>
+                      <div class="row m-0 mt-4 bg-gray p-2 ">
+                        <div class="col-md-4">Paid Amount : <span class="bg-primary text-white rounded p-1">$ 00.00</span></div>
+                      
+                      </div>
+                    </div>
+                </div>
+                <!----------Payments End ------>
+
+                 <!----------Estimates ------>
+                    <div class="tab-pane " id="estimates">
+                      <div class=" card ">
+                        <div class="row m-0">
+                            <div class="col-md-10">
+                              <h6 class="m-0 mt-1">Estimates</h6></div>
+                            <div class="col-md-2 text-right"> 
+                                <a href="" class="bg-primary font-weight-bold px-1 text-white" >New Estimate</a>
+                            </div>
+                        </div>
+                        <div class="line mt-2"></div>
+                        <div class="p-2">
+                             <table class="table table-striped border ">
+                                  <thead>
+                                      <tr>
+                                         <th scope="col" class="fs1">Ref No</th>
+                                         <th scope="col" class="fs1">Date Issued</th>
+                                         <th scope="col" class="fs1">Due Date</th>
+                                         <th scope="col" class="fs1">Amount</th>
+                                     
+                                    
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr>
+                                        <td>a</td>
+                                        <td>s</td>
+                                        <td>d</td>
+                                        <td>f</td>
+                                      
+                                      </tr>
+                                  </tbody>
+                              </table>    
+                        </div>
+                        <div class="row m-0 mt-4 bg-gray p-2 ">
+                          <div class="col-md-4">Paid Amount : <span class="bg-primary text-white rounded p-1">$ 00.00</span></div>
+                        
+                        </div>
+                      </div>
+                    </div>
+                  <!----------Estimates End ------>
+
+                  <!----------All Proposals fund ------>
                     <div class="tab-pane  " id="proposals">
-                        <div class="card shadow mb-4">
-                            <div class="row p-2">
-                                <div class="col-sm-10">
-                                   <h6 class="font-weight-bold mt-2"><i class="fa fa-calendar"></i> Provident Fund 2020</h6>
-                                </div>
-                                <div class="col-sm-2">
-                                    <div class="bg-primary w-50 p-2 m-auto text-center"data-toggle="tooltip" data-placement="top" title="Download PDF">
-                                        <i class="fa fa-file-pdf-o" style="color:white"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="line"></div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="offset-2 col-sm-1">
-                                                <label for="exampleInputEmail1" class="label-style">Year  <span class="text-danger">*</span></label>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <input type="text" id="datepicker" placeholder="2020" class="form-control">
-                                            </div>
-                                            <div class="col-sm-1">
-                                                <button type="button" id="acount" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
-                                            </div>
-                                            <div class=" col-sm-1">
-                                                <a href="provident.php"><button type="button" class="btn btn-primary butn text-white font-weight-bold">Go</button></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-md-12">
-                                    <table class="table table-striped ">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col" class="fs1">Overtime Date</th>
-                                                <th scope="col" class="fs1">Overtime Hour</th>
-                                                <th scope="col" class="fs1">Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td scope="row"></td>
-                                                <td scope="row">Total Overtime Hour :   0 : 0 m</td>
-                                                <td scope="row"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>  
-                    </div>
-                  <!----------Provident fund End ------>
-
-                  <!----------overtime Details ------>
-                    <div class="tab-pane " id="transaction">
-                        <div class="card shadow mb-4">
-                            <div class="row p-2">
-                                <div class="col-sm-10">
-                                   <h6 class="font-weight-bold mt-2"><i class="fa fa-calendar"></i> Provident Fund 2020</h6>
-                                </div>
-                                <div class="col-sm-2">
-                                    <div class="bg-primary w-50 p-2 m-auto text-center"data-toggle="tooltip" data-placement="top" title="Download PDF">
-                                        <i class="fa fa-file-pdf-o" style="color:white"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="line"></div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="offset-2 col-sm-1">
-                                                <label for="exampleInputEmail1" class="label-style">Year  <span class="text-danger">*</span></label>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <input type="text" id="datepicker" placeholder="2020" class="form-control">
-                                            </div>
-                                            <div class="col-sm-1">
-                                                <button type="button" id="acount" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
-                                            </div>
-                                            <div class=" col-sm-1">
-                                                <a href="provident.php"><button type="button" class="btn btn-primary butn text-white font-weight-bold">Go</button></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-md-12">
-                                    <table class="table table-striped ">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col" class="fs1">Payment Month</th>
-                                                <th scope="col" class="fs1">Payment Date</th>
-                                                <th scope="col" class="fs1">Amount</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td scope="row"></td>
-                                                <td scope="row"></td>
-                                                <td scope="row">
-                                                    Total Provident Fund :  â‚¬ 0,00
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                      <div class=" card ">
+                        <div class="row m-0">
+                            <div class="col-md-10">
+                              <h6 class="m-0 mt-1">All Proposals</h6></div>
+                            <div class="col-md-2 text-right"> 
+                                <a href="" class="bg-primary font-weight-bold px-1 text-white" >New Proposals</a>
                             </div>
                         </div>
+                        <div class="line mt-2"></div>
+                        <div class="p-2">
+                             <table class="table table-striped border ">
+                                  <thead>
+                                      <tr>
+                                         <th scope="col" class="fs1">Proposal #</th>
+                                         <th scope="col" class="fs1">Proposals date</th>
+                                         <th scope="col" class="fs1">Expired date</th>
+                                         <th scope="col" class="fs1">Status</th>
+                                         <th scope="col" class="fs1">Action</th>
+                                    
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr>
+                                        <td>a</td>
+                                        <td>s</td>
+                                        <td>d</td>
+                                        <td>f</td>
+                                        <td>f</td>
+                                      </tr>
+                                  </tbody>
+                              </table>    
+                        </div>
+                        <div class="row m-0 mt-4 bg-gray p-2 ">
+                          <div class="col-md-4">Paid Amount : <span class="bg-primary text-white rounded p-1">$ 00.00</span></div>
+                         
+                        </div>
+                      </div> 
                     </div>
-                  <!----------overtime Details End ------>
+                  <!----------Proposals End ------>
 
-                  <!----------tasks ------>
-                    <div class="tab-pane " id="projects">
-                        <div class="card shadow p-3">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                   <h6 class="font-weight-bold">Total Task Time Spent</h6>
-                                </div>
+                  <!----------Transaction------>
+                    <div class="tab-pane " id="transaction">
+                      <div class=" card ">
+                        <div class="row m-0">
+                            <div class="col-md-10">
+                              <h6 class="m-0 mt-1">Transaction</h6></div>
+                            <div class="col-md-2 text-right"> 
+                                <!-- <a href="" class="bg-primary font-weight-bold px-1 text-white" >New Proposals</a> -->
                             </div>
-                            <div class="line"></div>
-                            <div class="row p-5 m-auto">
-                                <div class="col-md-12  text-center">
-                                    <h1 class="timer">0:0:9</h1>
-                                </div>
-                                <div class="col-md-12  text-center">
-                                   <h6 class="label-style">Hours &nbsp; Minutes &nbsp; Seconds</h6> 
-                                </div>                     
-                            </div>
-                        </div> 
-                    
-                        <div class="card shadow p-3 mt-4">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                   <h6 class="font-weight-bold ">Task Reports</h6>
-                                </div>
-                            </div>
-                            <div class="line"></div>
-                            <div class="row p-1">
-                                <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-                            </div>
-                        </div>      
+                        </div>
+                        <div class="line mt-2"></div>
+                        <div class="p-2">
+                             <table class="table table-striped border ">
+                                  <thead>
+                                      <tr>
+                                         <th scope="col" class="fs1">Date</th>
+                                         <th scope="col" class="fs1">Accounts</th>
+                                         <th scope="col" class="fs1">Type</th>
+                                         <th scope="col" class="fs1">Amount</th>
+                                         <th scope="col" class="fs1">Action</th>
+                                    
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr>
+                                        <td>a</td>
+                                        <td>s</td>
+                                        <td>d</td>
+                                        <td>f</td>
+                                        <td>f</td>
+                                      </tr>
+                                  </tbody>
+                              </table>    
+                        </div>
+                        <div class="row m-0 mt-4 bg-gray p-2 ">
+                          <div class="col-md-4">Total Income : <span class="bg-primary text-white rounded p-1">$ 00.00</span></div>
+                         <div class="col-md-8 text-right text-danger">Total Expense : <span class="bg-danger text-white rounded p-1">$ 00.00</span></div>
+                        </div>
+                      </div>
                     </div>
-                  <!----------tasks End ------>
+                  <!----------Transaction End ------>
 
                   <!----------Projects ------>
-                    <div class="tab-pane " id="tickets">
-                        <div class="card shadow p-3">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                   <h6 class="font-weight-bold">Total Projects Time Spent</h6>
-                                </div>
-                            </div>
-                            <div class="line"></div>
-                            <div class="row p-5 m-auto">
-                                <div class="col-md-12  text-center">
-                                    <h1 class="timer">0:0:9</h1>
-                                </div>
-                                <div class="col-md-12  text-center">
-                                   <h6 class="label-style">Hours &nbsp; Minutes &nbsp; Seconds</h6> 
-                                </div>                     
-                            </div>
-                        </div> 
-                
-                        <div class="card shadow p-3 mt-4">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                   <h6 class="font-weight-bold ">Projects Reports</h6>
-                                </div>
-                            </div>
-                            <div class="line"></div>
-                            <div class="row p-1">
-                                <div id="projectchartContainer" style="height: 370px; width: 100%;"></div>
+                    <div class="tab-pane " id="projects">
+                      <div class=" card ">
+                        <div class="row m-0">
+                            <div class="col-md-10">
+                              <h6 class="m-0 mt-1">Projects</h6></div>
+                            <div class="col-md-2 text-right"> 
+                                <span class="text-primary font-weight-bold pointer" >New Projects</span>
                             </div>
                         </div>
+                        <div class="line mt-2"></div>
+                        <div class="p-2">
+                             <table class="table table-striped border ">
+                                  <thead>
+                                      <tr>
+                                         <th scope="col" class="fs1">Project Name</th>
+                                         <th scope="col" class="fs1">End Date</th>
+                                         <th scope="col" class="fs1">Status</th>
+                                    
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr>
+                                        <td>a</td>
+                                        <td>s</td>
+                                        <td>d</td>
+                                      </tr>
+                                  </tbody>
+                              </table>    
+                        </div>
+                       
+                      </div>  
                     </div>
                   <!----------Projects End ------>
 
-                  <!----------Bugs ------>
-                    <div class="tab-pane " id="bugs">
-                         <div class="card shadow p-3 mt-4">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                   <h6 class="font-weight-bold ">Bugs Reports</h6>
-                                </div>
-                            </div>
-                            <div class="line"></div>
-                            <div class="row p-1">
-                                <div id="bugschartContainer" style="height: 370px; width: 100%;"></div>
+                  <!----------Tickets ------>
+                    <div class="tab-pane " id="tickets">
+                      <div class=" card ">
+                        <div class="row m-0">
+                            <div class="col-md-10">
+                              <h6 class="m-0 mt-1">Tickets</h6></div>
+                            <div class="col-md-2 text-right"> 
+                                <span class="text-primary font-weight-bold pointer" >New Tickets</span>
                             </div>
                         </div>
+                        <div class="line mt-2"></div>
+                        <div class="p-2">
+                             <table class="table table-striped border ">
+                                  <thead>
+                                      <tr>
+                                        <th scope="col" class="fs1">Subject </th>
+                                        <th scope="col" class="fs1"> Date</th>
+                                        <th scope="col" class="fs1"> Reporter</th>
+                                        <th scope="col" class="fs1">Status</th>
+                                        <th scope="col" class="fs1"> Action</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr>
+                                        <td>a</td>
+                                        <td>s</td>
+                                        <td>d</td>
+                                        <td>s</td>
+                                        <td>d</td>
+                                      </tr>
+                                  </tbody>
+                              </table>    
+                        </div>
+                      </div>  
+                    </div>
+                  <!----------Tickets End ------>
+
+                  <!----------Bugs ------>
+                    <div class="tab-pane " id="bugs">
+                      <div class=" card ">
+                        <div class="row m-0">
+                            <div class="col-md-10">
+                              <h6 class="m-0 mt-1">Bugs</h6></div>
+                            <div class="col-md-2 text-right"> 
+                                <span class="text-primary font-weight-bold pointer" >New Bugs</span>
+                            </div>
+                        </div>
+                        <div class="line mt-2"></div>
+                        <div class="p-2">
+                             <table class="table table-striped border ">
+                                  <thead>
+                                      <tr>
+                                        <th scope="col" class="fs1">Bug Title </th>
+                                        <th scope="col" class="fs1">Status</th>
+                                        <th scope="col" class="fs1">Priority</th>
+                                        <th scope="col" class="fs1">Reporter</th>
+                                        <th scope="col" class="fs1">Assigned To</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr>
+                                        <td>a</td>
+                                        <td>s</td>
+                                        <td>d</td>
+                                        <td>s</td>
+                                        <td>d</td>
+                                      </tr>
+                                  </tbody>
+                              </table>    
+                        </div>
+                      </div>  
                     </div>
                   <!----------Bugs End ------>
 
@@ -974,15 +1001,104 @@ font-size: 35px;
                                 </div>
                             </div>
                             <div class="line"></div>
-                            <div class="row p-1">
-                                <div id="bugschartContainer" style="height: 370px; width: 100%;"></div>
+                            <div class=" p-2">
+                              <div class="tab">
+                                <div class="offset-3 col-md-9 tabsb">
+                                  <button class="tablinks active" onclick="openCity(event, 'reminderList')">Reminder List</button>
+                                  <button class="tablinks" onclick="openCity(event, 'setReminder')">Set Reminder</button>
+                                </div>
+                              </div>
+                            
+                                <div id="reminderList" class="tabcontent active">
+                                   <table class="table table-striped border ">
+                                        <thead>
+                                            <tr>
+                                              <th scope="col" class="fs1">Bug Title </th>
+                                              <th scope="col" class="fs1">Status</th>
+                                              <th scope="col" class="fs1">Priority</th>
+                                              <th scope="col" class="fs1">Reporter</th>
+                                              <th scope="col" class="fs1">Assigned To</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                              <td>a</td>
+                                              <td>s</td>
+                                              <td>d</td>
+                                              <td>s</td>
+                                              <td>d</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>    
+                                </div>
+                                <div id="setReminder" class="tabcontent">
+                                  <form  method="post" action="">
+                                    <div class="form-group row">
+                                      <label class="col-md-3 text-right">Date to be notified<sup class="text-danger">*</sup></label>
+                                       <div class="col-sm-7">
+                                          <input type="number" class="form-control" name="compPhone" >
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                      <label class="col-md-3 text-right">Description</label>
+                                       <div class="col-sm-7">
+                                          <textarea rows="4" class="form-control" name=""></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                      <label class="col-md-4 text-right">Set Reminder To <sup class="text-danger">*</sup></label>
+                                      <div class="col-md-8">
+                                        <select name="" id="cust_grp" class="form-control">
+                                          <option value="">Adminko</option>
+                                          <option value="">RTL</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div class="text-center">
+                                      <input type="checkbox" class="form-control chk_size" name="" >&nbsp;
+                                      <label class=" ">Send also an email for this reminder</label>
+                                    </div>
+                                     <div class="text-center">
+                                      <button type="submit" class="btn btn-primary">Update</button>
+                                    </div>
+                                  </form>
+                                </div>
+                                
                             </div>
+                           
                         </div>
                     </div>
+                    <script type="text/javascript">
+                       $(document).ready(function() {
+                           $("#cust_grp").select2(); 
+                        });
+                    </script>
+                       <script>
+                            function openCity(evt, cityName) {
+                              var i, tabcontent, tablinks;
+                              tabcontent = document.getElementsByClassName("tabcontent");
+                              for (i = 0; i < tabcontent.length; i++) {
+                              tabcontent[i].style.display = "none";
+                              }
+                              tablinks = document.getElementsByClassName("tablinks");
+                              for (i = 0; i < tablinks.length; i++) {
+                              tablinks[i].className = tablinks[i].className.replace(" active", "");
+                              }
+                              document.getElementById(cityName).style.display = "block";
+                              evt.currentTarget.className += " active";
+                            }
+                            </script>
+                          
+                          <script>
+                            $( document ).ready(function() 
+                            {
+                              $('#reminderList').css('display','block');
+                            })
+                        </script>
                   <!----------Reminder End ------>
 
                    <!----------File Manager ------>
-                    <div class="tab-pane " id="file_manager">
+          <!--           <div class="tab-pane " id="file_manager">
                          <div class="card shadow p-3 mt-4">
                             <div class="row">
                                 <div class="col-sm-12">
@@ -994,64 +1110,13 @@ font-size: 35px;
                                 <div id="bugschartContainer" style="height: 370px; width: 100%;"></div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                   <!----------File Manager End ------>
 
                   <!----------Maps ------>
-                    <div class="tab-pane  " id="maps">
-                        <div class="card shadow p-3 mt-4">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                   <h6 class="font-weight-bold ">All Activities</h6>
-                                </div>
-                            </div>
-                            <div class="line"></div>
-                            <div class="row p-1">
-                               <table class="table table-striped ">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col" class="fs1">Date</th>
-                                                <th scope="col" class="fs1">Module</th>
-                                                <th scope="col" class="fs1">Activity</th>
-                                                <th scope="col" class="fs1"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td scope="row">02.12.2020 19:26</td>
-                                                <td scope="row">Adminko</td>
-                                                <td scope="row">Performance</td>
-                                                <td scope="row">Performance Appraisal Saved ravish beg ForMar 2020</td>
-                                            </tr>
-                                            <tr>
-                                                <td scope="row">02.12.2020 19:26</td>
-                                                <td scope="row">Adminko</td>
-                                                <td scope="row">Performance</td>
-                                                <td scope="row">Performance Appraisal Saved ravish beg ForMar 2020</td>
-                                            </tr>
-                                            <tr>
-                                                <td scope="row">02.12.2020 19:26</td>
-                                                <td scope="row">Adminko</td>
-                                                <td scope="row">Performance</td>
-                                                <td scope="row">Performance Appraisal Saved ravish beg ForMar 2020</td>
-                                            </tr>
-                                            <tr>
-                                                <td scope="row">02.12.2020 19:26</td>
-                                                <td scope="row">Adminko</td>
-                                                <td scope="row">Performance</td>
-                                                <td scope="row">Performance Appraisal Saved ravish beg ForMar 2020</td>
-                                            </tr>
-                                            <tr>
-                                                <td scope="row">02.12.2020 19:26</td>
-                                                <td scope="row">Adminko</td>
-                                                <td scope="row">Performance</td>
-                                                <td scope="row">Performance Appraisal Saved ravish beg ForMar 2020</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                        </div>      
-                    </div>
+               <!--      <div class="tab-pane  " id="maps">
+                            
+                    </div> -->
                   <!----------Maps End ------>
             </div>
         </div>
@@ -1208,95 +1273,6 @@ function explodePie(e) {
   } );
 </script>
 
-<div class="modal fade" id="bankModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-                            
-            <div class="modal-content style" id="currency" style="display:none">
-                <div class="modal-header border-bottom-0">
-                    <h5 class="modal-title font-weight-bold" id="exampleModalLabel">New Bank</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="line"></div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <label for="exampleInputEmail1" class="label-style">Bank Name<span class="text-danger">*</span></label>
-                                </div>
-                                <div class="col-sm-12">
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" >
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <label for="exampleInputEmail1" class="label-style">Routing Number<span class="text-danger">*</span></label>
-                                </div>
-                                <div class="col-sm-12">
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" >
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <label for="exampleInputEmail1" class="label-style">Name of Account<span class="text-danger">*</span></label>
-                                </div>
-                                <div class="col-sm-12">
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" >
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <label for="exampleInputEmail1" class="label-style">Account Number<span class="text-danger">*</span></label>
-                                </div>
-                                <div class="col-sm-12">
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" >
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <div class="row">
-                                <div class=" col-sm-3">
-                                    <label for="exampleInputEmail1" class="label-style">Type of Account</label>
-                                </div>
-                                <div class="col-sm-2">
-                                    <label class="switch">
-                                    <input type="checkbox"> Checking
-                                    <span class="slider round"></span>
-                                    </label>
-                                </div>
-                                <div class="col-sm-2">
-                                    <label class="switch">
-                                    <input type="checkbox"> Savings
-                                    <span class="slider round"></span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </form>
-                </div>
-                <div class="modal-footer border-top-0 modal-butn">
-                    <button type="button" class="btn btn-secondary">close</button>
-                    <button type="button" class="btn btn-primary">Update</button>
-                </div>
-            </div>
-            
-                
-        </div>
-    </div>
-
 <script>
     $(document).ready(function(){
       $("#update").click(function(){
@@ -1306,100 +1282,6 @@ function explodePie(e) {
     });
 </script>
 
-<div class="modal fade" id="documentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-                            
-            <div class="modal-content style" id="currency" style="display:none">
-                <div class="modal-header border-bottom-0">
-                    <h5 class="modal-title font-weight-bold" id="exampleModalLabel">User Documents</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="line"></div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="offset-2 col-sm-2">
-                                    <label for="exampleInputEmail1" class="label-style">Resume</label>
-                                </div>
-                                <div class="col-sm-5">
-                                     <input type="file" id="myfile" name="myfile">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="offset-2 col-sm-2">
-                                    <label for="exampleInputEmail1" class="label-style">Offer Letter</label>
-                                </div>
-                                <div class="col-sm-5">
-                                     <input type="file" id="myfile" name="myfile">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="offset-2 col-sm-2">
-                                    <label for="exampleInputEmail1" class="label-style">Joining Letter</label>
-                                </div>
-                                <div class="col-sm-5">
-                                     <input type="file" id="myfile" name="myfile">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="offset-1 col-sm-3">
-                                    <label for="exampleInputEmail1" class="label-style">Contract Paper</label>
-                                </div>
-                                <div class="col-sm-5">
-                                     <input type="file" id="myfile" name="myfile">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="offset-2 col-sm-2">
-                                    <label for="exampleInputEmail1" class="label-style">ID Prof</label>
-                                </div>
-                                <div class="col-sm-5">
-                                     <input type="file" id="myfile" name="myfile">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="offset-1 col-sm-3">
-                                    <label for="exampleInputEmail1" class="label-style">Other Document</label>
-                                </div>
-                                <div class="col-sm-5">
-                                     <input type="file" id="myfile" name="myfile">
-                                </div>
-                                <div class="col-sm-3">
-                                    <a href="#"><h6 class="text-primary"><i class="fa fa-plus"></i> Add More</h6></a>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        
-                    </form>
-                </div>
-                <div class="modal-footer border-top-0 modal-butn">
-                    <button type="button" class="btn btn-secondary">close</button>
-                    <button type="button" class="btn btn-primary">Update</button>
-                </div>
-            </div>
-            
-                
-        </div>
-    </div>
 
 <script>
     $(document).ready(function(){

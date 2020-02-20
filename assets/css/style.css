@@ -3379,3 +3379,4 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
 .rounded-lg {
   border-radius: 1rem;
 }
+.progress {cursor: progress;}

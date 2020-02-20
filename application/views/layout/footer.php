@@ -19,6 +19,16 @@
     } );
 } );
 </script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('.alldatatable').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } );
+} );
+</script>
    <script type="text/javascript">
     //  $('tbody').sortable();
     </script>
@@ -426,6 +436,8 @@ $(document).on("click",".chat_close",function(){
         });
 })
 </script>
-
+<script>
+    CKEDITOR.replace( 'editor' );
+</script>
 </body>
 </html>
