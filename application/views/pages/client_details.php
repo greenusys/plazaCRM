@@ -1,3 +1,10 @@
+<?php
+  // print_r($client_invoices);
+  // print_r($client_estimates);
+  // print_r($clint_project);
+  // print_r($client_contacts);
+?>
+
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
@@ -271,12 +278,12 @@ font-size: 35px;
                  <li class="w-100 side_br">
                     <a href="#projects" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Projects</a>
                 </li>
-                <li class="w-100 side_br">
+                <!-- <li class="w-100 side_br">
                     <a href="#tickets" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Tickets</a>
-                </li>
-                 <li class="w-100 side_br">
+                </li> -->
+                 <!-- <li class="w-100 side_br">
                     <a href="#bugs" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Bugs</a>
-                </li>
+                </li> -->
                 <li class="w-100 side_br">
                     <a href="#reminder" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Reminder</a>
                 </li>
@@ -297,7 +304,7 @@ font-size: 35px;
                     <div class=" card ">
                         <div class="row m-0">
                             <div class="col-md-10">
-                              <h6 class="m-0 mt-1">User Name</h6></div>
+                              <h6 class="m-0 mt-1"><?=$client_details->name?> - Details</h6></div>
                             <div class="col-md-2 text-right"> 
                                 <a href="" class="text-primary font-weight-bold " id="update"><i class="far fa-edit"></i> Edit</a>
                             </div>
@@ -312,7 +319,7 @@ font-size: 35px;
                                     <label class="">Name</label>
                                   </div>
                                   <div class="col-md-8 ">
-                                    <span>dsf;dfslf;sdf;</span>
+                                    <span><?=$client_details->name?></span>
                                   </div>
                                 </div>
                                 <div class="row">
@@ -320,7 +327,7 @@ font-size: 35px;
                                     <label class="">Contact Person</label>
                                   </div>
                                   <div class="col-md-8 ">
-                                    <span>dsf;dfslf;sdf;</span>
+                                    <span><?=$client_details->name?></span>
                                   </div>
                                 </div>
                                 <div class="row">
@@ -328,7 +335,7 @@ font-size: 35px;
                                     <label class="">Email</label>
                                   </div>
                                   <div class="col-md-8 ">
-                                    <span>dsf;dfslf;sdf;</span>
+                                    <span><?=$client_details->email?></span>
                                   </div>
                                 </div>
                                 <div class="row">
@@ -336,7 +343,7 @@ font-size: 35px;
                                     <label class="">City</label>
                                   </div>
                                   <div class="col-md-8 ">
-                                    <span>dsf;dfslf;sdf;</span>
+                                    <span><?=$client_details->city?></span>
                                   </div>
                                 </div>
                                 <div class="row">
@@ -344,7 +351,7 @@ font-size: 35px;
                                     <label class="">Zip code</label>
                                   </div>
                                   <div class="col-md-8 ">
-                                    <span>dsf;dfslf;sdf;</span>
+                                    <span><?=$client_details->zipcode?></span>
                                   </div>
                                 </div>
                               </div>
@@ -355,7 +362,7 @@ font-size: 35px;
                                   <label class="">Address</label>
                                 </div>
                                 <div class="col-md-8 ">
-                                  <span>dsf;dfslf;sdf;</span>
+                                  <span><?=$client_details->address?></span>
                                 </div>
                             </div>
                             <div class="row">
@@ -363,7 +370,7 @@ font-size: 35px;
                                 <label class="">Phone</label>
                               </div>
                               <div class="col-md-8 ">
-                                <span>dsf;dfslf;sdf;</span>
+                                <span><?=$client_details->phone?></span>
                               </div>
                             </div>
                             <div class="row">
@@ -371,7 +378,7 @@ font-size: 35px;
                                 <label class="">Fax</label>
                               </div>
                               <div class="col-md-8 ">
-                                <span>dsf;dfslf;sdf;</span>
+                                <span><?=$client_details->fax?></span>
                               </div>
                             </div>
                             <div class="text-center">
@@ -465,7 +472,23 @@ font-size: 35px;
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+                                    <?php
+                                      foreach ($client_contacts as $contact) {
+                                        # code...
+                                        ?>
+                                          <tr>
+                                             <td scope="col" class="fs1"><?=$contact->fullname?></td>
+                                             <td scope="col" class="fs1"><?=$contact->email?></td>
+                                             <td scope="col" class="fs1"><?=$contact->phone?></td>
+                                             <td scope="col" class="fs1"><?=$contact->mobile?></td>
+                                             <td scope="col" class="fs1"><?=$contact->skype?></td>
+                                             <td scope="col" class="fs1"><?=$contact->last_login?></td>
+                                             <td scope="col" class="fs1">Action</td>
+                                          </tr>
+                                        <?php
+                                      }
+
+                                    ?>
                                 </tbody>
                             </table>
                       </div>
@@ -574,10 +597,10 @@ font-size: 35px;
                                   <label class="col-md-6 text-right">Projects</label>
                                   <input type="checkbox" name="" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
                                </div>
-                               <div class="form-group">
+                               <!-- <div class="form-group">
                                   <label class="col-md-6 text-right">Bugs</label>
                                   <input type="checkbox" name="" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
-                               </div>
+                               </div> -->
                                <div class="form-group">
                                   <label class="col-md-6 text-right">Invoices</label>
                                   <input type="checkbox" name="" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
@@ -598,10 +621,10 @@ font-size: 35px;
                                   <label class="col-md-6 text-right">Proposals</label>
                                   <input type="checkbox" name="" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
                                </div>
-                               <div class="form-group">
+                               <!-- <div class="form-group">
                                   <label class="col-md-6 text-right">Tickets</label>
                                   <input type="checkbox" name="" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
-                               </div>
+                               </div> -->
                                <div class="form-group">
                                   <label class="col-md-6 text-right">Quotations</label>
                                   <input type="checkbox" name="" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
@@ -905,11 +928,20 @@ font-size: 35px;
                                       </tr>
                                   </thead>
                                   <tbody>
-                                      <tr>
-                                        <td>a</td>
-                                        <td>s</td>
-                                        <td>d</td>
-                                      </tr>
+                                    <?php
+                                      foreach ($clint_project as $project) {
+                                        // print_r($project);
+                                        ?>
+                                          <tr>
+                                            <td><?=$project['project_name']?></td>
+                                            <td><?=$project['end_date']?></td>
+                                            <td><?=$project['project_status']?></td>
+                                          </tr>
+                                        <?php
+                                      }
+
+                                    ?>
+                                      
                                   </tbody>
                               </table>    
                         </div>
