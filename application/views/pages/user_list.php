@@ -30,7 +30,7 @@
               ?>
                   <tr>
                     <td class="text-capitalize text-center"><img style="height: 50px" src="<?=base_url().$user->avatar?>"></td>
-                    <td class="text-capitalize text-center"><a href="<?=base_url()?>User/userDetails" ><?=$user->fullname?></a></td>
+                    <td class="text-capitalize text-center"><a href="<?=base_url('User/userDetails').'/'.$user->user_id?>"><?=$user->fullname?></a></td>
                     <td class="text-capitalize text-center"><?=$user->username?></td>
                     <td class="text-capitalize text-center"><input type="checkbox" checked disabled=""></td>
                     <td class="text-capitalize text-center"><?php
@@ -197,8 +197,7 @@
                         </div>
                         <div class="col-sm-8">
                           <div class="input-group">
-                               <select name="designations_id" class="form-control select_box" style="width:100%"
-                            required>
+                               <select name="designations_id" class="form-control select_box w-100"  required>
                               <option value="">select designation</option>
                               <?php if (!empty($all_department_info)): foreach ($all_department_info as $dept_name => $v_department_info) : ?>
                                   <?php if (!empty($v_department_info)):
