@@ -354,6 +354,9 @@ class Projects extends MY_Controller {
        //  //force_download($name, $data);
        //  force_download($file_name, NULL); //will get the file name for you
 	}
+	function projectDetails($id){
+		
+	}
 
 }
 ?>

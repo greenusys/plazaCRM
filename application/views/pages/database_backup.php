@@ -7,7 +7,7 @@
              <!-- <a type="button" id="acount" class="btn btn-primary  p-0"><i class="fa fa-download"></i> Restore Database</a> -->
       </div>
       <div class="col-sm-2">
-              <a href="<?=base_url('Rahul/createBackUp')?>" class="btn btn-info p-0 px-2 " id="getBackUp"><i class="fa fa-download"></i> Backup Database</a>
+              <a href="<?=base_url('Backupdatabase/backup')?>" class="btn btn-info p-0 px-2 " id="getBackUp"><i class="fa fa-download"></i> Backup Database</a>
       </div>
     </div>
     <div class="line mt-1"></div>
@@ -22,20 +22,60 @@
             </tr>
           </thead>
           <tbody>
+            <?php
+            foreach ($backup as $back) {
+            ?>
             <tr >
-              <td scope="row" class="text-dark">2020-02-1122-19  </td>
-              <td scope="row" class="text-dark">BD backup</td>
+              <td scope="row" class="text-dark"><?=$back->backup_time?></td>
+              <td scope="row" class="text-dark"><?=$back->path?></td>
               <td scope="row" >
-                  <button type="button"  class="btn btn-primary " data-toggle="tooltip" data-placement="top" title="Download"><i class="fa fa-download"></i></button>
+                  <a href="<?=base_url()?>Backupdatabase/backup_download/<?=$back->path?>"><button type="button"  class="btn btn-primary " data-toggle="tooltip" data-placement="top" title="Download"><i class="fa fa-download"></i></button></a>
                 
-                <button type="button" class="btn btn-danger " data-toggle="tooltip" data-placement="top" title="Delete"><i class="far fa-trash-alt"></i></button>
+                <button type="button" class="btn btn-danger deleter" path="<?=$back->path?>" back_id="<?=$back->backup_id?>" data-toggle="tooltip" data-placement="top" title="Delete"><i class="far fa-trash-alt"></i></button>
               </td>
             </tr>
+          <?php } ?>
           </tbody>
         </table> 
         </div>
     </div>
   </div>
+<script type="text/javascript">
+$(document).on('click','.deleter',function(){
+  var back_id = $(this).attr('back_id');
+  var path = $(this).attr('path');
+   swal({
+      title: "Are you sure?",
+      text: "You will not be able to recover!",
+      icon: "warning",
+      buttons: [
+        'No, cancel it!',
+        'Yes, I am sure!'
+      ],
+      dangerMode: true,
+    }).then(function(isConfirm) {
+      if (isConfirm) {
+        $.ajax({
+          type:'POST',
+          data:{
+            back_id:back_id,
+            path:path
+          },
+          url:'<?=base_url()?>Backupdatabase/delete_db',
+          success:function(response){
+            if (response==1) {
+              swal('Deleted','Backup Removed','success');
+              location.reload();
+            }
+            else{
+              swal('OOPS','Something Went Wrong','warning');
+            }
+          }
+        })
+      }
+    })
+})
+</script>
  
     <div class="modal fade" id="accountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
