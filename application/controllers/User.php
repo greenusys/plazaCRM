@@ -7,6 +7,11 @@ class User extends MY_Controller {
 		$this->load->model('LoginModel','Login');
 		$this->load->model('Job_circular_model');
 		$this->load->model('User_model');
+		$this->load->model('Tasks_Model');
+		$this->load->model('Global_Model');
+		$this->load->model('AttendanceModel','ATND');
+        $this->load->model('Payroll_model');
+    	$this->load->model('Utilities_model');
 	}
 
 	public function index()
@@ -159,17 +164,331 @@ class User extends MY_Controller {
 		$this->load->view("layout/footer");
 	}
 	public function addTodoList(){
+		$data['users']=$this->User_model->fetch_all_employees_admin();
+		if (isset($_POST['users'])) {
+			$user_id=$_POST['users'];
+			$data['fetch_to_do']=$this->Tasks_Model->fetch_todo($user_id);
+			$data['main_id']=$user_id;
+		}
+		else{
+		$session=$this->session->userdata('logged_user');
+		$user_id=$session[0]->user_id;
+		$data['fetch_to_do']=$this->Tasks_Model->fetch_todo($user_id);
+		$data['main_id']=$user_id;
+		}
 		$this->load->view('layout/header');
-		$this->load->view("pages/todo_list");
-		$this->load->view("layout/footer");
-	}
-	public function userDetails(){
-		
-		$this->load->view('layout/header');
-		$this->load->view("pages/userDetails");
+		$this->load->view("pages/todo_list",$data);
 		$this->load->view("layout/footer");
 	}
 
+	public function fetch_to_do_id(){
+		$todo_id=$_POST['todo_id'];
+		$result=$this->Tasks_Model->fetch_to_do_id($todo_id);
+		if ($result) {
+			die(json_encode(array('status'=>'1','data'=>$result)));
+		}
+		else{
+			die(json_encode(array('status'=>'0')));
+		}
+	}
+
+	public function update_todo_ajax(){
+		$session=$this->session->userdata('logged_user');
+		$user_id=$session[0]->user_id;
+		$_POST['assigned']=$user_id;
+		$due_date=$_POST['due_date'];
+		$myTime = strtotime($due_date); 
+		$_POST['due_date']=date("Y-m-d", $myTime);
+		$result=$this->Tasks_Model->update_task_ajax($_POST);
+		if ($result) {
+			echo "1";
+		}
+		else{
+			echo "0";
+		}
+	}
+
+
+	// public function userDetails(){
+		
+	// 	$this->load->view('layout/header');
+	// 	$this->load->view("pages/userDetails");
+	// 	$this->load->view("layout/footer");
+	// }
+
+	public function update_todo(){
+		$result=$this->User_model->update_todo($_POST);
+		if($result){
+			echo "1";
+		}else{
+			echo "0";
+		}
+	}
+
+	public function delete_todo(){
+		$todo_id=$_POST['todo_id'];
+		$result=$this->User_model->delete_todo($todo_id);
+		if ($result) {
+			echo "1";
+		}
+		else{
+			echo "0";
+		}
+	}
+
+	 public function userDetails($id, $active = null)
+    {
+        if (isset($id)) 
+        {
+            $data['title'] = 'user_details';
+            $data['id'] = $id;
+            if (!empty($active)) {
+                $data['active'] = $active;
+            } else {
+                $data['active'] = 1;
+            }
+            $date = $this->input->post('date', true);
+            if (!empty($date)) {
+                $data['date'] = $date;
+            } else {
+                $data['date'] = date('Y-m');
+            }
+            $data['attendace_info'] = $this->get_report($id, $data['date']);
+            // $data['my_leave_report'] = leave_report($id);
+            //
+            if ($this->input->post('year', TRUE)) { // if input year
+                $data['year'] = $this->input->post('year', TRUE);
+            } else { // else current year
+                $data['year'] = date('Y'); // get current year
+            }
+            // get all expense list by year and month
+            $data['provident_fund_info'] = $this->get_provident_fund_info($data['year'], $id);
+
+            if ($this->input->post('overtime_year', TRUE)) 
+            { // if input year
+                $data['overtime_year'] = $this->input->post('overtime_year', TRUE);
+            } else { // else current year
+                $data['overtime_year'] = date('Y'); // get current year
+            }
+            // get all expense list by year and month
+            $data['all_overtime_info'] = $this->get_overtime_info($data['overtime_year'], $id);
+            $data['profile_info'] = $this->db->where('user_id', $id)->get('tbl_account_details')->row();
+
+            $data['total_attendance'] = count($this->total_attendace_in_month($id));
+
+            $data['total_absent'] = count($this->total_attendace_in_month($id, 'absent'));
+
+            $data['total_leave'] = count($this->total_attendace_in_month($id, 'leave'));
+            //award received
+            $data['total_award'] = count($this->db->where('user_id', $id)->get('tbl_employee_award')->result());
+
+            // get working days holiday
+            $holidays = $this->Global_Model->get_holidays(); //tbl working Days Holiday
+
+            $num = cal_days_in_month(CAL_GREGORIAN, date('n'), date('Y'));
+            $working_holiday = 0;
+            for ($i = 1; $i <= $num; $i++) {
+                $day_name = date('l', strtotime("+0 days", strtotime(date('Y') . '-' . date('n') . '-' . $i)));
+
+                if (!empty($holidays)) {
+                    foreach ($holidays as $v_holiday) {
+                        if ($v_holiday->day == $day_name) {
+                            $working_holiday += count($day_name);
+                        }
+                    }
+                }
+            }
+            // get public holiday
+            // $public_holiday = count($this->total_attendace_in_month($id, TRUE));
+            $public_holiday=0;
+            // get total days in a month
+            $month = date('m');
+            $year = date('Y');
+            $days = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+            // total attend days in a month without public holiday and working days
+            $data['total_days'] = $days - $working_holiday - $public_holiday;
+
+            $data['all_working_hour'] = $this->all_attendance_id_by_date($id, true);
+
+            $data['this_month_working_hour'] = $this->all_attendance_id_by_date($id);
+
+          	 $this->load->view('layout/header');
+			$this->load->view("pages/userDetails",$data);
+			$this->load->view("layout/footer");
+        } else {
+            set_message('error', lang('there_in_no_value'));
+            redirect('Dashboard');
+        }
+    }
+
+    public function get_provident_fund_info($year, $user_id)
+    {// this function is to create get monthy recap report
+
+        for ($i = 1; $i <= 12; $i++) { // query for months
+            if ($i >= 1 && $i <= 9) { // if i<=9 concate with Mysql.becuase on Mysql query fast in two digit like 01.
+                $start_date = $year . "-" . '0' . $i;
+                $end_date = $year . "-" . '0' . $i;
+            } else {
+                $start_date = $year . "-" . $i;
+                $end_date = $year . "-" . $i;
+            }
+            $provident_fund_info[$i] = $this->Payroll_model->get_provident_fund_info_by_date($start_date, $end_date, $user_id); // get all report by start date and in date
+        }
+
+        return $provident_fund_info; // return the result
+    }
+     public function get_overtime_info($year, $user_id)
+    {// this function is to create get monthy recap report
+
+        for ($i = 1; $i <= 12; $i++) { // query for months
+            if ($i >= 1 && $i <= 9) { // if i<=9 concate with Mysql.becuase on Mysql query fast in two digit like 01.
+                $start_date = $year . "-" . '0' . $i . '-' . '01';
+                $end_date = $year . "-" . '0' . $i . '-' . '31';
+            } else {
+                $start_date = $year . "-" . $i . '-' . '01';
+                $end_date = $year . "-" . $i . '-' . '31';
+            }
+            $get_expense_list[$i] = $this->Utilities_model->get_overtime_info_by_date($start_date, $end_date, $user_id); // get all report by start date and in date
+        }
+
+        return $get_expense_list; // return the result
+    }
+     public function total_attendace_in_month($user_id, $flag = NULL)
+    {
+        $month = date('m');
+        $year = date('Y');
+
+        if ($month >= 1 && $month <= 9) { // if i<=9 concate with Mysql.becuase on Mysql query fast in two digit like 01.
+            $start_date = $year . "-" . '0' . $month . '-' . '01';
+            $end_date = $year . "-" . '0' . $month . '-' . '31';
+        } else {
+            $start_date = $year . "-" . $month . '-' . '01';
+            $end_date = $year . "-" . $month . '-' . '31';
+        }
+        if (!empty($flag) && $flag == 1) { // if flag is not empty that means get pulic holiday
+            $get_public_holiday = $this->Global_Model->get_holiday_list_by_date($start_date, $end_date);
+
+            if (!empty($get_public_holiday)) { // if not empty the public holiday
+                foreach ($get_public_holiday as $v_holiday) {
+                    if ($v_holiday->start_date == $v_holiday->end_date) { // if start date and end date is equal return one data
+                        $total_holiday[] = $v_holiday->start_date;
+                    } else { // if start date and end date not equan return all date
+                        for ($j = $v_holiday->start_date; $j <= $v_holiday->end_date; $j++) {
+                            $total_holiday[] = $j;
+                        }
+                    }
+                }
+                return $total_holiday;
+            }
+        } elseif (!empty($flag)) { // if flag is not empty that means get pulic holiday
+            $get_total_absent = $this->Global_Model->get_total_attendace_by_date($start_date, $end_date, $user_id, $flag); // get all attendace by start date and in date
+            return $get_total_absent;
+        } else {
+            $get_total_attendance = $this->Global_Model->get_total_attendace_by_date($start_date, $end_date, $user_id); // get all attendace by start date and in date
+            return $get_total_attendance;
+        }
+    }
+
+     public function get_report($user_id, $date)
+    {
+        $month = date('n', strtotime($date));
+        $year = date('Y', strtotime($date));
+        $num = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+
+        $holidays = $this->Global_Model->get_holidays(); //tbl working Days Holiday
+
+        if ($month >= 1 && $month <= 9) {
+            $yymm = $year . '-' . '0' . $month;
+        } else {
+            $yymm = $year . '-' . $month;
+        }
+
+        $public_holiday = $this->Global_Model->get_public_holidays($yymm);
+
+        //tbl a_calendar Days Holiday
+        if (!empty($public_holiday)) {
+            foreach ($public_holiday as $p_holiday) {
+                $p_hday = $this->ATND->GetDays($p_holiday->start_date, $p_holiday->end_date);
+            }
+        }
+
+        $key = 1;
+        $x = 0;
+        for ($i = 1; $i <= $num; $i++) {
+
+            if ($i >= 1 && $i <= 9) {
+                $sdate = $yymm . '-' . '0' . $i;
+            } else {
+                $sdate = $yymm . '-' . $i;
+            }
+            $day_name = date('l', strtotime("+$x days", strtotime($year . '-' . $month . '-' . $key)));
+
+            $data['week_info'][date('W', strtotime($sdate))][$sdate] = $sdate;
+
+            // get leave info
+            if (!empty($holidays)) {
+                foreach ($holidays as $v_holiday) {
+                    if ($v_holiday->day == $day_name) {
+                        $flag = 'H';
+                    }
+                }
+            }
+            if (!empty($p_hday)) {
+                foreach ($p_hday as $v_hday) {
+                    if ($v_hday == $sdate) {
+                        $flag = 'H';
+                    }
+                }
+            }
+            if (!empty($flag)) {
+                $attendace_info[date('W', strtotime($sdate))][$sdate] = $this->ATND->attendance_report_by_empid($user_id, $sdate, $flag);
+            } else {
+                $attendace_info[date('W', strtotime($sdate))][$sdate] = $this->ATND->attendance_report_by_empid($user_id, $sdate);
+            }
+            $key++;
+            $flag = '';
+        }
+        return $attendace_info;
+
+    }
+    public function all_attendance_id_by_date($user_id, $flag = null)
+    {
+        if (!empty($flag)) {
+            $get_total_attendance = $this->db->where(array('user_id' => $user_id, 'attendance_status' => '1'))->get('tbl_attendance')->result();
+            if (!empty($get_total_attendance)) {
+                foreach ($get_total_attendance as $v_attendance_id) {
+                    $aresult[] = $this->Global_Model->get_total_working_hours($v_attendance_id->attendance_id);
+                }
+                return $aresult;
+            }
+        } else {
+
+            $month = date('n');
+            $year = date('Y');
+            if ($month >= 1 && $month <= 9) {
+                $yymm = $year . '-' . '0' . $month;
+            } else {
+                $yymm = $year . '-' . $month;
+            }
+            $num = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+            for ($i = 1; $i <= $num; $i++) {
+                if ($i >= 1 && $i <= 9) {
+                    $sdate = $yymm . '-' . '0' . $i;
+                } else {
+                    $sdate = $yymm . '-' . $i;
+                }
+                $get_total_attendance = $this->Global_Model->get_total_attendace_by_date($sdate, $sdate, $user_id); // get all attendace by start date and in date
+                if (!empty($get_total_attendance)) {
+                    foreach ($get_total_attendance as $v_attendance_id) {
+                        $result[] = $this->Global_Model->get_total_working_hours($v_attendance_id->attendance_id);
+                    }
+                }
+            }
+            if (!empty($result)) {
+                return $result;
+            }
+        }
+    }
 	public function updateUserInfo(){
 		if($_FILES["file"]['name'] !=""){
 			$image = rand(0000,9999).'-'.$_FILES["file"]['name'];

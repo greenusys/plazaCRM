@@ -36,8 +36,9 @@ class Leave_Model extends CI_Model
 	    return $this->db->get('tbl_users')->result();
 	    
 	}
-	public function fetchLeaveCategoryData()
+	public function fetchLeaveCategoryData($designation_id)
 	{
+		$this->db->where('leave_cat_desig_id',$designation_id);
 	    return $this->db->get('tbl_leave_category')->result();
 	    
 	}
@@ -92,9 +93,9 @@ class Leave_Model extends CI_Model
 		    }
 	}
 
-	public function addYearlyLeaveData($data,$dept)
+	public function addYearlyLeaveData($data,$designation_id)
 	{
-			$this->db->where('department_id',$dept);
+			$this->db->where('designation_id',$designation_id);
 		$re=$this->db->get('tbl_leave_yearly')->result();
 		if(count($re)==0)
 		{
@@ -136,6 +137,7 @@ class Leave_Model extends CI_Model
 			return 0;
 		}
 	}
+
 	
 	
 	public function fetchDepartmentforLeave()
@@ -143,9 +145,16 @@ class Leave_Model extends CI_Model
 	    return $this->db->get('tbl_departments')->result();
 	    
 	}
-	public function fetchtotalLeaveById($dept_id)
+	public function fetchDesignationforLeave()
 	{
-		$this->db->where('department_id',$dept_id);
+	    return $this->db->get('tbl_designations')->result();
+	    // print_r($re);
+	    // die;
+	    
+	}
+	public function fetchtotalLeaveById($desig_id)
+	{
+		$this->db->where('designation_id',$desig_id);
 	    return $this->db->get('tbl_leave_yearly')->result();
 	    
 	}
@@ -159,7 +168,7 @@ class Leave_Model extends CI_Model
 	{
 		$this->db->select('*')
          ->from('tbl_leave_yearly')
-         ->join('tbl_departments', 'tbl_departments.departments_id = tbl_leave_yearly.department_id');
+         ->join('tbl_designations', 'tbl_designations.designations_id = tbl_leave_yearly.designation_id');
 		return $this->db->get()->result();
 	    // return $this->db->get('tbl_leave_yearly')->result();
 	    
@@ -234,10 +243,10 @@ class Leave_Model extends CI_Model
 				return 0;
 		    }
 	}
-	public function checkAvailableleave($dept_id)
+	public function checkAvailableleave($desig_id)
  	{
         $this->db->select('lpolicy_days')->from('tbl_leave_policy');
-		$this->db->where('lpolicy_department_id',$dept_id);
+		$this->db->where('lpolicy_designation_id',$desig_id);
 		$query= $this->db->get();
 		$days_array = array();
 		foreach ($query->result_array() as $row)

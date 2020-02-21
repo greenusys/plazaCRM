@@ -1,6 +1,7 @@
 <?php
-class Client_Model extends CI_Model{
-
+class Client_Model extends MY_Model{
+	public $_table_name;
+	public $_order_by;
 	public function create_client($data){
 		$checker=array('email'=>$data['email']);
 		$this->db->where($checker);
@@ -15,11 +16,35 @@ class Client_Model extends CI_Model{
 			return false;
 		} 
 	}
+	public function get_client_contacts($client_id)
+    {
 
-	public function fetch_client($id){
-		$checker=array('id'=>$id);
+        $this->db->select('tbl_account_details.*', FALSE);
+        $this->db->select('tbl_users.*', FALSE);
+        $this->db->from('tbl_account_details');
+        $this->db->join('tbl_users', 'tbl_users.user_id = tbl_account_details.user_id', 'left');
+        $this->db->where('tbl_account_details.company', $client_id);
+        if (!empty($_POST["length"]) && $_POST["length"] != -1) {
+            $this->db->limit($_POST['length'], $_POST['start']);
+        }
+        $query_result = $this->db->get();
+        $result = $query_result->result();
+        return $result;
+    }
+    public function get_client_project($client_id){
+    	$checker=array('client_id'=>$client_id);
 		$this->db->where($checker);
-		$check = $this->db->get("client_")->result_array();
+		$check = $this->db->get("tbl_project")->result_array();
+		if(count($check)==0 ){
+			return false;
+		}else{
+			return $check;
+		} 
+    }
+	public function fetch_client($id){
+		$checker=array('client_id'=>$id);
+		$this->db->where($checker);
+		$check = $this->db->get("tbl_client")->result_array();
 		if(count($check)==0 ){
 			return false;
 		}else{

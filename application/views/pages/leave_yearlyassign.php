@@ -11,17 +11,17 @@
           <div class="form-group">
             <div class="row">
               <div class="offset-1 col-sm-2 text-right">
-                <label for="exampleInputEmail1" class="pt-2">Department<sup class="text-danger">*</sup></label>
+                <label for="exampleInputEmail1" class="pt-2">Designation<sup class="text-danger">*</sup></label>
               </div>
               <div class="col-sm-7">
                 <div class="input-group">
-                  <select name="dept_id" class="form-control" id="emply">
+                  <select name="designation_id" class="form-control" id="emply">
                     <option selected="" disabled="" value="0">Select Department</option>
                     <?php
-                                        foreach($fetch_Department_data as $deptdata)
+                                        foreach($fetch_Designation_data as $desigdata)
                                         {
                                         ?>
-              <option  value="<?=$deptdata->departments_id?>"><?=$deptdata->deptname?></option>;
+              <option  value="<?=$desigdata->designations_id?>"><?=$desigdata->designations?></option>;
                                     <?php
                                         }
                                         ?>
@@ -58,7 +58,7 @@
                         <thead>
                             <tr>
                               <th>S.NO</th>
-                                <th>Department </th>
+                                <th>Designation </th>
                                 <th>Yearly Leave</th>
                                 <th>Added On</th>
                                   <th>Action</th>
@@ -74,7 +74,7 @@
                               ?>
                                   <tr>  
                                     <td><?=$i?></td>
-                                      <td><?=$FYD->deptname?></td>
+                                      <td><?=$FYD->designations?></td>
                                       <td><?=$FYD->total_Yearlyleave?></td>
                                    <td><?=$FYD->added_on?></td>
                                    <td>
