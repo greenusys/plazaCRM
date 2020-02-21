@@ -1063,7 +1063,7 @@ font-size: 35px;
                                         </tbody>
                                     </table>    
                                 </div>
-                                <div id="setReminder" class="tabcontent">
+                                <div id="setReminder" class="mt-3 tabcontent">
                                   <form  method="post" action="">
                                     <div class="form-group row">
                                       <label class="col-md-3 text-right">Date to be notified<sup class="text-danger">*</sup></label>

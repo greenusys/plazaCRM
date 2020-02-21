@@ -185,7 +185,7 @@
                           ?>
                             <tr>
                               <td><input type="checkbox" name=" " class="h_22 form-control"></td>
-                                <td><?=$tasker->task_name?></td>
+                                <td><a href="<?=base_url('Task/task_details')?>"><?=$tasker->task_name?></a></td>
                                 <td><?=$tasker->due_date?></td>
                                 <td>
                                   <?php

@@ -867,7 +867,7 @@
                 var reason=response.data[0].reason;
                 var leavestartdate=response.data[0].leave_start_date;
                 var leaveendate=response.data[0].leave_end_date;
-                 var leave_image='<?=base_url("assets/uploads/leave/")?>'+response.data[0].attachment;
+                 var leave_image='<?=base_url("./uploads/leave/")?>'+response.data[0].attachment;
                  var leave_application_id=response.data[0].leave_application_id;
                     $('.acceptleave').attr('d-aplId',leave_application_id);
                     $('.rejectleave').attr('d-aplId',leave_application_id);
