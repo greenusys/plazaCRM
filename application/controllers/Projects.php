@@ -47,10 +47,10 @@ class Projects extends MY_Controller {
         $data['title'] = lang('project_details');
         //get all task information
         $data['project_details'] = $this->items_model->check_by(array('project_id' => $id), 'tbl_project');
-        if (empty($data['project_details'])) {
-            set_message('error', lang('there_in_no_value'));
-            redirect('admin/projects');
-        }
+        // if (empty($data['project_details'])) {
+        //     set_message('error', lang('there_in_no_value'));
+        //     redirect('admin/projects');
+        // }
         $this->items_model->_table_name = "tbl_task_attachment"; //table name
         $this->items_model->_order_by = "project_id";
         $data['files_info'] = $this->items_model->get_by(array('project_id' => $id), FALSE);
