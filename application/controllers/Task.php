@@ -113,5 +113,12 @@ class Task extends MY_Controller {
 			die(json_encode(array('status' =>'0' ,'msg'=>'Failed')));
 		}
 	}
+
+public function task_details()
+	{
+		$this->load->view('layout/header');
+		$this->load->view("pages/task_details");
+		$this->load->view("layout/footer");
+	}
 }
 ?>
