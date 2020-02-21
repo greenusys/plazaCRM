@@ -115,7 +115,7 @@
 		</div>
 		<div class="row bg-white p-0">
 			<div id="all" class="tabcontent">
-			    <table class="table table-striped ">
+			    <!-- <table class="table table-striped ">
 					<thead>
 						<tr class="text-center">
 							<th>Invoice</th>
@@ -128,7 +128,37 @@
 						</tr>
 					</thead>
 								
-                </table>
+                </table> -->
+                <table id="example" class="display nowrap" style="width:100%">
+                        <thead>
+                            <tr>
+                               
+                                <th>Invoice</th>
+							<th>Invoice Date</th>
+							<th>Due Date</th>
+							<th>Client Name</th>
+							<th>Due Amount</th>
+						   	<th>Status </th>
+							<th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                          
+                        </tbody>
+                        <!--<tfoot>-->
+                        <!--   <tr>-->
+                               
+                        <!--        <th>Name/Title</th>-->
+                        <!--        <th>Date</th>-->
+                        <!--        <th>Account Name</th>-->
+                        <!--        <th>Ammount</th>-->
+                        <!--        <th>Status</th>-->
+                        <!--        <th>Attachment</th>-->
+                        <!--        <th>Action</th>-->
+                        <!--    </tr>-->
+                        <!--</tfoot>-->
+                    </table>
 			</div>
 
 			<div id="Create" class="tabcontent">
