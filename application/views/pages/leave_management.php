@@ -60,11 +60,11 @@
                                     <?php
                                     foreach($fetch_leave_data as $leaseAllData)
                                     {
-                                        // print_r($leaseAllData);
+                                         // print_r($leaseAllData);
                                     ?>
                                         <tr>
                 
-           <td><a href="<?=base_url('Leavemanagement/Leave_Modal_Detailss/').$leaseAllData->leave_application_id?>"  LeaveApp_id="<?=$leaseAllData->leave_application_id?>" class="Applicationdata "data-toggle="modal" data-target="#leaveapplicationsection"><?=$leaseAllData->fullname?></a></td>
+           <td><a href="<?=base_url('Leavemanagement/Leave_Modal_Detailss/').$leaseAllData->leave_application_id?>"  LeaveApp_id="<?=$leaseAllData->leave_application_id?>" class="Applicationdata" fetchdesignationid="<?=$leaseAllData->designation_id?>"data-toggle="modal" data-target="#leaveapplicationsection"><?=$leaseAllData->fullname?></a></td>
                                             <td><?=$leaseAllData->leave_category?></td>
                                             <td><?=$leaseAllData->leave_start_date.' '.$leaseAllData->leave_end_date?></td>
                                             
@@ -641,11 +641,12 @@
                                                             <div class="row">
                                                     <?foreach($fetch_leave_category_data as $fetch_cat_name)
                                                     {
-                                        // print_r($fetch_cat_name);
+                                         // print_r($fetch_cat_name);
                                                                         ?>
                                                                 <div class="offset-1 col-sm-4 col-4 ">
 
                                                                     <label for="exampleInputEmail1"><strong><?=$fetch_cat_name->leave_category?></strong></label>
+                                                                    <input type="hidden" class="fetchdesig_id" desig_id="<?=$fetch_cat_name->leave_cat_desig_id?>">
                                                                 </div>
 
                                                                 <div class="col-sm-7 col-7
@@ -695,7 +696,7 @@
                                                                     <label for="exampleInputEmail1">Total:</label>
                                                                 </div>
                                                                 <div class="col-sm-6 col-6">
-                                                                    <label for="exampleInputEmail1">0/5</label>
+                                     <span id="availableleave"></span>/<span id="totalleave"></span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -715,6 +716,79 @@
 </div>
 <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> -->
 <!--end detail modal-->
+<script>
+          $('.Applicationdata').on('click',function(){
+             // var leaveapp_id=$(this).attr("LeaveApp_id");
+            var desig_id=$(this).attr('fetchdesignationid');
+                // alert(desig_id);
+            $.ajax({
+              url:"<?=base_url('Leavemanagement/Fetchtotalleave')?>",
+              type:"post",
+              data:{desig_id:desig_id},
+              success:function(response)
+              {
+                //   console.log(response.data);
+                  var response=JSON.parse(response);
+                   // console.log('fetchtotalleave',response.data);
+                    
+                   if(response.code==1)
+                   {
+                          $("#totalleave").empty();
+                        var totalleave=response.data[0].total_Yearlyleave;
+                        console.log('Total desigation Leave',totalleave);
+                         $('#totalleave').append(totalleave); 
+                        $.ajax({
+                        url:"<?=base_url('Leavemanagement/checkAvailableDesigleave')?>",
+                        type:"post",
+                        data:{desig_id:desig_id},
+                        success:function(response)
+                        {
+                            $('#availableleave').empty();
+                          //console.log(response.data);
+                          response=JSON.parse(response);
+                          console.log('check difference',response.data);
+                          console.log('check data',response.data[0].checkdata)
+                        var takenleave=response.data[0].checkdata;
+
+                          // $('#checkdiffleave').append(response.data);
+                          //  $("#availableleave").empty();
+                          // var takenleave=response.data; 
+                           // var availableleave=totalleave-takenleave;
+                           console.log('available',takenleave);
+                           $('#availableleave').append(takenleave);
+                          // console.log('available leave',availableleave);
+                          // if(availableleave>0)
+                          // {
+                          //   $('#availableleave').val(availableleave);
+                          //   // alert('empty');
+                          // }
+                          // else
+                          // {
+                          //    $('#availableleave').val('No More Leave Available');
+                          //    $("#addpolicybutton").attr("disabled", true);
+                          //    $("#addpolicybutton").prop('disabled', false);
+                          //    $(".addpolicybutton").prop('disabled', false);
+                          // }
+                        }    
+                        });
+                       
+                   }
+                   else
+                   {
+                    // console.log('no data',totalleave)
+                    $('#availableleave').val('no data found');
+                   }
+
+           
+              }    
+              });
+            });
+   
+       
+      </script>
+
+
+
 <script> 
        $(document).on('submit','#leave_newcategory',function(e)
        {
@@ -822,10 +896,9 @@
             success:function(response)
             {
                       $(".leaveappss_div").show();
-                    //  $('#expensemodalreset')[0].reset();  
-                    //   $(this).prev('span').remove();
+                
                      $("#fullname").html("");
-                    //  $("#leavedate").html("");
+                   
                      $("#leave_category").html("");
                      $("#Duration").html("");
                      $("#Applieddate").html(""); 
@@ -837,25 +910,7 @@
                      $("#dateleaveenddate").html("");
                       $("#categorynameofrleave").html("");
 
-                    
-                    //  $("#client_name").html("");
-                    //  $("#paymethod").html("");
-                    //  $("#notes").html("");
-                    //   $("#transstatus").html("");
-                    //   $("#transamount").html("");
-                    //   $("#trans_image").html("");
-                    //  $(".Expense_div").empty();
-                    //  $("#reference").empty();
-                    //  $("#transname").empty(;
-                    //  $("#account_name").empty(;
-                    //  $("#exdate").empty();
-                    //  $("#expense_name").empty();
-                    //  $("#paidby").empty();
-                    //  $("#paymethod").empty();
-                    //  $("#notes").empty();
-                    //  $("#transstatus").empty();
-                    //  $("#transamount").empty();
-                    //  $("#reference").empty();
+                  
     
                 response=JSON.parse(response);
                  console.log(response);
@@ -872,15 +927,7 @@
                     $('.acceptleave').attr('d-aplId',leave_application_id);
                     $('.rejectleave').attr('d-aplId',leave_application_id);
 
-                //  alert(leavestartdate);
-                //   alert(leaveendate);
-                
-    //             var paidby=response.data[0].clientname;
-    //             var paymentmethod=response.data[0].method_name;
-    //             var notes=response.data[0].notes;
-    //             var trans_status=response.data[0].transaction_status;
-    //            
-    //             // alert(paidby);
+  
                  $("#fullname").append(fullname);
                 // $("#leavedate").append(leavedate);
                  $("#leave_category").append(leavecategory);
@@ -896,13 +943,6 @@
                     // $('#leave_image').attr('src',leave_image  );
                      $('#leave_image').attr('src',   leave_image  );
 
-    //              $("#paymethod").append(paymentmethod);
-    //              $("#notes").append(notes);
-                //  $("#transstatus").append(trans_status);
-                //   $("#transamount").append(transamount);
-                //   $("#trans_image").attr('src',trans_image);
-                //   $('#trans_image').attr('src',   trans_image  );
-                //  $("#trans_image").append(trans_image);
             }              
         });
             
@@ -910,18 +950,6 @@
         }); 
         
   </script>
-
-<!--<script type="text/javascript">-->
-<!--window.onload = function() {-->
-<!--  $("#leavesection").hide();};-->
-
-
-<!--    $(document).on('click','.leaveDetails',function(){-->
-<!--         $("#leavesection").show();-->
-        
-<!--    });-->
-    
-<!--    </script>-->
 <script type="text/javascript">
         $(document).ready(function(){
           $('.deletetPendingApplication').on('click',function(){ 
