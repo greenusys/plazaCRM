@@ -478,7 +478,7 @@ background: #f3f3f3;
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe-europe"></i> <span>Sales </span></a>
                 <ul class="dropdown-menu">
-                  <li><a class="nav-link" href="<?=base_url('Sales/invoice')?>"><span> <i class="fas fa-ticket-alt"></i></span>Invoice </a></li>
+                  <li><a class="nav-link" href="<?=base_url('Sales')?>"><span> <i class="fas fa-ticket-alt"></i></span>Invoice </a></li>
                 </ul>
               </li>
 
