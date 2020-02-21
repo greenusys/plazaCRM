@@ -428,7 +428,7 @@ background: #f3f3f3;
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe-europe"></i> <span>Utilities </span></a>
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href="<?=base_url('Utilities/holiday')?>"><span> <i class="fas fa-ticket-alt"></i></span>Holiday<i class="fa fa-check" aria-hidden="true" style="color:orange"></i> </a></li>
-                  <li><a class="nav-link" href="<?=base_url('Utilities/gaolTracking')?>"><span><i class="far fa-compass"></i></span>Goal Tracking</a></li>
+                  <!-- <li><a class="nav-link" href="<?=base_url('Utilities/gaolTracking')?>"><span><i class="far fa-compass"></i></span>Goal Tracking</a></li> -->
                 </ul>
             </li>
 
