@@ -20,6 +20,10 @@
 	    background-color: #6777ef;
 	    color:white;
 	}
+	.slect_ht{
+		padding: 0px !important;
+    	height: 22px !important;
+	}
    
 </style>
 <!-- <body class="bg-light"> -->
@@ -57,7 +61,7 @@
 								<label class="bg-success text-white p-1">Resolved</label>
 								</div>
 								<div class="col-sm-6">
-									<select class=" form-control" name="department">
+									<select class="slect_ht form-control" name="department">
 									<option value="name1">Change</option>
 									<option value="name2">Verified</option>
 									<option value="name3">Resolved</option>

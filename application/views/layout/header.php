@@ -133,8 +133,52 @@ $role_id=$session[0]->role_id;
 .bg-gray{
 background: #f3f3f3;
 }
-
-
+.timer {
+    padding: 0;
+    text-align: center;
+    list-style: none;
+}
+.timer li {
+    font-size: 46px;
+    text-align: center;
+    display: inline-block;
+    color: #555;
+    font-weight: 300;
+}
+.timer li.dots {
+    font-size: 25px;
+    padding: 16.67px 0;
+}
+.timer li.dots {
+    vertical-align: top;
+}
+.timeline-2 {
+    border-left: 2px solid #23b7e5;
+    position: relative;
+}
+.time-item {
+  
+    padding-bottom: 10px;
+    position: relative;
+}
+.item-info {
+    margin-bottom: 15px;
+    margin-left: 15px;
+}
+.timeline-2 .time-item:after {
+    background-color: #ffffff;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 2px;
+    bottom: 0;
+    content: '';
+    height: 10px;
+    left: 0;
+    margin-left: -6px;
+    position: absolute;
+    top: 5px;
+    width: 10px;
+}
   </style>
 <style type="text/css">
   
@@ -406,9 +450,9 @@ background: #f3f3f3;
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href="<?=base_url('User/generateReport')?>"><span> <i class="fas fa-ticket-alt"></i></span>Daily Reports </a></li>
                   <li><a class="nav-link" href="<?=base_url('User/reportList')?>"><span><i class="far fa-compass"></i></span>View Report</a></li>
-                  <li><a class="nav-link" href="<?=base_url('Utilities/gaolTracking')?>"><span><i class="far fa-compass"></i></span>Monthly Report</a></li>
+                  <!-- <li><a class="nav-link" href="<?=base_url('Utilities/gaolTracking')?>"><span><i class="far fa-compass"></i></span>Monthly Report</a></li>
 									<li><a class="nav-link" href="<?=base_url('User/TaskReport')?>"><span><i class="far fa-compass"></i></span>Task Report</a></li>
-									<li><a class="nav-link" href="<?=base_url('User/ProjectReport')?>"><span><i class="far fa-compass"></i></span>Project Reportt</a></li>
+									<li><a class="nav-link" href="<?=base_url('User/ProjectReport')?>"><span><i class="far fa-compass"></i></span>Project Reportt</a></li> -->
 								</ul>
             </li>
             <li><a class="nav-link" href="<?=base_url('User/user_list')?>"><i class="fas fa-user"></i> <span>Users</span></a></li>
@@ -428,10 +472,15 @@ background: #f3f3f3;
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe-europe"></i> <span>Utilities </span></a>
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href="<?=base_url('Utilities/holiday')?>"><span> <i class="fas fa-ticket-alt"></i></span>Holiday<i class="fa fa-check" aria-hidden="true" style="color:orange"></i> </a></li>
-                  <li><a class="nav-link" href="<?=base_url('Utilities/gaolTracking')?>"><span><i class="far fa-compass"></i></span>Goal Tracking</a></li>
+                  <!-- <li><a class="nav-link" href="<?=base_url('Utilities/gaolTracking')?>"><span><i class="far fa-compass"></i></span>Goal Tracking</a></li> -->
                 </ul>
             </li>
-
+              <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe-europe"></i> <span>Sales </span></a>
+                <ul class="dropdown-menu">
+                  <li><a class="nav-link" href="<?=base_url('Sales')?>"><span> <i class="fas fa-ticket-alt"></i></span>Invoice </a></li>
+                </ul>
+              </li>
 
              <li><a class="nav-link" href=""><i class="fas fa-envelope"></i> <span>Private Chat </span></a></li>
             </ul>

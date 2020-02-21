@@ -872,27 +872,133 @@ endif;
                     <div class="container bg-white card ">
                         <div class="row pt-3">
                             <div class="col-md-10"><h6 class="mt">User Document</h6></div>
+                            <?php if (!empty($edited)) { ?>
                             <div class="col-md-2 text-right"> 
                                 <span class="text-primary font-weight-bold " data-toggle="modal" data-target="#documentModal" id="update">Update</span>
                             </div>
+                            <?php
+                          }
+                          ?>
                         </div>
                       <div class="line mt-2"></div>
-                      <div class="">
-                           <!--  <table class="table table-striped border">
-                                <thead>
-                                    <tr>
-                                       <th scope="col" class="fs1">Bank</th>
-                                       <th scope="col" class="fs1">Name of Account</th>
-                                       <th scope="col" class="fs1">Routing Number</th>
-                                       <th scope="col" class="fs1"> Account Number</th>
-                                       <th scope="col" class="fs1"> Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    
-                                </tbody>
-                            </table> -->
-                      </div>
+                   <div class="panel-body form-horizontal">
+                        <!-- CV Upload -->
+                        <?php
+                        $document_info = $this->db->where('user_id', $profile_info->user_id)->get('tbl_employee_document')->row();
+                        if (!empty($document_info->resume)): ?>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Resume: </label>
+                                <div class="col-sm-8">
+                                    <p class="form-control-static">
+                                        <a href="<?php echo base_url() . $document_info->resume; ?>"
+                                           target="_blank" style="text-decoration: underline;">View Resume</a>
+                                        <a href="<?= base_url('admin/user/delete_documents/resume/' . $document_info->document_id) ?>"
+                                           class="btn btn-xs" title="" data-toggle="tooltip"
+                                           data-placement="top"
+                                           onclick="return confirm('You are about to delete a record. This cannot be undone. Are you sure?');"
+                                           data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
+                                    </p>
+                                </div>
+                            </div>
+
+                        <?php endif; ?>
+                        <?php if (!empty($document_info->offer_letter)): ?>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Offer_latter: </label>
+                                <div class="col-sm-8">
+                                    <p class="form-control-static">
+                                        <a href="<?php echo base_url() . $document_info->offer_letter; ?>"
+                                           target="_blank"
+                                           style="text-decoration: underline;">View Offer_letter</a>
+                                        <a href="<?= base_url('admin/user/delete_documents/offer_letter/' . $document_info->document_id) ?>"
+                                           class="btn btn-xs" title="" data-toggle="tooltip"
+                                           data-placement="top"
+                                           onclick="return confirm('You are about to delete a record. This cannot be undone. Are you sure?');"
+                                           data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
+                                    </p>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (!empty($document_info->joining_letter)): ?>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"><?= lang('joining_latter') ?>
+                                    : </label>
+                                <div class="col-sm-8">
+                                    <p class="form-control-static">
+                                        <a href="<?php echo base_url() . $document_info->joining_letter; ?>"
+                                           target="_blank"
+                                           style="text-decoration: underline;">View joining_letter</a>
+                                        <a href="<?= base_url('admin/user/delete_documents/joining_letter/' . $document_info->document_id) ?>"
+                                           class="btn btn-xs" title="" data-toggle="tooltip"
+                                           data-placement="top"
+                                           onclick="return confirm('You are about to delete a record. This cannot be undone. Are you sure?');"
+                                           data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
+                                    </p>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (!empty($document_info->contract_paper)): ?>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"><?= lang('contract_paper') ?>
+                                    : </label>
+                                <div class="col-sm-8">
+                                    <p class="form-control-static">
+                                        <a href="<?php echo base_url() . $document_info->contract_paper; ?>"
+                                           target="_blank"
+                                           style="text-decoration: underline;">View contract_paper</a>
+                                        <a href="<?= base_url('admin/user/delete_documents/contract_paper/' . $document_info->document_id) ?>"
+                                           class="btn btn-xs" title="" data-toggle="tooltip"
+                                           data-placement="top"
+                                           onclick="return confirm('You are about to delete a record. This cannot be undone. Are you sure?');"
+                                           data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
+                                    </p>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (!empty($document_info->id_proff)): ?>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">id_prof : </label>
+                                <div class="col-sm-8">
+                                    <p class="form-control-static">
+                                        <a href="<?php echo base_url() . $document_info->id_proff; ?>"
+                                           target="_blank"
+                                           style="text-decoration: underline;">view id_prof</a>
+                                        <a href="<?= base_url('admin/user/delete_documents/id_proff/' . $document_info->document_id) ?>"
+                                           class="btn btn-xs" title="" data-toggle="tooltip"
+                                           data-placement="top"
+                                           onclick="return confirm('You are about to delete a record. This cannot be undone. Are you sure?');"
+                                           data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
+                                    </p>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (!empty($document_info->other_document)): ?>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">other_document
+                                    : </label>
+                                <div class="col-sm-8">
+                                    <?php
+                                    $uploaded_file = json_decode($document_info->other_document);
+
+                                    if (!empty($uploaded_file)):
+                                        foreach ($uploaded_file as $sl => $v_files):
+
+                                            if (!empty($v_files)):
+                                                ?>
+                                                <p class="form-control-static">
+                                                    <a href="<?php echo base_url() . 'uploads/' . $v_files->fileName; ?>"
+                                                       target="_blank"
+                                                       style="text-decoration: underline;"><?= $sl + 1 . '. ' . 'view other_document'?></a>
+                                                </p>
+                                                <?php
+                                            endif;
+                                        endforeach;
+                                    endif;
+                                    ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
                     </div>
                 </div>
                 <!----------Document Details-End ------>
@@ -907,68 +1013,329 @@ endif;
                             </div>
                         </div>
                       <div class="line mt-2"></div>
-                      <div class="">
-                       <!--      <table class="table table-striped border">
-                                <thead>
-                                    <tr>
-                                       <th scope="col" class="fs1">Bank</th>
-                                       <th scope="col" class="fs1">Name of Account</th>
-                                       <th scope="col" class="fs1">Routing Number</th>
-                                       <th scope="col" class="fs1"> Account Number</th>
-                                       <th scope="col" class="fs1"> Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    
-                                </tbody>
-                            </table> -->
-                            <p>There is no data to display!</p>
-                      </div>
+                      <?php
+                      if (!empty($emp_salary_info)) {
+                          ?>
+                      <div class="panel-body">
+                        <div class="">
+                            <label for="field-1" class="col-sm-5 control-label"><strong>Salary_grade
+                                    :</strong></label>
+
+                            <p class="form-control-static"><?php echo((!empty($emp_salary_info->salary_template_id)) ? $emp_salary_info->salary_grade : $emp_salary_info->hourly_grade); ?></p>
+
+                        </div>
+                        <div class="">
+                            <label for="field-1"
+                                   class="col-sm-5 control-label"><strong>Basic_salary
+                                    :</strong>
+
+                            </label>
+                            <?php if (!empty($emp_salary_info->salary_template_id)) {
+                                $basic_salary = $emp_salary_info->basic_salary;
+                            } else {
+                                $basic_salary = $emp_salary_info->hourly_rate;
+                            }
+                            if (empty($basic_salary)) {
+                                $basic_salary = 0;
+                            }
+                            ?>
+
+                            <p class="form-control-static"><?php
+
+                                $curency = $this->db->where('code', config_item('default_currency'))->get('tbl_currencies')->row();
+
+                                echo display_money($basic_salary, $curency->symbol);
+
+                                ?></p>
+
+                        </div>
+                        <?php if (!empty($emp_salary_info->overtime_salary)) { ?>
+                            <div class="">
+
+                                <label for="field-1"
+
+                                       class="col-sm-5 control-label"><strong>Overtime
+
+                                        <small>(<?= lang('per_hour') ?>)</small>
+
+                                        :</strong> </label>
+
+                                <p class="form-control-static">
+
+                                    <?php echo display_money($emp_salary_info->overtime_salary, $curency->symbol); ?>
+
+                                </p>
+
+                            </div>
+                        <?php } ?>
+
+
+                        <!-- ***************** Salary Details  Ends *********************-->
+
+
+                        <!-- ******************-- Allowance Panel Start **************************-->
+                        <?php
+                        $total_salary = 0;
+                        $total_deduction = 0;
+                        if (!empty($emp_salary_info->salary_template_id)) { ?>
+                            <div class="col-sm-6">
+
+                                <div class="row panel panel-custom" style="margin-left: -30px">
+
+                                    <div class="panel-heading">
+
+                                        <div class="panel-title">
+
+                                            <strong>Allowances</strong>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="panel-body">
+
+                                        <?php
+
+                                        if (!empty($salary_allowance_info)):foreach ($salary_allowance_info as $v_allowance_info):
+                                            ?>
+
+                                            <div class="">
+
+                                                <label
+
+                                                    class="col-sm-6 control-label"><strong><?php echo $v_allowance_info->allowance_label; ?>
+
+                                                        : </strong></label>
+
+                                                <p class="form-control-static"><?php echo display_money($v_allowance_info->allowance_value, $curency->symbol) ?></p>
+
+                                            </div>
+
+                                            <?php $total_salary += $v_allowance_info->allowance_value; ?>
+
+                                        <?php endforeach; ?>
+
+                                        <?php else: ?>
+
+                                            <h2> Nothing_to_display</h2>
+
+                                        <?php endif; ?>
+
+                                    </div>
+
+                                </div>
+
+                            </div><!-- ********************Allowance End ******************-->
+                                  <!-- ************** Deduction Panel Column  **************-->
+
+                            <div class="col-sm-6">
+
+                                <div class=" panel panel-custom" style="margin-right: -30px">
+
+                                    <div class="panel-heading">
+
+                                        <div class="panel-title">
+
+                                            <strong>Deductions</strong>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="panel-body">
+
+                                        <?php
+
+                                        if (!empty($salary_deduction_info)):foreach ($salary_deduction_info as $v_deduction_info):
+
+                                            ?>
+
+                                            <div class="">
+
+                                                <label
+
+                                                    class="col-sm-6 control-label"><strong><?php echo $v_deduction_info->deduction_label; ?>
+
+                                                        : </strong></label>
+
+                                                <p class="form-control-static"><?php
+
+                                                    echo display_money($v_deduction_info->deduction_value, $curency->symbol);
+
+                                                    ?></p>
+
+                                            </div>
+
+                                            <?php $total_deduction += $v_deduction_info->deduction_value ?>
+
+                                        <?php endforeach; ?>
+
+                                        <?php else: ?>
+
+                                            <h2>Nothing_to_display</h2>
+
+                                        <?php endif; ?>
+
+                                    </div>
+
+                                </div>
+
+                            </div><!-- ****************** Deduction End  *******************-->
+                        <?php } ?>
+                        <div class="form-horizontal col-sm-8 pull-right">
+
+                            <div class="panel panel-info" style="margin-right: -30px">
+
+                                <div class="panel-heading">
+
+                                    <div class="panel-title">
+
+                                        <strong>Total_salary_details</strong>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="panel-body">
+
+                                    <div class="">
+
+                                        <label
+
+                                            class="col-sm-6 control-label"><strong>Gross_salary: </strong></label>
+
+                                        <p class="form-control-static"><?php
+
+                                            if (!empty($total_salary) || !empty($basic_salary)) {
+
+                                                $total = $total_salary + $basic_salary;
+                                                if (!empty($total)) {
+                                                    $total = $total;
+                                                } else {
+                                                    $total = 0;
+                                                }
+
+                                                echo display_money($total, $curency->symbol);
+
+                                            }
+
+                                            ?></p>
+
+                                    </div>
+
+                                    <div class="">
+
+                                        <label
+
+                                            class="col-sm-6 control-label"><strong>Total_deduction
+
+                                                : </strong></label>
+
+                                        <p class="form-control-static"><?php
+
+                                            if (!empty($total_deduction)) {
+
+                                                echo display_money($total_deduction, $curency->symbol);
+
+                                            }
+
+                                            ?></p>
+
+                                    </div>
+
+                                    <div class="">
+
+                                        <label class="col-sm-6 control-label"><strong>Net_salary: </strong></label>
+
+                                        <p class="form-control-static"><?php
+                                            if (!empty($total)) {
+                                                $total = $total;
+                                            } else {
+                                                $total = 0;
+                                            }
+
+                                            $net_salary = $total - $total_deduction;
+
+                                            echo display_money($net_salary, $curency->symbol);
+
+                                            ?></p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div><!-- ****************** Total Salary Details End  *******************-->
+
+                    </div>
+                      <?php } else {
+
+                      echo  '<span>no_data</span>';
+
+                    } ?>
                     </div>
                 </div>
                 <!----------Salary Details-End ------>
 
                 <!----------Timecard Details------->
                 <div class="tab-pane " id="timecard_details">
-                    <div class="container bg-white card ">
-                        <div class="row pt-3">
-                            <div class="col-md-10"><h6 class="mt">Timecard Details</h6></div>
-                            <div class="col-md-2 text-right"> 
-                                <span class="text-primary font-weight-bold " data-toggle="modal" data-target="#bankModal" id="update">Update</span>
-                            </div>
-                        </div>
-                      <div class="line mt-2"></div>
-                      <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="offset-2 col-sm-2">
-                                    <label for="exampleInputEmail1" class="label-style">Month <span class="text-danger">*</span></label>
-                                </div>
-                                <div class="col-sm-4">
-                                    <input type="text" id="datepicker" placeholder="2020-2" class="form-control">
-                                </div>
-                                <div class="col-sm-1">
-                                    <button type="button" id="acount" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
-                                </div>
-                                <div class="offset-1 col-sm-1">
-                                    <a href="timedetails.php"><button type="button" class="btn btn-primary butn  font-weight-bold">Go</button></a>
-                                </div>
-                            </div>
-                        </div>
+                  <div class="container bg-white card ">
+                    <div class="row pt-3">
+                      <div class="col-md-10"><h6 class="mt">Timecard Details</h6>
+                      </div>
+                      <div class="col-md-2 text-right"> 
+                        <span class="text-primary font-weight-bold " data-toggle="modal" data-target="#bankModal" id="update">Update</span>
+                      </div>
                     </div>
-                </div>
-                <div class="card shadow p-3 mt-4">
-                    <div class="row">
-                        <div class="col-sm-12">
-                           <h6 class="font-weight-bold">Works Hours Details of February-2020</h6>
+                    <div class="line mt-2"></div>
+                  <form id="attendance-form" role="form" enctype="multipart/form-data"
+                  action="<?php echo base_url(); ?>User/userDetails/<?= $profile_info->user_id ?>/6"
+                  method="post"
+                  class="form-horizontal form-groups-bordered">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="offset-2 col-sm-2">
+                            <label for="exampleInputEmail1" class="label-style">Month <span class="text-danger">*</span></label>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class='input-group date form-group' id='datetimepicker10'>
+                              <input type='text' class="form-control" name="date" value="<?php
+                            if (!empty($date)) {
+                                echo date('Y-n', strtotime($date));
+                            }
+                            ?>" autocomplete="off"/>
+                              <span class="input-group-addon">
+                                <span ><i class="fa fa-calendar"></i></span>
+                              </span>
+                            </div>
+                          </div>
+                          <div class="col-sm-1">
+                            <button type="submit" class="btn btn-primary butn  font-weight-bold">Go</button>
+                          </div>
                         </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                 <?php if (!empty($attendace_info)): ?>
+                <div class="card shadow p-3 mt-4">
+                 
+                    <div class="row">
+                      <div class="col-sm-12">
+                         <h6 class="font-weight-bold">Works Hours Details of <?php echo date('F-Y', strtotime($date));; ?></h6>
+                      </div>
                     </div>
                     <div class="line"></div>
                     <div class="">
+                        <?php
+                        foreach ($attendace_info as $week => $v_attndc_info):
+                          ?>
                         <div class="row mt-2">
                            <div class="col-md-12">
-                              <h6 class="font-weight-bold text-color">Week : 05</h6>
+                              <h6 class="font-weight-bold text-color">Week : <?=$week; ?></h6>
                            </div>
                            <div class="col-md-12 line1"></div>
                         </div>
@@ -977,139 +1344,124 @@ endif;
                                 <table class="table table-striped  table-bordered">
                                     <thead>
                                         <tr>
-                                            <th scope="col" class="fs1">02.01.2020</th>
-                                            <th scope="col" class="fs1">02.02.2020</th>
+                                            <?php
+                                        if (!empty($v_attndc_info)): foreach ($v_attndc_info as $date => $attendace):
+                                            $total_hour = 0;
+                                            $total_minutes = 0;
+                                            ?>
+                                            <th>
+                                                <?= strftime(config_item('date_format'), strtotime($date)) ?>                                                 
+                                            </th>
+                                        <?php endforeach; ?>
+                                        <?php endif; ?>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td scope="row">
-                                                0 : 0 m
-                                            </td>
-                                            <td scope="row">
-                                                0 : 40 m  
-                                            </td>
+                                           <?php
+                                    if (!empty($v_attndc_info)):foreach ($v_attndc_info as $date => $v_attendace):
+
+                                        $total_hh = 0;
+                                        $total_mm = 0;
+
+                                        ?>
+                                        <?php
+                                        if (!empty($v_attendace)) 
+                                        {
+                                            foreach ($v_attendace as $v_attandc) {
+                                                if ($v_attandc->attendance_status == 1) {
+
+                                                    // calculate the start timestamp
+                                                    $startdatetime = strtotime($v_attandc->date_in . " " . $v_attandc->clockin_time);
+                                                    // calculate the end timestamp
+                                                    $enddatetime = strtotime($v_attandc->date_out . " " . $v_attandc->clockout_time);
+                                                    // calulate the difference in seconds
+                                                    $difference = $enddatetime - $startdatetime;
+                                                    $years = abs(floor($difference / 31536000));
+                                                    $days = abs(floor(($difference - ($years * 31536000)) / 86400));
+                                                    $hours = abs(floor(($difference - ($years * 31536000) - ($days * 86400)) / 3600));
+                                                    $mins = abs(floor(($difference - ($years * 31536000) - ($days * 86400) - ($hours * 3600)) / 60));#floor($difference / 60);
+                                                    $total_mm += $mins;
+                                                    $total_hh += $hours;
+                                                    // output the result
+                                                    //echo round($hoursDiff) . " : " . round($minutesDiffRemainder) . " m";
+                                                } elseif ($v_attandc->attendance_status == 'H') {
+                                                    $holiday = 1;
+                                                } elseif ($v_attandc->attendance_status == '3') {
+                                                    $leave = 1;
+                                                } elseif ($v_attandc->attendance_status == '0') {
+                                                    $absent = 1;
+                                                }
+                                            }
+                                        }
+
+                                        ?>
+                                        <td>
+                                          <?php
+                                            if ($total_mm > 59) {
+                                                $total_hh += intval($total_mm / 60);
+                                                $total_mm = intval($total_mm % 60);
+                                            }
+                                            $total_hour += $total_hh;
+                                            $total_minutes += $total_mm;
+                                            if ($total_hh != 0 || $total_mm != 0) 
+                                            {
+                                                echo $total_hh . " : " . $total_mm . " m";
+                                            } 
+                                            elseif (!empty($holiday)) 
+                                            {
+                                                echo '<span style="font-size: 12px;" class="label label-info std_p">Holiday</span>';
+                                            } 
+                                            elseif (!empty($leave)) 
+                                            {
+                                                echo '<span style="font-size: 12px;" class="label label-warning std_p">On_leave</span>';
+                                            } 
+                                            elseif (!empty ($absent)) 
+                                            {
+                                                echo '<span style="font-size: 12px;" class="label label-danger std_p"> Absent</span>';
+                                            } 
+                                            else 
+                                            {
+                                                echo $total_hh . " : " . $total_mm . " m";
+                                            }
+                                          ?>
+                                          </td>
+                                            <?php
+                                        $holiday = NULL;
+                                        $leave = NULL;
+                                        $absent = NULL;
+                                    endforeach;
+                                    endif;
+                                    ?>
+                                          
                                         </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                                    <tr>
+                                        <td colspan="2" class="text-right">
+                                            <strong
+                                                style="margin-right: 10px; ">Total_working_hour
+                                                : </strong>
+                                        </td>
+                                        <td>
+                                            <?php
+                                            if ($total_minutes >= 60) {
+                                                $total_hour += intval($total_minutes / 60);
+                                                $total_minutes = intval($total_minutes % 60);
+                                            }
+                                            echo $total_hour . " : " . $total_minutes . " m";
+                                            ?>
+                                        </td>
+                                    </tr>
+                                  </tbody>
+                            </table>
+                          </div>
                         </div>
-                        <div class="row p-2">
-                            <h6><strong>Total Working Hour :</strong> 0 : 40 m</h6>
-                        </div>
-                    </div>
-                    
-                    <div class="">
-                        <div class="row mt-2">
-                           <div class="col-md-12">
-                              <h6 class="font-weight-bold text-color">Week : 06</h6>
-                           </div>
-                           <div class="col-md-12 line1"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-striped  table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" class="fs1">02.01.2020</th>
-                                            <th scope="col" class="fs1">02.02.2020</th>
-                                            <th scope="col" class="fs1">02.01.2020</th>
-                                            <th scope="col" class="fs1">02.02.2020</th>
-                                            <th scope="col" class="fs1">02.01.2020</th>
-                                            <th scope="col" class="fs1">02.02.2020</th>
-                                            <th scope="col" class="fs1">02.02.2020</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td scope="row">
-                                                0 : 0 m
-                                            </td>
-                                            <td scope="row">
-                                                0 : 40 m  
-                                            </td>
-                                            <td scope="row">
-                                                0 : 0 m
-                                            </td>
-                                            <td scope="row">
-                                                0 : 40 m  
-                                            </td>
-                                            <td scope="row">
-                                                0 : 0 m
-                                            </td>
-                                            <td scope="row">
-                                                0 : 40 m  
-                                            </td>
-                                            <td scope="row">
-                                                0 : 40 m  
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="row p-2">
-                            <h6><strong>Total Working Hour :</strong> 0 : 2 m</h6>
-                        </div>
-                    </div>
-                    
-                    <div class="">
-                        <div class="row mt-2">
-                           <div class="col-md-12">
-                              <h6 class="font-weight-bold text-color">Week : 07</h6>
-                           </div>
-                           <div class="col-md-12 line1"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-striped  table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" class="fs1">02.01.2020</th>
-                                            <th scope="col" class="fs1">02.02.2020</th>
-                                            <th scope="col" class="fs1">02.01.2020</th>
-                                            <th scope="col" class="fs1">02.02.2020</th>
-                                            <th scope="col" class="fs1">02.01.2020</th>
-                                            <th scope="col" class="fs1">02.02.2020</th>
-                                            <th scope="col" class="fs1">02.02.2020</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td scope="row">
-                                                <h6  class="bg-danger text-white text-center p-1">Active</h6>
-                                            </td>
-                                            <td scope="row">
-                                                0 : 40 m  
-                                            </td>
-                                            <td scope="row">
-                                                0 : 0 m
-                                            </td>
-                                            <td scope="row">
-                                                0 : 40 m  
-                                            </td>
-                                            <td scope="row">
-                                                0 : 0 m
-                                            </td>
-                                            <td scope="row">
-                                                0 : 40 m  
-                                            </td>
-                                            <td scope="row">
-                                                0 : 40 m  
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="row p-2">
-                            <h6><strong>Total Working Hour :</strong> 0 : 0 m</h6>
-                        </div>
-                    </div>
-                    
+                        <?php endforeach; ?>
+                          </div>
+                      </div>
+                   
+                   <?php endif; ?>
                 </div>
-                    </div>
-                </div>
+              </div>
                 <!----------Timecard Details-End ------>
 
                  <!----------Leave Details ------>
@@ -1117,53 +1469,41 @@ endif;
                         <div class="container bg-white card ">
                             <div class="row pt-3">
                                 <div class="col-sm-12">
-                                   <h6 class="font-weight-bold">Leave Details Of Adminko</h6>
+                                   <h6 class="font-weight-bold">Leave Details Of <?=ucwords($profile_info->fullname) ?></h6>
                                 </div>
                             </div>
                             <div class="line"></div>
                         <div class="row p-2">
                             <table class="table table-striped  ">
                                 <tbody>
+                                <?php
+                                $total_taken = 0;
+                                $total_quota = 0;
+                                $leave_report = leave_report($profile_info->user_id);
+                               // print_r($leave_report['leave_category']);
+                                if (!empty($leave_report['leave_category'])) {
+                                    foreach ($leave_report['leave_category'] as $lkey => $v_l_report) {
+                                        $total_quota += $leave_report['leave_quota'][$lkey];
+                                        $total_taken += $leave_report['leave_taken'][$lkey];
+                                        ?>
                                     <tr>
                                         <th scope="row">
-                                            <h6 class="label-style">Sick</h6>
+                                            <h6 class="label-style"><?= $leave_report['leave_category'][$lkey] ?></h6>
                                         </th>
                                         <td scope="row">
-                                            0/2 
+                                            <?= $leave_report['leave_taken'][$lkey] ?>/<?= $leave_report['leave_quota'][$lkey]; ?>
                                         </td>
                                     </tr>
+                                     <?php }
+                                        }
+                                        ?>
                                     <tr>
-                                        <th scope="row">
-                                            <h6 class="label-style">Marriage</h6>
-                                        </th>
-                                        <td scope="row">
-                                            0/3
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <h6 class="label-style">:</h6>
-                                        </th>
-                                        <td scope="row">
-                                            0/0
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <h6 class="label-style">emergency</h6>
-                                        </th>
-                                        <td scope="row">
-                                            0/0
-                                        </td>
-                                    </tr>
-                                    <tr class="bg-dark text-white">
-                                        <th scope="row">
-                                            <h6 class=" text-white">Total</h6>
-                                        </th>
-                                        <td scope="row">
-                                            0/5
-                                        </td>
-                                    </tr>
+                                <td style="background-color: #e8e8e8; font-size: 14px; font-weight: bold;">
+                                    <strong> Total</strong>:
+                                </td>
+                                <td style="background-color: #e8e8e8; font-size: 14px; font-weight: bold;"> <?= $total_taken; ?>
+                                    /<?= $total_quota; ?> </td>
+                            </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -1176,6 +1516,73 @@ endif;
                             </div>
                             <div class="line"></div>
                         </div> 
+                        <?php
+                      $all_category = $this->db->get('tbl_leave_category')->result();
+                      $color = array('37bc9b', '7266ba', 'f05050', 'ff902b', '7266ba', 'f532e5', '5d9cec', '7cd600', '91ca00', 'ff7400', '1cc200', 'bb9000', '40c400');
+                      foreach ($all_category as $key => $v_category) {
+                          if (!empty($my_leave_report['leave_taken'][$key])) {
+                              $a = $my_leave_report['leave_taken'][$key];
+                          }
+                      }
+                      if (!empty($a)) {
+                          ?>
+                          <script type="text/javascript">
+                              // CHART PIE
+                              // -----------------------------------
+                              (function (window, document, $, undefined) {
+
+                                  $(function () {
+
+                                      var data = [
+                                          <?php
+                                          if(!empty($all_category)){
+                                          foreach ($all_category as $key => $v_category) {
+                                          if (!empty($my_leave_report['leave_taken'][$key])) {
+                                          $result = $my_leave_report['leave_taken'][$key];
+                                          ?>
+                                          {
+                                              "label": "<?= $v_category->leave_category . ' ( <small>' . 'quota'. ': ' . $my_leave_report['leave_quota'][$key] . ' ' .'taken'. ': ' . $result . '</small>)'?>",
+                                              "color": "#<?=$color[$key] ?>",
+                                              "data": <?= $result?>
+                                          },
+                                          <?php }
+                                          }
+                                          }?>
+                                      ];
+
+                                      var options = {
+                                          series: {
+                                              pie: {
+                                                  show: true,
+                                                  innerRadius: 0,
+                                                  label: {
+                                                      show: true,
+                                                      radius: 0.8,
+                                                      formatter: function (label, series) {
+                                                          return '<div class="flot-pie-label">' +
+                                                                  //label + ' : ' +
+                                                              Math.round(series.percent) +
+                                                              '%</div>';
+                                                      },
+                                                      background: {
+                                                          opacity: 0.8,
+                                                          color: '#222'
+                                                      }
+                                                  }
+                                              }
+                                          }
+                                      };
+
+                                      var chart = $('.chart-pie-my');
+                                      if (chart.length)
+                                          $.plot(chart, data, options);
+
+                                  });
+
+                              })(window, document, window.jQuery);
+
+                          </script>
+                      <?php } ?>
                     </div>
                   <!----------Leave Details End ------>
 
@@ -1184,15 +1591,16 @@ endif;
                         <div class="container bg-white card ">
                             <div class="row pt-3">
                                 <div class="col-sm-10">
-                                   <h6 class="font-weight-bold mt-2"><i class="fa fa-calendar"></i> Provident Fund 2020</h6>
+                                   <h6 class="font-weight-bold mt-2"><i class="fa fa-calendar"></i> Provident Fund <?=$year?></h6>
                                 </div>
                                 <div class="col-sm-2">
                                     <div class="bg-primary w-50 p-2 m-auto text-center"data-toggle="tooltip" data-placement="top" title="Download PDF">
-                                        <i class="fa fa-file-pdf-o" style="color:white"></i>
+                                        <i class="fa fa-file-pdf-o text-white"></i>
                                     </div>
                                 </div>
                             </div>
                             <div class="line"></div>
+                            <form data-parsley-validate="" novalidate="" role="form" enctype="multipart/form-data"action="<?= base_url(); ?>User/userDetails/<?= $profile_info->user_id ?>/8"          method="post" class="form-horizontal form-groups-bordered">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -1200,14 +1608,16 @@ endif;
                                             <div class="offset-2 col-sm-1">
                                                 <label for="exampleInputEmail1" class="label-style">Year  <span class="text-danger">*</span></label>
                                             </div>
-                                            <div class="col-sm-4">
-                                                <input type="text" id="datepicker" placeholder="2020" class="form-control">
-                                            </div>
-                                            <div class="col-sm-1">
-                                                <button type="button" id="acount" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
+                                             <div class="col-sm-4">
+                                                <div class='input-group date form-group' id='datetimepicker11'>
+                                                  <input type='text' class="form-control" name="date" value="<?php if (!empty($year)) {  echo $year; }?>" autocomplete="off"/>
+                                                  <span class="input-group-addon">
+                                                    <span ><i class="fa fa-calendar"></i></span>
+                                                  </span>
+                                                </div>
                                             </div>
                                             <div class=" col-sm-1">
-                                                <a href="provident.php"><button type="button" class="btn btn-primary butn text-white font-weight-bold">Go</button></a>
+                                                <a href="provident.php"><button type="submit" class="btn btn-primary butn text-white font-weight-bold">Go</button></a>
                                             </div>
                                         </div>
                                     </div>
@@ -1224,11 +1634,41 @@ endif;
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td scope="row"></td>
-                                                <td scope="row">Total Overtime Hour :   0 : 0 m</td>
-                                                <td scope="row"></td>
+                                             <?php
+                                          $total_amount = 0;
+                                          $curency = $this->db->get('tbl_currencies')->row();
+                                          ?>
+                                          <?php if (!empty($provident_fund_info)) {
+                                              foreach ($provident_fund_info as $key => $v_provident_fund) {
+                                                  $month_name = date('F', strtotime($year . '-' . $key)); // get full name of month by date query
+
+                                                  $curency = $this->db->get('tbl_currencies')->row();
+                                                  if (!empty($v_provident_fund)) {
+                                                      foreach ($v_provident_fund as $provident_fund) { ?>
+                                                          <tr>
+                                                              <td><?php echo $month_name ?></td>
+                                                              <td><?= strftime(config_item('date_format'), strtotime($provident_fund->paid_date)) ?></td>
+                                                              <td><?php echo display_money($provident_fund->salary_payment_deduction_value, $curency->symbol);
+                                                                  $total_amount += $provident_fund->salary_payment_deduction_value;
+                                                                  ?></td>
+
+                                                          </tr>
+                                                          <?php
+                                                          $key++;
+                                                      };
+                                                      $total_amount = $total_amount;
+                                                  };
+
+                                              }
+                                          }; ?>
+                                           <tr class="total_amount">
+                                                <td colspan="2" class="text-right">
+                                                    <strong>Total provident_fund
+                                                        : </strong></td>
+                                                <td colspan="3" style="padding-left: 8px;"><strong><?= display_money($total_amount, $curency->symbol);
+                                                        ?></strong></td>
                                             </tr>
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -1242,35 +1682,41 @@ endif;
                         <div class="container bg-white card ">
                             <div class="row pt-3">
                                 <div class="col-sm-10">
-                                   <h6 class="font-weight-bold mt-2"><i class="fa fa-calendar"></i> Provident Fund 2020</h6>
+                                   <h6 class="font-weight-bold mt-2"><i class="fa fa-calendar"></i> Overtime_details<?=$year?></h6>
                                 </div>
                                 <div class="col-sm-2">
                                     <div class="bg-primary w-50 p-2 m-auto text-center"data-toggle="tooltip" data-placement="top" title="Download PDF">
-                                        <i class="fa fa-file-pdf-o" style="color:white"></i>
+                                        <i class="fa fa-file-pdf-o text-white"></i>
                                     </div>
                                 </div>
                             </div>
                             <div class="line"></div>
+                            <form id="attendance-form" role="form" enctype="multipart/form-data"
+          action="<?php echo base_url(); ?>User/userDetails/<?= $profile_info->user_id ?>/9" method="post" class="form-horizontal form-groups-bordered">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="offset-2 col-sm-1">
-                                                <label for="exampleInputEmail1" class="label-style">Year  <span class="text-danger">*</span></label>
+                                                <label for="exampleInputEmail1" class="label-style">Year <span class="text-danger">*</span></label>
                                             </div>
                                             <div class="col-sm-4">
-                                                <input type="text" id="datepicker" placeholder="2020" class="form-control">
-                                            </div>
-                                            <div class="col-sm-1">
-                                                <button type="button" id="acount" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
+                                                <div class='input-group date form-group' id='datetimepicker12'>
+                                                  <input type='text' class="form-control" name="date" value="<?php
+                                                  if (!empty($overtime_year)) { echo $overtime_year; } ?>" autocomplete="off"/>
+                                                  <span class="input-group-addon">
+                                                    <span ><i class="fa fa-calendar"></i></span>
+                                                  </span>
+                                                </div>
                                             </div>
                                             <div class=" col-sm-1">
-                                                <a href="provident.php"><button type="button" class="btn btn-primary butn text-white font-weight-bold">Go</button></a>
+                                                <a href="provident.php"><button type="submit" class="btn btn-primary butn text-white font-weight-bold">Go</button></a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                          </form>
                             <div class="row mt-3">
                                 <div class="col-md-12">
                                     <table class="table table-striped ">
@@ -1282,13 +1728,86 @@ endif;
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td scope="row"></td>
-                                                <td scope="row"></td>
-                                                <td scope="row">
-                                                    Total Provident Fund :  â‚¬ 0,00
-                                                </td>
-                                            </tr>
+                                        <?php
+                                        $key = 1;
+                                        $hh = 0;
+                                        $mm = 0;
+                                        if (!empty($all_overtime_info)) {
+                                            foreach ($all_overtime_info as $key => $v_overtime_info) {
+                                                if (!empty($v_overtime_info)) {
+                                                    foreach ($v_overtime_info as $v_overtime) {
+                                                        if ($v_overtime->status == 'pending') {
+                                                            $status = '<strong class="label label-warning">'.'Pending'.'</strong>';
+                                                        } elseif ($v_overtime->status == 'approved') {
+                                                            $status = '<strong class="label label-success">' .  'approved' . '</strong>';
+                                                        } else {
+                                                            $status = '<strong class="label label-danger">' . $v_overtime->status . '</strong>';
+                                                        }
+                                                        ?>
+                                                        <tr>
+                                                            <td><?= strftime(config_item('date_format'), strtotime($v_overtime->overtime_date)) ?></td>
+                                                            <td><?php echo $v_overtime->overtime_hours; ?></td>
+                                                            <td><?= $status ?>
+
+                                                                <?php
+                                                                if ($this->session->userdata('user_type') == 1) {
+                                                                    if ($v_overtime->status == 'pending') { ?>
+                                                                        <a data-toggle="tooltip" data-placment="top"
+                                                                           title="Approved"
+                                                                           href="<?= base_url() ?>admin/utilities/change_overtime_status/approved/<?= $v_overtime->overtime_id; ?>"
+                                                                           class="btn btn-xs btn-success ml"><i
+                                                                                class="fa fa-check"></i> </a>
+                                                                        <a data-toggle="tooltip" data-placment="top"
+                                                                           title="Reject"
+                                                                           href="<?= base_url() ?>admin/utilities/change_overtime_status/rejected/<?= $v_overtime->overtime_id; ?>"
+                                                                           class="btn btn-xs btn-danger ml"><i
+                                                                                class="fa fa-times"></i></a>
+                                                                    <?php } elseif ($v_overtime->status == 'rejected') { ?>
+                                                                        <a data-toggle="tooltip" data-placment="top"
+                                                                           title="Approved"
+                                                                           href="<?= base_url() ?>admin/utilities/change_overtime_status/approved/<?= $v_overtime->overtime_id; ?>"
+                                                                           class="btn btn-xs btn-success ml"><i
+                                                                                class="fa fa-check"></i> </a>
+                                                                    <?php } elseif ($v_overtime->status == 'approved') { ?>
+                                                                        <a data-toggle="tooltip" data-placment="top"
+                                                                           title="Reject"
+                                                                           href="<?= base_url() ?>admin/utilities/change_overtime_status/rejected/<?= $v_overtime->overtime_id; ?>"
+                                                                           class="btn btn-xs btn-danger ml"><i
+                                                                                class="fa fa-times"></i></a>
+                                                                    <?php }
+                                                                }
+                                                                ?>
+                                                            </td>
+                                                            <?php $hh += $v_overtime->overtime_hours; ?>
+                                                            <?php $mm += date('i', strtotime($v_overtime->overtime_hours)); ?>
+
+                                                        </tr>
+                                                        <?php
+                                                        $key++;
+                                                    };
+                                                };
+                                            };
+                                        };
+                                        ?>
+                                        <tr class="total_amount">
+                                            <td colspan="1" class="text-right">
+                                                <strong>Total_overtime_hour : </strong></td>
+                                            <td colspan="2" style="padding-left: 8px;"><strong><?php
+                                                    if ($hh > 1 && $hh < 10 || $mm > 1 && $mm < 10) {
+                                                        $total_mm = '0' . $mm;
+                                                        $total_hh = '0' . $hh;
+                                                    } else {
+                                                        $total_mm = $mm;
+                                                        $total_hh = $hh;
+                                                    }
+                                                    if ($total_mm > 59) {
+                                                        $total_hh += intval($total_mm / 60);
+                                                        $total_mm = intval($total_mm % 60);
+                                                    }
+                                                    echo $total_hh . " : " . $total_mm . " m";
+
+                                                    ?></strong></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -1308,6 +1827,7 @@ endif;
                             <div class="line"></div>
                             <div class="row p-5 m-auto">
                                 <div class="col-md-12  text-center">
+
                                     <h1 class="timer">0:0:9</h1>
                                 </div>
                                 <div class="col-md-12  text-center">
@@ -1324,9 +1844,10 @@ endif;
                             </div>
                             <div class="line"></div>
                             <div class="row p-1">
-                                <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                                <div class="text-center" id="chartContainer" style="height: 370px; width: 100%;"></div>
                             </div>
-                        </div>      
+                        </div> 
+
                     </div>
                   <!----------tasks End ------>
 
@@ -1357,7 +1878,7 @@ endif;
                             </div>
                             <div class="line"></div>
                             <div class="row p-1">
-                                <div id="projectchartContainer" style="height: 370px; width: 100%;"></div>
+                                <div class="text-center" id="projectchartContainer" style="height: 370px; width: 100%;"></div>
                             </div>
                         </div>
                     </div>
@@ -1373,7 +1894,7 @@ endif;
                             </div>
                             <div class="line"></div>
                             <div class="row p-1">
-                                <div id="bugschartContainer" style="height: 370px; width: 100%;"></div>
+                                <div class="text-center" id="bugschartContainer" style="height: 370px; width: 100%;"></div>
                             </div>
                         </div>
                     </div>
@@ -1399,36 +1920,23 @@ endif;
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td scope="row">02.12.2020 19:26</td>
-                                                <td scope="row">Adminko</td>
-                                                <td scope="row">Performance</td>
-                                                <td scope="row">Performance Appraisal Saved ravish beg ForMar 2020</td>
-                                            </tr>
-                                            <tr>
-                                                <td scope="row">02.12.2020 19:26</td>
-                                                <td scope="row">Adminko</td>
-                                                <td scope="row">Performance</td>
-                                                <td scope="row">Performance Appraisal Saved ravish beg ForMar 2020</td>
-                                            </tr>
-                                            <tr>
-                                                <td scope="row">02.12.2020 19:26</td>
-                                                <td scope="row">Adminko</td>
-                                                <td scope="row">Performance</td>
-                                                <td scope="row">Performance Appraisal Saved ravish beg ForMar 2020</td>
-                                            </tr>
-                                            <tr>
-                                                <td scope="row">02.12.2020 19:26</td>
-                                                <td scope="row">Adminko</td>
-                                                <td scope="row">Performance</td>
-                                                <td scope="row">Performance Appraisal Saved ravish beg ForMar 2020</td>
-                                            </tr>
-                                            <tr>
-                                                <td scope="row">02.12.2020 19:26</td>
-                                                <td scope="row">Adminko</td>
-                                                <td scope="row">Performance</td>
-                                                <td scope="row">Performance Appraisal Saved ravish beg ForMar 2020</td>
-                                            </tr>
+                                           <?php
+                                          if (!empty($activities_info)) {
+                                              foreach ($activities_info as $v_activity) {
+                                                  ?>
+                                                  <tr>
+                                                     <td scope="row"><?= $v_activity->activity_date?></td>
+                                                <td scope="row"><?= $this->db->where('user_id', $v_activity->user)->get('tbl_account_details')->row()->fullname; ?></td>
+                                                <td scope="row"><?= $v_activity->module ?></td>
+                                                <td scope="row"> <?= $v_activity->activity ?>
+                                                          <strong > <?= $v_activity->value1 . ' ' . $v_activity->value2 ?></strong>
+                                                        </td>
+
+                                                  </tr>
+                                                  <?php
+                                              }
+                                          }
+                                          ?>
                                         </tbody>
                                     </table>
                             </div>
@@ -1472,11 +1980,6 @@ function explodePie(e) {
     }
 }
  
-}
-</script>
-<script>
-window.onload = function() {
-
 var chart = new CanvasJS.Chart("projectchartContainer", {
     animationEnabled: true,
     
@@ -1492,12 +1995,6 @@ var chart = new CanvasJS.Chart("projectchartContainer", {
     }]
 });
 chart.render();
-
-}
-</script>
-
-<script>
-window.onload = function () {
 
 var chart = new CanvasJS.Chart("chartContainer", {
     theme: "light2",
@@ -1629,9 +2126,7 @@ function explodePie(e) {
                                     <button type="button" id="acount" class="btn btn-light butn" data-toggle="tooltip" data-placement="top" title="New Account"><i class="fa fa-calendar"></i></button>
                                 </div>
                             </div>
-                        </div>
-                        
-                        
+                        </div>    
                         <div class="form-group">
                             <div class="row">
                                 <div class="offset-2 col-sm-2">
@@ -1888,9 +2383,7 @@ function explodePie(e) {
                     <button type="button" class="btn btn-secondary">close</button>
                     <button type="button" class="btn btn-primary">Update</button>
                 </div>
-            </div>
-            
-                
+            </div>  
         </div>
     </div>
 
@@ -1906,97 +2399,95 @@ function explodePie(e) {
 <div class="modal fade" id="documentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
                             
-            <div class="modal-content style" id="currency" style="display:none">
-                <div class="modal-header border-bottom-0">
-                    <h5 class="modal-title font-weight-bold" id="exampleModalLabel">User Documents</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="line"></div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="offset-2 col-sm-2">
-                                    <label for="exampleInputEmail1" class="label-style">Resume</label>
-                                </div>
-                                <div class="col-sm-5">
-                                     <input type="file" id="myfile" name="myfile">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="offset-2 col-sm-2">
-                                    <label for="exampleInputEmail1" class="label-style">Offer Letter</label>
-                                </div>
-                                <div class="col-sm-5">
-                                     <input type="file" id="myfile" name="myfile">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="offset-2 col-sm-2">
-                                    <label for="exampleInputEmail1" class="label-style">Joining Letter</label>
-                                </div>
-                                <div class="col-sm-5">
-                                     <input type="file" id="myfile" name="myfile">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="offset-1 col-sm-3">
-                                    <label for="exampleInputEmail1" class="label-style">Contract Paper</label>
-                                </div>
-                                <div class="col-sm-5">
-                                     <input type="file" id="myfile" name="myfile">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="offset-2 col-sm-2">
-                                    <label for="exampleInputEmail1" class="label-style">ID Prof</label>
-                                </div>
-                                <div class="col-sm-5">
-                                     <input type="file" id="myfile" name="myfile">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="offset-1 col-sm-3">
-                                    <label for="exampleInputEmail1" class="label-style">Other Document</label>
-                                </div>
-                                <div class="col-sm-5">
-                                     <input type="file" id="myfile" name="myfile">
-                                </div>
-                                <div class="col-sm-3">
-                                    <a href="#"><h6 class="text-primary"><i class="fa fa-plus"></i> Add More</h6></a>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        
-                    </form>
-                </div>
-                <div class="modal-footer border-top-0 modal-butn">
-                    <button type="button" class="btn btn-secondary">close</button>
-                    <button type="button" class="btn btn-primary">Update</button>
-                </div>
-            </div>
-            
-                
-        </div>
+      <div class="modal-content style" id="currency" style="display:none">
+          <div class="modal-header border-bottom-0">
+              <h5 class="modal-title font-weight-bold" id="exampleModalLabel">User Documents</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="line"></div>
+          <div class="modal-body">
+              <form>
+                  <div class="form-group">
+                      <div class="row">
+                          <div class="offset-2 col-sm-2">
+                              <label for="exampleInputEmail1" class="label-style">Resume</label>
+                          </div>
+                          <div class="col-sm-5">
+                               <input type="file" id="myfile" name="myfile">
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="form-group">
+                      <div class="row">
+                          <div class="offset-2 col-sm-2">
+                              <label for="exampleInputEmail1" class="label-style">Offer Letter</label>
+                          </div>
+                          <div class="col-sm-5">
+                               <input type="file" id="myfile" name="myfile">
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="form-group">
+                      <div class="row">
+                          <div class="offset-2 col-sm-2">
+                              <label for="exampleInputEmail1" class="label-style">Joining Letter</label>
+                          </div>
+                          <div class="col-sm-5">
+                               <input type="file" id="myfile" name="myfile">
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="form-group">
+                      <div class="row">
+                          <div class="offset-1 col-sm-3">
+                              <label for="exampleInputEmail1" class="label-style">Contract Paper</label>
+                          </div>
+                          <div class="col-sm-5">
+                               <input type="file" id="myfile" name="myfile">
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="offset-2 col-sm-2">
+                          <label for="exampleInputEmail1" class="label-style">ID Prof</label>
+                      </div>
+                      <div class="col-sm-5">
+                           <input type="file" id="myfile" name="myfile">
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                      <div class="row">
+                          <div class="offset-1 col-sm-3">
+                              <label for="exampleInputEmail1" class="label-style">Other Document</label>
+                          </div>
+                          <div class="col-sm-5">
+                               <input type="file" id="myfile" name="myfile">
+                          </div>
+                          <div class="col-sm-3">
+                              <a href="#"><h6 class="text-primary"><i class="fa fa-plus"></i> Add More</h6></a>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  
+              </form>
+          </div>
+          <div class="modal-footer border-top-0 modal-butn">
+              <button type="button" class="btn btn-secondary">close</button>
+              <button type="button" class="btn btn-primary">Update</button>
+          </div>
     </div>
+   </div>
+</div>
 
 <script>
     $(document).ready(function(){
@@ -2005,4 +2496,24 @@ function explodePie(e) {
          $('#exampleModal').modal('show');
       });
     });
+</script>
+ <script type="text/javascript">
+  $(function () {
+      $('#datetimepicker10').datetimepicker({
+          viewMode: 'years',
+          format: 'YYYY-MM'
+      });
+  });
+  $(function () {
+      $('#datetimepicker11').datetimepicker({
+          viewMode: 'years',
+          format: 'YYYY-MM'
+      });
+  });
+  $(function () {
+      $('#datetimepicker12').datetimepicker({
+          viewMode: 'years',
+          format: 'YYYY-MM'
+      });
+  });
 </script>
