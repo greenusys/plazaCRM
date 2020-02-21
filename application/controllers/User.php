@@ -186,11 +186,13 @@ class User extends MY_Controller {
                 $data['date'] = date('Y-m');
             }
             $data['attendace_info'] = $this->get_report($id, $data['date']);
-            // $data['my_leave_report'] = leave_report($id);
+            $data['my_leave_report'] = leave_report($id);
             //
             if ($this->input->post('year', TRUE)) { // if input year
                 $data['year'] = $this->input->post('year', TRUE);
-            } else { // else current year
+            } 
+            else
+             { // else current year
                 $data['year'] = date('Y'); // get current year
             }
             // get all expense list by year and month
