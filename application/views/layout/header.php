@@ -450,9 +450,9 @@ background: #f3f3f3;
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href="<?=base_url('User/generateReport')?>"><span> <i class="fas fa-ticket-alt"></i></span>Daily Reports </a></li>
                   <li><a class="nav-link" href="<?=base_url('User/reportList')?>"><span><i class="far fa-compass"></i></span>View Report</a></li>
-                  <li><a class="nav-link" href="<?=base_url('Utilities/gaolTracking')?>"><span><i class="far fa-compass"></i></span>Monthly Report</a></li>
+                  <!-- <li><a class="nav-link" href="<?=base_url('Utilities/gaolTracking')?>"><span><i class="far fa-compass"></i></span>Monthly Report</a></li>
 									<li><a class="nav-link" href="<?=base_url('User/TaskReport')?>"><span><i class="far fa-compass"></i></span>Task Report</a></li>
-									<li><a class="nav-link" href="<?=base_url('User/ProjectReport')?>"><span><i class="far fa-compass"></i></span>Project Reportt</a></li>
+									<li><a class="nav-link" href="<?=base_url('User/ProjectReport')?>"><span><i class="far fa-compass"></i></span>Project Reportt</a></li> -->
 								</ul>
             </li>
             <li><a class="nav-link" href="<?=base_url('User/user_list')?>"><i class="fas fa-user"></i> <span>Users</span></a></li>

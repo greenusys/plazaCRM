@@ -297,7 +297,7 @@ $(document).ready(function(){
                           ?>
                             <tr>
                               <td>  
-                                <a href="<?=base_url('Project/projectDetails/').$pr['project_id']?>"><?=$pr['project_name']?>
+                                <a href="<?=base_url('Projects/project_details/').$pr['project_id']?>"><?=$pr['project_name']?>
                                 <div class="progress">
                                   <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:<?=$pr['progress']?>">
                                     <span class="sr-only">70% Complete</span>
