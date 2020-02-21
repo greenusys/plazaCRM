@@ -50,7 +50,8 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Leave Category</th>
-                                        <th>Date</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
                                         <th>Duration</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -61,14 +62,17 @@
                                     foreach($fetch_leave_data as $leaseAllData)
                                     {
                                          // print_r($leaseAllData);
+                                        $date1=date_create($leaseAllData->leave_start_date);
+                                        $date2=date_create($leaseAllData->leave_end_date);
+                                        $diff=date_diff($date1,$date2);
                                     ?>
                                         <tr>
                 
            <td><a href="<?=base_url('Leavemanagement/Leave_Modal_Detailss/').$leaseAllData->leave_application_id?>"  LeaveApp_id="<?=$leaseAllData->leave_application_id?>" class="Applicationdata" fetchdesignationid="<?=$leaseAllData->designation_id?>"data-toggle="modal" data-target="#leaveapplicationsection"><?=$leaseAllData->fullname?></a></td>
-                                            <td><?=$leaseAllData->leave_category?></td>
-                                            <td><?=$leaseAllData->leave_start_date.' '.$leaseAllData->leave_end_date?></td>
-                                            
-                                            <td><?=$leaseAllData->hours?></td>
+                                            <td><?=ucwords($leaseAllData->leave_category)?></td>
+                                            <td><?=date('d-m-Y',strtotime($leaseAllData->leave_start_date))?></td>
+                                            <td><?=date('d-m-Y',strtotime($leaseAllData->leave_end_date))?></td>
+                                            <td><?php print_r($diff->d)?></td>
                                             <?php
                                             if($leaseAllData->application_status==1)
                                             {?>
@@ -121,7 +125,8 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Leave Category</th>
-                                        <th>Date</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
                                         <th>Duration</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -135,10 +140,10 @@
                                     ?>
                                         <tr>
                                             <td><a href="<?=base_url('Leavemanagement/Leave_Modal_Detailss/').$MyleaveAllData->leave_application_id?>"  LeaveApp_id="<?=$MyleaveAllData->leave_application_id?>" class="Applicationdata "data-toggle="modal" data-target="#leaveapplicationsection"><?=$MyleaveAllData->fullname?></a></td>
-                                            <td><?=$MyleaveAllData->leave_category?></td>
-                                            <td><?=$MyleaveAllData->leave_start_date.' '.$leaseAllData->leave_end_date?></td>
-                                            
-                                            <td><?=$MyleaveAllData->hours?></td>
+                                            <td><?=ucwords($leaseAllData->leave_category)?></td>
+                                            <td><?=date('d-m-Y',strtotime($leaseAllData->leave_start_date))?></td>
+                                            <td><?=date('d-m-Y',strtotime($leaseAllData->leave_end_date))?></td>
+                                            <td><?php print_r($diff->d)?></td>
                                             <?php
                                             if($MyleaveAllData->application_status==1)
                                             {?>
@@ -189,7 +194,8 @@
                                      <tr>
                                         <th>Name</th>
                                         <th>Leave Category</th>
-                                        <th>Date</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
                                         <th>Duration</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -203,10 +209,10 @@
                                     ?>
                                         <tr>
                                             <td><a href="<?=base_url('Leavemanagement/Leave_Modal_Detailss/').$leaseAllData->leave_application_id?>"  LeaveApp_id="<?=$leaseAllData->leave_application_id?>" class="Applicationdata "data-toggle="modal" data-target="#leaveapplicationsection"><?=$leaseAllData->fullname?></a></td>
-                                            <td><?=$leaseAllData->leave_category?></td>
-                                            <td><?=$leaseAllData->leave_start_date.' '.$leaseAllData->leave_end_date?></td>
-                                            
-                                            <td><?=$leaseAllData->hours?></td>
+                                           <td><?=ucwords($leaseAllData->leave_category)?></td>
+                                            <td><?=date('d-m-Y',strtotime($leaseAllData->leave_start_date))?></td>
+                                            <td><?=date('d-m-Y',strtotime($leaseAllData->leave_end_date))?></td>
+                                            <td><?php print_r($diff->d)?></td>
                                             <?php
                                             if($leaseAllData->application_status==1)
                                             {?>
@@ -525,7 +531,7 @@
                         <div class="row">
                             <div class="col-md-11 col-10">
 
-                               <h5><span id="fullname"></span><span class="text-danger" id="leavestartdate"></span>to<span class="text-danger" id="leaveenddate"></span></h5>
+                               <h5><span id="fullname"> </span></h5>
                             </div>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
@@ -541,20 +547,20 @@
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="offset-1 col-sm-4 col-4" >
-                                                            <label for="exampleInputEmail1"><strong>Leave Category :</strong></label>
+                                                            <label for="exampleInputEmail1"><strong>Category :</strong></label>
                                                         </div>
                                                         <div class="col-sm-7 col-7">
-                                                            <label for="exampleInputEmail1"><strong><span id="leave_category"></span></strong></label>
+                                                            <label for="exampleInputEmail1"><strong><span class="text-capitalize" id="leave_category"></span></strong></label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="offset-2 col-sm-3 col-3">
-                                                            <label for="exampleInputEmail1"><strong>Date :</strong></label>
+                                                        <div class="offset-1 col-sm-3 col-3">
+                                                            <label f><strong>Date :</strong></label>
                                                         </div>
-                                                        <div class="col-sm-7 col-7">
-                                                            <label for="exampleInputEmail1"><strong ><span id="dateleavestartdate"></span><b> to </b><span id="dateleaveenddate"></span></strong></label>
+                                                        <div class="col-sm-7 col-7 text-danger">
+                                                            <label for="exampleInputEmail1"><strong ><span id="dateleavestartdate"></span><b>  to   </b><span id="dateleaveenddate"></span></strong></label>
                                                         
                                                         </div>
                                                     </div>
@@ -626,6 +632,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                      
                                         <div class="col-sm-4 card shadow mb-5">
                                             <div class="row" >
                                                 <div class="col-md-12" >
@@ -639,22 +646,24 @@
                                                     <div class="offset-1 col-sm-11">
                                                         <div class="form-group">
                                                             <div class="row">
-                                                    <?foreach($fetch_leave_category_data as $fetch_cat_name)
+                                                    <?php 
+                                                    foreach($fetch_leave_category_data as $fetch_cat_name)
                                                     {
-                                         // print_r($fetch_cat_name);
-                                                                        ?>
-                                                                <div class="offset-1 col-sm-4 col-4 ">
+                                         
+                                                    ?>
+                                                        <div class="offset-1 col-sm-4 col-4 ">
 
-                                                                    <label for="exampleInputEmail1"><strong><?=$fetch_cat_name->leave_category?></strong></label>
-                                                                    <input type="hidden" class="fetchdesig_id" desig_id="<?=$fetch_cat_name->leave_cat_desig_id?>">
-                                                                </div>
+                                                            <label for="exampleInputEmail1"><strong><?=ucwords($fetch_cat_name->leave_category)?></strong></label>
+                                                            <input type="hidden" class="fetchdesig_id" desig_id="<?=$fetch_cat_name->leave_cat_desig_id?>">
+                                                        </div>
 
-                                                                <div class="col-sm-7 col-7
-                                                                pl-5">
-                                                            <span>0/</span><span><?=$fetch_cat_name->leave_quota?></span>                                                                   <!--  <label for="exampleInputEmail1">0/2</label> -->
+                                                        <div class="col-sm-7 col-7
+                                                        pl-5">
+                                                    <span>0/</span><span><?=$fetch_cat_name->leave_quota?></span>                                                                   <!--  <label for="exampleInputEmail1">0/2</label> -->
                                                                 </div>
-                                                                <?
-                                                            }?>
+                                                                <?php
+                                                            }
+                                                            ?>
                                                             </div>
                                                         </div>
                                                         
@@ -922,8 +931,18 @@
                 var reason=response.data[0].reason;
                 var leavestartdate=response.data[0].leave_start_date;
                 var leaveendate=response.data[0].leave_end_date;
-                 var leave_image='<?=base_url("./uploads/leave/")?>'+response.data[0].attachment;
-                 var leave_application_id=response.data[0].leave_application_id;
+                var leave_image='<?=base_url("./uploads/leave/")?>'+response.data[0].attachment;
+                var leave_application_id=response.data[0].leave_application_id;
+                const date1 = new Date(leavestartdate);
+                const date2 = new Date(leaveendate);
+                const diffTime = Math.abs(date2 - date1);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+                console.log(diffDays);
+                var mydateOne = new Date(leavestartdate);
+               var strtDate = mydateOne.getUTCDate()+'-'+mydateOne.getMonth()+'-'+mydateOne.getFullYear();
+               var mydateTwo = new Date(leaveendate);
+               var endDate = mydateTwo.getUTCDate()+'-'+mydateTwo.getMonth()+'-'+mydateTwo.getFullYear();
+               // window.alert(str);
                     $('.acceptleave').attr('d-aplId',leave_application_id);
                     $('.rejectleave').attr('d-aplId',leave_application_id);
 
@@ -932,13 +951,13 @@
                 // $("#leavedate").append(leavedate);
                  $("#leave_category").append(leavecategory);
                  $("#categorynameofrleave").append(fullname);
-                 $("#Duration").append(duration);
+                 $("#Duration").append(diffDays);
                  $("#Applieddate").append(applieddate);
                  $("#reason").append(reason);
-                  $("#leavestartdate").append(leavestartdate);
-                   $("#leaveenddate").append(leaveendate);
-                    $("#dateleavestartdate").append(leavestartdate);
-                   $("#dateleaveenddate").append(leaveendate);
+                  $("#leavestartdate").append(strtDate);
+                   $("#leaveenddate").append(endDate);
+                    $("#dateleavestartdate").append(strtDate);
+                   $("#dateleaveenddate").append(endDate);
                     $("#leave_application_id").val(leave_application_id);
                     // $('#leave_image').attr('src',leave_image  );
                      $('#leave_image').attr('src',   leave_image  );
