@@ -258,7 +258,7 @@
                                 <div class="offset-1 col-sm-7 cl-md-7 col-lg-7">
                                     <form action="<?=base_url('Leavemanagement/addleaveapplication')?>" method="post" enctype="multipart/form-data">
 
-                                        <div class="form-group">
+                                       <!--  <div class="form-group">
                                             <div class="row">
                                                 <div class="col-sm-3">
                                                     <label for="exampleInputEmail1">Select Client <span class="text-danger">*</span> </label>
@@ -281,7 +281,7 @@
                                                 </div>
                                                
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-sm-3">
@@ -489,13 +489,13 @@
                             <label for="exampleInputEmail1"> Departments </label>
                         </div>
                         <div class="col-sm-9">
-                             <select name="dept_id" class="form-control" id="emply">
-                    <option selected="" disabled="" value="0">Select Department</option>
+                             <select name="desig_id" class="form-control" id="emply">
+                    <option selected="" disabled="" value="0">Select Designation</option>
                     <?php
-                                        foreach($fetch_Department_data as $deptdata)
+                                        foreach($fetch_Designation_data as $desigdata)
                                         {
                                         ?>
-              <option  value="<?=$deptdata->departments_id?>"><?=$deptdata->deptname?></option>;
+              <option  value="<?=$desigdata->designations_id?>"><?=$desigdata->designations?></option>;
                                     <?php
                                         }
                                         ?>
@@ -627,27 +627,37 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-4 card shadow mb-5">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                   <h6>Details Of Adminko</h6>
+                                            <div class="row" >
+                                                <div class="col-md-12" >
+                                            <h6 id="categorynameofrleave">Detail Of </h6>
                                                 </div>
                                             </div>
                                             <div class="">
                                                 <div class="line mt-2"></div>
                                                 <form>
+
                                                     <div class="offset-1 col-sm-11">
                                                         <div class="form-group">
                                                             <div class="row">
-                                                                <div class="offset-1 col-sm-4 col-4">
-                                                                    <label for="exampleInputEmail1">Sick :</label>
+                                                    <?foreach($fetch_leave_category_data as $fetch_cat_name)
+                                                    {
+                                        // print_r($fetch_cat_name);
+                                                                        ?>
+                                                                <div class="offset-1 col-sm-4 col-4 ">
+
+                                                                    <label for="exampleInputEmail1"><strong><?=$fetch_cat_name->leave_category?></strong></label>
                                                                 </div>
-                                                                <div class="col-sm-7 col-7">
-                                                                    <label for="exampleInputEmail1">0/2</label>
+
+                                                                <div class="col-sm-7 col-7
+                                                                pl-5">
+                                                            <span>0/</span><span><?=$fetch_cat_name->leave_quota?></span>                                                                   <!--  <label for="exampleInputEmail1">0/2</label> -->
                                                                 </div>
+                                                                <?
+                                                            }?>
                                                             </div>
                                                         </div>
                                                         
-                                                        <div class="form-group">
+                                                       <!--  <div class="form-group">
                                                             <div class="row">
                                                                 <div class=" col-sm-6 col-6">
                                                                     <label for="exampleInputEmail1">Marriage :</label>
@@ -657,8 +667,8 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        
-                                                        <div class="form-group">
+                                                         -->
+                                                        <!-- <div class="form-group">
                                                             <div class="row">
                                                                 <div class="offset-1 col-sm-5 col-5">
                                                                     <label for="exampleInputEmail1">:</label>
@@ -667,8 +677,8 @@
                                                                     <label for="exampleInputEmail1">0/0</label>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        
+                                                        </div> -->
+                                                        <!-- 
                                                         <div class="form-group">
                                                             <div class="row">
                                                                 <div class=" col-sm-6 col-6">
@@ -678,7 +688,7 @@
                                                                     <label for="exampleInputEmail1">0/0</label>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> -->
                                                         <div class="form-group bg-dark p-1 text-white">
                                                             <div class="row">
                                                                 <div class=" col-sm-6 col-6">
@@ -825,6 +835,7 @@
                      $("#leave_image").html("");
                      $("#dateleavestartdate").html("");
                      $("#dateleaveenddate").html("");
+                      $("#categorynameofrleave").html("");
 
                     
                     //  $("#client_name").html("");
@@ -856,7 +867,7 @@
                 var reason=response.data[0].reason;
                 var leavestartdate=response.data[0].leave_start_date;
                 var leaveendate=response.data[0].leave_end_date;
-                 var leave_image='<?=base_url("assets/uploads/leave/")?>'+response.data[0].attachment;
+                 var leave_image='<?=base_url("./uploads/leave/")?>'+response.data[0].attachment;
                  var leave_application_id=response.data[0].leave_application_id;
                     $('.acceptleave').attr('d-aplId',leave_application_id);
                     $('.rejectleave').attr('d-aplId',leave_application_id);
@@ -873,6 +884,7 @@
                  $("#fullname").append(fullname);
                 // $("#leavedate").append(leavedate);
                  $("#leave_category").append(leavecategory);
+                 $("#categorynameofrleave").append(fullname);
                  $("#Duration").append(duration);
                  $("#Applieddate").append(applieddate);
                  $("#reason").append(reason);

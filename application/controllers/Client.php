@@ -18,6 +18,8 @@ public function __construct(){
 		$this->load->view("pages/client",$data);
 		$this->load->view("layout/footer");
 	}
+
+    
 	public function clientList($type = null)
     {
         if ($this->input->is_ajax_request()) {
@@ -188,11 +190,75 @@ public function __construct(){
 		}
 	}
 
-	function client_details(){
+	public function client_details($id){
+		$data['client_details']=$this->Client->fetch_client($id);
+		// get all client details
+        $this->Client->_table_name = "tbl_client"; //table name
+        $this->Client->_order_by = "client_id";
+        $data['client_details'] = $this->Client->get_by(array('client_id' => $id), TRUE);
+        // get all invoice by client id
+        $this->Client->_table_name = "tbl_invoices"; //table name
+        $this->Client->_order_by = "client_id";
+        $data['client_invoices'] = $this->Client->get_by(array('client_id' => $id), FALSE);
+        // get all estimates by client id
+        $this->Client->_table_name = "tbl_estimates"; //table name
+        $this->Client->_order_by = "client_id";
+        $data['client_estimates'] = $this->Client->get_by(array('client_id' => $id), FALSE);
+        // get client contatc by client id
+        $data['client_contacts'] = $this->Client->get_client_contacts($id);
+        // get Project  by client id
+        $data['clint_project'] = $this->Client->get_client_project($id);
 		$this->load->view('layout/header');
-		$this->load->view("pages/client_details");
+		$this->load->view("pages/client_details",$data);
 		$this->load->view("layout/footer");
 	} 
+	// public function client_detaisls($id, $action = null)
+ //    {
+ //        if ($action == 'add_contacts') {
+ //            // get all language
+ //            $data['languages'] = $this->db->where('active', 1)->order_by('name', 'ASC')->get('tbl_languages')->result();
+ //            // get all location
+ //            $this->client_model->_table_name = 'tbl_locales';
+ //            $this->client_model->_order_by = 'name';
+ //            $data['locales'] = $this->client_model->get();
+ //            $data['company'] = $id;
+ //            $user_id = $this->uri->segment(6);
+ //            if (!empty($user_id)) {
+ //                // get all user_info by user id
+ //                $data['account_details'] = $this->client_model->check_by(array('user_id' => $user_id), 'tbl_account_details');
+
+ //                $data['user_info'] = $this->client_model->check_by(array('user_id' => $user_id), 'tbl_users');
+ //            }
+
+ //        }
+
+ //        $data['title'] = "View Client Details"; //Page title
+ //        // get all client details
+ //        $this->client_model->_table_name = "tbl_client"; //table name
+ //        $this->client_model->_order_by = "client_id";
+ //        $data['client_details'] = $this->client_model->get_by(array('client_id' => $id), TRUE);
+ //        if (empty($data['client_details'])) {
+ //            $type = "error";
+ //            $message = "No Record Found";
+ //            set_message($type, $message);
+ //            redirect('admin/client/manage_client');
+ //        }
+ //        // get all invoice by client id
+ //        $this->client_model->_table_name = "tbl_invoices"; //table name
+ //        $this->client_model->_order_by = "client_id";
+ //        $data['client_invoices'] = $this->client_model->get_by(array('client_id' => $id), FALSE);
+
+ //        // get all estimates by client id
+ //        $this->client_model->_table_name = "tbl_estimates"; //table name
+ //        $this->client_model->_order_by = "client_id";
+ //        $data['client_estimates'] = $this->client_model->get_by(array('client_id' => $id), FALSE);
+
+ //        // get client contatc by client id
+ //        $data['client_contacts'] = $this->client_model->get_client_contacts($id);
+
+ //        $data['subview'] = $this->load->view('admin/client/client_details', $data, TRUE);
+ //        $this->load->view('admin/_layout_main', $data); //page load
+ //    }
 
 }
 ?>

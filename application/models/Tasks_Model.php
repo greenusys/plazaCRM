@@ -92,6 +92,22 @@ class Tasks_Model extends CI_Model{
     		}
 	}
 
+    public function update_task_ajax($main_data){
+        extract($main_data);
+        $data=array('user_id'=>$user_id,
+                    'title'=>$title,
+                    'due_date'=>$due_date,
+                    'assigned'=>$assigned);
+        $this->db->where('todo_id', $todo_id);
+        if($this->db->update('tbl_todo',$data)){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+
 	public function update_task($data){
 			$id=$data['id'];
 			unset($data['id']);
@@ -129,9 +145,23 @@ class Tasks_Model extends CI_Model{
        return  true;
     }
 
-    public function fetch_todo(){
+    public function fetch_todo($id){
+        $checker=array('tbl_todo.user_id'=>$id);
         $this->db->select('*');
         $this->db->from('tbl_todo');
+        $this->db->join('tbl_account_details','tbl_todo.assigned=tbl_account_details.user_id','left');
+        $this->db->where($checker);
+        $query_result = $this->db->get();
+        $result = $query_result->result();
+        return $result;
+    }
+
+    public function fetch_to_do_id($id){
+        $checker=array('todo_id'=>$id);
+        $this->db->select('*');
+        $this->db->from('tbl_todo');
+        $this->db->join('tbl_account_details','tbl_todo.user_id=tbl_account_details.user_id','left');
+        $this->db->where($checker);
         $query_result = $this->db->get();
         $result = $query_result->result();
         return $result;

@@ -115,7 +115,7 @@
               </div>
               <div class="col-sm-7">
                 <div class="input-group">
-                  <select name="lpolicy_designation_id" class="form-control" id="designationforleave">
+                  <select name="lpolicy_designation_id" class="form-control fetchdesigid" id="designationforleave">
                     <option selected="" disabled="" value="0">Select Designation</option>
                      </select>
                 </div>
@@ -132,7 +132,7 @@
                    <select name="lpolicy_category_id" class="form-control " id="emply">
                     <option selected="" disabled="" value="0">Select Category</option>
                      <?php
-                                        foreach($leave_category_data as $LCdata)
+                                        foreach($fetch_leave_category_data as $LCdata)
                                         {
                                         ?>
               <option  value="<?=$LCdata->leave_category_id?>"><?=$LCdata->leave_category?></option>;
@@ -219,8 +219,8 @@
               </div>
             </div>
           <div class="row">
-            <div class="offset-3 col-sm-3">
-              <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="offset-3 col-sm-3" >
+              <button type="submit" class="btn btn-primary addpolicybutton">Submit</button>
             </div>
           </div>
         </form>
@@ -294,7 +294,7 @@
         // $('.checkagain').on('click',function(){
           $('.fetchdeptid').on('change',function(){
             var dept_id=$(this).val();
-             // alert(dept_id);
+              // alert(dept_id);
             $.ajax({
               url:"<?=base_url('Leavemanagement/fetchDesignationById')?>",
               type:"post",
@@ -327,27 +327,17 @@
               }
                   
               });
-            });
-   
-       
+            });  
       </script>
-      <!-- <script>
-        // $('.checkagain').on('click',function(){
-          $('.fetchdeptid').on('change',function(){
-            var dept_id=$(this).val();
-              // alert($dept_iddept_id);
-           
-            }); 
-      </script>  -->
        <script>
         // $('.checkagain').on('click',function(){
-          $('.fetchdeptid').on('change',function(){
-            var dept_id=$(this).val();
-               // alert($dept_iddept_id);
+          $('.fetchdesigid').on('change',function(){
+            var desig_id=$(this).val();
+               // alert(desig_id);
             $.ajax({
               url:"<?=base_url('Leavemanagement/Fetchtotalleave')?>",
               type:"post",
-              data:{dept_id:dept_id},
+              data:{desig_id:desig_id},
               success:function(response)
               {
                 //   console.log(response.data);
@@ -356,28 +346,37 @@
                     
                    if(response.code==1)
                    {
-                         $("#availableleave").empty();
+                          $("#availableleave").empty();
                         var totalleave=response.data[0].total_Yearlyleave;
-                        console.log('Total Leave',totalleave);
+                        console.log('Total Leavesucces',totalleave);
                         // $('#availableleave').val(totalleave); 
                         $.ajax({
                         url:"<?=base_url('Leavemanagement/checkAvailableleave')?>",
                         type:"post",
-                        data:{dept_id:dept_id},
+                        data:{desig_id:desig_id},
 
                         success:function(response)
                         {
-                        //console.log(response.data);
-                        response=JSON.parse(response);
-                        console.log('Taken Leave',response.data);
-                         $("#availableleave").empty();
-                        var takenleave=response.data; 
-                        var availableleave=totalleave-takenleave;
-                        console.log(totalleave,takenleave);
-                        console.log('available leave',availableleave);
-                        
-                         $('#availableleave').val(availableleave);
-
+                          //console.log(response.data);
+                          response=JSON.parse(response);
+                          console.log('Taken Leave',response.data);
+                           $("#availableleave").empty();
+                          var takenleave=response.data; 
+                          var availableleave=totalleave-takenleave;
+                          console.log(totalleave,takenleave);
+                          console.log('available leave',availableleave);
+                          if(availableleave>0)
+                          {
+                            $('#availableleave').val(availableleave);
+                            // alert('empty');
+                          }
+                          else
+                          {
+                             $('#availableleave').val('No More Leave Available');
+                             $("#addpolicybutton").attr("disabled", true);
+                             $("#addpolicybutton").prop('disabled', false);
+                             $(".addpolicybutton").prop('disabled', false);
+                          }
                         }    
                         });
                        
