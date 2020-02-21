@@ -168,6 +168,26 @@ class Global_Model extends MY_Model
        return  true;
     }
 
+    public function add_backup($db_name){
+        $data=array('path'=>$db_name);
+       $this->db->insert('tbl_db_backup', $data);
+       return  true;
+    }
+
+    public function fetch_backup(){
+        $this->db->select('*');
+        $this->db->from('tbl_db_backup');
+        $query_result = $this->db->get();
+        $result = $query_result->result();
+        return $result;
+    }
+
+    public function delete_db($id){
+        $this->db->where('backup_id', $id);
+        $this->db->delete('tbl_db_backup');
+        return true;
+    }
+
     public function get_attendance_info($id)
     {
 
