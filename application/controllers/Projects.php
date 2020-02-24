@@ -33,7 +33,9 @@ class Projects extends MY_Controller {
 			 }
 			}
 			$project_data[]=array_merge($pr,$user);
+
 		}
+        
 		$data['project']=$project_data;
 		$this->load->view('layout/header');
 		$this->load->view("pages/projects",$data);

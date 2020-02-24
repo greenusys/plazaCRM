@@ -124,7 +124,7 @@
                 </ul>
                 <div class="tab-content card pt-5" id="myTabContentJust">
                   <div class="tab-pane fade show active px-4" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
-                   <table id="example" class="display nowrap" style="width:100%">
+                   <table id="overDuTable" class="alldatatable display nowrap" style="width:100%">
                         <thead>
                             <tr>
                                 <th>Project Name</th>
@@ -138,22 +138,43 @@
                             </tr>
                         </thead>
                         <tbody>
-                          
+                          <?php
+                          // print_r($Overproject);
+                            foreach ($Overproject as $proj_detail) {
+                              // print_r($proj_detail);
+                              ?>
+                                <tr>
+                                  <td><?=$proj_detail['project_name']?></td>
+                                  <td><?=$proj_detail['client_name']?></td>
+                                  <td><?=$proj_detail['end_date']?></td>
+                                  <td><?=$proj_detail['project_status']?></td>
+                                  <td>
+                                    <?php
+                                      foreach($proj_detail['assigned_to'] as $user){
+                                        // print_r($user);
+                                        echo '<img src="'.base_url().$user->avatar.'" class="rounded-circle" width="20px">';
+                                      }
+                                    ?>
+                                  </td>
+                                </tr>
+                              <?php
+                            }
+                          ?> 
                         </tbody>
                         <tfoot>
-                            <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
-                            </tr>
+                          <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Age</th>
+                            <th>Start date</th>
+                            <th>Salary</th>
+                          </tr>
                         </tfoot>
                     </table>
                   </div>
                   <div class="tab-pane fade px-4" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
-                   <table id="example12" class="table table-striped display nowrap" style="width:100%">
+                   <table id="" class="alldatatable table table-striped display nowrap" style="width:100%">
                         <thead class="border">
                             <tr>
                                 <th>Name</th>
@@ -165,39 +186,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
-                            </tr>
-                            
-                            <tr>
-                                <td>Shad Decker</td>
-                                <td>Regional Director</td>
-                                <td>Edinburgh</td>
-                                <td>51</td>
-                                <td>2008/11/13</td>
-                                <td>$183,000</td>
-                            </tr>
-                            <tr>
-                                <td>Michael Bruce</td>
-                                <td>Javascript Developer</td>
-                                <td>Singapore</td>
-                                <td>29</td>
-                                <td>2011/06/27</td>
-                                <td>$183,000</td>
-                            </tr>
-                            <tr>
-                                <td>Donna Snider</td>
-                                <td>Customer Support</td>
-                                <td>New York</td>
-                                <td>27</td>
-                                <td>2011/01/25</td>
-                                <td>$112,000</td>
-                            </tr>
+                          <?php
+                          // print_r($Overtask);
+                            foreach ($Overproject as $proj_detail) {
+                              // print_r($proj_detail);
+                              ?>
+                                <tr>
+                                  <td><?=$proj_detail['project_name']?></td>
+                                  <td><?=$proj_detail['client_name']?></td>
+                                  <td><?=$proj_detail['end_date']?></td>
+                                  <td><?=$proj_detail['project_status']?></td>
+                                  <td>
+                                    <?php
+                                      foreach($proj_detail['assigned_to'] as $user){
+                                        // print_r($user);
+                                        echo '<img src="'.base_url().$user->avatar.'" class="rounded-circle" width="20px">';
+                                      }
+                                    ?>
+                                  </td>
+                                </tr>
+                              <?php
+                            }
+                          ?> 
                         </tbody>
                         <tfoot class="border">
                             <tr>
