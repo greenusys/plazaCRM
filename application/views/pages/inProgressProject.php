@@ -91,7 +91,7 @@ $(document).ready(function(){
 });
 </script>
 
-           <div class="p-3">
+         <!--   <div class="p-3">
             <div class="row bg-white mt-3">
                 <div class="col-md-2 ">
                   <div class="p-3 pro_status">
@@ -251,7 +251,7 @@ $(document).ready(function(){
               </div>
             </div>
   
-          </div>
+          </div> -->
           <div class="row mt-4">
             <div class="col-lg-12">
               <div class="card">
@@ -264,31 +264,31 @@ $(document).ready(function(){
                 <ul class="nav nav-tabs nav-justified md-tabs indigo col-md-5" id="myTabJust" role="tablist">
                   <li class="nav-item">
                     <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
-                      aria-selected="true">All Projects</a>
+                      aria-selected="true">Project List</a>
                   </li>
-                  <li class="nav-item">
+                  <!-- <li class="nav-item">
                     <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
                       aria-selected="false">New Project</a>
                   </li>
                   <li class="nav-item ">
                   <a class="nav-link" id="import_project" data-toggle="tab" href="#imp_project" role="tab" aria-controls="imp_project" aria-selected="false">Import Projects</a>
-                  </li>
+                  </li> -->
                 </ul>
                 <div class="tab-content card pt-3" id="myTabContentJust">
                   <div class="tab-pane fade show active px-4" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
 
                    <table id="example" class="display nowrap table-responsive" style="width:100%">
                         <thead>
-                            <tr>
+                            <!-- <tr> -->
                                 <th>Project Name</th>
                                 <th>Client</th>
                                 <th>End Date</th>
-                                <th>Status</th>
+                                <!-- <th>Status</th> -->
                                 <th>Assigned To</th>
                                 <th>Downloads</th>
                                 <th>Action</th>
                              
-                            </tr>
+                            <!-- </tr> -->
                         </thead>
 
                         <tbody>
@@ -308,9 +308,9 @@ $(document).ready(function(){
                                       </div>
                                 </div>
                               </td>
-                                <td><?=$pr['client_name']?></td>
-                                <td><?=$pr['end_date']?></td>
-                                <td>
+                              <td><?=$pr['client_name']?></td>
+                              <td><?=$pr['end_date']?></td>
+                             
                                 <td>
                                   <?php
                                   if ($pr['project_status']=="completed") {
@@ -349,13 +349,13 @@ $(document).ready(function(){
                                     $total=$total-8;
                                     for($i=0;$i<$total;$i++)
                                     {
-                                      // if($pr[$i]=="Everyone ")
-                                      // {
-                                      //   echo "Everyone";
-                                      // }
-                                      // else{
-                                      //   // echo $pr[$i]->fullname;
-                                      // }
+                                      if($pr[0]=="Everyone ")
+                                      {
+                                        echo "Everyone";
+                                      }
+                                      else{
+                                        // echo $pr[$i]->fullname;
+                                      }
                                    }
                                   }
                                   else{

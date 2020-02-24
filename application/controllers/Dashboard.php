@@ -11,6 +11,8 @@ class Dashboard extends MY_Controller {
 		$this->load->model('User_model');
 		$this->load->model('Rahul_Model','Demo');
 		$this->load->model('Global_Model');
+		$this->load->model('Bugs_model');
+		$this->load->model('Projects_Model');
 	}
 
 	public function index()
@@ -115,8 +117,89 @@ class Dashboard extends MY_Controller {
 		$data['project']=$project_data;
       //  $data['taskprogress']=$taskprogress;
 		$this->load->view('layout/header');
-		$this->load->view("pages/projects",$data);
+		$this->load->view("pages/inProgressProject",$data);
 		$this->load->view("layout/footer");
 	}
+	public function counttaskprogress($project_id=NULL)
+    {
+
+        $this->db->where(array('tbl_task.project_id' => $project_id,'tbl_task.task_status' => 'completed'));
+        $this->db->join('tbl_project','tbl_task.project_id=tbl_project.project_id');
+        $task= $this->db->get('tbl_task')->result_array();
+        $count1=count($task);
+
+        $this->db->where(array('tbl_task.project_id' => $project_id));
+        $this->db->join('tbl_project','tbl_task.project_id=tbl_project.project_id');
+        $total= $this->db->get('tbl_task')->result_array();
+        $count=count($total);
+        if($count!=0)
+        {
+            $pro=$count-$count1;
+            $progress=($count1/$count)*100;
+            $progress=number_format($progress,2);
+        }   
+        else
+        {
+            $progress=0;
+        }
+        return $progress;
+        // $total=$task;
+        // return $total;
+
+    }
+    public function inProgressTasks(){
+    	$data['all_tasks']=$this->db->where('task_status','in_progress')->get('tbl_task')->result();
+    	// print_r($data['all_tasks']);
+    	// die;
+		$data['users']=$this->User_model->fetch_user();
+		$this->load->view('layout/header');
+		$this->load->view("pages/inProgressTask",$data);
+		$this->load->view("layout/footer");
+    }
+    public function inProgressBugs($id=""){
+    	 $data['assign_user'] = $this->Bugs_model->allowad_user('58');
+        $data['all_bugs_info'] = $this->Bugs_model->get_permission('tbl_bug');
+        if ($id) { // retrive data from db by id
+            $data['active'] = 2;
+            $can_edit = $this->Bugs_model->can_action('tbl_bug', 'edit', array('bug_id' => $id));
+            $edited = can_action('58', 'edited');
+            if ($id == 'project') {
+                $data['project_id'] = $opt_id;
+                $project_info = get_row('tbl_project', array('project_id' => $opt_id));
+                if ($project_info->permission == 'all') {
+                    $data['assign_user'] = $this->Bugs_model->allowad_user('57');
+                } else {
+                    $data['assign_user'] = $this->Bugs_model->permitted_allowad_user($project_info->permission);
+                }
+            } elseif ($id == 'opportunities') {
+                $data['opportunities_id'] = $opt_id;
+                $option_info = get_row('tbl_opportunities', array('opportunities_id' => $opt_id));
+                if ($option_info->permission == 'all') {
+                    $data['assign_user'] = $this->Bugs_model->allowad_user('56');
+                } else {
+                    $data['assign_user'] = $this->Bugs_model->permitted_allowad_user($option_info->permission);
+                }
+            } else {
+                if (!empty($can_edit) && !empty($edited)) {
+                    if (is_numeric($id)) {
+                        // get all bug information
+                        $data['bug_info'] = $this->db->where('bug_id', $id)->get('tbl_bug')->row();
+                    }
+                }
+            }
+            $data['all_opportunities_info'] = $this->Bugs_model->get_permission('tbl_opportunities');
+        } else {
+            $data['active'] = 1;
+        }
+        //$data['editor'] = $this->data;
+        //$data['subview'] = $this->load->view('admin/bugs/bugs', $data, TRUE);
+        //$this->load->view('admin/_layout_main', $data);
+
+			$data['admin_staff']=$this->User_model->fetch_all_users();
+			$data['users']=$this->User_model->fetch_user();
+			$this->load->view('layout/header');
+			$this->load->view('pages/bugs',$data);
+			$this->load->view('layout/footer');
+    }
 }
 ?>
