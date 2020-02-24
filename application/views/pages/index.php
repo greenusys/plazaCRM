@@ -375,7 +375,7 @@
                             <td><?=$todo->due_date?></td>
                         </tr>
                       <?php } ?>
-                         <tr>
+                        <!--  <tr>
                             <td class="sorter"></td>
                             <td>Row 2</td>
                             <td>Record 2</td>
@@ -398,12 +398,12 @@
                             <td>Row 5</td>
                             <td>Record 5</td>
                             <td>Record 5</td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                  <tfoot>
-                        <tr>
+                  <!--       <tr>
                             <td colspan="4">&nbsp;</td>
-                        </tr>
+                        </tr> -->
                     </tfoot> 
 
                   </table>
