@@ -214,7 +214,7 @@
               </div>
               <div class="col-sm-7">
                 <div class='input-group date form-group' >
-                   <input type="text"  id="availableleave" class="w_20 form-control">     
+                   <strong><input type="text"  id="availableleave" class="w_20 form-control">  </strong>   
                </div>
               </div>
             </div>

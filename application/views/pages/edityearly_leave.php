@@ -18,19 +18,19 @@
               </div>
               <div class="col-sm-7">
                 <div class="input-group">
-                  <select name="dept_id" class="form-control" id="emply">
+                  <select name="desig_id" class="form-control" id="emply">
                     <option selected="" disabled="" value="0">Select Department</option>
                     <?php
                                                 
-                                foreach($fetch_Department_data as $deptData)
+                                foreach($fetch_Designation_data as $desigData)
                                   {
-                                      if($flydata->department_id==$deptData->departments_id)
+                                      if($flydata->designation_id==$desigData->designations_id)
                                       {
-                                         echo '<option value="'.$deptData->departments_id.'" selected>'.$deptData->deptname.'</option>';
+                                         echo '<option value="'.$desigData->designations_id.'" selected>'.$desigData->designations.'</option>';
                                       }
                                       else
                                       {
-                                           echo '<option value="'.$deptData->departments_id.'">'.$deptData->deptname.'</option>';
+                                           echo '<option value="'.$desigData->designations_id.'">'.$desigData->designations.'</option>';
                                       }
                                   }
                                         ?>

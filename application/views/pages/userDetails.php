@@ -1662,7 +1662,7 @@ endif;
                                               }
                                           }; ?>
                                            <tr class="total_amount">
-                                                <td colspan="2" style="text-align: right;">
+                                                <td colspan="2" class="text-right">
                                                     <strong>Total provident_fund
                                                         : </strong></td>
                                                 <td colspan="3" style="padding-left: 8px;"><strong><?= display_money($total_amount, $curency->symbol);
@@ -1827,6 +1827,7 @@ endif;
                             <div class="line"></div>
                             <div class="row p-5 m-auto">
                                 <div class="col-md-12  text-center">
+
                                     <h1 class="timer">0:0:9</h1>
                                 </div>
                                 <div class="col-md-12  text-center">
@@ -1843,9 +1844,10 @@ endif;
                             </div>
                             <div class="line"></div>
                             <div class="row p-1">
-                                <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                                <div class="text-center" id="chartContainer" style="height: 370px; width: 100%;"></div>
                             </div>
-                        </div>      
+                        </div> 
+
                     </div>
                   <!----------tasks End ------>
 
@@ -1876,7 +1878,7 @@ endif;
                             </div>
                             <div class="line"></div>
                             <div class="row p-1">
-                                <div id="projectchartContainer" style="height: 370px; width: 100%;"></div>
+                                <div class="text-center" id="projectchartContainer" style="height: 370px; width: 100%;"></div>
                             </div>
                         </div>
                     </div>
@@ -1892,7 +1894,7 @@ endif;
                             </div>
                             <div class="line"></div>
                             <div class="row p-1">
-                                <div id="bugschartContainer" style="height: 370px; width: 100%;"></div>
+                                <div class="text-center" id="bugschartContainer" style="height: 370px; width: 100%;"></div>
                             </div>
                         </div>
                     </div>
@@ -1918,36 +1920,23 @@ endif;
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td scope="row">02.12.2020 19:26</td>
-                                                <td scope="row">Adminko</td>
-                                                <td scope="row">Performance</td>
-                                                <td scope="row">Performance Appraisal Saved ravish beg ForMar 2020</td>
-                                            </tr>
-                                            <tr>
-                                                <td scope="row">02.12.2020 19:26</td>
-                                                <td scope="row">Adminko</td>
-                                                <td scope="row">Performance</td>
-                                                <td scope="row">Performance Appraisal Saved ravish beg ForMar 2020</td>
-                                            </tr>
-                                            <tr>
-                                                <td scope="row">02.12.2020 19:26</td>
-                                                <td scope="row">Adminko</td>
-                                                <td scope="row">Performance</td>
-                                                <td scope="row">Performance Appraisal Saved ravish beg ForMar 2020</td>
-                                            </tr>
-                                            <tr>
-                                                <td scope="row">02.12.2020 19:26</td>
-                                                <td scope="row">Adminko</td>
-                                                <td scope="row">Performance</td>
-                                                <td scope="row">Performance Appraisal Saved ravish beg ForMar 2020</td>
-                                            </tr>
-                                            <tr>
-                                                <td scope="row">02.12.2020 19:26</td>
-                                                <td scope="row">Adminko</td>
-                                                <td scope="row">Performance</td>
-                                                <td scope="row">Performance Appraisal Saved ravish beg ForMar 2020</td>
-                                            </tr>
+                                           <?php
+                                          if (!empty($activities_info)) {
+                                              foreach ($activities_info as $v_activity) {
+                                                  ?>
+                                                  <tr>
+                                                     <td scope="row"><?= $v_activity->activity_date?></td>
+                                                <td scope="row"><?= $this->db->where('user_id', $v_activity->user)->get('tbl_account_details')->row()->fullname; ?></td>
+                                                <td scope="row"><?= $v_activity->module ?></td>
+                                                <td scope="row"> <?= $v_activity->activity ?>
+                                                          <strong > <?= $v_activity->value1 . ' ' . $v_activity->value2 ?></strong>
+                                                        </td>
+
+                                                  </tr>
+                                                  <?php
+                                              }
+                                          }
+                                          ?>
                                         </tbody>
                                     </table>
                             </div>
@@ -1991,11 +1980,6 @@ function explodePie(e) {
     }
 }
  
-}
-</script>
-<script>
-window.onload = function() {
-
 var chart = new CanvasJS.Chart("projectchartContainer", {
     animationEnabled: true,
     
@@ -2011,12 +1995,6 @@ var chart = new CanvasJS.Chart("projectchartContainer", {
     }]
 });
 chart.render();
-
-}
-</script>
-
-<script>
-window.onload = function () {
 
 var chart = new CanvasJS.Chart("chartContainer", {
     theme: "light2",

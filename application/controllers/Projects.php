@@ -9,9 +9,10 @@ class Projects extends MY_Controller {
 		$this->load->model('Projects_Model');
 		$this->load->model('Client_Model');
 		$this->load->model('User_model');
+        $this->load->model('Items_Model','items_model');
 		$this->load->model('Notification_model');
 		}
-
+		
 	public function index()
 	{
 		//echo 'Projects';
@@ -38,7 +39,129 @@ class Projects extends MY_Controller {
 		$this->load->view("pages/projects",$data);
 		$this->load->view("layout/footer");
 	}
+	public function project_details($id, $active = NULL, $op_id = NULL)
+    {
+        // echo ' ******* ';
+        // die;
 
+        $data['title'] = lang('project_details');
+        //get all task information
+        $this->db->where(array('project_id' => $id));
+        $this->db->join('tbl_client','tbl_client.client_id=tbl_project.client_id');
+        $data['project_details'] = $this->db->get('tbl_project')->result();
+        // if (empty($data['project_details'])) {
+        //     set_message('error', lang('there_in_no_value'));
+        //     redirect('admin/projects');
+        // }
+        $this->items_model->_table_name = "tbl_task_attachment"; //table name
+        $this->items_model->_order_by = "project_id";
+        $data['files_info'] = $this->items_model->get_by(array('project_id' => $id), FALSE);
+
+        if (!empty($data['files_info'])) {
+            foreach ($data['files_info'] as $key => $v_files) {
+                $this->items_model->_table_name = "tbl_task_uploaded_files"; //table name
+                $this->items_model->_order_by = "task_attachment_id";
+                $data['project_files_info'][$key] = $this->items_model->get_by(array('task_attachment_id' => $v_files->task_attachment_id), FALSE);
+            }
+        }
+        $data['dropzone'] = true;
+        // print_r($files_info);
+        if ($active == 2) {
+            $data['active'] = 2;
+            $data['miles_active'] = 1;
+            $data['task_active'] = 1;
+            $data['bugs_active'] = 1;
+            $data['time_active'] = 1;
+            $data['estimate'] = 1;
+        } elseif ($active == 3) {
+            $data['active'] = 3;
+            $data['miles_active'] = 1;
+            $data['task_active'] = 1;
+            $data['bugs_active'] = 1;
+            $data['time_active'] = 1;
+            $data['estimate'] = 1;
+        } elseif ($active == 4) {
+            $data['active'] = 4;
+            $data['miles_active'] = 1;
+            $data['task_active'] = 1;
+            $data['bugs_active'] = 1;
+            $data['time_active'] = 1;
+            $data['estimate'] = 1;
+        } elseif ($active == 5) {
+            $data['active'] = 5;
+            $data['miles_active'] = 1;
+            $data['task_active'] = 1;
+            $data['bugs_active'] = 1;
+            $data['time_active'] = 1;
+            $data['estimate'] = 1;
+        } elseif ($active == 'milestone') {
+            $data['active'] = 5;
+            $data['miles_active'] = 2;
+            $data['task_active'] = 1;
+            $data['bugs_active'] = 1;
+            $data['time_active'] = 1;
+            $data['estimate'] = 1;
+            $data['milestones_info'] = $this->items_model->check_by(array('milestones_id' => $op_id), 'tbl_milestones');
+        } elseif ($active == 6) {
+            $data['active'] = 6;
+            $data['miles_active'] = 1;
+            $data['task_active'] = 1;
+            $data['bugs_active'] = 1;
+            $data['time_active'] = 1;
+            $data['estimate'] = 1;
+        } elseif ($active == 7) {
+            $data['active'] = 7;
+            $data['miles_active'] = 1;
+            $data['task_active'] = 1;
+            $data['bugs_active'] = 1;
+            $data['estimate'] = 1;
+            if (!empty($op_id)) {
+                $data['time_active'] = 2;
+                $data['project_timer_info'] = $this->items_model->check_by(array('tasks_timer_id' => $op_id), 'tbl_tasks_timer');
+            } else {
+                $data['time_active'] = 1;
+            }
+        } elseif ($active == 8) {
+            $data['active'] = 8;
+            $data['miles_active'] = 1;
+            $data['task_active'] = 1;
+            $data['bugs_active'] = 1;
+            $data['time_active'] = 1;
+            $data['estimate'] = 1;
+        } elseif ($active == 10) {
+            $data['active'] = 10;
+            $data['miles_active'] = 1;
+            $data['task_active'] = 1;
+            $data['bugs_active'] = 1;
+            $data['time_active'] = 1;
+            $data['estimate'] = 1;
+        } elseif ($active == 13) {
+            $data['active'] = 13;
+            $data['miles_active'] = 1;
+            $data['task_active'] = 1;
+            $data['bugs_active'] = 1;
+            $data['time_active'] = 1;
+            $data['estimate'] = 1;
+        } elseif ($active == 15) {
+            $data['active'] = 15;
+            $data['miles_active'] = 1;
+            $data['task_active'] = 1;
+            $data['bugs_active'] = 1;
+            $data['time_active'] = 1;
+            $data['estimate'] = 1;
+        } else {
+            $data['active'] = 1;
+            $data['miles_active'] = 1;
+            $data['task_active'] = 1;
+            $data['bugs_active'] = 1;
+            $data['time_active'] = 1;
+            $data['estimate'] = 1;
+        }
+      //  print_r($data);
+        $this->load->view('layout/header');
+        $this->load->view('pages/projectDetails', $data);
+        $this->load->view('layout/footer');
+    }
 	public function create_project(){
 		$date=date('Y-m-d H:i:s');
 		unset($_POST['everyone']);
@@ -233,9 +356,9 @@ class Projects extends MY_Controller {
        //  //force_download($name, $data);
        //  force_download($file_name, NULL); //will get the file name for you
 	}
-	function projectDetails($id){
+	// function projectDetails($id){
 		
-	}
+	// }
 
 }
 ?>
