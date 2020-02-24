@@ -70,9 +70,9 @@
         endforeach;
         endif;
         $totalTasks=$t_not_started+$t_in_progress+$t_completed;
-        $startper=($t_not_started/$totalTasks)*100;
-        $progressper=($t_in_progress/$totalTasks)*100;
-        $completedper=($t_completed/$totalTasks)*100;
+        $startper=number_format(($t_not_started/$totalTasks)*100);
+        $progressper=number_format(($t_in_progress/$totalTasks)*100);
+        $completedper=number_format(($t_completed/$totalTasks)*100);
         ?>
           <div class="row mt-4">
             <div class="col-lg-4 col-md-4 col-sm-12">
