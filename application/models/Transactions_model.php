@@ -101,4 +101,97 @@ class Transactions_model extends MY_Model
     {
         return $this->db->query("select  tbl_transactions.*,tbl_accounts.*,tbl_accounts.account_name as accountholdername,tbl_expense_category.*,tbl_client.*,tbl_client.name as client_name,tbl_payment_methods.*,tbl_transactions.account_id as account_name,tbl_transactions.category_id as expense_category,tbl_transactions.name as depo_name from tbl_transactions join tbl_accounts on tbl_accounts.account_id=tbl_transactions.account_id  join  tbl_expense_category on tbl_expense_category.expense_category_id=tbl_transactions.category_id join tbl_client on tbl_client.client_id=tbl_transactions.paid_by join tbl_payment_methods on tbl_payment_methods.payment_methods_id=tbl_transactions.payment_methods_id where tbl_transactions.type='Income'")->result();
     }
+    public function DeleteTransaction($data)
+    {
+        $this->db->where($data);
+         $results=$this->db->delete('tbl_transactions');
+         if($results)
+            {
+                return 1;
+            }
+    
+            else
+            {
+                return 0;
+            }
+    }
+    public function DeleteDepositData($data)
+    {
+        $this->db->where($data);
+         $results=$this->db->delete('tbl_transactions');
+         if($results)
+            {
+                return 1;
+            }
+    
+            else
+            {
+                return 0;
+            }
+    }
+    public function fetchTransactionDataByIdToModal($transid)
+    {
+        return $this->db->query("select tbl_transactions.*,tbl_accounts.*,tbl_accounts.account_name as accountholdername,tbl_expense_category.*,tbl_expense_category.expense_category as expense_name,tbl_client.*,tbl_client.name as clientname,tbl_payment_methods.*,tbl_transactions.account_id as account_name,tbl_transactions.category_id as expense_category,tbl_transactions.date as transactiondate,tbl_transactions.name as transname,tbl_transactions.status as transaction_status,tbl_transactions.amount as transamount from tbl_transactions join tbl_accounts on tbl_accounts.account_id=tbl_transactions.account_id  join  tbl_expense_category on tbl_expense_category.expense_category_id=tbl_transactions.category_id join tbl_client on tbl_client.client_id=tbl_transactions.paid_by join tbl_payment_methods on tbl_payment_methods.payment_methods_id=tbl_transactions.payment_methods_id where tbl_transactions.type='Expense' && tbl_transactions.transactions_id='$transid'")->result();
+    }
+    public function fetchDepositTransactionDataByIdToModal($transid)
+    {
+        return $this->db->query("select tbl_transactions.*,tbl_accounts.*,tbl_accounts.account_name as accountholdername,tbl_expense_category.*,tbl_expense_category.expense_category as expense_name,tbl_client.*,tbl_client.name as clientname,tbl_payment_methods.*,tbl_transactions.account_id as account_name,tbl_transactions.category_id as expense_category,tbl_transactions.date as transactiondate,tbl_transactions.name as transname,tbl_transactions.status as transaction_status,tbl_transactions.amount as transamount from tbl_transactions join tbl_accounts on tbl_accounts.account_id=tbl_transactions.account_id  join  tbl_expense_category on tbl_expense_category.expense_category_id=tbl_transactions.category_id join tbl_client on tbl_client.client_id=tbl_transactions.paid_by join tbl_payment_methods on tbl_payment_methods.payment_methods_id=tbl_transactions.payment_methods_id where tbl_transactions.type='Income' && tbl_transactions.transactions_id='$transid'")->result();
+    }
+     public function fetchDepositDataById($id)
+    {
+        return $this->db->query("select tbl_transactions.*,tbl_accounts.*,tbl_accounts.account_name as accountholdername,tbl_expense_category.*,tbl_client.*,tbl_payment_methods.*,tbl_transactions.account_id as account_name,tbl_transactions.category_id as expense_category,tbl_transactions.date as transactiondate,tbl_transactions.name as transname from tbl_transactions join tbl_accounts on tbl_accounts.account_id=tbl_transactions.account_id  join  tbl_expense_category on tbl_expense_category.expense_category_id=tbl_transactions.category_id join tbl_client on tbl_client.client_id=tbl_transactions.paid_by join tbl_payment_methods on tbl_payment_methods.payment_methods_id=tbl_transactions.payment_methods_id where tbl_transactions.type='Income' && tbl_transactions.transactions_id='$id'")->result();
+    }
+    public function fetchTransactionDataById($id)
+    {
+        return $this->db->query("select tbl_transactions.*,tbl_accounts.*,tbl_accounts.account_name as accountholdername,tbl_expense_category.*,tbl_client.*,tbl_payment_methods.*,tbl_transactions.account_id as account_name,tbl_transactions.category_id as expense_category,tbl_transactions.date as transactiondate,tbl_transactions.name as transname from tbl_transactions join tbl_accounts on tbl_accounts.account_id=tbl_transactions.account_id  join  tbl_expense_category on tbl_expense_category.expense_category_id=tbl_transactions.category_id join tbl_client on tbl_client.client_id=tbl_transactions.paid_by join tbl_payment_methods on tbl_payment_methods.payment_methods_id=tbl_transactions.payment_methods_id where tbl_transactions.type='Expense' && tbl_transactions.transactions_id='$id'")->result();
+    }
+    public function fetchAllTransferData()
+    {
+        return $this->db->query("select tbl_accounts.*,tbl_payment_methods.*,tbl_transfer.*,tbl_transfer.to_account_id as transferTo,tbl_transfer.from_account_id as transferfrm from tbl_transfer join tbl_accounts on tbl_accounts.account_id=tbl_transfer.to_account_id && tbl_transfer.from_account_id join tbl_payment_methods on tbl_payment_methods.payment_methods_id=tbl_transfer.payment_methods_id ")->result();
+        
+    }
+     public function addTransferData($data)
+    {
+        if($this->db->insert('tbl_transfer',$data))
+        {
+            return 1;
+            
+        }else{
+            return 0;
+        }
+    }
+    public function DeleteTransferData($data)
+    {
+        $this->db->where($data);
+         $results=$this->db->delete('tbl_transfer');
+         if($results)
+            {
+                return 1;
+            }
+    
+            else
+            {
+                return 0;
+            }
+    }
+    public function fetchTransferDataById($id)
+    {
+         return $this->db->query("select tbl_accounts.*,tbl_payment_methods.*,tbl_transfer.*,tbl_transfer.to_account_id as transferTo,tbl_transfer.from_account_id as transferfrm from tbl_transfer join tbl_accounts on tbl_accounts.account_id=tbl_transfer.to_account_id && tbl_transfer.from_account_id join tbl_payment_methods on tbl_payment_methods.payment_methods_id=tbl_transfer.payment_methods_id where tbl_transfer.transfer_id='$id'")->result();
+        // return $this->db->query("select tbl_transfer.*,tbl_accounts.*,tbl_accounts.account_name as accountholdername,tbl_payment_methods.*,tbl_transfer.to_account_id as toaccount_name,tbl_transfer.from_account_id as fromaccount_name from tbl_transfer join tbl_accounts on tbl_accounts.account_id=tbl_transfer.toaccount_name join  tbl_expense_category on tbl_expense_category.expense_category_id=tbl_transactions.category_id join tbl_client on tbl_client.client_id=tbl_transactions.paid_by join tbl_payment_methods on tbl_payment_methods.payment_methods_id=tbl_transactions.payment_methods_id where tbl_transactions.type='Expense' && tbl_transactions.transactions_id='$id'")->result();
+    }
+    public function UpdateTransferData($data,$transId)
+    {
+        $this->db->where('transfer_id',$transId);
+         $results=$this->db->update('tbl_transfer',$data);
+        
+            if($results)
+            {
+                return 1;
+            }
+    
+            else
+            {
+                return 0;
+            }
+    }
 }
