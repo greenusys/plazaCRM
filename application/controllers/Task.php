@@ -121,13 +121,15 @@ class Task extends MY_Controller {
 
 public function task_details($id=NULL)
 	{
-	 	$this->db->where(array('task_id' => $id));
- 	 	// $this->db->join('tbl_users','tbl_task.created_by=tbl_users.user_id');
+		$this->db->select('tbl_task.*,tbl_users.full_name');
+	 	$this->db->where(array('tbl_task.task_id' => $id));
+ 	 	 $this->db->join('tbl_users','tbl_task.created_by=tbl_users.user_id','left');
         $data['task_details']= $this->db->get('tbl_task')->result_array();
-        // print_r($data['task_details']);
+         // print_r($data['task_details']);
+         // die();
         foreach ($data['task_details'] as $pr) {
         	# code...
-        	echo $perm=$pr['permission'];
+        	$perm=$pr['permission'];
         	$user=array();
 			if($perm=="all"){
 				$user[]="Everyone";
