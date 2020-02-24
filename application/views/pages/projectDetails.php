@@ -1,5 +1,6 @@
 <?php
-	print_r($files_info);
+//	print_r($project_details);
+	$project_details=$project_details[0];
 ?>
 <style type="text/css">
 .back
@@ -51,9 +52,7 @@
 }
 </style>
   <style type="text/css">
-p, body, td { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-body { padding: 0px; margin: 0px; background-color: #ffffff; }
-a { color: #1155a3; }
+
 .space { margin: 10px 0px 10px 0px; }
 .header { background: #003267; background: linear-gradient(to right, #011329 0%,#00639e 44%,#011329 100%); padding:20px 10px; color: white; box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.75); }
 .header a { color: white; }
@@ -86,13 +85,13 @@ a { color: #1155a3; }
   border-bottom: 2px solid orange;
 }
 </style>
-<div class="container bg-white mb-5">
+<div class=" mb-5">
 		<div class="row mt-4">
-		    <div class="col-sm-3 shadow">
+		    <div class="col-sm-3 bg-white shadow">
 		    	<div class="tab">
 				   <div class="card shadow"  id="myDIV">
-					   	<button class="tablinks btn active border p-2 text-left pl-5 back" onclick="openCity(event, 'proj')">Project Details</button>
-						<button class="tablinks btn border p-2 text-left pl-5 back" onclick="openCity(event, 'cal')">Calendar</button>
+					   	<button class="tablinks btn  border p-2 text-left pl-5 back active" onclick="openCity(event, 'proj')">Project Details</button>
+						<!-- <button class="tablinks btn border p-2 text-left pl-5 back" onclick="openCity(event, 'cal')">Calendar</button>
 						<button class="tablinks btn border p-2 text-left pl-5 back" onclick="openCity(event, 'com')">Comments</button>
 						<button class="tablinks btn border p-2 text-left pl-5 back" onclick="openCity(event, 'att')">Attachment</button>
 						<button class="tablinks btn border p-2 text-left pl-5 back" onclick="openCity(event, 'mil')">Milestones</button>
@@ -106,7 +105,7 @@ a { color: #1155a3; }
 						<button class="tablinks btn border p-2 text-left pl-5 back" onclick="openCity(event, 'esti')">Estimates</button>
 						<button class="tablinks btn border p-2 text-left pl-5 back" onclick="openCity(event, 'expen')">Expense</button>
 						<button class="tablinks btn border p-2 text-left pl-5 back" onclick="openCity(event, 'pro')">Project Setting</button>
-						<button class="tablinks btn border p-2 text-left pl-5 back" onclick="openCity(event, 'act')">Activities</button>
+						<button class="tablinks btn border p-2 text-left pl-5 back" onclick="openCity(event, 'act')">Activities</button> -->
 				      <!-- <ul style="list-style:none" class="p-0">
 					     <a href="basicdetails.php" class="text-dark text-decoration-none"><li class="border p-2 back active pl-4">Project Details</li></a>
 						 <a href="bankdetails.php" class="text-dark text-decoration-none"><li class="border p-2 back pl-4">Calendar</li></a>
@@ -129,12 +128,13 @@ a { color: #1155a3; }
 				   </div>
 				</div>
 			</div>
+
 			<div class="col-md-9">
-				<div id="proj" class="tabcontent border-0">
-					<div class="container bg-white shadow  p-3" id="project">
+				<div id="proj" class="card tabcontent  d-block  border-0">
+					<div class="container bg-white shadow p-3" id="project" >
 						<div class="row">
 							<div class="col-sm-10">
-				                <h6>Rahul</h6>
+				                <h6><?=$project_details->project_name?></h6>
 				            </div>
 				            <div class="col-sm-2">
 				            	 <a href="Javascript:void(0)" class="text-decoration-none text-primary" id="edits">Edit Projects</a>
@@ -149,62 +149,63 @@ a { color: #1155a3; }
 									    <div class="form-group">
 							              <div class="row">
 							                <div class="offset-1 col-sm-4">
-							                  <label for="exampleInputEmail1" class="label-style">Project Name</label>
+							                  <label class="label-style">Project Name</label>
 							                </div>
 							                <div class="col-sm-7">
-							                     <label for="exampleInputEmail1">Rahul</label>
+							                     <label><?=$project_details->project_name?></label>
 							                </div>
 							              </div>
 							            </div>
 							            <div class="form-group">
 							              <div class="row">
 							                <div class="offset-2 col-sm-3">
-							                  <label for="exampleInputEmail1" class="label-style">Client </label>
+							                  <label class="label-style">Client </label>
 							                </div>
 							                <div class="col-sm-7">
-							                  <label for="exampleInputEmail1" class="label-style">HR </label>
+							                  <label class="label-style"><?=$project_details->name?> </label>
 							                </div>
 							              </div>
 							            </div>
 							            <div class="form-group">
 							              <div class="row">
 							                <div class="offset-1 col-sm-4">
-							                  <label for="exampleInputEmail1" class="label-style">Start Date</label>
+							                  <label class="label-style">Start Date</label>
 							                </div>
 							                <div class="col-sm-7">
-							                   <label for="exampleInputEmail1" class="label-style">01.07.2020</label>
+							                   <label class="label-style"><?=$project_details->start_date?></label>
 							                </div>
 							              </div>
 							            </div>
 							            <div class="form-group">
 							              <div class="row">
 							                <div class="offset-1 col-sm-4">
-							                  <label for="exampleInputEmail1" class="label-style">Billing Type</label>
+							                  <label class="label-style">Billing Type</label>
 							                </div>
 							                <div class="col-sm-7">
-							                   <label for="exampleInputEmail1" class="label-style">Fixed Price</label>
+							                   <label class="label-style"><?=$project_details->billing_type?></label>
 							                </div>
 							              </div>
 							            </div>
 							            <div class="form-group">
 							              <div class="row">
 							                <div class="offset-1 col-sm-4">
-							                  <label for="exampleInputEmail1" class="label-style">Demo Url </label>
+							                  <label class="label-style">Demo Url </label>
 							                </div>
 							                <div class="col-sm-7">
-							                   <a href="#"><label for="exampleInputEmail1">google.com</label></a>
+							                   <a href="#"><label class="label-style"><?=$project_details->demo_url?></label></a>
 							                </div>
 							              </div>
 							            </div>
 							            <div class="form-group">
 							              <div class="row">
 							                <div class="offset-1 col-sm-4">
-							                  <label for="exampleInputEmail1" class="label-style ml-3">Status</label>
+							                  <label class="label-style ml-3">Status</label>
 							                </div>
 							                <div class="col-sm-7 d-flex">
-							                   <label for="exampleInputEmail1" class="bg-warning p-1 he  text-white" >Started</label>
-							                   <label for="exampleInputEmail1" class=" p-1 ml-3 top">
+							                   <label class="bg-warning p-1 he  text-white" ><?=$project_details->project_status?></label>
+							                   <!-- <label class=" p-1 ml-3 top"><span class="bg-primary p-1 text-white"></span> -->
 							                   	   <select class=" form-control bg-success text-white" name="department">
+
 							                   	   	    <option value="minor">Change</option>
 														<option value="minor">Started</option>
 														<option value="major">In progress</option>
@@ -221,61 +222,62 @@ a { color: #1155a3; }
 							       	   <div class="form-group">
 							              <div class="row">
 							                <div class="offset-1 col-sm-4">
-							                  <label for="exampleInputEmail1" class="label-style ml-3">Timer Status </label>
+							                  <label  class="label-style ml-3">Timer Status </label>
 							                </div>
 							                <div class="col-sm-7 d-flex">
-							                   <label for="exampleInputEmail1" class="bg-danger p-1   text-white" >Off</label>
-							                   <label for="exampleInputEmail1" class="bg-success p-1  text-white ml-3" >Start Timer</label>
+							              
+							                   <label  class="bg-danger p-1  text-white" ><?=$project_details->timer_status?></label>
+							                   <label  class="bg-success p-1  text-white ml-3" >Start Timer</label>
 							       		     </div>
 							              </div>
 							            </div>
 							             <div class="form-group">
 							              <div class="row">
 							                <div class="offset-2 col-sm-3">
-							                  <label for="exampleInputEmail1" class="label-style">End Date</label>
+							                  <label  class="label-style">End Date</label>
 							                </div>
 							                <div class="col-sm-7">
-							                  <label for="exampleInputEmail1" >01.23.2020</label>
+							                  <label  ><?=$project_details->end_date?></label>
 							                </div>
 							              </div>
 							            </div>
 							            <div class="form-group">
 							              <div class="row">
 							                <div class="offset-1 col-sm-4">
-							                  <label for="exampleInputEmail1" class="label-style">Estimate Hours</label>
+							                  <label  class="label-style">Estimate Hours</label>
 							                </div>
 							                <div class="col-sm-7">
-							                   <label for="exampleInputEmail1" >5:00 m</label>
+							                   <label  ><?=$project_details->estimate_hours?></label>
 							                </div>
 							              </div>
 							            </div>
 							            <div class="form-group">
 							              <div class="row">
 							                <div class="offset-1 col-sm-4">
-							                  <label for="exampleInputEmail1" class="label-style ml-5">Budget </label>
+							                  <label  class="label-style ml-5">Budget </label>
 							                </div>
 							                <div class="col-sm-7">
-							                   <label for="exampleInputEmail1" >â‚¬ 50,00</label>
+							                   <label  >00</label>
 							                </div>
 							              </div>
 							            </div>
-							            <div class="form-group">
+							       <!--      <div class="form-group">
 							              <div class="row">
 							                <div class="offset-1 col-sm-4">
-							                  <label for="exampleInputEmail1" class="label-style ml-3">Participants</label>
+							                  <label  class="label-style ml-3">Participants</label>
 							                </div>
 							                <div class="col-sm-7">
-							                   <label for="exampleInputEmail1" >Everyone <i class="fa fa-question-circle"></i> &nbsp; <i class="fa fa-plus text-primary" data-toggle="modal" data-target="#myModal"></i></label>
+							                   <label  >Everyone <i class="fa fa-question-circle"></i> &nbsp; <i class="fa fa-plus text-primary" data-toggle="modal" data-target="#myModal"></i></label>
 							                </div>
 							              </div>
-							            </div>
+							            </div> -->
 							       </div>
 					           </div>
-					           <div class="row">
+					         <!--   <div class="row">
 					           	    <div class="form-group">
 									    <div class="row">
 											<div class="offset-1 col-sm-3">
-												<label for="exampleInputEmail1" class="label-style">Completed: </label>
+												<label  class="label-style">Completed: </label>
 											</div>
 											<div class="col-sm-8">
 											    <div id="slider-range-min"></div>
@@ -296,8 +298,8 @@ a { color: #1155a3; }
 											</div>
 										</div>
 									</div>
-					           </div>
-					           <div class="row text-center">
+					           </div> -->
+					       <!--     <div class="row text-center">
 					           	    <div class="w-100">
 						           	   <ul class="list-unstyled">
 						           	   	   <li class="timer ">0 : 1 : 29</li>
@@ -308,10 +310,10 @@ a { color: #1155a3; }
 								           	   	   	  <div class="form-group">
 											              <div class="row">
 											                <div class="offset-1 col-sm-3">
-											                  <label for="exampleInputEmail1" class="label-style ml-2">Total Expense:</label>
+											                  <label  class="label-style ml-2">Total Expense:</label>
 											                </div>
 											                <div class="col-sm-2">
-											                   <label for="exampleInputEmail1" >â‚¬ 0,00</label>
+											                   <label  >â‚¬ 0,00</label>
 											                </div>
 											              </div>
 										              </div>
@@ -324,10 +326,10 @@ a { color: #1155a3; }
 								           	   	   	  <div class="form-group">
 											              <div class="row">
 											                <div class="offset-1 col-sm-3">
-											                  <label for="exampleInputEmail1" class="label-style">Billable Expense:</label>
+											                  <label  class="label-style">Billable Expense:</label>
 											                </div>
 											                <div class="col-sm-2">
-											                   <label for="exampleInputEmail1" >â‚¬ 0,00</label>
+											                   <label  >â‚¬ 0,00</label>
 											                </div>
 											              </div>
 										              </div>
@@ -340,10 +342,10 @@ a { color: #1155a3; }
 								           	   	   	  <div class="form-group">
 											              <div class="row">
 											                <div class="col-sm-4">
-											                  <label for="exampleInputEmail1" class="label-style">Non Billable Expense:</label>
+											                  <label  class="label-style">Non Billable Expense:</label>
 											                </div>
 											                <div class="col-sm-2">
-											                   <label for="exampleInputEmail1" >â‚¬ 0,00</label>
+											                   <label  >â‚¬ 0,00</label>
 											                </div>
 											              </div>
 										              </div>
@@ -356,10 +358,10 @@ a { color: #1155a3; }
 								           	   	   	  <div class="form-group">
 											              <div class="row">
 											                <div class="col-sm-4">
-											                  <label for="exampleInputEmail1" class="label-style ml-3">Billed Expense:</label>
+											                  <label  class="label-style ml-3">Billed Expense:</label>
 											                </div>
 											                <div class="col-sm-2">
-											                   <label for="exampleInputEmail1" >â‚¬ 0,00</label>
+											                   <label  >â‚¬ 0,00</label>
 											                </div>
 											              </div>
 										              </div>
@@ -372,10 +374,10 @@ a { color: #1155a3; }
 								           	   	   	  <div class="form-group">
 											              <div class="row">
 											                <div class="col-sm-4">
-											                  <label for="exampleInputEmail1" class="label-style ml-3">Unbilled Expense:</label>
+											                  <label  class="label-style ml-3">Unbilled Expense:</label>
 											                </div>
 											                <div class="col-sm-2">
-											                   <label for="exampleInputEmail1" >â‚¬ 0,00</label>
+											                   <label  >â‚¬ 0,00</label>
 											                </div>
 											              </div>
 										              </div>
@@ -385,13 +387,13 @@ a { color: #1155a3; }
 						           	   	   <li class="font-weight-bold "><h2>Total Bill : â‚¬ 50,00</h2></li>
 						           	   </ul>
 						           	</div>
-					           </div>
-					           <div class="row">
+					           </div> -->
+				<!-- 	           <div class="row">
 					           	    <div class="col-sm-4">
 					           	    	<div class="form-group">
 										    <div class="row">
 												<div class="col-sm-12">
-													<label for="exampleInputEmail1" class="label-style">0 / 16 Days Gone (0% ) </label>
+													<label  class="label-style">0 / 16 Days Gone (0% ) </label>
 												</div>
 												<div class="col-sm-12">
 												    <div id="slider-range-min"></div>
@@ -408,13 +410,13 @@ a { color: #1155a3; }
 					           	    	<div class="form-group">
 										    <div class="row">
 												<div class="col-sm-12">
-													<label for="exampleInputEmail1" class="label-style text-danger">Left Works</label>
+													<label  class="label-style text-danger">Left Works</label>
 												</div>
 												<div class="col-sm-12">
 												  
 													<div class="row">
 													    <div class="col-sm-12">
-															<label for="exampleInputEmail1" class="label-style">4 Hours : 58 Minutes : 31 Seconds </label>
+															<label  class="label-style">4 Hours : 58 Minutes : 31 Seconds </label>
 														</div>
 													</div>
 												</div>
@@ -425,7 +427,7 @@ a { color: #1155a3; }
 					           	    	<div class="form-group">
 										    <div class="row">
 												<div class="col-sm-12">
-													<label for="exampleInputEmail1" class="label-style">0 / 0 Open Tasks (0% ) </label>
+													<label  class="label-style">0 / 0 Open Tasks (0% ) </label>
 												</div>
 												<div class="col-sm-12">
 												    <div id="slider-range-min"></div>
@@ -441,7 +443,7 @@ a { color: #1155a3; }
 					           </div>
 					           <div class="row p-2 bg-light">
 					           	<h6>dsgdfgfdgdf</h6>
-					           </div>
+					           </div> -->
 					        </form>
 					    </div>
 				    </div>
@@ -453,7 +455,7 @@ a { color: #1155a3; }
 									<div class="form-group">
 									    <div class="row">
 											<div class="col-sm-3">
-												<label for="exampleInputEmail1">Project Name <span class="text-danger">*</span> </label>
+												<label >Project Name <span class="text-danger">*</span> </label>
 											</div>
 											<div class="col-sm-9">
 												<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -463,7 +465,7 @@ a { color: #1155a3; }
 									<div class="form-group">
 									    <div class="row">
 											<div class="col-sm-3">
-												<label for="exampleInputEmail1">Select Client  <span class="text-danger">*</span> </label>
+												<label >Select Client  <span class="text-danger">*</span> </label>
 											</div>
 											<div class="col-sm-8">
 												<div class="input-group">
@@ -494,7 +496,7 @@ a { color: #1155a3; }
 									<div class="form-group">
 									    <div class="row">
 											<div class="col-sm-3">
-												<label for="exampleInputEmail1">Progress </label>
+												<label >Progress </label>
 											</div>
 											<div class="col-sm-9">
 											    <div id="slider-range-min"></div>
@@ -518,7 +520,7 @@ a { color: #1155a3; }
 									<div class="form-group">
 									    <div class="row">
 											<div class="col-sm-3">
-												<label for="exampleInputEmail1">Start Date  <span class="text-danger">*</span> </label>
+												<label >Start Date  <span class="text-danger">*</span> </label>
 											</div>
 											<div class="col-sm-8">
 												<input type="text" class="form-control" id="datepicker">
@@ -531,7 +533,7 @@ a { color: #1155a3; }
 									<div class="form-group">
 									    <div class="row">
 											<div class="col-sm-3">
-												<label for="exampleInputEmail1">End Date  <span class="text-danger">*</span> </label>
+												<label >End Date  <span class="text-danger">*</span> </label>
 											</div>
 											<div class="col-sm-8">
 												<input type="text" class="form-control" id="datepicker">
@@ -544,7 +546,7 @@ a { color: #1155a3; }
 									<div class="form-group">
 									    <div class="row">
 											<div class="col-sm-3">
-												<label for="exampleInputEmail1">Billing Type  <span class="text-danger">*</span> </label>
+												<label >Billing Type  <span class="text-danger">*</span> </label>
 											</div>
 											<div class="col-sm-9">
 												<div class="input-group">
@@ -561,7 +563,7 @@ a { color: #1155a3; }
 									<div class="form-group">
 									    <div class="row">
 											<div class="col-sm-3">
-												<label for="exampleInputEmail1">Fixed Price  </label>
+												<label >Fixed Price  </label>
 											</div>
 											<div class="col-sm-9">
 												<input type="email" class="form-control" placeholder="50" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -571,7 +573,7 @@ a { color: #1155a3; }
 									<div class="form-group">
 									    <div class="row">
 											<div class="col-sm-3">
-												<label for="exampleInputEmail1">Estimate Hours  </label>
+												<label >Estimate Hours  </label>
 											</div>
 											<div class="col-sm-9">
 												<input type="number" step="0.01" value="" class="form-control" name="estimate_hours" data-parsley-id="23">
@@ -581,7 +583,7 @@ a { color: #1155a3; }
 									<div class="form-group">
 									    <div class="row">
 											<div class="col-sm-3">
-												<label for="exampleInputEmail1">Status  <span class="text-danger">*</span> </label>
+												<label >Status  <span class="text-danger">*</span> </label>
 											</div>
 											<div class="col-sm-9">
 												<div class="input-group">
@@ -599,7 +601,7 @@ a { color: #1155a3; }
 									<div class="form-group">
 									    <div class="row">
 											<div class="col-sm-3">
-												<label for="exampleInputEmail1">Demo Url </label>
+												<label >Demo Url </label>
 											</div>
 											<div class="col-sm-9">
 												<input type="email" class="form-control" placeholder="http://www.demo.com" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -609,7 +611,7 @@ a { color: #1155a3; }
 									<div class="form-group">
 									    <div class="row">
 											<div class="col-sm-3">
-												<label for="exampleInputEmail1">Assigned To <span class="text-danger">*</span></label>
+												<label >Assigned To <span class="text-danger">*</span></label>
 											</div>
 											<div class="col-sm-9">
 											
@@ -625,7 +627,7 @@ a { color: #1155a3; }
 									<div class="form-group"  id="dvPassport" style="display: none">
 									    <div class="row">
 											<div class="col-sm-3">
-												<label for="exampleInputEmail1">select Users<span class="text-danger">*</span></label>
+												<label >select Users<span class="text-danger">*</span></label>
 											</div>
 											<div class="col-sm-9">
 												 <input type="checkbox" name="vehicle1" value="Bike"  id="chkPassport1" > admin <strong class="badge btn-danger">Admin</strong>
@@ -746,7 +748,7 @@ a { color: #1155a3; }
 						</div>
 						<div class="row">
 						    <div class=" col-md-2">
-							    <label for="exampleInputEmail1">Description <span class="text-danger">*</span> </label>
+							    <label >Description <span class="text-danger">*</span> </label>
 							</div>
 							<div class="col-md-10">
 							     <textarea name="editor1"></textarea>
@@ -1025,7 +1027,7 @@ a { color: #1155a3; }
 					<div class="form-group">
 						<div class="row">
 							<div class="offset-1 col-sm-3">
-								<label for="exampleInputEmail1" class="label-style">Assigned To <span class="text-danger">*</span></label>
+								<label  class="label-style">Assigned To <span class="text-danger">*</span></label>
 							</div>
 								<div class="col-sm-8">
 									<div class="checkbox c-radio needsclick ">
@@ -1040,7 +1042,7 @@ a { color: #1155a3; }
 						<div class="form-group"  id="dvPassport5" style="display: none">
 						    <div class="row">
 								<div class="offset-1 col-sm-3">
-									<label for="exampleInputEmail1" class="label-style">select Users<span class="text-danger">*</span></label>
+									<label  class="label-style">select Users<span class="text-danger">*</span></label>
 								</div>
 								<div class="col-sm-8">
 									 <input type="checkbox" name="vehicle1" value="Bike"  id="chkPassport4" > admin <strong class="badge btn-danger">Admin</strong>
@@ -1115,7 +1117,7 @@ a { color: #1155a3; }
 						    <div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Company Name <span class="text-danger">*</span> </label>
+										<label >Company Name <span class="text-danger">*</span> </label>
 									</div>
 									<div class="col-sm-9">
 										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -1125,7 +1127,7 @@ a { color: #1155a3; }
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Company Email <span class="text-danger">*</span> </label>
+										<label >Company Email <span class="text-danger">*</span> </label>
 									</div>
 									<div class="col-sm-9">
 										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -1135,7 +1137,7 @@ a { color: #1155a3; }
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Company VAT </label>
+										<label >Company VAT </label>
 									</div>
 									<div class="col-sm-9">
 										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -1145,7 +1147,7 @@ a { color: #1155a3; }
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Customer Group  </label>
+										<label >Customer Group  </label>
 									</div>
 									<div class="col-sm-9">
 										<div class="input-group">
@@ -1159,7 +1161,7 @@ a { color: #1155a3; }
 					        <div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Language  </label>
+										<label >Language  </label>
 									</div>
 									<div class="col-sm-9">
 										<div class="input-group">
@@ -1173,7 +1175,7 @@ a { color: #1155a3; }
 					        <div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Currency </label>
+										<label >Currency </label>
 									</div>
 									<div class="col-sm-9">
 										<div class="input-group">
@@ -1187,7 +1189,7 @@ a { color: #1155a3; }
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Short Note  </label>
+										<label >Short Note  </label>
 									</div>
 									<div class="col-sm-9">
 										<textarea class="form-control" name="short_note"></textarea>
@@ -1202,7 +1204,7 @@ a { color: #1155a3; }
 						  <div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Company Phone</label>
+										<label >Company Phone</label>
 									</div>
 									<div class="col-sm-9">
 										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -1212,7 +1214,7 @@ a { color: #1155a3; }
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Company Mobile </label>
+										<label >Company Mobile </label>
 									</div>
 									<div class="col-sm-9">
 										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -1222,7 +1224,7 @@ a { color: #1155a3; }
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Zip code </label>
+										<label >Zip code </label>
 									</div>
 									<div class="col-sm-9">
 										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -1232,7 +1234,7 @@ a { color: #1155a3; }
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Company City</label>
+										<label >Company City</label>
 									</div>
 									<div class="col-sm-9">
 										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -1242,7 +1244,7 @@ a { color: #1155a3; }
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Company Country</label>
+										<label >Company Country</label>
 									</div>
 									<div class="col-sm-9">
 										<div class="input-group">
@@ -1256,7 +1258,7 @@ a { color: #1155a3; }
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Company Fax</label>
+										<label >Company Fax</label>
 									</div>
 									<div class="col-sm-9">
 										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -1266,7 +1268,7 @@ a { color: #1155a3; }
                             <div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Company Address </label>
+										<label >Company Address </label>
 									</div>
 									<div class="col-sm-9">
 										<textarea class="form-control" name="short_note"></textarea>
@@ -1276,7 +1278,7 @@ a { color: #1155a3; }
                             <div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1"> Latitude( Google Map ) </label>
+										<label > Latitude( Google Map ) </label>
 									</div>
 									<div class="col-sm-9">
 										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -1286,7 +1288,7 @@ a { color: #1155a3; }
                             <div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Longitude( Google Map ) </label>
+										<label >Longitude( Google Map ) </label>
 									</div>
 									<div class="col-sm-9">
 										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -1301,7 +1303,7 @@ a { color: #1155a3; }
 						    <div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Company Website</label>
+										<label >Company Website</label>
 									</div>
 									<div class="col-sm-9">
 										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -1311,7 +1313,7 @@ a { color: #1155a3; }
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Skype id</label>
+										<label >Skype id</label>
 									</div>
 									<div class="col-sm-9">
 										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -1321,7 +1323,7 @@ a { color: #1155a3; }
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Facebook URL</label>
+										<label >Facebook URL</label>
 									</div>
 									<div class="col-sm-9">
 										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -1331,7 +1333,7 @@ a { color: #1155a3; }
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Twitter URL</label>
+										<label >Twitter URL</label>
 									</div>
 									<div class="col-sm-9">
 										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -1341,7 +1343,7 @@ a { color: #1155a3; }
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Linkedin URL</label>
+										<label >Linkedin URL</label>
 									</div>
 									<div class="col-sm-9">
 										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -1355,7 +1357,7 @@ a { color: #1155a3; }
 						    <div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Hosting Company</label>
+										<label >Hosting Company</label>
 									</div>
 									<div class="col-sm-9">
 										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -1365,7 +1367,7 @@ a { color: #1155a3; }
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Hosting</label>
+										<label >Hosting</label>
 									</div>
 									<div class="col-sm-9">
 										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -1375,7 +1377,7 @@ a { color: #1155a3; }
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Username</label>
+										<label >Username</label>
 									</div>
 									<div class="col-sm-9">
 										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -1385,7 +1387,7 @@ a { color: #1155a3; }
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Password</label>
+										<label >Password</label>
 									</div>
 									<div class="col-sm-9">
 										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -1395,7 +1397,7 @@ a { color: #1155a3; }
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Port</label>
+										<label >Port</label>
 									</div>
 									<div class="col-sm-9">
 										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">

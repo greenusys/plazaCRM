@@ -46,7 +46,9 @@ class Projects extends MY_Controller {
 
         $data['title'] = lang('project_details');
         //get all task information
-        $data['project_details'] = $this->items_model->check_by(array('project_id' => $id), 'tbl_project');
+        $this->db->where(array('project_id' => $id));
+        $this->db->join('tbl_client','tbl_client.client_id=tbl_project.client_id');
+        $data['project_details'] = $this->db->get('tbl_project')->result();
         // if (empty($data['project_details'])) {
         //     set_message('error', lang('there_in_no_value'));
         //     redirect('admin/projects');
@@ -155,7 +157,7 @@ class Projects extends MY_Controller {
             $data['time_active'] = 1;
             $data['estimate'] = 1;
         }
-        print_r($data);
+      //  print_r($data);
         $this->load->view('layout/header');
         $this->load->view('pages/projectDetails', $data);
         $this->load->view('layout/footer');
@@ -354,9 +356,9 @@ class Projects extends MY_Controller {
        //  //force_download($name, $data);
        //  force_download($file_name, NULL); //will get the file name for you
 	}
-	function projectDetails($id){
+	// function projectDetails($id){
 		
-	}
+	// }
 
 }
 ?>

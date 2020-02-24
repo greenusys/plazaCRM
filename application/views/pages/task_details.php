@@ -288,9 +288,9 @@ font-size: 35px;
                              <div class="">
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Task Status :</label>
-                                <div class="col-md-8">
+                                <div class="col-md-8 d-flex">
                                   <span class="bg-danger text-white p-1">Deferred</span>
-                                  <div class="dropdown">
+                                  <div class="dropdown ml-2">
                                     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
                                       Change 
                                     </button>
@@ -335,9 +335,9 @@ font-size: 35px;
                             <div class="">
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Time Status :</label>
-                                <div class="col-md-8">
+                                <div class="col-md-8 d-flex">
                                   <span class="bg-danger text-white p-1">Deferred</span>
-                                  <div class="dropdown">
+                                  <div class="dropdown ml-2">
                                     <button  class="btn btn-success" ">
                                     Start Time
                                     </button>
@@ -373,10 +373,14 @@ font-size: 35px;
                             </div>
                           </div>
                       </div>
-                        <div class="row form-group">
-                          <label class="col-md-4 text-right">Completed :</label>
-                          <div class="col-md-8">
-                           
+                        <div class="row form-group ">
+                          <label class="col-md-2 text-right">Completed :</label>
+                          <div class="col-md-10 pr-5">
+                             <div class="progress" style="height: 1.6rem;">
+                                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
+                                  40%
+                                </div>
+                              </div>
                           </div>
                         </div>
                         <div class="text-center">
@@ -589,7 +593,7 @@ font-size: 35px;
                                 </div>
                               </div>
                             
-                                <div id="timeSheet" class="tabcontent active">
+                                <div id="timeSheet" class="tabcontent active" style="display: block;">
                                    <table class="table table-striped border ">
                                         <thead>
                                             <tr>
@@ -606,10 +610,10 @@ font-size: 35px;
                                               <td>
                                                 <img src="" class="w-25"> <strong>Adminko</strong>
                                               </td>
-                                              <td><span class="p-1 bg-success">02.20.2020</span></td>
-                                              <td><span class="p-1 bg-danger">02.20.2020</span></td>
+                                              <td><span class="p-1 text-white bg-success">02.20.2020</span></td>
+                                              <td><span class="p-1 text-white  bg-danger">02.20.2020</span></td>
                                               <td>s</td>
-                                              <td><span class="bg-primary text-white "><i class="far fa-edit"></i></span> <span class="bg-danger ml-2 text-white "><i class="far fa-trash-alt"></i></span> </td>
+                                              <td><span class="bg-primary text-white p-1 "><i class="far fa-edit"></i></span> <span class="bg-danger ml-2 text-white p-1"><i class="far fa-trash-alt"></i></span> </td>
                                             </tr>
                                         </tbody>
                                     </table>    
@@ -674,9 +678,9 @@ font-size: 35px;
                                           </div>
                                           <div class="">
                                             <label>Reason for Edit <sup class="text-danger">*</sup></label>
-                                            <textarea rows="5"></textarea>
+                                            <textarea rows="5" class="form-control"></textarea>
                                           </div>
-                                          <button class="btn btn-info">Updates</button>
+                                          <button class="btn btn-info mt-2">Updates</button>
                                       </div>  
                                     </div>
                               
