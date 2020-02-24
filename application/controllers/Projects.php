@@ -20,8 +20,16 @@ class Projects extends MY_Controller {
 		$data['users']=$this->User_model->fetch_user();
 		$data['settings']=$this->Projects_Model->fetch_settings();
 		$projects=$this->Projects_Model->fetch_projects();
+
 		foreach ($projects as $pr) {
 			$perm=$pr['permission'];
+            $project_id=$pr['project_id'];
+           // print_r($project_id.'<br>');
+
+            $taskprogress['taskprogress']=$this->counttaskprogress($project_id);
+           // print_r($taskprogress);
+           // die;
+           
 			$user=array();
 			if($perm=="all"){
 				$user[]="Everyone";
@@ -32,13 +40,43 @@ class Projects extends MY_Controller {
 				$user[]=$this->User_model->fetch_user_by_id($key);
 			 }
 			}
-			$project_data[]=array_merge($pr,$user);
+			$project_data[]=array_merge($pr,$user,$taskprogress);
+
 		}
+       // die;
 		$data['project']=$project_data;
+      //  $data['taskprogress']=$taskprogress;
 		$this->load->view('layout/header');
 		$this->load->view("pages/projects",$data);
 		$this->load->view("layout/footer");
 	}
+    public function counttaskprogress($project_id=NULL)
+    {
+
+        $this->db->where(array('tbl_task.project_id' => $project_id,'tbl_task.task_status' => 'completed'));
+        $this->db->join('tbl_project','tbl_task.project_id=tbl_project.project_id');
+        $task= $this->db->get('tbl_task')->result_array();
+        $count1=count($task);
+
+        $this->db->where(array('tbl_task.project_id' => $project_id));
+        $this->db->join('tbl_project','tbl_task.project_id=tbl_project.project_id');
+        $total= $this->db->get('tbl_task')->result_array();
+        $count=count($total);
+        if($count!=0)
+        {
+            $pro=$count-$count1;
+            $progress=($count1/$count)*100;
+            $progress=number_format($progress,2);
+        }   
+        else
+        {
+            $progress=0;
+        }
+        return $progress;
+        // $total=$task;
+        // return $total;
+
+    }
 	public function project_details($id, $active = NULL, $op_id = NULL)
     {
         // echo ' ******* ';
