@@ -65,6 +65,7 @@ class Dashboard extends MY_Controller {
 
 		}
         // print_r($project_data);
+        $data['users']=$this->User_model->fetch_user();
 		$data['Overtask']=$task_data;
 		$this->load->view('layout/header');
 		$this->load->view('pages/index',$data);
@@ -197,9 +198,21 @@ class Dashboard extends MY_Controller {
 
 			$data['admin_staff']=$this->User_model->fetch_all_users();
 			$data['users']=$this->User_model->fetch_user();
+			// print_r($data['users']);
 			$this->load->view('layout/header');
 			$this->load->view('pages/bugs',$data);
 			$this->load->view('layout/footer');
+    }
+    public function assign_to(){
+    	$task_id=$_POST['project_id'];
+		$permission=$_POST['permission'];
+		$updater=$this->Tasks_Model->update_permission($task_id,$permission);
+		if ($updater) {
+			echo "1";
+		}
+		else{
+			echo "0";
+		}
     }
 }
 ?>

@@ -139,7 +139,7 @@
                         </thead>
                         <tbody>
                           <?php
-                          print_r($Overproject);
+                          // print_r($Overproject);
                           // die;
                             foreach ($Overproject as $proj_detail) {
                               // print_r($proj_detail);
@@ -183,23 +183,23 @@
                                     if($proj_detail['assigned_to'][0]!=""){
                                       $total = count((array)$proj_detail);
                   // print_r($total);
-                                      if($total>8)
-                                      {
-                                        $total=$total-8;
-                                        for($i=0;$i<$total;$i++)
-                                        {
-                                          if($proj_detail[$i]=="Everyone ")
-                                          {
-                                            echo "Everyone";
-                                          }
-                                          else{
-                                            echo $pr[$i]->fullname;
-                                          }
-                                       }
-                                      }
-                                      else{
-                                        echo "Everyone";
-                                      }
+                                      // if($total>8)
+                                      // {
+                                      //   $total=$total-8;
+                                      //   for($i=0;$i<$total;$i++)
+                                      //   {
+                                      //     if($proj_detail[$i]=="Everyone ")
+                                      //     {
+                                      //       echo "Everyone";
+                                      //     }
+                                      //     else{
+                                      //       echo $proj_detail[$i]->fullname;
+                                      //     }
+                                      //  }
+                                      // }
+                                      // else{
+                                      //   echo "Everyone";
+                                      // }
 
 
 
@@ -207,9 +207,8 @@
                                         // print_r($user);
                                         echo '<img src="'.base_url().$user->avatar.'" class="rounded-circle" width="20px">';
                                       }
-                                    }else{
-                                      echo '<a href="javascript:void(0)"><i class="fa fa-plus" aria-hidden="true"></i></a>';
-                                      }
+                                    }
+                                      echo '<a href="javascript:void(0)" id="open_modal"><i class="fa fa-plus" aria-hidden="true"></i></a>';
                                    ?> 
                                     
                                 
@@ -671,4 +670,146 @@ $(document).ready(function(){
     calendar.render();
   // });
 })
+$(document).on('click','#open_modal',function(){
+    var task_id=$(this).attr('task_id');
+    $('#tasker_id').val(task_id);
+    $('#assign_to').modal('show');
+})
+$("#updater").submit(function(e){
+         e.preventDefault();
+         var ar=[];
+           var count=1;
+           var obj = {};
+            $('.admindModal').each(function(){
+              var pass_id="#dvPassportModal"+count;
+              if($(this).is(':checked')){
+               var user_id=$(this).val();
+               var data=$(pass_id).find('.data');
+               data.each(function(){
+                if($(this).is(':checked')){
+                  ar.push($(this).val());
+                }
+               })
+               obj[user_id] = ar;
+               ar=[];
+               }
+               count++;
+            })
+         // var new_ar=[];
+         //  $('.song').each(function(){
+         //      if($(this).is(':checked'))
+         //      {
+         //          new_ar.push($(this).val()); 
+         //      }        
+         //  });
+         // var project_settings=JSON.stringify(new_ar);
+         var permission=JSON.stringify(obj);
+         if(Object.keys(permission).length==2){
+          permission="all";
+         }
+        // if($('#everyone').is(':checked')) { permission="all"; }
+         var formData= new FormData($(this)[0]);
+         formData.append('permission',permission);
+         $.ajax({
+             url:"<?=base_url()?>Dashboard/assign_to",
+              type:"post",
+              data:formData,
+              contentType:false,
+              processData:false,
+              cache:false,
+             success:function(response)
+             {
+                //var response=JSON.parse(response);
+               if(response==1){
+                location.reload();
+                 // swal("Task Created Successfully!", "Created", "success");
+                 //window.location.href='<?=base_url()?>Home';
+               }
+               else{
+                swal("Error", "Error", "error");
+              }
+             }
+         });
+    });
 </script>
+
+
+<div id="assign_to" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+     <div class="modal-header border-bottom">
+          <h5 class="modal-title" id="exampleModalLabel">All Users</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <form id="updater">
+          <input type="hidden" value="" id="tasker_id" name="task_id">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-sm-3">
+              <label for="exampleInputEmail1">Assigned To <span class="text-danger">*</span></label>
+            </div>
+            <div class="col-sm-9">
+              <div class="checkbox c-radio needsclick">
+                <input type="radio" name="radio_admin" value="" class="btn1"> Everyone<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
+                              </div>
+              <div class="checkbox c-radio needsclick">
+                <input type="radio" name="radio_admin" value=""  class="chkPassport"> Customise Permission<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
+              </div>
+            </div>
+          </div>
+        </div>
+           <div class="form-group dvPassport"  style="display: nodne">
+              <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">select Users<span class="text-danger">*</span></label>
+              </div>
+              <div class="col-sm-9">
+                  <?php
+                   $count=1;
+                   // print_r($users);
+                   foreach ($users as $user) {
+                   ?>
+
+                     <input type="checkbox" value="<?=$user['user_id']?>" class="chkPassport admindModal" ><?=$user['username']?><?php 
+                     if ($user['role_id']==1) {
+                       echo "<strong class='badge btn-danger'>Admin</strong>";
+                     }
+                     else{
+                      echo "<strong class='badge btn-primary'>Staff</strong>";
+                     }
+                     ?>
+                   <br>
+                   <div class="row dvPassport"  id="dvPassportModal<?=$count?>" style="display: none">
+                      <div class="col-md-3">
+                     <input type="checkbox" class="data" value="View"> Can View
+                    </div>
+                    <div class="col-md-3">
+                         <input type="checkbox" class="data" value="Edit" > Can Edit
+                    </div>
+                    <div class="col-md-3">
+                        <input type="checkbox" class="data" value="Delete"> Can Delete
+                    </div>
+                   </div>
+                   <?php
+                   $count++;
+                    }
+                   ?>
+              </div>
+            </div>
+          </div>
+          <div class="text-center" > <button type="submit" class="btn btn-success" >Update</button></div>
+        </form>
+      </div>
+      <div class="modal-footer">
+
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+      </div>
+    </div>
+
+  </div>
+</div>
