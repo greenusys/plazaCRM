@@ -292,17 +292,23 @@ $(document).ready(function(){
                         </thead>
 
                         <tbody>
-                          <?php
+                        <?php
+                        foreach ($progress as $prog) {
+                        $prog=number_format($prog);
+                         // print_r($taskprogress);
                           foreach ($project as $pr) {
+
                           ?>
                             <tr>
                               <td>  
                                 <a href="<?=base_url('Projects/project_details/').$pr['project_id']?>"><?=$pr['project_name']?>
-                                <div class="progress">
-                                  <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:<?=$pr['progress']?>">
-                                    <span class="sr-only">70% Complete</span>
-                                  </div>
+                               
+                                  <div class="progress">
+                                      <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:<?=$prog?>%">
+                                       <?=$prog?> 
+                                      </div>
                                 </div>
+                               
                               </td>
                                 <td><?=$pr['client_name']?></td>
                                 <td><?=$pr['end_date']?></td>
@@ -379,7 +385,9 @@ $(document).ready(function(){
                             </tr>
                             <?php
                              }
+                           }
                             ?>
+
                         </tbody>
                     </table>
                   </div>
