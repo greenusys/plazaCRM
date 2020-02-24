@@ -274,11 +274,13 @@ font-size: 35px;
         <div class="col-md-12">
             <div class="tab-content">
                 <!----------Task Details------->
+                <?php foreach ($task_details as $task) {
+                 ?>
                 <div class="tab-pane active" id="details">
                     <div class=" card ">
                         <div class="row m-0">
                             <div class="col-md-10">
-                              <h6 class="m-0 mt-1">Task Name</h6></div>
+                              <h6 class="m-0 mt-1"><?=$task->task_name?></h6></div>
                             <div class="col-md-2 text-right"> 
                                 <a href="" class="text-primary font-weight-bold " id="update"><i class="far fa-edit"></i> Edit</a>
                             </div>
@@ -290,7 +292,26 @@ font-size: 35px;
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Task Status :</label>
                                 <div class="col-md-8 d-flex">
-                                  <span class="bg-danger text-white p-1">Deferred</span>
+                                  <?php
+                                  if($task->task_status=='completed')
+                                  {
+                                    ?>
+                                  <span class="bg-success text-white p-1">completed</span>
+                                  <?php
+                                }
+                                elseif ($task->task_status=='not_started') {
+                               ?>
+                                <span class="bg-info text-white p-1">Not Started</span>
+                               <?php }
+                               elseif ($task->task_status=='deferred') {
+                               ?>
+                                <span class="bg-danger text-white p-1">Deferred</span>
+                               <?php }
+                                else
+                                {?>
+                                   <span class="bg-warning text-white p-1">In Progress</span>
+                                   <?php }
+                                ?>
                                   <div class="dropdown ml-2">
                                     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
                                       Change 
@@ -308,25 +329,25 @@ font-size: 35px;
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Start Date :</label>
                                 <div class="col-md-8">
-                                  <span class="">01.07.2020</span>
+                                  <span class=""><?=$task->task_start_date?></span>
                                 </div>
                               </div>
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Created By :</label>
                                 <div class="col-md-8">
-                                  <span class="">Adminko</span>
+                                  <span class=""><?=$task->full_name?></span>
                                 </div>
                               </div>
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Hourly Rate :</label>
                                 <div class="col-md-8">
-                                  <span class="">10.00</span>
+                                  <span class=""><?=$task->task_hour?></span>
                                 </div>
                               </div>
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Billable :</label>
                                 <div class="col-md-8">
-                                  <span class="text-white bg-danger p-1">No</span>
+                                  <span class="text-white bg-danger p-1"><?=$task->billable?></span>
                                 </div>
                               </div>
                             
@@ -349,19 +370,19 @@ font-size: 35px;
                               <div class="row form-group">
                                 <label class="col-md-4 text-right text-danger">Due Date :</label>
                                 <div class="col-md-8">
-                                  <span class="">01.07.2020</span>
+                                  <span class=""><?=$task->due_date?></span>
                                 </div>
                               </div>
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Created Date :</label>
                                 <div class="col-md-8">
-                                  <span class="">01.07.2020</span>
+                                  <span class=""><?=$task->task_created_date?></span>
                                 </div>
                               </div>
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Estimated Hour  :</label>
                                 <div class="col-md-8">
-                                  <span class="">10.00</span>
+                                  <span class=""><?=$task->task_hour?></span>
                                 </div>
                               </div>
                               <div class="row form-group">
@@ -378,8 +399,8 @@ font-size: 35px;
                           <label class="col-md-2 text-right">Completed :</label>
                           <div class="col-md-10 pr-5">
                              <div class="progress" style="height: 1.6rem;">
-                                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
-                                  40%
+                                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:<?=$task->task_progress?>%">
+                                  <?=$task->task_progress?>%
                                 </div>
                               </div>
                           </div>
@@ -392,10 +413,13 @@ font-size: 35px;
                               <li class="dots">:</li>
                               <li>10<span>Seconds</span></li>
                             </ul>
-                            <span class="text-danger"> Left Works</span>
+                            <span class="text-danger">  task_description</span>
                         </div>  
                     </div>
                 </div>
+                <?php
+              }
+              ?>
 
       <!-- Modal -->
 <div class="modal fade" id="participantModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
