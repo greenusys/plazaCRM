@@ -321,14 +321,14 @@
                         </tfoot>
                     </table>
                   </div>
-                 <!--  <div class="tab-pane fade px-4" id="contact-just" role="tabpanel" aria-labelledby="contact-tab-just">
+            <!--       <div class="tab-pane fade px-4" id="contact-just" role="tabpanel" aria-labelledby="contact-tab-just">
                     <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro
                       fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone
                       skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings
                       gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork
                       biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl
                       craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.</p>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -375,7 +375,7 @@
                             <td><?=$todo->due_date?></td>
                         </tr>
                       <?php } ?>
-<!--                         <tr>
+                         <tr>
                             <td class="sorter"></td>
                             <td>Row 2</td>
                             <td>Record 2</td>
@@ -398,13 +398,13 @@
                             <td>Row 5</td>
                             <td>Record 5</td>
                             <td>Record 5</td>
-                        </tr> -->
+                        </tr>
                     </tbody>
-              <!--       <tfoot>
+                 <tfoot>
                         <tr>
                             <td colspan="4">&nbsp;</td>
                         </tr>
-                    </tfoot> -->
+                    </tfoot> 
 
                   </table>
                 </div>
