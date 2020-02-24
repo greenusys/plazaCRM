@@ -163,7 +163,7 @@ font-size: 35px;
   color: gray;
 }
 </style>
- <div class="row mt-4 m-0">   
+<!--  <div class="row mt-4 m-0">   
           <div class="col-md-3 ">
             <div class="card">
               <div class="row">
@@ -236,7 +236,7 @@ font-size: 35px;
               </div>
             </div>
           </div>
-       </div>
+       </div> -->
     <div class="mb-5">
     <div class="row mt-4">
        <!--  <div class="col-sm-3">
