@@ -78,7 +78,14 @@
 		border-radius: 50%;
 		background: white;
 	}
-
+	.table tr td{
+		padding:10px 5px !important;
+	}
+	.label_danger{
+		color: #fc544b !important;
+		font-size: 14px;
+    	font-weight: bold;
+	}
 </style>
 
 	<div class="container-fluid card mt-5">
@@ -294,11 +301,11 @@ $(document).on('change','#client_main_id',function(){
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1" class="label-style ml-3">Discount Type</label>
+										<label for="exampleInputEmail1"  id="d_type" class="label-style ml-3">Discount Type</label>
 									</div>
 									<div class="col-sm-7">
-										<select class=" form-control" name="department">
-											<option selected="">No Discount</option>
+										<select class=" form-control disType" name="department">
+											<option selected="" value="no_discount">No Discount</option>
 											<option value="before_tax">Before Tax</option>
 											<option value="after_tax">After Tax</option>
 											
@@ -615,7 +622,7 @@ $(document).ready(function(){
 									<th>Action</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody id="apnd_table">
 							    <tr id="show">
 									<td>
 										<textarea cols="30" rows="2" class="text-center">Item Name</textarea>
@@ -624,85 +631,64 @@ $(document).ready(function(){
 										<textarea cols="30" rows="2" class="text-center">Description</textarea>
 									</td>
 									<td>
-										<input type="text" class="form-control" id="designation" aria-describedby="emailHelp" placeholder="1">
-										<h6>Unit Type</h6>
+										<input type="text" class="form-control qty_amt p-1" value="1">
+										<h6><input type="text" name="" class="p-1 border-0" placeholder="Unit Type"></h6>
 									</td>
-									<td>
-										<input type="text" class="form-control" id="designation" aria-describedby="emailHelp" placeholder="Price">
-									</td>
-									<td>
-										<select class=" form-control" name="department">
-											<option value="minor">NO Tax</option>
-										</select>
-									</td>
-									<td></td>
-									<td >
-									   <label class="small-box" id="add">
-										   <input type="checkbox" checked="checked">
-										   <span class="checkmark"></span>
-										</label> 
-									</td>
-								</tr>
-								<tr id="data" style="display:none">
-									<td>
-										<textarea cols="30" rows="2" class="text-center"></textarea>
-									</td>
-									<td>
-										<textarea cols="30" rows="2" class="text-center"></textarea>
-									</td>
-									<td>
-										<input type="text" class="form-control" id="designation" aria-describedby="emailHelp" placeholder="1">
-										
-									</td>
-									<td>
-										<input type="text" class="form-control" id="designation" aria-describedby="emailHelp" placeholder="0">
+									<td class="">
+										<input type="text" class="form-control item_prc p-1" placeholder="Price">
 									</td>
 									<td>
 										<select class=" form-control" name="department">
 											<option value="minor">NO Tax</option>
 										</select>
 									</td>
-									<td>0</td>
+									<td class="total_prc text-center"></td>
 									<td >
-									   <button type="button" id="delete" class="btn btn-danger  " data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash-o"></i></button>
+									   <button type="button" class="btn btn-info small-box" id="add">
+										  <i class="fas fa-check"></i>
+										</button> 
 									</td>
 								</tr>
+							
 								<tr>
 									<td></td>
 									<td></td>
 									<td></td>
 									<td></td>
 									<td></td>
-									<td colspan="2">Sub Total :	</td>
-									<td>0.00</td>
-								</tr>
-								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-								    <td  colspan="1">Discount (%)</td>
-									<td colspan="3"><input type="text" class="form-control" id="designation" aria-describedby="emailHelp" placeholder="0"></td>
-									<td>0.00</td>
-								</tr>
-								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-								    <td  colspan="1">Adjustment</td>
-									<td colspan="3"><input type="text" class="form-control" id="designation" aria-describedby="emailHelp" placeholder="0"></td>
-									<td>0.00</td>
+									<td >Sub Total :	</td>
+									<td class="sub_tt"></td>
 								</tr>
 								<tr>
 									<td></td>
 									<td></td>
 									<td></td>
 									<td></td>
+								    <td >Discount (%)</td>
+									<td ><input type="text" class="form-control discount" placeholder="0"></td>
+									<td>- <span class="dis_tt">0.00</span></td>
+								</tr>
+								<tr>
 									<td></td>
-									<td colspan="2"> Total :	</td>
-									<td>0.00</td>
+									<td></td>
+									<td></td>
+									<td></td>
+								    <td >Adjustment</td>
+									<td><input type="text" class="form-control adjustment" placeholder="0"></td>
+									<td class="adjs_tt">0.00</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td > Total :	</td>
+									<td class="grand_tt">0.00</td>
 								</tr>
 							</tbody>
                         </table>
+                     
 				    </div>
 											
 				    <div class="row mt-5">
@@ -716,6 +702,98 @@ $(document).ready(function(){
 		</div> 
 	</div>
 	
+<script>
+	$(document).ready(function(){
+$(document).on("click","body",function(){
+	$(".qty_amt").each(function() {
+		var qty = $(this).val();
+   		var price = $(this).parent().parent().find(".item_prc").val();
+   		var total = qty*price;
+   		$(this).parent().parent().find(".total_prc").html(total);
+
+	});
+	calculate();
+})
+
+	  $("#add").click(function(){
+	   // $("#data").show();
+	     html=' <tr>'+
+				'<td>'+
+						'<textarea cols="30" rows="2" class="text-center">Item Name</textarea>'+
+					'</td>'+
+					'<td>'+
+						'<textarea cols="30" rows="2" class="text-center">Description</textarea>'+
+					'</td>'+
+					'<td>'+
+						'<input type="text" class="form-control qty_amt p-1" value="1">'+
+						'<span><input type="text" name="" class="border-0 p-1" placeholder="Unit Type"></span>'+
+					'</td>'+
+					'<td class="">'+
+						'<input type="text" class="form-control item_prc p-1" placeholder="Price">'+
+					'</td>'+
+					'<td>'+
+						'<select class=" form-control" name="department">'+
+							'<option value="minor">NO Tax</option>'+
+						'</select>'+
+					'</td>'+
+					'<td class="total_prc"></td>'+
+					'<td >'+
+					   '<button type="button" class="btn btn-danger small-box del_row">'+
+						  '<i class="far fa-trash-alt"></i>'+
+						'</button> '+
+					'</td>'+
+				'</tr>';
+			//$("#apnd_table").append(html);
+			$("#apnd_table tr:first").after(html);
+	  });
+	 
+	 $(document).on("click",".del_row",function(){
+	 	$(this).parent().parent().remove();
+	 })
+	 var dtt=0;
+	 function calculate(){
+	 	var total = 0; 
+ 		$(".total_prc").each(function(){
+ 			var tt = $(this).html();
+ 			total =total+parseInt(tt);
+ 		})
+ 			$(".sub_tt").html(total);
+ 		var discount =$(".discount").val(); 
+ 		if(discount){
+ 			var dis_type=$(".disType").val();
+ 			if(dtt==0){
+	 			if(dis_type=='no_discount'){
+	 				alert("First Select Discount Type.");
+	 				dtt=1;
+	 				$("#d_type").removeClass("label-style");
+	 				$("#d_type").addClass("label_danger");
+	 				$('html,body').animate({
+				        scrollTop: $("#" + "d_type").offset().top
+				    }, 'slow');
+	 			}else{
+	 				discount_tt = total*(discount/100);
+	 				$(".dis_tt").html(discount_tt);
+	 				total = total - discount_tt;
+	 			}
+	 		}
+ 		}else{
+ 			dtt=0;
+ 		}
+ 	
+ 		$(".grand_tt").html(total);
+ 		var adjs = $(".adjustment").val();
+ 		if(adjs){
+ 			$(".adjs_tt").html(adjs);
+ 			$(".grand_tt").html(total+parseInt(adjs));
+ 		}
+	 }	
+
+// $(document).on("keypress",".adjustment",function(){
+// alert("dadsa");
+// })
+
+	});
+</script>
 
 	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
@@ -1158,15 +1236,6 @@ $(document).ready(function(){
 });
 </script>
 
-<script>
-	$(document).ready(function(){
-	  $("#add").click(function(){
-	    $("#data").show();
-	     
-	  });
-	 
-	});
-</script>
 <script>
 	$(document).ready(function(){
 	  $("#delete").click(function(){
