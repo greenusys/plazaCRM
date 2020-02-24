@@ -269,12 +269,12 @@ font-size: 35px;
                     <a href="#estimates" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Estimates</a>
                 </li>
 
-                <li class="w-100 side_br">
+               <!--  <li class="w-100 side_br">
                     <a href="#proposals" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Proposals</a>
-                </li>
-                <li class="w-100 side_br">
+                </li> -->
+                <!-- <li class="w-100 side_br">
                     <a href="#transaction" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Transactions</a>
-                </li>
+                </li> -->
                  <li class="w-100 side_br">
                     <a href="#projects" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Projects</a>
                 </li>
