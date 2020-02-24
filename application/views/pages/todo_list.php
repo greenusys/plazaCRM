@@ -1,23 +1,23 @@
 <?php
-        function daysleft($time)
-    {
-        $result = null;
-        $to_date = strtotime($time); //Future date.
-        $cur_date = strtotime(date('Y-m-d'));
-        $timeleft = $to_date - $cur_date;
-        $daysleft = round((($timeleft / 24) / 60) / 60);
-        if ($daysleft == 1) {
-            $result = ",".$daysleft . ' ' . 'day' . ' ' . 'left';
-        } else if ($daysleft > 1) {
-            $result = ",".$daysleft . ' ' . 'days' . ' ' . 'left';
-        } else if ($daysleft == -1) {
-            $result = ",".$daysleft . ' ' . 'day' . ' ' . 'gone';
-        } else if ($daysleft > -1) {
-            $result = ",".$daysleft . ' ' . 'days' . ' ' . 'gone';
-        }
-        return $result;
+    //     function daysleft($time)
+    // {
+    //     $result = null;
+    //     $to_date = strtotime($time); //Future date.
+    //     $cur_date = strtotime(date('Y-m-d'));
+    //     $timeleft = $to_date - $cur_date;
+    //     $daysleft = round((($timeleft / 24) / 60) / 60);
+    //     if ($daysleft == 1) {
+    //         $result = ",".$daysleft . ' ' . 'day' . ' ' . 'left';
+    //     } else if ($daysleft > 1) {
+    //         $result = ",".$daysleft . ' ' . 'days' . ' ' . 'left';
+    //     } else if ($daysleft == -1) {
+    //         $result = ",".$daysleft . ' ' . 'day' . ' ' . 'gone';
+    //     } else if ($daysleft > -1) {
+    //         $result = ",".$daysleft . ' ' . 'days' . ' ' . 'gone';
+    //     }
+    //     return $result;
 
-    }
+    // }
 ?>	
       <div class="row mt-4">
 		    <div class="col-sm-6">

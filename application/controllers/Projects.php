@@ -20,8 +20,16 @@ class Projects extends MY_Controller {
 		$data['users']=$this->User_model->fetch_user();
 		$data['settings']=$this->Projects_Model->fetch_settings();
 		$projects=$this->Projects_Model->fetch_projects();
+
 		foreach ($projects as $pr) {
 			$perm=$pr['permission'];
+            $project_id=$pr['project_id'];
+           // print_r($project_id.'<br>');
+
+            $taskprogress['taskprogress']=$this->counttaskprogress($project_id);
+           // print_r($taskprogress);
+           // die;
+           
 			$user=array();
 			if($perm=="all"){
 				$user[]="Everyone";
@@ -32,13 +40,43 @@ class Projects extends MY_Controller {
 				$user[]=$this->User_model->fetch_user_by_id($key);
 			 }
 			}
-			$project_data[]=array_merge($pr,$user);
+			$project_data[]=array_merge($pr,$user,$taskprogress);
+
 		}
+       // die;
 		$data['project']=$project_data;
+      //  $data['taskprogress']=$taskprogress;
 		$this->load->view('layout/header');
 		$this->load->view("pages/projects",$data);
 		$this->load->view("layout/footer");
 	}
+    public function counttaskprogress($project_id=NULL)
+    {
+
+        $this->db->where(array('tbl_task.project_id' => $project_id,'tbl_task.task_status' => 'completed'));
+        $this->db->join('tbl_project','tbl_task.project_id=tbl_project.project_id');
+        $task= $this->db->get('tbl_task')->result_array();
+        $count1=count($task);
+
+        $this->db->where(array('tbl_task.project_id' => $project_id));
+        $this->db->join('tbl_project','tbl_task.project_id=tbl_project.project_id');
+        $total= $this->db->get('tbl_task')->result_array();
+        $count=count($total);
+        if($count!=0)
+        {
+            $pro=$count-$count1;
+            $progress=($count1/$count)*100;
+            $progress=number_format($progress,2);
+        }   
+        else
+        {
+            $progress=0;
+        }
+        return $progress;
+        // $total=$task;
+        // return $total;
+
+    }
 	public function project_details($id, $active = NULL, $op_id = NULL)
     {
         // echo ' ******* ';
@@ -46,7 +84,9 @@ class Projects extends MY_Controller {
 
         $data['title'] = lang('project_details');
         //get all task information
-        $data['project_details'] = $this->items_model->check_by(array('project_id' => $id), 'tbl_project');
+        $this->db->where(array('project_id' => $id));
+        $this->db->join('tbl_client','tbl_client.client_id=tbl_project.client_id');
+        $data['project_details'] = $this->db->get('tbl_project')->result();
         // if (empty($data['project_details'])) {
         //     set_message('error', lang('there_in_no_value'));
         //     redirect('admin/projects');
@@ -155,7 +195,7 @@ class Projects extends MY_Controller {
             $data['time_active'] = 1;
             $data['estimate'] = 1;
         }
-        print_r($data);
+      //  print_r($data);
         $this->load->view('layout/header');
         $this->load->view('pages/projectDetails', $data);
         $this->load->view('layout/footer');
@@ -354,9 +394,9 @@ class Projects extends MY_Controller {
        //  //force_download($name, $data);
        //  force_download($file_name, NULL); //will get the file name for you
 	}
-	function projectDetails($id){
+	// function projectDetails($id){
 		
-	}
+	// }
 
 }
 ?>

@@ -377,7 +377,7 @@ background: #f3f3f3;
                 </ul>
             </li>
             <?php
-            if($role_id!=3){
+            // if($role_id!=3){
               ?>
                 <li class="nav-item dropdown">
                   <a href="#" class="nav-link has-dropdown"><i class="fa fa-lock"></i> <span>Permission</span></a>
@@ -389,9 +389,9 @@ background: #f3f3f3;
                   </ul>
                 </li>
               <?php
-            }
+            // }
             ?>
-             <li class="nav-item dropdown">
+             <!-- <li class="nav-item dropdown">
                   <a href="#" class="nav-link has-dropdown"><i class="fa fa-briefcase"></i> <span>Designation</span></a>
                   <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?=base_url('Designation')?>"><span><i class="fa fa-briefcase"></i></span>Designation  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
@@ -399,7 +399,7 @@ background: #f3f3f3;
                    
                     
                   </ul>
-                </li>
+                </li> -->
                 <li class="nav-item dropdown">
                   <a href="#" class="nav-link has-dropdown"><i class="fa fa-user"></i> <span>Department</span></a>
                   <ul class="dropdown-menu">

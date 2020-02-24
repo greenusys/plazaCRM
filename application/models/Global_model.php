@@ -16,6 +16,14 @@ class Global_Model extends MY_Model
         return $result;
     }
 
+    public function check_install(){
+        $this->db->select('*');
+        $this->db->from('installer');
+        $query_result = $this->db->get();
+        $result = $query_result->result();
+        return $result;
+    }
+
     public function get_holidays()
     {
         $this->db->select('tbl_working_days.day_id,tbl_working_days.flag', FALSE);
@@ -167,6 +175,12 @@ class Global_Model extends MY_Model
        $this->db->insert('tbl_holiday', $data);
        return  true;
     }
+
+    public function add_install($data){
+       $this->db->insert('installer', $data);
+       return  true;
+    }
+
 
     public function add_backup($db_name){
         $data=array('path'=>$db_name);

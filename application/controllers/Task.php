@@ -14,8 +14,13 @@ class Task extends MY_Controller {
 
 	public function index()
 	{
+		$session=$this->session->userdata('logged_user');
+		$id=$session[0]->user_id;
 		$data['all_tasks']=$this->Tasks_Model->fetch_all_task(null);
 		$data['users']=$this->User_model->fetch_user();
+      	$data['profile_info'] = $this->db->where('user_id', $id)->get('tbl_account_details')->row();
+
+
 		$this->load->view('layout/header');
 		$this->load->view("pages/tasks",$data);
 		$this->load->view("layout/footer");
@@ -114,10 +119,13 @@ class Task extends MY_Controller {
 		}
 	}
 
-public function task_details()
+public function task_details($id=NULL)
 	{
+	 	$this->db->where(array('task_id' => $id));
+ 	 	$this->db->join('tbl_users','tbl_task.created_by=tbl_users.user_id');
+        $data['task_details']= $this->db->get('tbl_task')->result();
 		$this->load->view('layout/header');
-		$this->load->view("pages/task_details");
+		$this->load->view("pages/task_details",$data);
 		$this->load->view("layout/footer");
 	}
 }

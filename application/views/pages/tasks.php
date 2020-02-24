@@ -1,5 +1,5 @@
 
-             <div class="p-3">
+            <!--  <div class="p-3">
             <div class="row bg-white mt-3">
                 <div class="col-md-2 ">
                   <div class="p-3 pro_status">
@@ -42,9 +42,40 @@
                 </div>
             </div>  
           </div>
-         
+          -->
+        <?php
+        $tasks_info = $this->User_model->my_permission('tbl_task', $profile_info->user_id);
+
+        $t_not_started = 0;
+        $t_in_progress = 0;
+        $t_completed = 0;
+        $t_deferred = 0;
+        $t_waiting_for_someone = 0;
+        $task_time = 0;
+        $task_time = $this->User_model->my_spent_time($profile_info->user_id);
+        if (!empty($tasks_info)):foreach ($tasks_info as $v_tasks):
+            if ($v_tasks->task_status == 'not_started') {
+              $t_not_started += 1;
+                // $t_not_started += count($v_tasks->task_status);
+            }
+            if ($v_tasks->task_status == 'in_progress') {
+              $t_in_progress += 1;
+                // $t_in_progress += count($v_tasks->task_status);
+            }
+            if ($v_tasks->task_status == 'completed') {
+              $t_completed += 1;
+                // $t_completed += count($v_tasks->task_status);
+            }
+
+        endforeach;
+        endif;
+        $totalTasks=$t_not_started+$t_in_progress+$t_completed;
+        $startper=number_format(($t_not_started/$totalTasks)*100);
+        $progressper=number_format(($t_in_progress/$totalTasks)*100);
+        $completedper=number_format(($t_completed/$totalTasks)*100);
+        ?>
           <div class="row mt-4">
-            <div class="col-lg-2 col-md-2 col-sm-12">
+            <div class="col-lg-4 col-md-4 col-sm-12">
               <div class="card card-statistic-2 px-2">
                 <div class="row  py-1">
                  <div class="col-md-8">
@@ -53,17 +84,18 @@
                    </div>
                  </div>
                  <div class="col-md-4">
-                    <span>9/48</span>
+                    <span><?=$t_not_started?>/<?=$totalTasks?></span>
                  </div>
                </div>
                <div class="progress">
-                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
-                    40%
+                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width
+                    <?=$startper?>%">
+                   <?=$startper?>%
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-lg-2 col-md-2 col-sm-12">
+            <div class="col-lg-4 col-md-4 col-sm-12">
               <div class="card card-statistic-2 px-2">
                 <div class="row  py-1">
                  <div class="col-md-8">
@@ -72,55 +104,17 @@
                    </div>
                  </div>
                  <div class="col-md-4">
-                    <span>9/48</span>
+                    <span><?=$t_in_progress?>/<?=$totalTasks?></span>
                  </div>
                </div>
                <div class="progress">
-                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
-                    40%
+                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:<?=$progressper?>%">
+                   <?=$progressper?>%
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-lg-2 col-md-2 col-sm-12">
-              <div class="card card-statistic-2 px-2">
-                <div class="row  py-1">
-                 <div class="col-md-8">
-                   <div class=" ">
-                      <h6 class="text_col">Deferred</h6>
-                   </div>
-                 </div>
-                 <div class="col-md-4">
-                    <span>9/48</span>
-                 </div>
-               </div>
-               <div class="progress">
-                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
-                    40%
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-12">
-              <div class="card card-statistic-2 px-2">
-                <div class="row  py-1">
-                 <div class="col-md-8">
-                   <div class=" ">
-                      <h6 class="text_col">Waiting For Someone</h6>
-                   </div>
-                 </div>
-                 <div class="col-md-4">
-                    <span>9/48</span>
-                 </div>
-               </div>
-               <div class="progress">
-                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
-                    40%
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-2 col-md-2 col-sm-12">
+            <div class="col-lg-4 col-md-4 col-sm-12">
               <div class="card card-statistic-2 px-2">
                 <div class="row  py-1">
                  <div class="col-md-8">
@@ -129,12 +123,12 @@
                    </div>
                  </div>
                  <div class="col-md-4">
-                    <span>9/48</span>
+                    <span><?=$t_completed?>/<?=$totalTasks?></span>
                  </div>
                </div>
                <div class="progress">
-                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
-                    40%
+                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:<?=$completedper?>%">
+                   <?=$completedper?>%
                   </div>
                 </div>
               </div>
@@ -185,7 +179,7 @@
                           ?>
                             <tr>
                               <td><input type="checkbox" name=" " class="h_22 form-control"></td>
-                                <td><a href="<?=base_url('Task/task_details')?>"><?=$tasker->task_name?></a></td>
+                                <td><a href="<?=base_url('Task/task_details').'/'.$tasker->task_id?>"><?=$tasker->task_name?></a></td>
                                 <td><?=$tasker->due_date?></td>
                                 <td>
                                   <?php

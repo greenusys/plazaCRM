@@ -163,7 +163,8 @@ font-size: 35px;
   color: gray;
 }
 </style>
- <div class="row mt-4 m-0">   
+
+<!--  <div class="row mt-4 m-0">   
           <div class="col-md-3 ">
             <div class="card">
               <div class="row">
@@ -236,10 +237,10 @@ font-size: 35px;
               </div>
             </div>
           </div>
-       </div>
+       </div> -->
     <div class="mb-5">
     <div class="row mt-4">
-        <div class="col-sm-3">
+       <!--  <div class="col-sm-3">
            <div class="card shadow"  id="myDIV">
               <ul style="list-style:none" class="nav nav-tabs tabs-left sideways bg-white">
                 <li class="w-100 side_br active">
@@ -269,15 +270,17 @@ font-size: 35px;
               </ul>
            </div>
         </div>
-
-        <div class="col-md-9">
+ -->
+        <div class="col-md-12">
             <div class="tab-content">
                 <!----------Task Details------->
+                <?php foreach ($task_details as $task) {
+                 ?>
                 <div class="tab-pane active" id="details">
                     <div class=" card ">
                         <div class="row m-0">
                             <div class="col-md-10">
-                              <h6 class="m-0 mt-1">Task Name</h6></div>
+                              <h6 class="m-0 mt-1"><?=$task->task_name?></h6></div>
                             <div class="col-md-2 text-right"> 
                                 <a href="" class="text-primary font-weight-bold " id="update"><i class="far fa-edit"></i> Edit</a>
                             </div>
@@ -288,9 +291,28 @@ font-size: 35px;
                              <div class="">
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Task Status :</label>
-                                <div class="col-md-8">
-                                  <span class="bg-danger text-white p-1">Deferred</span>
-                                  <div class="dropdown">
+                                <div class="col-md-8 d-flex">
+                                  <?php
+                                  if($task->task_status=='completed')
+                                  {
+                                    ?>
+                                  <span class="bg-success text-white p-1">completed</span>
+                                  <?php
+                                }
+                                elseif ($task->task_status=='not_started') {
+                               ?>
+                                <span class="bg-info text-white p-1">Not Started</span>
+                               <?php }
+                               elseif ($task->task_status=='deferred') {
+                               ?>
+                                <span class="bg-danger text-white p-1">Deferred</span>
+                               <?php }
+                                else
+                                {?>
+                                   <span class="bg-warning text-white p-1">In Progress</span>
+                                   <?php }
+                                ?>
+                                  <div class="dropdown ml-2">
                                     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
                                       Change 
                                     </button>
@@ -307,25 +329,25 @@ font-size: 35px;
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Start Date :</label>
                                 <div class="col-md-8">
-                                  <span class="">01.07.2020</span>
+                                  <span class=""><?=$task->task_start_date?></span>
                                 </div>
                               </div>
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Created By :</label>
                                 <div class="col-md-8">
-                                  <span class="">Adminko</span>
+                                  <span class=""><?=$task->full_name?></span>
                                 </div>
                               </div>
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Hourly Rate :</label>
                                 <div class="col-md-8">
-                                  <span class="">10.00</span>
+                                  <span class=""><?=$task->task_hour?></span>
                                 </div>
                               </div>
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Billable :</label>
                                 <div class="col-md-8">
-                                  <span class="text-white bg-danger p-1">No</span>
+                                  <span class="text-white bg-danger p-1"><?=$task->billable?></span>
                                 </div>
                               </div>
                             
@@ -333,34 +355,34 @@ font-size: 35px;
                           </div>
                           <div class="col-sm-6">
                             <div class="">
-                              <div class="row form-group">
+                           <!--    <div class="row form-group">
                                 <label class="col-md-4 text-right">Time Status :</label>
-                                <div class="col-md-8">
+                                <div class="col-md-8 d-flex">
                                   <span class="bg-danger text-white p-1">Deferred</span>
-                                  <div class="dropdown">
+                                  <div class="dropdown ml-2">
                                     <button  class="btn btn-success" ">
                                     Start Time
                                     </button>
                               
                                   </div>
                                 </div>
-                              </div>
+                              </div> -->
                               <div class="row form-group">
                                 <label class="col-md-4 text-right text-danger">Due Date :</label>
                                 <div class="col-md-8">
-                                  <span class="">01.07.2020</span>
+                                  <span class=""><?=$task->due_date?></span>
                                 </div>
                               </div>
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Created Date :</label>
                                 <div class="col-md-8">
-                                  <span class="">01.07.2020</span>
+                                  <span class=""><?=$task->task_created_date?></span>
                                 </div>
                               </div>
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Estimated Hour  :</label>
                                 <div class="col-md-8">
-                                  <span class="">10.00</span>
+                                  <span class=""><?=$task->task_hour?></span>
                                 </div>
                               </div>
                               <div class="row form-group">
@@ -373,10 +395,14 @@ font-size: 35px;
                             </div>
                           </div>
                       </div>
-                        <div class="row form-group">
-                          <label class="col-md-4 text-right">Completed :</label>
-                          <div class="col-md-8">
-                           
+                        <div class="row form-group ">
+                          <label class="col-md-2 text-right">Completed :</label>
+                          <div class="col-md-10 pr-5">
+                             <div class="progress" style="height: 1.6rem;">
+                                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:<?=$task->task_progress?>%">
+                                  <?=$task->task_progress?>%
+                                </div>
+                              </div>
                           </div>
                         </div>
                         <div class="text-center">
@@ -387,10 +413,13 @@ font-size: 35px;
                               <li class="dots">:</li>
                               <li>10<span>Seconds</span></li>
                             </ul>
-                            <span class="text-danger"> Left Works</span>
+                            <span class="text-danger">  task_description</span>
                         </div>  
                     </div>
                 </div>
+                <?php
+              }
+              ?>
 
       <!-- Modal -->
 <div class="modal fade" id="participantModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -589,7 +618,7 @@ font-size: 35px;
                                 </div>
                               </div>
                             
-                                <div id="timeSheet" class="tabcontent active">
+                                <div id="timeSheet" class="tabcontent active" style="display: block;">
                                    <table class="table table-striped border ">
                                         <thead>
                                             <tr>
@@ -606,10 +635,10 @@ font-size: 35px;
                                               <td>
                                                 <img src="" class="w-25"> <strong>Adminko</strong>
                                               </td>
-                                              <td><span class="p-1 bg-success">02.20.2020</span></td>
-                                              <td><span class="p-1 bg-danger">02.20.2020</span></td>
+                                              <td><span class="p-1 text-white bg-success">02.20.2020</span></td>
+                                              <td><span class="p-1 text-white  bg-danger">02.20.2020</span></td>
                                               <td>s</td>
-                                              <td><span class="bg-primary text-white "><i class="far fa-edit"></i></span> <span class="bg-danger ml-2 text-white "><i class="far fa-trash-alt"></i></span> </td>
+                                              <td><span class="bg-primary text-white p-1 "><i class="far fa-edit"></i></span> <span class="bg-danger ml-2 text-white p-1"><i class="far fa-trash-alt"></i></span> </td>
                                             </tr>
                                         </tbody>
                                     </table>    
@@ -674,9 +703,9 @@ font-size: 35px;
                                           </div>
                                           <div class="">
                                             <label>Reason for Edit <sup class="text-danger">*</sup></label>
-                                            <textarea rows="5"></textarea>
+                                            <textarea rows="5" class="form-control"></textarea>
                                           </div>
-                                          <button class="btn btn-info">Updates</button>
+                                          <button class="btn btn-info mt-2">Updates</button>
                                       </div>  
                                     </div>
                               

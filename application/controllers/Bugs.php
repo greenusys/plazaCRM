@@ -78,6 +78,14 @@ date_default_timezone_set('Asia/Kolkata');
 			else{
 				echo "0";
 			}
-		}	
+		}
+
+        function  progessBugs{
+            $this->load->view('layout/header');
+            $this->load->view('pages/inProgressBugs',$data);
+            $this->load->view('layout/footer');
+        }
+    
+
 	}
 ?>

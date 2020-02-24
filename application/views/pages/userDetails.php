@@ -355,6 +355,7 @@ if (!empty($designation)) {
     $department = $this->db->where('departments_id', $designation->departments_id)->get('tbl_departments')->row();
 }
 $all_project_info = $this->User_model->my_permission('tbl_project', $profile_info->user_id);
+
 $p_started = 0;
 $p_in_progress = 0;
 $p_completed = 0;
@@ -362,18 +363,26 @@ $project_time = 0;
 $project_time = $this->User_model->my_spent_time($profile_info->user_id, true);
 
 if (!empty($all_project_info)) {
+  // print_r($all_project_info);
     foreach ($all_project_info as $v_user_project) {
+      // print_r($v_user_project->project_status);
+      // echo ' || <br>';
         if ($v_user_project->project_status == 'started') {
-            $p_started += count($v_user_project->project_status);
+          $p_started += 1;
+            // $p_started += count($v_user_project->project_status);
         }
         if ($v_user_project->project_status == 'in_progress') {
-            $p_in_progress += count($v_user_project->project_status);
+          $p_in_progress += 1;
+            // $p_in_progress += count($v_user_project->project_status);
         }
         if ($v_user_project->project_status == 'completed') {
-            $p_completed += count($v_user_project->project_status);
+          $p_completed += 1;
+            // $p_completed += count($v_user_project->project_status);
         }
     }
+
 }
+$totalProject=$p_started+$p_in_progress+$p_completed;
 
 $tasks_info = $this->User_model->my_permission('tbl_task', $profile_info->user_id);
 
@@ -386,17 +395,21 @@ $task_time = 0;
 $task_time = $this->User_model->my_spent_time($profile_info->user_id);
 if (!empty($tasks_info)):foreach ($tasks_info as $v_tasks):
     if ($v_tasks->task_status == 'not_started') {
-        $t_not_started += count($v_tasks->task_status);
+      $t_not_started += 1;
+        // $t_not_started += count($v_tasks->task_status);
     }
     if ($v_tasks->task_status == 'in_progress') {
-        $t_in_progress += count($v_tasks->task_status);
+      $t_in_progress += 1;
+        // $t_in_progress += count($v_tasks->task_status);
     }
     if ($v_tasks->task_status == 'completed') {
-        $t_completed += count($v_tasks->task_status);
+      $t_completed += 1;
+        // $t_completed += count($v_tasks->task_status);
     }
 
 endforeach;
 endif;
+$totalTasks=$t_not_started+$t_in_progress+$t_completed;
 ?>
 <body class="bg-light">
     <div class="mb-5">
@@ -607,9 +620,9 @@ endif;
                     <a href="#leave_details" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Leave Details</a>
                 </li>
 
-                <li class="w-100 side_br">
+                <!-- <li class="w-100 side_br">
                     <a href="#prov_fund" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Provident Fund</a>
-                </li>
+                </li> -->
                 <li class="w-100 side_br">
                     <a href="#overtime_details" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Overtime Details</a>
                 </li>
@@ -619,12 +632,12 @@ endif;
                 <li class="w-100 side_br">
                     <a href="#projects" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Projects</a>
                 </li>
-                 <li class="w-100 side_br">
+                <!--  <li class="w-100 side_br">
                     <a href="#bugs" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Bugs</a>
                 </li>
                 <li class="w-100 side_br">
                     <a href="#activites" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Activities</a>
-                </li>
+                </li> -->
 
               </ul>
            </div>
@@ -1488,7 +1501,7 @@ endif;
                                         ?>
                                     <tr>
                                         <th scope="row">
-                                            <h6 class="label-style"><?= $leave_report['leave_category'][$lkey] ?></h6>
+                                            <h6 class="label-style"><?= ucwords($leave_report['leave_category'][$lkey]) ?></h6>
                                         </th>
                                         <td scope="row">
                                             <?= $leave_report['leave_taken'][$lkey] ?>/<?= $leave_report['leave_quota'][$lkey]; ?>
@@ -1843,8 +1856,8 @@ endif;
                                 </div>
                             </div>
                             <div class="line"></div>
-                            <div class="row p-1">
-                                <div class="text-center" id="chartContainer" style="height: 370px; width: 100%;"></div>
+                            <div class="row p-1" align="center">
+                                <div class="text-center" id="taskReportChartContainer" style="height: 370px; width: 100%;"></div>
                             </div>
                         </div> 
 
@@ -1952,6 +1965,37 @@ endif;
 <script>
 window.onload = function () {
 
+var chart_for_task = new CanvasJS.Chart("taskReportChartContainer", {
+    theme: "light2",
+    animationEnabled: true,
+    
+    data: [{
+        type: "pie",
+        indexLabelFontSize: 18,
+        radius: 80,
+        indexLabel: "{label} : {y}",
+        yValueFormatString: "###0.0\"%\"",
+        click: explodePie,
+        dataPoints: [
+        <?php
+        // $total_task=$t_not_started
+
+        ?>
+        // $t_not_started = 0;
+        // $t_in_progress = 0;
+        // $t_completed = 0;
+        // $t_deferred = 0;
+        // $t_waiting_for_someone = 0;
+            { label:'Not Started',y: <?=($t_not_started/$totalTasks)*100?>,  },
+            { label:'In Progress',y: <?=($t_in_progress/$totalTasks)*100?>, },
+            { label:'Completed',y: <?=($t_completed/$totalTasks)*100?>,  },
+            { label:'Deferred',y: <?=($t_deferred/$totalTasks)*100?>,  },
+            { label:'Waiting For Someone',y: <?=($t_waiting_for_someone/$totalTasks)*100?>,  },
+            
+        ]
+    }]
+});
+chart_for_task.render();
 var chart = new CanvasJS.Chart("bugschartContainer", {
     theme: "light2",
     animationEnabled: true,
@@ -1980,7 +2024,7 @@ function explodePie(e) {
     }
 }
  
-var chart = new CanvasJS.Chart("projectchartContainer", {
+var chart_for_project = new CanvasJS.Chart("projectchartContainer", {
     animationEnabled: true,
     
     data: [{
@@ -1989,12 +2033,16 @@ var chart = new CanvasJS.Chart("projectchartContainer", {
         yValueFormatString: "##0.00\"%\"",
         indexLabel: "{label} {y}",
         dataPoints: [
-            {y: 100,},
+
+     
+            {label:'Started', y: <?=($p_started/$totalProject)*100?>,},
+            {label:'In Progress', y: <?=($p_in_progress/$totalProject)*100?>,},
+            {label:'Completed', y: <?=($p_completed/$totalProject)*100?>,},
             
         ]
     }]
 });
-chart.render();
+chart_for_project.render();
 
 var chart = new CanvasJS.Chart("chartContainer", {
     theme: "light2",

@@ -1,26 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Project form</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <link href="css/style.css" rel="stylesheet">
-  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
-  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-  <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-</head> -->
 <style>
 	.tabcontent 
 	{
@@ -101,7 +78,14 @@
 		border-radius: 50%;
 		background: white;
 	}
-
+	.table tr td{
+		padding:10px 5px !important;
+	}
+	.label_danger{
+		color: #fc544b !important;
+		font-size: 14px;
+    	font-weight: bold;
+	}
 </style>
 
 	<div class="container-fluid card mt-5">
@@ -133,7 +117,7 @@
                         <thead>
                             <tr>
                                
-                                <th>Invoice</th>
+                            <th>Invoice</th>
 							<th>Invoice Date</th>
 							<th>Due Date</th>
 							<th>Client Name</th>
@@ -187,13 +171,13 @@
 										<div class="col-sm-5">
 											<select class=" form-control" name="department">
 												<option value="none">None</option>
-												<option value="project">Week</option>
-												<option value="oppor">Month</option>
-												<option value="none">Quarter</option>
-												<option value="project">Six Monthly</option>
-												<option value="oppor">One Year</option>
-												<option value="none">Two year</option>
-												<option value="project">Three Year</option>
+												<option value="7D">Week</option>
+												<option value="1M">Month</option>
+												<option value="3M">Quarter</option>
+												<option value="6M">Six Monthly</option>
+												<option value="1Y">One Year</option>
+												<option value="2Y">Two year</option>
+												<option value="3Y">Three Year</option>
 											</select>
 										</div>
 									</div>
@@ -204,7 +188,7 @@
 											<label for="exampleInputEmail1" class="label-style ml-4">Start Date</label>
 										</div>
 										<div class="col-sm-6">
-											<input type="text" id="datepicker" placeholder="2020" class="form-control">
+											<input type="text" id="datepicker" placeholder="" class="form-control">
 										</div>
 										<div class="col-sm-1">
 											<button type="button" id="acount" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
@@ -218,7 +202,7 @@
 											<label for="exampleInputEmail1" class="label-style ml-4">End Date </label>
 										</div>
 										<div class="col-sm-6">
-											<input type="text" id="datepicker1" placeholder="2020" class="form-control">
+											<input type="text" id="datepicker1" placeholder="" class="form-control">
 										</div>
 										<div class="col-sm-1">
 											<button type="button" id="acount" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
@@ -234,29 +218,53 @@
 									</div>
 									<div class="col-sm-6">
 										<div class="input-group">
-		                                    <select name="client_id" class="form-control select_box select2-hidden-accessible" style="width: 100%" required="" data-parsley-id="6" tabindex="-1" aria-hidden="true">
-		                                        <option value="">Select Client</option>
-		                                        <option value="1">GMAP</option>
-		                                        <option value="2">HR</option>
-		                                        <option value="3">IT</option>
-		                                        <option value="4">BI</option>
-		                                        <option value="5">Marketing ( Uro-Onco)</option>
+		                                    <select name="client_id" class="form-control select_boxs" style="width: 100%" required="" id="client_main_id" data-parsley-id="6" tabindex="-1" aria-hidden="true">
+		                                        <option value="" selected="" disabled="">Select Client</option>
+		                                        <?php
+		                                        foreach ($clients as $clnt) {
+		                                        ?>
+		                                        <option value="<?=$clnt->client_id?>"><?=$clnt->name?></option>
+		                                    <?php } ?>
 		           		                    </select>
 			                            </div>
 									</div>
-									<div class="col-sm-1">
-									    <button type="button" class="btn btn-light butn addgenral" data-toggle="modal" data-target="#exampleModal" data-toggle="tooltip" data-placement="top" title="New Client"><i class="fa fa-plus"></i></button>
-									</div>
 								</div>
 							</div>
-
-							<div class="form-group">
+<script>
+$(document).on('change','#client_main_id',function(){
+	var client_id = $(this).val();
+	$.ajax({
+		type:'POST',
+		data:{
+			client_id:client_id
+		},
+		url:'<?=base_url()?>Sales/fetch_project',
+		success:function(response){
+			var response = JSON.parse(response);
+			var html='';
+			html+='<option value="" selected="" disabled="">Select Project</option>';
+			if (response.status==1) {
+				for(var i=0;i<response.data.length;i++){
+				html+='<option value="'+response.data[i].project_id+'">'+response.data[i].project_name+'</option>';
+				}
+			  $('#project_main_id').empty();
+			  $('#project_main_id').append(html);
+			}
+			else{
+			  $('#project_main_id').empty();
+			  $('#project_main_id').append(html);
+			}
+		}
+	})
+})	
+</script>
+				<div class="form-group">
 								<div class="row">
 									<div class=" col-sm-3">
 										<label for="exampleInputEmail1" class="ml-5 label-style">Projects </label>
 									</div>
 									<div class="col-sm-7">
-										<select class=" form-control" name="department">
+										<select class=" form-control" name="department" id="project_main_id">
 											<option value="high">None</option>
 										</select>
 									</div>
@@ -268,7 +276,7 @@
 											<label for="exampleInputEmail1" class="label-style ml-4">Invoice Date</label>
 										</div>
 										<div class="col-sm-6">
-											<input type="text" id="datepicker2" placeholder="2020" class="form-control">
+											<input type="text" id="datepicker2" placeholder="" class="form-control">
 										</div>
 										<div class="col-sm-1">
 											<button type="button" id="acount" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
@@ -282,7 +290,7 @@
 											<label for="exampleInputEmail1" class="label-style ml-5">Due Date </label>
 										</div>
 										<div class="col-sm-6">
-											<input type="text" id="datepicker3" placeholder="2020" class="form-control">
+											<input type="text" id="datepicker3" placeholder="" class="form-control">
 										</div>
 										<div class="col-sm-1">
 											<button type="button" id="acount" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
@@ -293,20 +301,94 @@
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-3">
-										<label for="exampleInputEmail1" class="label-style ml-3">Discount Type</label>
+										<label for="exampleInputEmail1"  id="d_type" class="label-style ml-3">Discount Type</label>
 									</div>
 									<div class="col-sm-7">
-										<select class=" form-control" name="department">
-											<option value="minor">No Discount</option>
-											<option value="major">Before Tax</option>
-											<option value="show">After Tax</option>
+										<select class=" form-control disType" name="department">
+											<option selected="" value="no_discount">No Discount</option>
+											<option value="before_tax">Before Tax</option>
+											<option value="after_tax">After Tax</option>
 											
 										</select>
 									</div>
 								</div>
 							</div>
+<script type="text/javascript">
+$(document).ready(function(){
+  $(".btn1").click(function(){
+    $(".dvPassport").hide();
+  });
+ 
+});
 
-							<div class="form-group">
+    $(function () {
+        $(".customize_permission").click(function () {
+            if ($(this).is(":checked")) {
+                $(".dvPassport").show();
+            } else {
+                $(".dvPassport").hide();
+            }
+        });
+    });
+</script>
+
+			
+      	<div class="form-group">
+              <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">Assigned To <span class="text-danger">*</span></label>
+              </div>
+              <div class="col-sm-9">
+                <div class="checkbox c-radio needsclick">
+                  <input type="radio" value="" name="everyone" id="everyone" class="btn1"> Everyone<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
+                </div>
+                <div class="checkbox c-radio needsclick">
+                  <input type="radio" value="" name="everyone" class="customize_permission"> Customise Permission<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
+                </div>
+              </div>
+            </div>
+          </div>
+                    <div class="form-group dvPassport"  style="display: none">
+              <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">Select Users<span class="text-danger">*</span></label>
+              </div>
+              <div class="col-sm-9">
+                 <?php
+                 $count=1;
+                 foreach ($users as $user) {
+                 ?>
+
+                   <input type="checkbox" value="<?=$user['user_id']?>" class="chkPassport admind" > <?=$user['username']?> 
+                   <?php
+                   if ($user['role_id']=='1') {
+                   echo '<strong class="badge btn-danger">Admin</strong>';
+                   }
+                   else{
+                   	echo '<strong class="badge btn-primary">Staff</strong>';
+                   }
+                   ?>
+                 <br>
+                 <div class="row dvPassport"  id="dvPassport<?=$count?>" style="display: none">
+                    <div class="col-md-3">
+                   <input type="checkbox" class="data" value="View" > View
+                  </div>
+                  <div class="col-md-3">
+                       <input type="checkbox" class="data" value="Edit" > Edit
+                  </div>
+                  <div class="col-md-3">
+                      <input type="checkbox" class="data" value="Delete"> Delete
+                  </div>
+                 </div>
+                 <?php
+                 $count++;
+                  }
+                 ?>
+              </div>
+            </div>
+          </div>
+
+<!-- 							<div class="form-group">
 								<div class="row">
 									<div class=" col-sm-3">
 										<label for="exampleInputEmail1" class=" label-style ml-4">Permission<span class="text-danger">*</span></label>
@@ -321,8 +403,8 @@
 										</div>
 									</div>
 								</div>
-						    </div>
-							<div class="form-group"  id="dvPassport" style="display: none">
+						    </div> -->
+<!-- 							<div class="form-group"  id="dvPassport" style="display: none">
 						        <div class="row">
 									<div class="col-sm-3">
 										<label for="exampleInputEmail1" class="label-style ml-3">select Users<span class="text-danger">*</span></label>
@@ -357,7 +439,7 @@
 										 </div>
 									</div>
 							    </div>
-						    </div>
+						    </div> -->
 						</div>
 						<div class=" col-sm-5">
 							<div class="form-group">
@@ -367,15 +449,17 @@
 									</div>
 									<div class="col-sm-7">
 										<select class=" form-control" name="department">
-											<option value="minor">Select Sales Agent</option>
-											<option value="major">Adminko</option>
-											<option value="show">Rahul Kumar</option>
-											<option value="show">Ravish Beg</option>
+											<option value="" selected="" disabled="">Select Sales Agent</option>
+											<?php
+											foreach ($users as $user) {
+											?>
+											<option value="<?=$user['user_id']?>"><?=$user['username']?></option>
+										<?php } ?>
 										</select>
 									</div>
 								</div>
 							</div>
-							<div class="form-group">
+<!-- 							<div class="form-group">
 								<div class="row">
 									<div class="offset-1 col-sm-4">
 										<label for="exampleInputEmail1" class="label-style ml-4">Allow Paypal</label>
@@ -465,7 +549,7 @@
 										</label>
 									</div>
 								</div>
-							</div>
+							</div> -->
 						</div>
 				    </div>
 				    <div class="row mt-3">
@@ -538,7 +622,7 @@
 									<th>Action</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody id="apnd_table">
 							    <tr id="show">
 									<td>
 										<textarea cols="30" rows="2" class="text-center">Item Name</textarea>
@@ -547,85 +631,64 @@
 										<textarea cols="30" rows="2" class="text-center">Description</textarea>
 									</td>
 									<td>
-										<input type="text" class="form-control" id="designation" aria-describedby="emailHelp" placeholder="1">
-										<h6>Unit Type</h6>
+										<input type="text" class="form-control qty_amt p-1" value="1">
+										<h6><input type="text" name="" class="p-1 border-0" placeholder="Unit Type"></h6>
 									</td>
-									<td>
-										<input type="text" class="form-control" id="designation" aria-describedby="emailHelp" placeholder="Price">
-									</td>
-									<td>
-										<select class=" form-control" name="department">
-											<option value="minor">NO Tax</option>
-										</select>
-									</td>
-									<td></td>
-									<td >
-									   <label class="small-box" id="add">
-										   <input type="checkbox" checked="checked">
-										   <span class="checkmark"></span>
-										</label> 
-									</td>
-								</tr>
-								<tr id="data" style="display:none">
-									<td>
-										<textarea cols="30" rows="2" class="text-center"></textarea>
-									</td>
-									<td>
-										<textarea cols="30" rows="2" class="text-center"></textarea>
-									</td>
-									<td>
-										<input type="text" class="form-control" id="designation" aria-describedby="emailHelp" placeholder="1">
-										
-									</td>
-									<td>
-										<input type="text" class="form-control" id="designation" aria-describedby="emailHelp" placeholder="0">
+									<td class="">
+										<input type="text" class="form-control item_prc p-1" placeholder="Price">
 									</td>
 									<td>
 										<select class=" form-control" name="department">
 											<option value="minor">NO Tax</option>
 										</select>
 									</td>
-									<td>0</td>
+									<td class="total_prc text-center"></td>
 									<td >
-									   <button type="button" id="delete" class="btn btn-danger  " data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash-o"></i></button>
+									   <button type="button" class="btn btn-info small-box" id="add">
+										  <i class="fas fa-check"></i>
+										</button> 
 									</td>
 								</tr>
+							
 								<tr>
 									<td></td>
 									<td></td>
 									<td></td>
 									<td></td>
 									<td></td>
-									<td colspan="2">Sub Total :	</td>
-									<td>0.00</td>
-								</tr>
-								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-								    <td  colspan="1">Discount (%)</td>
-									<td colspan="3"><input type="text" class="form-control" id="designation" aria-describedby="emailHelp" placeholder="0"></td>
-									<td>0.00</td>
-								</tr>
-								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-								    <td  colspan="1">Adjustment</td>
-									<td colspan="3"><input type="text" class="form-control" id="designation" aria-describedby="emailHelp" placeholder="0"></td>
-									<td>0.00</td>
+									<td >Sub Total :	</td>
+									<td class="sub_tt"></td>
 								</tr>
 								<tr>
 									<td></td>
 									<td></td>
 									<td></td>
 									<td></td>
+								    <td >Discount (%)</td>
+									<td ><input type="text" class="form-control discount" placeholder="0"></td>
+									<td>- <span class="dis_tt">0.00</span></td>
+								</tr>
+								<tr>
 									<td></td>
-									<td colspan="2"> Total :	</td>
-									<td>0.00</td>
+									<td></td>
+									<td></td>
+									<td></td>
+								    <td >Adjustment</td>
+									<td><input type="text" class="form-control adjustment" placeholder="0"></td>
+									<td class="adjs_tt">0.00</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td > Total :	</td>
+									<td class="grand_tt">0.00</td>
 								</tr>
 							</tbody>
                         </table>
+                     
 				    </div>
 											
 				    <div class="row mt-5">
@@ -639,6 +702,98 @@
 		</div> 
 	</div>
 	
+<script>
+	$(document).ready(function(){
+$(document).on("click","body",function(){
+	$(".qty_amt").each(function() {
+		var qty = $(this).val();
+   		var price = $(this).parent().parent().find(".item_prc").val();
+   		var total = qty*price;
+   		$(this).parent().parent().find(".total_prc").html(total);
+
+	});
+	calculate();
+})
+
+	  $("#add").click(function(){
+	   // $("#data").show();
+	     html=' <tr>'+
+				'<td>'+
+						'<textarea cols="30" rows="2" class="text-center">Item Name</textarea>'+
+					'</td>'+
+					'<td>'+
+						'<textarea cols="30" rows="2" class="text-center">Description</textarea>'+
+					'</td>'+
+					'<td>'+
+						'<input type="text" class="form-control qty_amt p-1" value="1">'+
+						'<span><input type="text" name="" class="border-0 p-1" placeholder="Unit Type"></span>'+
+					'</td>'+
+					'<td class="">'+
+						'<input type="text" class="form-control item_prc p-1" placeholder="Price">'+
+					'</td>'+
+					'<td>'+
+						'<select class=" form-control" name="department">'+
+							'<option value="minor">NO Tax</option>'+
+						'</select>'+
+					'</td>'+
+					'<td class="total_prc"></td>'+
+					'<td >'+
+					   '<button type="button" class="btn btn-danger small-box del_row">'+
+						  '<i class="far fa-trash-alt"></i>'+
+						'</button> '+
+					'</td>'+
+				'</tr>';
+			//$("#apnd_table").append(html);
+			$("#apnd_table tr:first").after(html);
+	  });
+	 
+	 $(document).on("click",".del_row",function(){
+	 	$(this).parent().parent().remove();
+	 })
+	 var dtt=0;
+	 function calculate(){
+	 	var total = 0; 
+ 		$(".total_prc").each(function(){
+ 			var tt = $(this).html();
+ 			total =total+parseInt(tt);
+ 		})
+ 			$(".sub_tt").html(total);
+ 		var discount =$(".discount").val(); 
+ 		if(discount){
+ 			var dis_type=$(".disType").val();
+ 			if(dtt==0){
+	 			if(dis_type=='no_discount'){
+	 				alert("First Select Discount Type.");
+	 				dtt=1;
+	 				$("#d_type").removeClass("label-style");
+	 				$("#d_type").addClass("label_danger");
+	 				$('html,body').animate({
+				        scrollTop: $("#" + "d_type").offset().top
+				    }, 'slow');
+	 			}else{
+	 				discount_tt = total*(discount/100);
+	 				$(".dis_tt").html(discount_tt);
+	 				total = total - discount_tt;
+	 			}
+	 		}
+ 		}else{
+ 			dtt=0;
+ 		}
+ 	
+ 		$(".grand_tt").html(total);
+ 		var adjs = $(".adjustment").val();
+ 		if(adjs){
+ 			$(".adjs_tt").html(adjs);
+ 			$(".grand_tt").html(total+parseInt(adjs));
+ 		}
+	 }	
+
+// $(document).on("keypress",".adjustment",function(){
+// alert("dadsa");
+// })
+
+	});
+</script>
 
 	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
@@ -1012,7 +1167,9 @@
 
 <script>
   $( function() {
-	$( "#datepicker" ).datepicker();
+	$( "#datepicker" ).datepicker(
+		{ dateFormat: 'dd-mm-yy' }
+		);
   } );
 </script>
 
@@ -1023,13 +1180,17 @@
 </script>
 <script>
   $( function() {
-	$( "#datepicker2" ).datepicker();
+	$( "#datepicker2" ).datepicker(
+		{ dateFormat: 'yy-mm-dd' }
+		);
   } );
 </script>
 
 <script>
   $( function() {
-	$( "#datepicker3" ).datepicker();
+	$( "#datepicker3" ).datepicker(
+		{ dateFormat: 'yy-mm-dd' }
+		);
   } );
 </script>
 
@@ -1075,15 +1236,6 @@ $(document).ready(function(){
 });
 </script>
 
-<script>
-	$(document).ready(function(){
-	  $("#add").click(function(){
-	    $("#data").show();
-	     
-	  });
-	 
-	});
-</script>
 <script>
 	$(document).ready(function(){
 	  $("#delete").click(function(){
