@@ -87,7 +87,7 @@ class Leavemanagement extends MY_Controller {
 	public function Edit_Yearlyleave($id)
 	{
 	    $data['fetch_leave_yearly']=$this->leave->EditYearlyleave($id);
-	   $data['fetch_Department_data']=$this->leave->fetchDepartmentforLeave();
+	   $data['fetch_Designation_data']=$this->leave->fetchDesignationforYearlyLeave();
 	    // print_r( $data['fetch_leave_yearly']);
     	$this->load->view('layout/header');
 		$this->load->view("pages/edityearly_leave",$data);
@@ -97,10 +97,10 @@ class Leavemanagement extends MY_Controller {
 	public function updateYearlyleave()
 	{
 		$leaveyearid=$this->input->post('year_leaveid');
-		$dept=$this->input->post('dept_id');
+		$desig_id=$this->input->post('desig_id');
 		$total_leave=$this->input->post('totalleave'); 	 
 		$data = array(
-        	'department_id'=>$dept,
+        	'designation_id'=>$desig_id,
         	'total_Yearlyleave'=>$total_leave
         );
    
@@ -127,6 +127,14 @@ class Leavemanagement extends MY_Controller {
 		$desig_id=$this->input->post('desig_id');
 		$data=$this->leave->checkAvailableleave($desig_id);
 		die(json_encode(array('code'=>1,'data'=>$data)));
+		
+	}
+	public function checkAvailableDesigleave()
+	{
+		$desig_id=$this->input->post('desig_id');
+		$data=$this->leave->checkAvailableleaveforParticularUser($desig_id);
+		 // die(json_encode($data));
+		  die(json_encode(array('code'=>1,'data'=>$data)));
 		
 	}
 	public function addLeavePolicyData()

@@ -138,7 +138,11 @@ class Leave_Model extends CI_Model
 		}
 	}
 
-	
+	public function fetchDesignationforYearlyLeave()
+	{
+	    return $this->db->get('tbl_designations')->result();
+	    
+	}
 	
 	public function fetchDepartmentforLeave()
 	{
@@ -222,7 +226,7 @@ class Leave_Model extends CI_Model
 	{
 		$this->db->select('*')
          ->from('tbl_leave_yearly')
-         ->join('tbl_departments', 'tbl_departments.departments_id = tbl_leave_yearly.department_id')
+         ->join('tbl_designations', 'tbl_designations.designations_id = tbl_leave_yearly.designation_id')
          ->where('tbl_leave_yearly.year_leaveid',$id);
 		return $this->db->get()->result();
 	    // return $this->db->get('tbl_leave_yearly')->result();
@@ -256,6 +260,12 @@ class Leave_Model extends CI_Model
 		return $total = array_sum($days_array);
 		 
 	}
-}
+	 public function checkAvailableleaveforParticularUser($desig_id)
+ 	{
+ 		return $this->db->query("select designation_id,DATEDIFF(max(leave_end_date),min(leave_start_date))+1 as checkdata from tbl_leave_application where tbl_leave_application.application_status='2' group by tbl_leave_application.designation_id='$desig_id'")->result();
+ 		
+	
+	   }
+	}
 
 ?>
