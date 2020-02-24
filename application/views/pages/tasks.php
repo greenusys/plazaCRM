@@ -1,5 +1,5 @@
 
-             <div class="p-3">
+            <!--  <div class="p-3">
             <div class="row bg-white mt-3">
                 <div class="col-md-2 ">
                   <div class="p-3 pro_status">
@@ -42,7 +42,12 @@
                 </div>
             </div>  
           </div>
-         
+          -->
+          <?php
+          foreach ($all_tasks as $task) {
+           
+          }
+          ?>
           <div class="row mt-4">
             <div class="col-lg-2 col-md-2 col-sm-12">
               <div class="card card-statistic-2 px-2">
