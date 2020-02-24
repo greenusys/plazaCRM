@@ -1,26 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Project form</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <link href="css/style.css" rel="stylesheet">
-  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
-  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-  <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-</head> -->
 <style>
 	.tabcontent 
 	{
@@ -133,7 +110,7 @@
                         <thead>
                             <tr>
                                
-                                <th>Invoice</th>
+                            <th>Invoice</th>
 							<th>Invoice Date</th>
 							<th>Due Date</th>
 							<th>Client Name</th>
@@ -187,13 +164,13 @@
 										<div class="col-sm-5">
 											<select class=" form-control" name="department">
 												<option value="none">None</option>
-												<option value="project">Week</option>
-												<option value="oppor">Month</option>
-												<option value="none">Quarter</option>
-												<option value="project">Six Monthly</option>
-												<option value="oppor">One Year</option>
-												<option value="none">Two year</option>
-												<option value="project">Three Year</option>
+												<option value="7D">Week</option>
+												<option value="1M">Month</option>
+												<option value="3M">Quarter</option>
+												<option value="6M">Six Monthly</option>
+												<option value="1Y">One Year</option>
+												<option value="2Y">Two year</option>
+												<option value="3Y">Three Year</option>
 											</select>
 										</div>
 									</div>
@@ -204,7 +181,7 @@
 											<label for="exampleInputEmail1" class="label-style ml-4">Start Date</label>
 										</div>
 										<div class="col-sm-6">
-											<input type="text" id="datepicker" placeholder="2020" class="form-control">
+											<input type="text" id="datepicker" placeholder="" class="form-control">
 										</div>
 										<div class="col-sm-1">
 											<button type="button" id="acount" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
@@ -218,7 +195,7 @@
 											<label for="exampleInputEmail1" class="label-style ml-4">End Date </label>
 										</div>
 										<div class="col-sm-6">
-											<input type="text" id="datepicker1" placeholder="2020" class="form-control">
+											<input type="text" id="datepicker1" placeholder="" class="form-control">
 										</div>
 										<div class="col-sm-1">
 											<button type="button" id="acount" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
@@ -234,29 +211,53 @@
 									</div>
 									<div class="col-sm-6">
 										<div class="input-group">
-		                                    <select name="client_id" class="form-control select_box select2-hidden-accessible" style="width: 100%" required="" data-parsley-id="6" tabindex="-1" aria-hidden="true">
-		                                        <option value="">Select Client</option>
-		                                        <option value="1">GMAP</option>
-		                                        <option value="2">HR</option>
-		                                        <option value="3">IT</option>
-		                                        <option value="4">BI</option>
-		                                        <option value="5">Marketing ( Uro-Onco)</option>
+		                                    <select name="client_id" class="form-control select_boxs" style="width: 100%" required="" id="client_main_id" data-parsley-id="6" tabindex="-1" aria-hidden="true">
+		                                        <option value="" selected="" disabled="">Select Client</option>
+		                                        <?php
+		                                        foreach ($clients as $clnt) {
+		                                        ?>
+		                                        <option value="<?=$clnt->client_id?>"><?=$clnt->name?></option>
+		                                    <?php } ?>
 		           		                    </select>
 			                            </div>
 									</div>
-									<div class="col-sm-1">
-									    <button type="button" class="btn btn-light butn addgenral" data-toggle="modal" data-target="#exampleModal" data-toggle="tooltip" data-placement="top" title="New Client"><i class="fa fa-plus"></i></button>
-									</div>
 								</div>
 							</div>
-
-							<div class="form-group">
+<script>
+$(document).on('change','#client_main_id',function(){
+	var client_id = $(this).val();
+	$.ajax({
+		type:'POST',
+		data:{
+			client_id:client_id
+		},
+		url:'<?=base_url()?>Sales/fetch_project',
+		success:function(response){
+			var response = JSON.parse(response);
+			var html='';
+			html+='<option value="" selected="" disabled="">Select Project</option>';
+			if (response.status==1) {
+				for(var i=0;i<response.data.length;i++){
+				html+='<option value="'+response.data[i].project_id+'">'+response.data[i].project_name+'</option>';
+				}
+			  $('#project_main_id').empty();
+			  $('#project_main_id').append(html);
+			}
+			else{
+			  $('#project_main_id').empty();
+			  $('#project_main_id').append(html);
+			}
+		}
+	})
+})	
+</script>
+				<div class="form-group">
 								<div class="row">
 									<div class=" col-sm-3">
 										<label for="exampleInputEmail1" class="ml-5 label-style">Projects </label>
 									</div>
 									<div class="col-sm-7">
-										<select class=" form-control" name="department">
+										<select class=" form-control" name="department" id="project_main_id">
 											<option value="high">None</option>
 										</select>
 									</div>
@@ -268,7 +269,7 @@
 											<label for="exampleInputEmail1" class="label-style ml-4">Invoice Date</label>
 										</div>
 										<div class="col-sm-6">
-											<input type="text" id="datepicker2" placeholder="2020" class="form-control">
+											<input type="text" id="datepicker2" placeholder="" class="form-control">
 										</div>
 										<div class="col-sm-1">
 											<button type="button" id="acount" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
@@ -282,7 +283,7 @@
 											<label for="exampleInputEmail1" class="label-style ml-5">Due Date </label>
 										</div>
 										<div class="col-sm-6">
-											<input type="text" id="datepicker3" placeholder="2020" class="form-control">
+											<input type="text" id="datepicker3" placeholder="" class="form-control">
 										</div>
 										<div class="col-sm-1">
 											<button type="button" id="acount" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
@@ -297,16 +298,90 @@
 									</div>
 									<div class="col-sm-7">
 										<select class=" form-control" name="department">
-											<option value="minor">No Discount</option>
-											<option value="major">Before Tax</option>
-											<option value="show">After Tax</option>
+											<option selected="">No Discount</option>
+											<option value="before_tax">Before Tax</option>
+											<option value="after_tax">After Tax</option>
 											
 										</select>
 									</div>
 								</div>
 							</div>
+<script type="text/javascript">
+$(document).ready(function(){
+  $(".btn1").click(function(){
+    $(".dvPassport").hide();
+  });
+ 
+});
 
-							<div class="form-group">
+    $(function () {
+        $(".customize_permission").click(function () {
+            if ($(this).is(":checked")) {
+                $(".dvPassport").show();
+            } else {
+                $(".dvPassport").hide();
+            }
+        });
+    });
+</script>
+
+			
+      	<div class="form-group">
+              <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">Assigned To <span class="text-danger">*</span></label>
+              </div>
+              <div class="col-sm-9">
+                <div class="checkbox c-radio needsclick">
+                  <input type="radio" value="" name="everyone" id="everyone" class="btn1"> Everyone<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
+                </div>
+                <div class="checkbox c-radio needsclick">
+                  <input type="radio" value="" name="everyone" class="customize_permission"> Customise Permission<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
+                </div>
+              </div>
+            </div>
+          </div>
+                    <div class="form-group dvPassport"  style="display: none">
+              <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">Select Users<span class="text-danger">*</span></label>
+              </div>
+              <div class="col-sm-9">
+                 <?php
+                 $count=1;
+                 foreach ($users as $user) {
+                 ?>
+
+                   <input type="checkbox" value="<?=$user['user_id']?>" class="chkPassport admind" > <?=$user['username']?> 
+                   <?php
+                   if ($user['role_id']=='1') {
+                   echo '<strong class="badge btn-danger">Admin</strong>';
+                   }
+                   else{
+                   	echo '<strong class="badge btn-primary">Staff</strong>';
+                   }
+                   ?>
+                 <br>
+                 <div class="row dvPassport"  id="dvPassport<?=$count?>" style="display: none">
+                    <div class="col-md-3">
+                   <input type="checkbox" class="data" value="View" > View
+                  </div>
+                  <div class="col-md-3">
+                       <input type="checkbox" class="data" value="Edit" > Edit
+                  </div>
+                  <div class="col-md-3">
+                      <input type="checkbox" class="data" value="Delete"> Delete
+                  </div>
+                 </div>
+                 <?php
+                 $count++;
+                  }
+                 ?>
+              </div>
+            </div>
+          </div>
+
+<!-- 							<div class="form-group">
 								<div class="row">
 									<div class=" col-sm-3">
 										<label for="exampleInputEmail1" class=" label-style ml-4">Permission<span class="text-danger">*</span></label>
@@ -321,8 +396,8 @@
 										</div>
 									</div>
 								</div>
-						    </div>
-							<div class="form-group"  id="dvPassport" style="display: none">
+						    </div> -->
+<!-- 							<div class="form-group"  id="dvPassport" style="display: none">
 						        <div class="row">
 									<div class="col-sm-3">
 										<label for="exampleInputEmail1" class="label-style ml-3">select Users<span class="text-danger">*</span></label>
@@ -357,7 +432,7 @@
 										 </div>
 									</div>
 							    </div>
-						    </div>
+						    </div> -->
 						</div>
 						<div class=" col-sm-5">
 							<div class="form-group">
@@ -367,15 +442,17 @@
 									</div>
 									<div class="col-sm-7">
 										<select class=" form-control" name="department">
-											<option value="minor">Select Sales Agent</option>
-											<option value="major">Adminko</option>
-											<option value="show">Rahul Kumar</option>
-											<option value="show">Ravish Beg</option>
+											<option value="" selected="" disabled="">Select Sales Agent</option>
+											<?php
+											foreach ($users as $user) {
+											?>
+											<option value="<?=$user['user_id']?>"><?=$user['username']?></option>
+										<?php } ?>
 										</select>
 									</div>
 								</div>
 							</div>
-							<div class="form-group">
+<!-- 							<div class="form-group">
 								<div class="row">
 									<div class="offset-1 col-sm-4">
 										<label for="exampleInputEmail1" class="label-style ml-4">Allow Paypal</label>
@@ -465,7 +542,7 @@
 										</label>
 									</div>
 								</div>
-							</div>
+							</div> -->
 						</div>
 				    </div>
 				    <div class="row mt-3">
@@ -1012,7 +1089,9 @@
 
 <script>
   $( function() {
-	$( "#datepicker" ).datepicker();
+	$( "#datepicker" ).datepicker(
+		{ dateFormat: 'dd-mm-yy' }
+		);
   } );
 </script>
 
@@ -1023,13 +1102,17 @@
 </script>
 <script>
   $( function() {
-	$( "#datepicker2" ).datepicker();
+	$( "#datepicker2" ).datepicker(
+		{ dateFormat: 'yy-mm-dd' }
+		);
   } );
 </script>
 
 <script>
   $( function() {
-	$( "#datepicker3" ).datepicker();
+	$( "#datepicker3" ).datepicker(
+		{ dateFormat: 'yy-mm-dd' }
+		);
   } );
 </script>
 
