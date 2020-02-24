@@ -38,7 +38,7 @@
                       </div>
                       <div class="card-body">
                        In Progress Task<br>
-                    <span><a href="">More Info <i class="fas fa-arrow-circle-right"></i></a></span>
+                    <span><a href="<?=base_url('Dashboard/inProgressTasks')?>">More Info <i class="fas fa-arrow-circle-right"></i></a></span>
                       </div>
                     </div>
                  </div>

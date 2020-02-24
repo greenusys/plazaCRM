@@ -11,6 +11,7 @@ class Dashboard extends MY_Controller {
 		$this->load->model('User_model');
 		$this->load->model('Rahul_Model','Demo');
 		$this->load->model('Global_Model');
+		$this->load->model('Projects_Model');
 	}
 
 	public function index()
@@ -115,8 +116,44 @@ class Dashboard extends MY_Controller {
 		$data['project']=$project_data;
       //  $data['taskprogress']=$taskprogress;
 		$this->load->view('layout/header');
-		$this->load->view("pages/projects",$data);
+		$this->load->view("pages/inProgressProject",$data);
 		$this->load->view("layout/footer");
 	}
+	public function counttaskprogress($project_id=NULL)
+    {
+
+        $this->db->where(array('tbl_task.project_id' => $project_id,'tbl_task.task_status' => 'completed'));
+        $this->db->join('tbl_project','tbl_task.project_id=tbl_project.project_id');
+        $task= $this->db->get('tbl_task')->result_array();
+        $count1=count($task);
+
+        $this->db->where(array('tbl_task.project_id' => $project_id));
+        $this->db->join('tbl_project','tbl_task.project_id=tbl_project.project_id');
+        $total= $this->db->get('tbl_task')->result_array();
+        $count=count($total);
+        if($count!=0)
+        {
+            $pro=$count-$count1;
+            $progress=($count1/$count)*100;
+            $progress=number_format($progress,2);
+        }   
+        else
+        {
+            $progress=0;
+        }
+        return $progress;
+        // $total=$task;
+        // return $total;
+
+    }
+    public function inProgressTasks(){
+    	$data['all_tasks']=$this->db->where('task_status','in_progress')->get('tbl_task')->result();
+    	// print_r($data['all_tasks']);
+    	// die;
+		$data['users']=$this->User_model->fetch_user();
+		$this->load->view('layout/header');
+		$this->load->view("pages/inProgressTask",$data);
+		$this->load->view("layout/footer");
+    }
 }
 ?>
