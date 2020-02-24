@@ -163,7 +163,8 @@ font-size: 35px;
   color: gray;
 }
 </style>
- <div class="row mt-4 m-0">   
+
+<!--  <div class="row mt-4 m-0">   
           <div class="col-md-3 ">
             <div class="card">
               <div class="row">
@@ -236,10 +237,10 @@ font-size: 35px;
               </div>
             </div>
           </div>
-       </div>
+       </div> -->
     <div class="mb-5">
     <div class="row mt-4">
-        <div class="col-sm-3">
+       <!--  <div class="col-sm-3">
            <div class="card shadow"  id="myDIV">
               <ul style="list-style:none" class="nav nav-tabs tabs-left sideways bg-white">
                 <li class="w-100 side_br active">
@@ -269,8 +270,8 @@ font-size: 35px;
               </ul>
            </div>
         </div>
-
-        <div class="col-md-9">
+ -->
+        <div class="col-md-12">
             <div class="tab-content">
                 <!----------Task Details------->
                 <div class="tab-pane active" id="details">
@@ -333,7 +334,7 @@ font-size: 35px;
                           </div>
                           <div class="col-sm-6">
                             <div class="">
-                              <div class="row form-group">
+                           <!--    <div class="row form-group">
                                 <label class="col-md-4 text-right">Time Status :</label>
                                 <div class="col-md-8 d-flex">
                                   <span class="bg-danger text-white p-1">Deferred</span>
@@ -344,7 +345,7 @@ font-size: 35px;
                               
                                   </div>
                                 </div>
-                              </div>
+                              </div> -->
                               <div class="row form-group">
                                 <label class="col-md-4 text-right text-danger">Due Date :</label>
                                 <div class="col-md-8">

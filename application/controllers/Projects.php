@@ -24,8 +24,11 @@ class Projects extends MY_Controller {
 		foreach ($projects as $pr) {
 			$perm=$pr['permission'];
             $project_id=$pr['project_id'];
-            $taskprogress[]=$this->counttaskprogress($project_id);
-           
+           // print_r($project_id.'<br>');
+
+            $taskprogress['taskprogress']=$this->counttaskprogress($project_id);
+           // print_r($taskprogress);
+           // die;
            
 			$user=array();
 			if($perm=="all"){
@@ -37,11 +40,12 @@ class Projects extends MY_Controller {
 				$user[]=$this->User_model->fetch_user_by_id($key);
 			 }
 			}
-			$project_data[]=array_merge($pr,$user);
+			$project_data[]=array_merge($pr,$user,$taskprogress);
+
 		}
-        $data['progress']=$taskprogress;
+       // die;
 		$data['project']=$project_data;
-        //$data['taskprogress']=$taskprogress;
+      //  $data['taskprogress']=$taskprogress;
 		$this->load->view('layout/header');
 		$this->load->view("pages/projects",$data);
 		$this->load->view("layout/footer");

@@ -52,6 +52,17 @@ class Client_Model extends MY_Model{
 		} 
 	}
 
+	public function fetch_projects_by_client_id($id){
+		$checker=array('client_id'=>$id);
+		$this->db->where($checker);
+		$check = $this->db->get("tbl_project")->result_array();
+		if(count($check)==0 ){
+			return false;
+		}else{
+			return $check;
+		} 
+	}
+
 	public function getClients(){
 		$this->db->select('client_id, name');
 		$this->db->order_by('client_id', 'Desc');

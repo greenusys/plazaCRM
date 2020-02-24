@@ -292,23 +292,21 @@ $(document).ready(function(){
                         </thead>
 
                         <tbody>
-                        <?php
-                        foreach ($progress as $prog) {
-                        $prog=number_format($prog);
-                         // print_r($taskprogress);
+                          <?php
                           foreach ($project as $pr) {
-
+                            $taskprogress=number_format($pr['taskprogress']);
+                            // print_r($pr);
+                            // print_r('<bt>');
                           ?>
                             <tr>
                               <td>  
                                 <a href="<?=base_url('Projects/project_details/').$pr['project_id']?>"><?=$pr['project_name']?>
-                               
                                   <div class="progress">
-                                      <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:<?=$prog?>%">
-                                       <?=$prog?> 
+                                      <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:<?=$taskprogress?>%">
+                                       
+                                       <?=$taskprogress?>
                                       </div>
                                 </div>
-                               
                               </td>
                                 <td><?=$pr['client_name']?></td>
                                 <td><?=$pr['end_date']?></td>
@@ -345,15 +343,19 @@ $(document).ready(function(){
                                 <td>
                                   <?php
                                   $total = count((array)$pr);
-                                  if($total>8){
+              // print_r($total);
+                                  if($total>8)
+                                  {
                                     $total=$total-8;
-                                    for($i=0;$i<$total;$i++){
-                                      if($pr[$i]=="Everyone "){
-                                        echo "Everyone";
-                                      }
-                                      else{
-                                        // echo $pr[$i]->fullname;
-                                      }
+                                    for($i=0;$i<$total;$i++)
+                                    {
+                                      // if($pr[$i]=="Everyone ")
+                                      // {
+                                      //   echo "Everyone";
+                                      // }
+                                      // else{
+                                      //   // echo $pr[$i]->fullname;
+                                      // }
                                    }
                                   }
                                   else{
@@ -385,9 +387,7 @@ $(document).ready(function(){
                             </tr>
                             <?php
                              }
-                           }
                             ?>
-
                         </tbody>
                     </table>
                   </div>
@@ -443,13 +443,13 @@ $(document).ready(function(){
                       <input type="text" id="amount" name="progress" readonly style="border:0; color:#f6931f;width:40%; font-weight:bold;">
                     
                   </div>
-<script>
-// $(document).ready(function(){
-//   $('input[type="checkbox"]').on('change', function() {
-//    $('input[type="checkbox"]').not(this).prop('checked', false);
-// });
-// })
-</script>
+                    <script>
+                    // $(document).ready(function(){
+                    //   $('input[type="checkbox"]').on('change', function() {
+                    //    $('input[type="checkbox"]').not(this).prop('checked', false);
+                    // });
+                    // })
+                    </script>
                   <div class="col-sm-4">
                     <input type="checkbox" name="vehicle1" value="hours"> Project Hours<br>
                   </div>

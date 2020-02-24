@@ -87,10 +87,10 @@
 </style>
 <div class=" mb-5">
 		<div class="row mt-4">
-		    <div class="col-sm-3 bg-white shadow">
+		    <!-- <div class="col-sm-3 bg-white shadow">
 		    	<div class="tab">
 				   <div class="card shadow"  id="myDIV">
-					   	<button class="tablinks btn  border p-2 text-left pl-5 back active" onclick="openCity(event, 'proj')">Project Details</button>
+					   	<button class="tablinks btn  border p-2 text-left pl-5 back active" onclick="openCity(event, 'proj')">Project Details</button> -->
 						<!-- <button class="tablinks btn border p-2 text-left pl-5 back" onclick="openCity(event, 'cal')">Calendar</button>
 						<button class="tablinks btn border p-2 text-left pl-5 back" onclick="openCity(event, 'com')">Comments</button>
 						<button class="tablinks btn border p-2 text-left pl-5 back" onclick="openCity(event, 'att')">Attachment</button>
@@ -125,13 +125,13 @@
 						 <a href="bugsdetails.php" class="text-dark text-decoration-none"><li class="border p-2 back pl-4">Project Setting</li></a>
 						 <a href="activitydetails.php" class="text-dark text-decoration-none"><li class=" p-2 back pl-4">Activities</li>
 					  </ul> -->
-				   </div>
+		<!-- 		   </div>
 				</div>
 			</div>
-
-			<div class="col-md-9">
+ -->
+			<div class="col-md-12">
 				<div id="proj" class="card tabcontent  d-block  border-0">
-					<div class="container bg-white shadow p-3" id="project" >
+					<div class= p-3" id="project" >
 						<div class="row">
 							<div class="col-sm-10">
 				                <h6><?=$project_details->project_name?></h6>
@@ -219,7 +219,7 @@
 							            </div>
 							       </div>
 							       <div class="col-sm-6">
-							       	   <div class="form-group">
+							       	  <!--  <div class="form-group">
 							              <div class="row">
 							                <div class="offset-1 col-sm-4">
 							                  <label  class="label-style ml-3">Timer Status </label>
@@ -230,7 +230,7 @@
 							                   <label  class="bg-success p-1  text-white ml-3" >Start Timer</label>
 							       		     </div>
 							              </div>
-							            </div>
+							            </div> -->
 							             <div class="form-group">
 							              <div class="row">
 							                <div class="offset-2 col-sm-3">
