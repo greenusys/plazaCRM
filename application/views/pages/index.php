@@ -139,7 +139,8 @@
                         </thead>
                         <tbody>
                           <?php
-                          // print_r($Overproject);
+                          print_r($Overproject);
+                          // die;
                             foreach ($Overproject as $proj_detail) {
                               // print_r($proj_detail);
                               ?>
@@ -178,12 +179,40 @@
                                       
                                   </td>
                                   <td>
-                                    <?php
+                                    <?php 
+                                    if($proj_detail['assigned_to'][0]!=""){
+                                      $total = count((array)$proj_detail);
+                  // print_r($total);
+                                      if($total>8)
+                                      {
+                                        $total=$total-8;
+                                        for($i=0;$i<$total;$i++)
+                                        {
+                                          if($proj_detail[$i]=="Everyone ")
+                                          {
+                                            echo "Everyone";
+                                          }
+                                          else{
+                                            echo $pr[$i]->fullname;
+                                          }
+                                       }
+                                      }
+                                      else{
+                                        echo "Everyone";
+                                      }
+
+
+
                                       foreach($proj_detail['assigned_to'] as $user){
                                         // print_r($user);
                                         echo '<img src="'.base_url().$user->avatar.'" class="rounded-circle" width="20px">';
                                       }
-                                    ?>
+                                    }else{
+                                      echo '<a href="javascript:void(0)"><i class="fa fa-plus" aria-hidden="true"></i></a>';
+                                      }
+                                   ?> 
+                                    
+                                
                                   </td>
                                   <td>
                                     <?php
@@ -300,7 +329,7 @@
                       gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork
                       biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl
                       craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.</p>
-                  </div> -->
+                  </div>
                 </div>
               </div>
             </div>

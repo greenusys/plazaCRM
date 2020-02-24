@@ -349,13 +349,13 @@ $(document).ready(function(){
                                     $total=$total-8;
                                     for($i=0;$i<$total;$i++)
                                     {
-                                      // if($pr[$i]=="Everyone ")
-                                      // {
-                                      //   echo "Everyone";
-                                      // }
-                                      // else{
-                                      //   // echo $pr[$i]->fullname;
-                                      // }
+                                      if($pr[$i]=="Everyone ")
+                                      {
+                                        echo "Everyone";
+                                      }
+                                      else{
+                                        // echo $pr[$i]->fullname;
+                                      }
                                    }
                                   }
                                   else{
