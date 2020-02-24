@@ -27,6 +27,17 @@ class Projects_Model extends CI_Model{
 		} 
 	}
 
+	public function fetch_Inprojects(){
+		$this->db->select('project_id,tbl_project.uploads as project_uploads, project_name,progress,end_date,project_status,permission,tbl_client.name as client_name');
+		$this->db->where(' tbl_project.project_status','in_progress');
+		$this->db->join('tbl_client', 'tbl_client.client_id = tbl_project.client_id');
+		$check = $this->db->get("tbl_project")->result_array();
+		if(count($check)==0 ){
+			return false;
+		}else{
+			return $check;
+		} 
+	}
 	public function fetch_projects(){
 		$this->db->select('project_id,tbl_project.uploads as project_uploads, project_name,progress,end_date,project_status,permission,tbl_client.name as client_name');
 		$this->db->join('tbl_client', 'tbl_client.client_id = tbl_project.client_id');

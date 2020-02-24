@@ -25,6 +25,45 @@ class Dashboard extends MY_Controller {
 		$data['over_due_task']=$this->Demo->get_over_due_task();
 		$data['fetch_holiday']=$this->Global_Model->fetch_holidays();
 		// $data['over_due_task']=$this->Demo->get_online_user();
+		$projects=$this->Demo->get_over_due_project();
+		// print_r($projects);
+		foreach ($projects as $pr) {
+			$perm=$pr['permission'];
+			$user=array();
+			if($perm=="all"){
+				$user[]="Everyone";
+			}
+			else{
+			$new=json_decode($perm);
+			foreach($new as $key => $value){
+				$user[]=$this->User_model->fetch_user_by_id($key);
+			 }
+			}
+			$project_data[]=array_merge($pr,array("assigned_to"=>$user));
+
+		}
+        // print_r($project_data);
+		$data['Overproject']=$project_data;
+
+		$tasks=$this->Demo->get_over_due_task();
+		// print_r($projects);
+		foreach ($tasks as $pr) {
+			$perm=$pr['permission'];
+			$user=array();
+			if($perm=="all"){
+				$user[]="Everyone";
+			}
+			else{
+			$new=json_decode($perm);
+			foreach($new as $key => $value){
+				$user[]=$this->User_model->fetch_user_by_id($key);
+			 }
+			}
+			$task_data[]=array_merge($pr,array("assigned_to"=>$user));
+
+		}
+        // print_r($project_data);
+		$data['Overtask']=$task_data;
 		$this->load->view('layout/header');
 		$this->load->view('pages/index',$data);
 		$this->load->view('layout/footer');
@@ -43,6 +82,41 @@ class Dashboard extends MY_Controller {
 	}
 	public function fetchOnlineUser(){
 		die(json_encode($this->Demo->get_online_user()));
+	}
+	public function projectInprogress(){
+		// $data['clients']=$this->Client_Model->getClients();
+		// $data['users']=$this->User_model->fetch_user();
+		// $data['settings']=$this->Projects_Model->fetch_settings();
+		$projects=$this->Projects_Model->fetch_Inprojects();
+
+		foreach ($projects as $pr) {
+			$perm=$pr['permission'];
+            $project_id=$pr['project_id'];
+           // print_r($project_id.'<br>');
+
+            $taskprogress['taskprogress']=$this->counttaskprogress($project_id);
+           // print_r($taskprogress);
+           // die;
+           
+			$user=array();
+			if($perm=="all"){
+				$user[]="Everyone";
+			}
+			else{
+			$new=json_decode($perm);
+			foreach($new as $key => $value){
+				$user[]=$this->User_model->fetch_user_by_id($key);
+			 }
+			}
+			$project_data[]=array_merge($pr,$user,$taskprogress);
+
+		}
+       // die;
+		$data['project']=$project_data;
+      //  $data['taskprogress']=$taskprogress;
+		$this->load->view('layout/header');
+		$this->load->view("pages/projects",$data);
+		$this->load->view("layout/footer");
 	}
 }
 ?>

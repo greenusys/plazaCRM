@@ -15,7 +15,7 @@
                       </div>
                       <div class="card-body">
                        In Progress Projects<br>
-                    <span><a href="">More Info <i class="fas fa-arrow-circle-right"></i></a></span>
+                    <span><a href="<?=base_url('Dashboard/projectInprogress')?>">More Info <i class="fas fa-arrow-circle-right"></i></a></span>
                       </div>
                     </div>
                  </div>
@@ -64,7 +64,7 @@
                         <h4>0</h4>
                       </div>
                       <div class="card-body">
-                       Open Tickets<br>
+                       In Progress Bugs<br>
                     <span><a href="">More Info <i class="fas fa-arrow-circle-right"></i></a></span>
                       </div>
                     </div>
@@ -117,14 +117,14 @@
                     <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
                       aria-selected="false">Overdue Tasks(<?=count($over_due_task)?>)</a>
                   </li>
-                  <li class="nav-item">
+                 <!--  <li class="nav-item">
                     <a class="nav-link" id="contact-tab-just" data-toggle="tab" href="#contact-just" role="tab" aria-controls="contact-just"
                       aria-selected="false">Overdue Invoice</a>
-                  </li>
+                  </li> -->
                 </ul>
                 <div class="tab-content card pt-5" id="myTabContentJust">
                   <div class="tab-pane fade show active px-4" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
-                   <table id="example" class="display nowrap" style="width:100%">
+                   <table id="overDuTable" class="alldatatable display nowrap" style="width:100%">
                         <thead>
                             <tr>
                                 <th>Project Name</th>
@@ -138,87 +138,169 @@
                             </tr>
                         </thead>
                         <tbody>
-                          
+                          <?php
+                          // print_r($Overproject);
+                            foreach ($Overproject as $proj_detail) {
+                              // print_r($proj_detail);
+                              ?>
+                                <tr>
+                                  <td><?=$proj_detail['project_name']?></td>
+                                  <td><?=$proj_detail['client_name']?></td>
+                                  <td><?=$proj_detail['end_date']?></td>
+                                  <td>
+                                     <?php
+                                        if ($proj_detail['project_status']=="completed") {
+                                          echo "<span class='text-white bg-success sele_staus'>Completed</span>";
+                                        }
+                                        elseif ($proj_detail['project_status']=="deferred") {
+                                          echo "<span class='text-white bg-danger sele_staus'>Deferred</span>";
+                                        }
+                                        elseif ($proj_detail['project_status']=="waiting_for_someone") {
+                                          echo "<span class='text-white bg-warning sele_staus'>Waiting For Someone</span>";
+                                        }
+                                        elseif ($proj_detail['project_status']=="in_progress") {
+                                          echo "<span class='text-white bg-warning sele_staus'>In Progresse</span>";
+                                        }
+                                        else{
+                                          echo "<span class='text-white bg-danger sele_staus'>Not Started</span>";
+                                        }
+                                        ?>
+                                        <div class="btn-group open">
+                                            <button class="btn btn-xs p-0 border btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> Change <span class="caret"></span></button>
+                                            <ul class="dropdown-menu animated zoomIn">
+                                              <li><a href="<?=base_url()?>Projects/update_projecter/<?=$proj_detail['project_id']?>/waiting_for_someone">Waiting For Someone</a></li>
+                                              <li><a href="<?=base_url()?>Projects/update_projecter/<?=$proj_detail['project_id']?>/deferred">Deferred</a></li>
+                                              <li><a href="<?=base_url()?>Projects/update_projecter/<?=$proj_detail['project_id']?>/completed">Completed</a></li>
+                                              <li><a href="<?=base_url()?>Projects/update_projecter/<?=$proj_detail['project_id']?>/in_progress">In Progress</a></li>
+                                              <li><a href="<?=base_url()?>Projects/update_projecter/<?=$proj_detail['project_id']?>/Not_Started">Not Started</a></li>
+                                            </ul>
+                                        </div>
+                                      
+                                  </td>
+                                  <td>
+                                    <?php
+                                      foreach($proj_detail['assigned_to'] as $user){
+                                        // print_r($user);
+                                        echo '<img src="'.base_url().$user->avatar.'" class="rounded-circle" width="20px">';
+                                      }
+                                    ?>
+                                  </td>
+                                  <td>
+                                    <?php
+                                      if ($proj_detail['project_uploads']==null) {
+                                        echo "No Downloads";
+                                      }
+                                      else{
+                                        echo "<a href='".base_url()."Projects/downloader/".$proj_detail['project_id']."'>Download Now</a>";
+                                      }
+                                      ?>
+                                  </td>
+                                  <td>
+                                    <div class="">
+                                      <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                      <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
+                                       <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
+                                    </div>
+
+                                </td>
+                                </tr>
+                              <?php
+                            }
+                          ?> 
                         </tbody>
                         <tfoot>
-                            <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
-                            </tr>
+                          <tr>
+                            <th>Project Name</th>
+                                <th>Client</th>
+                                <th>End Date</th>
+                                <th>Status</th>
+                                <th>Assigned To</th>
+                                <th>Downloads</th>
+                                <th>Action</th>
+                          </tr>
                         </tfoot>
                     </table>
                   </div>
                   <div class="tab-pane fade px-4" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
-                   <table id="example12" class="table table-striped display nowrap" style="width:100%">
+                   <table id="" class="alldatatable table table-striped display nowrap" style="width:100%">
                         <thead class="border">
                             <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th>Task Name</th>
+                                <th>End Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                               
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
-                            </tr>
-                            
-                            <tr>
-                                <td>Shad Decker</td>
-                                <td>Regional Director</td>
-                                <td>Edinburgh</td>
-                                <td>51</td>
-                                <td>2008/11/13</td>
-                                <td>$183,000</td>
-                            </tr>
-                            <tr>
-                                <td>Michael Bruce</td>
-                                <td>Javascript Developer</td>
-                                <td>Singapore</td>
-                                <td>29</td>
-                                <td>2011/06/27</td>
-                                <td>$183,000</td>
-                            </tr>
-                            <tr>
-                                <td>Donna Snider</td>
-                                <td>Customer Support</td>
-                                <td>New York</td>
-                                <td>27</td>
-                                <td>2011/01/25</td>
-                                <td>$112,000</td>
-                            </tr>
+                          <?php
+                          // print_r($Overtask);
+                            foreach ($Overtask as $task_detail) {
+                              // print_r($proj_detail);
+                              ?>
+                                <tr>
+                                  <td><?=$task_detail['task_name']?></td>
+                                  <td><?=$task_detail['due_date']?></td>
+                                  <td>
+                                  <?php
+                                  if ($task_detail['task_status']=="completed") {
+                                    echo "<span class='text-white bg-success sele_staus'>Completed</span>";
+                                  }
+                                  elseif ($task_detail['task_status']=="deferred") {
+                                    echo "<span class='text-white bg-danger sele_staus'>Deferred</span>";
+                                  }
+                                  elseif ($task_detail['task_status']=="waiting_for_someone") {
+                                    echo "<span class='text-white bg-warning sele_staus'>Waiting For Someone</span>";
+                                  }
+                                  elseif ($task_detail['task_status']=="in_progress") {
+                                    echo "<span class='text-white bg-warning sele_staus'>In Progresse</span>";
+                                  }
+                                  else{
+                                    echo "<span class='text-white bg-danger sele_staus'>Not Started</span>";
+                                  }
+                                  ?>
+                                  
+                                  <div class="btn-group open">
+                                      <button class="btn btn-xs p-0 border btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> Change <span class="caret"></span></button>
+                                      <ul class="dropdown-menu animated zoomIn">
+                                        <li><a href="<?=base_url()?>Task/update_tasks/<?=$task_detail['task_id']?>/waiting_for_someone">Waiting For Someone</a></li>
+                                        <li><a href="<?=base_url()?>Task/update_tasks/<?=$task_detail['task_id']?>/deferred">Deferred</a></li>
+                                        <li><a href="<?=base_url()?>Task/update_tasks/<?=$task_detail['task_id']?>/completed">Completed</a></li>
+                                        <li><a href="<?=base_url()?>Task/update_tasks/<?=$task_detail['task_id']?>/in_progress">In Progress</a></li>
+                                        <li><a href="<?=base_url()?>Task/update_tasks/<?=$task_detail['task_id']?>/not_started">Not Started</a></li>
+                                      </ul>
+                                  </div>
+                                 </td>
+                                  <td>
+                                    <div class="">
+                                      <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                      <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
+                                       <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
+                                    </div>
+                                  </td>
+                                </tr>
+                              <?php
+                            }
+                          ?> 
                         </tbody>
                         <tfoot class="border">
                             <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th>Task Name</th>
+                                <th>End Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
                             </tr>
                         </tfoot>
                     </table>
                   </div>
-                  <div class="tab-pane fade px-4" id="contact-just" role="tabpanel" aria-labelledby="contact-tab-just">
+                 <!--  <div class="tab-pane fade px-4" id="contact-just" role="tabpanel" aria-labelledby="contact-tab-just">
                     <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro
                       fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone
                       skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings
                       gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork
                       biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl
                       craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.</p>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>

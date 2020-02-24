@@ -219,7 +219,7 @@
 							            </div>
 							       </div>
 							       <div class="col-sm-6">
-							       	   <div class="form-group">
+							       	  <!--  <div class="form-group">
 							              <div class="row">
 							                <div class="offset-1 col-sm-4">
 							                  <label  class="label-style ml-3">Timer Status </label>
@@ -230,7 +230,7 @@
 							                   <label  class="bg-success p-1  text-white ml-3" >Start Timer</label>
 							       		     </div>
 							              </div>
-							            </div>
+							            </div> -->
 							             <div class="form-group">
 							              <div class="row">
 							                <div class="offset-2 col-sm-3">

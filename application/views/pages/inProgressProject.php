@@ -277,7 +277,7 @@ $(document).ready(function(){
                 <div class="tab-content card pt-3" id="myTabContentJust">
                   <div class="tab-pane fade show active px-4" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
 
-                   <table id="" class="alldatatable display nowrap table-responsive" style="width:100%">
+                   <table id="example" class="display nowrap table-responsive" style="width:100%">
                         <thead>
                             <tr>
                                 <th>Project Name</th>
@@ -310,7 +310,7 @@ $(document).ready(function(){
                               </td>
                                 <td><?=$pr['client_name']?></td>
                                 <td><?=$pr['end_date']?></td>
-                                
+                                <td>
                                 <td>
                                   <?php
                                   if ($pr['project_status']=="completed") {
