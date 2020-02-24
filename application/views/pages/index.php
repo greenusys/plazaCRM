@@ -48,7 +48,7 @@
               </div>
             </div>
           </div>
-          <div class="row ">
+          <!-- <div class="row ">
            
             <div class="col-lg-6 col-md-6 col-sm-12">
               <div class="card card-statistic-2">
@@ -65,7 +65,7 @@
                       </div>
                       <div class="card-body">
                        In Progress Bugs<br>
-                    <span><a href="">More Info <i class="fas fa-arrow-circle-right"></i></a></span>
+                    <span><a href="<?=base_url('Dashboard/inProgressBugs')?>">More Info <i class="fas fa-arrow-circle-right"></i></a></span>
                       </div>
                     </div>
                  </div>
@@ -97,7 +97,7 @@
              
               </div>
             </div>
-          </div>
+          </div> -->
           
           <div class="row mt-4">
             <div class="col-lg-12">
