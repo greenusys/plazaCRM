@@ -92,7 +92,7 @@ else{
               <div class="col-sm-8">
                 <div class="input-group">
                   <input type="hidden" name="trans_id" value="<?=$dataById->transfer_id?>">
-                    <input type="hidden" name="accountsss_id" value="<?=$dataById->account_id?>">
+                    <input type="hidden" name="from_account" value="<?=$dataById->from_account_id?>">
                           <select disabled name="from_account_id" class="form-control" id="customer_group">
                                         <option value="">Select Category</option>
                                         <?php
@@ -125,7 +125,7 @@ else{
               </div>
               <div class="col-sm-8">
                 <div class="input-group">
-                    <input type="hidden" name="accountsss_id" value="<?=$dataById->account_id?>">
+                    <input type="hidden" name="to_account" value="<?=$dataById->to_account_id?>">
                           <select disabled name="to_account_id" class="form-control" id="customer_group">
                                         <option value="">Select Category</option>
                                         <?php
@@ -155,7 +155,7 @@ else{
               </div>
               <div class="col-sm-8">
                 <div class='input-group date' id=''>
-                   <input type='date' value="<?=$dataById->date?>"name="date"class="form-control" />
+                   <input type='date' value="<?=$dataById->date?>"name="transdate"class="form-control" />
                     <span class="input-group-addon">
                     <span ><i class="fa fa-calendar"></i></span>
                     </span>
@@ -170,7 +170,7 @@ else{
                 <label for="exampleInputEmail1">Notes  </label>
               </div>
               <div class="col-sm-9">
-               <textarea class="form-control" name="notes"><?=$dataById->notes?></textarea>
+               <textarea class="form-control" name="short_note"><?=$dataById->notes?></textarea>
               </div>
             </div>
           </div>
@@ -180,7 +180,7 @@ else{
                 <label for="exampleInputEmail1">Amount  <span class="text-danger">*</span></label>
               </div>
               <div class="col-sm-4">
-                  <input type="hidden" name="amount" value="<?=$dataById->amount?>">
+                  <input type="hidden" name="transfer_amount" value="<?=$dataById->amount?>">
                <input disabled type="number" class="form-control" value="<?=$dataById->amount?>"id="exampleInputEmail1" aria-describedby="emailHelp">
               </div>
             </div>
@@ -221,7 +221,7 @@ else{
                 <label for="exampleInputEmail1">Reference  </label>
               </div>
               <div class="col-sm-9">
-               <input type="text" value="<?=$dataById->reference?>" name="reference" value="" class="form-control" placeholder="e.g. Transection Id, Check No" name="estimate_hours" data-parsley-id="23">
+               <input type="text" value="<?=$dataById->reference?>" name="transferreference" value="" class="form-control" data-parsley-id="23">
               </div>
             </div>
           </div>

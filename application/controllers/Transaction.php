@@ -744,11 +744,7 @@ class Transaction extends MY_Controller {
 	public function UpdateTransferData()
 	{  
 	    $type='Transfer';
-	   // $total_balance=$this->input->post('account_total_balance');
-	   // $users_seesion_id=$this->input->post('users_idforTransaction'); 
-	    
 		$data = array();
-		// If file upload form submitted
 			if(!empty($_FILES['files']['name']))
 			{
 			   $filesCount = count($_FILES['files']['name']);
@@ -782,15 +778,14 @@ class Transaction extends MY_Controller {
 		        }
 	            $tranferFiles=implode(",",$attach);
 			    // $videos=implode(",",$images);
-			    if(!empty($uploadData))
-			    {
+			    
 			        // Insert files data into the database
 				$uploadDate=date("Y-m-d H:i:s");
 				$transId=$this->input->post('trans_id');
 	            $data = array(
-        	        	'from_account_id'=>$this->input->post('From_Account_id'),
-                        'to_account_id'=>$this->input->post('To_Account_id'),
-                        'date'=>$this->input->post('transferdate'),
+        	        	'from_account_id'=>$this->input->post('from_account'),
+                        'to_account_id'=>$this->input->post('to_account'),
+                        'date'=>$this->input->post('transdate'),
                         'notes'=>$this->input->post('short_note'),
                         'amount'=>$this->input->post('transfer_amount'),
                         'payment_methods_id'=>$this->input->post('payment_methods_id'),
@@ -801,33 +796,40 @@ class Transaction extends MY_Controller {
                         'type'=>$type,
                         'attachement'=>$tranferFiles,
                         );
-	       //	print_r($data);
-	        $results=$this->Transaction->UpdateTransferData($data,$transId);
-    	        	  switch ($results) 
-    				{
-    					case 0:$this->session->set_flashdata('msg','Error');
-    						break;
-    					case 1:$this->session->set_flashdata('msg','update Transfer Successfully');
-    						break;
-    					
-    					default:$this->session->set_flashdata('msg','Error');
-    						break;
-    				}
-    					redirect('Transaction/transfer');
-			    }
-	        
- 			else
- 			{
- 			    	die(json_encode(array('status' =>'2' ,'msg'=>'code error')));
- 			}
- 			// image if end
-		}
-		else
-		{
-		    	die(json_encode(array('status' =>'3' ,'msg'=>'Error Try Again ')));
-		}
-	
+	            
+	             }
+
+			else
+			{
+				$data = array(
+	    	        	'from_account_id'=>$this->input->post('from_account'),
+	                    'to_account_id'=>$this->input->post('to_account'),
+	                    'date'=>$this->input->post('transdate'),
+	                    'notes'=>$this->input->post('short_note'),
+	                    'amount'=>$this->input->post('transfer_amount'),
+	                    'payment_methods_id'=>$this->input->post('payment_methods_id'),
+	                    'reference'=>$this->input->post('transferreference'),
+	                    'permission'=>$this->input->post('permission'),
+	                    // 'added_by'=>$users_seesion_id,
+	                    // 'total_balance'=>$total_balance,
+	                    'type'=>$type
+	                    );
+			}
+			 $results=$this->Transaction->UpdateTransferData($data,$transId);
+        	  switch ($results) 
+			{
+				case 0:$this->session->set_flashdata('msg','Error');
+					break;
+				case 1:$this->session->set_flashdata('msg','update Transfer Successfully');
+					break;
+				
+				default:$this->session->set_flashdata('default','Error');
+					break;
+			}
+				redirect('Transaction/transfer');
+
 	}
+	  
 
 }
 ?>
