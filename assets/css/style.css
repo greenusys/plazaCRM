@@ -3380,3 +3380,6 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
   border-radius: 1rem;
 }
 .progress {cursor: progress;}
+.w_20{
+  width: 20px !important;
+}
