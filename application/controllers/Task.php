@@ -17,6 +17,23 @@ class Task extends MY_Controller {
 		$session=$this->session->userdata('logged_user');
 		$id=$session[0]->user_id;
 		$data['all_tasks']=$this->Tasks_Model->fetch_all_task(null);
+		$data['all_tasks']=$data['all_tasks'];
+		foreach ($data['all_tasks'] as $pr) {
+        	$pr=(array)$pr;
+        	$perm=$pr['permission'];
+        	$user=array();
+			if($perm=="all"){
+				$user[]="Everyone";
+			}
+			else{
+			$new=json_decode($perm);
+			foreach($new as $key => $value){
+				$user[]=$this->User_model->fetch_user_by_id($key);
+			 }
+			}
+		$task_data[]=array_merge($pr,array("assigned_to"=>$user));
+        }
+        $data['task_data']=$task_data;
 		$data['users']=$this->User_model->fetch_user();
       	$data['profile_info'] = $this->db->where('user_id', $id)->get('tbl_account_details')->row();
 
