@@ -40,7 +40,7 @@
                             <?php
                                 foreach($All_Transfer_Data as $ATD)
                                 {
-                                    //   print_r($ATD);
+                                     // print_r($ATD);
                                 ?>
                             <tr>
                                
@@ -52,7 +52,10 @@
                            
                                 <td>
                                     <div class="">
-                                     <a href="#" class="bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                     <a href="<?=base_url('Transaction/Edit_Transfer/').$ATD->transfer_id?>" class="bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+
+                                    
+
                                       <a href="javascript:void(0)" transactions_id="<?=$ATD->transfer_id?>" class="deletettransfertransaction"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
                                        <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
                                     </disessionv>

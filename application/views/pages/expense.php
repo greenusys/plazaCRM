@@ -114,8 +114,8 @@
                                 <?php
                                }
                                ?>
-                             
-                            <td><a href="">Download</a></td>
+                              
+                               <td ><a href=""  download>Download</a></td>
                            
                                 <td>
                                     <div class="">
@@ -124,7 +124,6 @@
                                       <a href="javascript:void(0)" transactions_id="<?=$AED->transactions_id?>" class="deletettransaction"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
                                        <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
                                     </div>
-
                                 </td>
                                
                             </tr>
@@ -1136,7 +1135,7 @@
                 var paymentmethod=response.data[0].method_name;
                 var notes=response.data[0].notes;
                 var trans_status=response.data[0].transaction_status;
-                var trans_image='<?=base_url("assets/uploads/expense/")?>'+response.data[0].attachement;
+                var trans_image='<?=base_url("./uploads/expense/")?>'+response.data[0].attachement;
                 // alert(paidby);
                  $("#reference").append(reference);
                 $("#transname").append(transaction_name);

@@ -265,6 +265,19 @@ class Payments_model extends MY_Model
     {
          return $this->db->get('tbl_payment_methods')->result();
     }
+    public function addPaymentsMethod($data)
+    {
+        if($this->db->insert('tbl_payment_methods',$data))
+        {
+            return 1;
+            
+        }
+        else
+        {
+            return 0;
+        }
+        
+    }
 
 
 }

@@ -1,7 +1,7 @@
 <!--   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script> -->
-<?php
+<!-- <?php
 if(count($Expense_DataById)>0)
 {
   $category_id=$Expense_DataById[0]->category_id;
@@ -12,7 +12,7 @@ else{
     $category_id="";
      
 }
-?>
+?> -->
              <div class="p-3">
             <div class="row bg-white mt-3">
                 <div class="col-md-2 ">
@@ -61,32 +61,19 @@ else{
           <div class="row mt-4">
             <div class="col-lg-12">
               <div class="card">
-               <!--  <div class="card-header">
-                  <h4>Budget vs Sales</h4>
-                </div> -->
-             <!--    <div class="card-body">
-                  <canvas id="myChart" height="158"></canvas>
-                </div> -->
-                <!--<ul class="nav nav-tabs nav-justified md-tabs indigo col-md-5" id="myTabJust" role="tablist">-->
-                 
-                <!--  <li class="nav-item active">-->
-                <!--    <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"-->
-                <!--      aria-selected="false"></a>-->
-                <!--  </li>-->
-                 
-                <!--</ul>-->
+             
                 <div class="tab-content card pt-5" id="myTabContentJust">
                   
                   <div class="tab-pane  px-4 show active" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
                       <div class="row">
         <div class="offset-1 col-sm-8 cl-md-8 col-lg-8">
-            <form action="<?=base_url('Transaction/UpdateExpenseData')?>"method="post"  enctype="multipart/form-data">
+            <form action="<?=base_url('Transaction/UpdateTransferData')?>"method="post"  enctype="multipart/form-data">
                 <?php
-                foreach($Expense_DataById as $dataById)
+                foreach($Transfer_DataById as $dataById)
                 {
-                    // print_r($dataById);
+                     // print_r($dataById);
                 ?>
-          <div class="form-group">
+         <!--  <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
                 <label for="exampleInputEmail1">Name/Title </label>
@@ -96,38 +83,71 @@ else{
                <input type="text" class="form-control" value="<?=$dataById->transname?>"name="expense_title"id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter name/Title For Personal Use">
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label for="exampleInputEmail1">Accounts <span class="text-danger">*</span> </label>
+                <label for="exampleInputEmail1">From Accounts <span class="text-danger">*</span> </label>
               </div>
               <div class="col-sm-8">
                 <div class="input-group">
+                  <input type="hidden" name="trans_id" value="<?=$dataById->transfer_id?>">
                     <input type="hidden" name="accountsss_id" value="<?=$dataById->account_id?>">
-                    <select  name="account_id" class="form-control" id="customer_group" disabled>
-                          <option  value="<?=$dataById->account_id?>"><?=$dataById->accountholdername?></option>
-                          <?php
-                          foreach($fetch_Account_Data as $AccData)
-                          {
-                         ?>
-                          
-                         <!--<option class="fetchusersbalance" users_balance="<?=$AccData->account_id?>" value="<?=$AccData->account_id?>"selected><?=$AccData->account_name ?></option>-->
-                          <?php   
-                          }
-                          ?>
-                      </select>
+                          <select disabled name="from_account_id" class="form-control" id="customer_group">
+                                        <option value="">Select Category</option>
+                                        <?php
+                                foreach($fetch_Account_Data as $AccData)
+                                  {
+                                      if($dataById->from_account_id==$AccData->account_id)
+                                      {
+                                         echo '<option value="'.$AccData->account_id.'" selected>'.$AccData->account_name.'</option>';
+                                      }
+                                      else
+                                      {
+                                           echo '<option value="'.$AccData->account_id.'">'.$AccData->account_name.'</option>';
+                                      }
+                                  }
+                                  ?>
+                                    </select>
                 </div>
               </div>
-              <div class="col-sm-1">
-                  <button type="button" id="acount" class="btn btn-light butn" title="New Accounts"><i class="fa fa-plus"></i></button>
-              </div>
+             
             </div>
           </div>
                          <?php
                            $usersdetail=$this->session->logged_user;
                            ?>
            <input type="hidden" name="users_idforTransaction" value="<?=$usersdetail[0]->user_id?>">
+              <div class="form-group">
+              <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">To Accounts <span class="text-danger">*</span> </label>
+              </div>
+              <div class="col-sm-8">
+                <div class="input-group">
+                    <input type="hidden" name="accountsss_id" value="<?=$dataById->account_id?>">
+                          <select disabled name="to_account_id" class="form-control" id="customer_group">
+                                        <option value="">Select Category</option>
+                                        <?php
+                                foreach($fetch_Account_Data as $AccData)
+                                  {
+                                      if($dataById->to_account_id==$AccData->account_id)
+                                      {
+                                         echo '<option value="'.$AccData->account_id.'" selected>'.$AccData->account_name.'</option>';
+                                      }
+                                      else
+                                      {
+                                           echo '<option value="'.$AccData->account_id.'">'.$AccData->account_name.'</option>';
+                                      }
+                                  }
+                                  ?>
+                                  ?>
+                                    </select>
+                </div>
+              </div>
+             
+            </div>
+          </div>
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
@@ -135,7 +155,7 @@ else{
               </div>
               <div class="col-sm-8">
                 <div class='input-group date' id=''>
-                   <input type='date' value="<?=$dataById->transactiondate?>"name="expensedate"class="form-control" />
+                   <input type='date' value="<?=$dataById->date?>"name="date"class="form-control" />
                     <span class="input-group-addon">
                     <span ><i class="fa fa-calendar"></i></span>
                     </span>
@@ -150,7 +170,7 @@ else{
                 <label for="exampleInputEmail1">Notes  </label>
               </div>
               <div class="col-sm-9">
-               <textarea class="form-control" name="short_note"><?=$dataById->notes?></textarea>
+               <textarea class="form-control" name="notes"><?=$dataById->notes?></textarea>
               </div>
             </div>
           </div>
@@ -160,71 +180,12 @@ else{
                 <label for="exampleInputEmail1">Amount  <span class="text-danger">*</span></label>
               </div>
               <div class="col-sm-4">
-                  <input type="hidden" name="expenseamount" value="<?=$dataById->amount?>">
+                  <input type="hidden" name="amount" value="<?=$dataById->amount?>">
                <input disabled type="number" class="form-control" value="<?=$dataById->amount?>"id="exampleInputEmail1" aria-describedby="emailHelp">
               </div>
             </div>
           </div>
-          <div class="form-group">
-              <div class="row">
-              <div class="col-sm-3">
-                <label for="exampleInputEmail1">Category</label>
-              </div>
-              <div class="col-sm-8">
-                <div class="input-group">
-                                    <select name="expenses_cat_id" class="form-control" id="customer_group">
-                                        <option value="">Select Category</option>
-                                        <?php
-                                foreach($fetch_Expenses_Category as $ExCatData)
-                                  {
-                                      if($dataById->category_id==$ExCatData->expense_category_id)
-                                      {
-                                         echo '<option value="'.$ExCatData->expense_category_id.'" selected>'.$ExCatData->expense_category.'</option>';
-                                      }
-                                      else
-                                      {
-                                           echo '<option value="'.$ExCatData->expense_category_id.'">'.$ExCatData ->expense_category.'</option>';
-                                      }
-                                  }
-                                  ?>
-                                    </select>
-                              </div>
-              </div>
-              <div class="col-sm-1">
-                  <button type="button" id="catgry" class="btn btn-light butn" title="New Category"><i class="fa fa-plus"></i></button>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-              <div class="row">
-              <div class="col-sm-3">
-                <label for="exampleInputEmail1">Paid By</label>
-              </div>
-              <div class="col-sm-8">
-                <div class="input-group">
-                       <select name="paid_by_id" class="form-control" id="customer_group">
-                        <option value="0">Select a Payer</option>
-                         <?php
-                          foreach($fetch_Client_Data as $ClientData)
-                          {
-                              if($dataById->paid_by==$ClientData->client_id)
-                              {
-                                   echo '<option value="'.$ClientData->client_id.'" selected>'.$ClientData->name.'</option>';
-                              }
-                              else
-                              {
-                                   echo '<option value="'.$ClientData->client_id.'">'.$ClientData->name.'</option>';
-                              }
-                          }
-                          ?>
-                    </select>
-                  </div>
-              </div>
-              <div class="col-sm-1">
-                  <button type="button" id="paid" class="btn btn-light butn" title="New Paid By"><i class="fa fa-plus"></i></button>
-              </div>
-            </div>
-          </div>
+
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
@@ -251,9 +212,7 @@ else{
                         </select>
                   </div>
               </div>
-              <div class="col-sm-1">
-                  <button type="button" id="paymnt" class="btn btn-light butn" title="New Payment Method"><i class="fa fa-plus"></i></button>
-              </div>
+             
             </div>
           </div>
           <div class="form-group">
@@ -262,7 +221,7 @@ else{
                 <label for="exampleInputEmail1">Reference  </label>
               </div>
               <div class="col-sm-9">
-               <input type="text" value="<?=$dataById->reference?>" name="expensereference" value="" class="form-control" placeholder="e.g. Transection Id, Check No" name="estimate_hours" data-parsley-id="23">
+               <input type="text" value="<?=$dataById->reference?>" name="reference" value="" class="form-control" placeholder="e.g. Transection Id, Check No" name="estimate_hours" data-parsley-id="23">
               </div>
             </div>
           </div>
@@ -282,7 +241,7 @@ else{
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label for="exampleInputEmail1">Expense Image  </label>
+                <label for="exampleInputEmail1">Tranfer Image  </label>
               </div>
               <div class="col-sm-9">
                <input type="hidden" name="image_string" id="image_string" value="<?=$dataById->attachement?>" class="form-control">
@@ -293,9 +252,9 @@ else{
                     {
                       ?>
                       <li>
-                        <img style="width:4em;height:4em;"src="<?php echo base_url().'./uploads/expense/'.$myImages[$i]?>" class="img-reponsive thumbnail ">
+                        <img style="width:4em;height:4em;"src="<?php echo base_url().'./uploads/transfer/'.$myImages[$i]?>" class="img-reponsive thumbnail ">
                      
-                       <a href="javascript:void(0)" img_id="<?=$i?>"  img_String="<?=$dataById->transactions_id?>" class=" deleteimage fa fa-times-circle"></a>
+                       <a href="javascript:void(0)" img_id="<?=$i?>"  img_String="<?=$dataById->transfer_id?>" class=" deleteimage fa fa-times-circle"></a>
                      </li>
                       <?php
                     
@@ -336,41 +295,7 @@ else{
               </div>
             </div>
           </div>
-          
-          <!--<div class="form-group"  id="dvPassport" style="display: none">-->
-          <!--    <div class="row">-->
-          <!--    <div class="col-sm-3">-->
-          <!--      <label for="exampleInputEmail1">select Users<span class="text-danger">*</span></label>-->
-          <!--    </div>-->
-              <!--<div class="col-sm-9">
-                 <input type="checkbox" name="vehicle1" value="Bike"  id="chkPassport1" onclick="ShowHideDiv(this)"> admin <strong class="badge btn-danger">Admin</strong>
-                 <br>
-                 <div class="row"  id="dvPassport1" style="display: none">
-                    <div class="col-md-3">
-                   <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> View
-                  </div>
-                  <div class="col-md-3">
-                       <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Edit
-                  </div>
-                  <div class="col-md-3">
-                      <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Delete
-                  </div>
-                 </div>
-                 
-                                 <input type="checkbox" name="vehicle2" value="Car"  id="chkPassport2" onclick="ShowHideDiv(this)" > adminko <strong class="badge btn-danger">Admin</strong>
-                 <br>
-                 <div class="row"  id="dvPassport2" style="display: none">
-                    <div class="col-md-3">
-                   <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> View
-                  </div>
-                  <div class="col-md-3">
-                       <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Edit
-                  </div>
-                  <div class="col-md-3">
-                      <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Delete
-                  </div>
-                 </div>
-              </div>--->
+        
             </div>
           </div>
          
@@ -387,7 +312,7 @@ else{
                   </div>
                   <div class="tab-pane fade show px-4" id="imp_project" role="tabpanel" aria-labelledby="import_project">
                       <div class="text-right dnld_sample"><button class="btn btn-primary"> <i class="fas fa-download"></i>Download Sample</div>
-                    <div class="row">
+                  <!--   <div class="row">
                       <div class="col-md-12 card p-4">
                           <div class="col-md-5 offset-md-1 mt-3">
                             <form action="/action_page.php">
@@ -467,7 +392,7 @@ else{
                             </form>   
                           </div>
                         </div>
-                      </div>
+                      </div> -->
               
 
                   </div>
@@ -477,7 +402,7 @@ else{
           </div>
         </section>
       </div>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content style" id="account" style="display: none">
           <div class="modal-header border-bottom-0">
@@ -915,7 +840,7 @@ else{
       </div>
       
     </div>
-  </div>
+  </div> -->
        <script type="text/javascript">
  $(document).ready(function(){
   $('.deleteimage').on('click',function(){
