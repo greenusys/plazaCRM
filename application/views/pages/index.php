@@ -763,7 +763,7 @@ $("#updater").submit(function(e){
             </div>
           </div>
         </div>
-           <div class="form-group dvPassport"  style="display: nodne">
+           <div class="form-group dvPassport"  style="display: none">
               <div class="row">
               <div class="col-sm-3">
                 <label for="exampleInputEmail1">select Users<span class="text-danger">*</span></label>
@@ -775,7 +775,7 @@ $("#updater").submit(function(e){
                    foreach ($users as $user) {
                    ?>
 
-                     <input type="checkbox" value="<?=$user['user_id']?>" class="chkPassport admindModal" ><?=$user['username']?><?php 
+                     <input type="checkbox" value="<?=$user['user_id']?>" class=" admindModal" ><?=$user['username']?><?php 
                      if ($user['role_id']==1) {
                        echo "<strong class='badge btn-danger'>Admin</strong>";
                      }
@@ -813,3 +813,22 @@ $("#updater").submit(function(e){
 
   </div>
 </div>
+<script type="text/javascript">
+    $(function () {
+        $(".chkPassport").click(function () {
+            if ($(this).is(":checked")) {
+                $(".dvPassport").show();
+            } else {
+                $(".dvPassport").hide();
+            }
+        });
+    });
+</script>
+
+<script>
+$(document).ready(function(){
+  $(".btn1").click(function(){
+    $(".dvPassport").hide();
+  });
+});
+</script>

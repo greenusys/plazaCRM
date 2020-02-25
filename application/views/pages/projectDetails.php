@@ -148,8 +148,8 @@
 							          <div class="col-md-6">
 									    <div class="form-group">
 							              <div class="row">
-							                <div class="offset-1 col-sm-4">
-							                  <label class="label-style">Project Name</label>
+							                <div class="offset-1 text-right col-sm-3">
+							                  <label class="label-style">Project Name :</label>
 							                </div>
 							                <div class="col-sm-7">
 							                     <label><?=$project_details->project_name?></label>
@@ -158,8 +158,8 @@
 							            </div>
 							            <div class="form-group">
 							              <div class="row">
-							                <div class="offset-2 col-sm-3">
-							                  <label class="label-style">Client </label>
+							                <div class="offset-1 text-right col-sm-3">
+							                  <label class="label-style">Client : </label>
 							                </div>
 							                <div class="col-sm-7">
 							                  <label class="label-style"><?=$project_details->name?> </label>
@@ -168,8 +168,8 @@
 							            </div>
 							            <div class="form-group">
 							              <div class="row">
-							                <div class="offset-1 col-sm-4">
-							                  <label class="label-style">Start Date</label>
+							                <div class="offset-1 col-sm-3 text-right">
+							                  <label class="label-style">Start Date :</label>
 							                </div>
 							                <div class="col-sm-7">
 							                   <label class="label-style"><?=$project_details->start_date?></label>
@@ -178,8 +178,8 @@
 							            </div>
 							            <div class="form-group">
 							              <div class="row">
-							                <div class="offset-1 col-sm-4">
-							                  <label class="label-style">Billing Type</label>
+							                <div class="offset-1 col-sm-3 text-right">
+							                  <label class="label-style">Billing Type :</label>
 							                </div>
 							                <div class="col-sm-7">
 							                   <label class="label-style"><?=$project_details->billing_type?></label>
@@ -188,8 +188,8 @@
 							            </div>
 							            <div class="form-group">
 							              <div class="row">
-							                <div class="offset-1 col-sm-4">
-							                  <label class="label-style">Demo Url </label>
+							                <div class="offset-1 col-sm-3 text-right">
+							                  <label class="label-style">Demo Url : </label>
 							                </div>
 							                <div class="col-sm-7">
 							                   <a href="#"><label class="label-style"><?=$project_details->demo_url?></label></a>
@@ -198,10 +198,10 @@
 							            </div>
 							            <div class="form-group">
 							              <div class="row">
-							                <div class="offset-1 col-sm-4">
-							                  <label class="label-style ml-3">Status</label>
+							                <div class="offset-1 col-sm-3 text-right">
+							                  <label class="label-style ml-3">Status :</label>
 							                </div>
-							                <div class="col-sm-7 d-flex">
+							                <div class="col-sm-5 d-flex">
 							                   <label class="bg-warning p-1 he  text-white" ><?=$project_details->project_status?></label>
 							                   <!-- <label class=" p-1 ml-3 top"><span class="bg-primary p-1 text-white"></span> -->
 							                   	   <select class=" form-control bg-success text-white" name="department">
@@ -233,8 +233,8 @@
 							            </div> -->
 							             <div class="form-group">
 							              <div class="row">
-							                <div class="offset-2 col-sm-3">
-							                  <label  class="label-style">End Date</label>
+							                <div class="offset-1 col-sm-3 text-right">
+							                  <label  class="label-style">End Date :</label>
 							                </div>
 							                <div class="col-sm-7">
 							                  <label  ><?=$project_details->end_date?></label>
@@ -243,8 +243,8 @@
 							            </div>
 							            <div class="form-group">
 							              <div class="row">
-							                <div class="offset-1 col-sm-4">
-							                  <label  class="label-style">Estimate Hours</label>
+							                <div class="offset-1 col-sm-3 text-right">
+							                  <label  class="label-style">Estimate Hours :</label>
 							                </div>
 							                <div class="col-sm-7">
 							                   <label  ><?=$project_details->estimate_hours?></label>
@@ -253,8 +253,8 @@
 							            </div>
 							            <div class="form-group">
 							              <div class="row">
-							                <div class="offset-1 col-sm-4">
-							                  <label  class="label-style ml-5">Budget </label>
+							                <div class="offset-1 col-sm-3 text-right">
+							                  <label  class="label-style ml-5">Budget :</label>
 							                </div>
 							                <div class="col-sm-7">
 							                   <label  >00</label>
