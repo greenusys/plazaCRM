@@ -40,7 +40,7 @@ class Projects extends MY_Controller {
 				$user[]=$this->User_model->fetch_user_by_id($key);
 			 }
 			}
-			$project_data[]=array_merge($pr,$user,$taskprogress);
+			$project_data[]=array_merge($pr,array("assigned_to"=>$user),$taskprogress);
 
 		}
        // die;

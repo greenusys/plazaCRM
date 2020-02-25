@@ -1,4 +1,4 @@
-<script>
+  <script>
     function openCity(evt, cityName) {
       console.log(evt);
       var i, tabcontent, tablinks;
@@ -342,25 +342,36 @@ $(document).ready(function(){
                                  </td>
                                 <td>
                                   <?php
-                                  $total = count((array)$pr);
-              // print_r($total);
-                                  if($total>8)
-                                  {
-                                    $total=$total-8;
-                                    for($i=0;$i<$total;$i++)
-                                    {
-                                      if($pr[$i]=="Everyone ")
-                                      {
-                                        echo "Everyone";
-                                      }
-                                      else{
-                                        // echo $pr[$i]->fullname;
-                                      }
-                                   }
+                                  if(count($pr['assigned_to'])>0){
+                                    foreach ($pr['assigned_to'] as $assigned_to) {
+                                      print_r($assigned_to);
+                                     echo '<img src="'.base_url().'" class="rounded-circle"> <a href="javascript:void(0)" id="open_modal"><i class="fa fa-plus" aria-hidden="true"></i></a>';
+                                    }
+                                  // print_r($pr['assigned_to']);
+                                  
+                                  }else{
+                                     echo '<a href="javascript:void(0)" id="open_modal"><i class="fa fa-plus" aria-hidden="true"></i></a>';
                                   }
-                                  else{
-                                    echo "Everyone";
-                                  }
+                                  // die(json_encode($pr));
+                                  // $total = count($pr);
+                                  // print_r($pr);
+                                  // if($total>8)
+                                  // {
+                                  //   $total=$total-8;
+                                  //   for($i=0;$i<$total;$i++)
+                                  //   {
+                                  //     if($pr[$i]=="Everyone ")
+                                  //     {
+                                  //       echo "Everyone";
+                                  //     }
+                                  //     else{
+                                  //       // echo $pr[$i]->fullname;
+                                  //     }
+                                  //  }
+                                  // }
+                                  // else{
+                                  //   echo "Everyone";
+                                  // }
                                   //print_r($pr[0]->fullname);
                                  
                                   ?>

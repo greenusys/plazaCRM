@@ -124,6 +124,27 @@ public function task_details($id=NULL)
 	 	$this->db->where(array('task_id' => $id));
  	 	$this->db->join('tbl_users','tbl_task.created_by=tbl_users.user_id');
         $data['task_details']= $this->db->get('tbl_task')->result();
+        print_r($data['task_details']);
+
+  //       $perm=$pr['permission'];
+  //       $project_id=$pr['project_id'];
+  //      // print_r($project_id.'<br>');
+
+  //       $taskprogress['taskprogress']=$this->counttaskprogress($project_id);
+  //      // print_r($taskprogress);
+  //      // die;
+       
+		// $user=array();
+		// if($perm=="all"){
+		// 	$user[]="Everyone";
+		// }
+		// else{
+		// $new=json_decode($perm);
+		// foreach($new as $key => $value){
+		// 	$user[]=$this->User_model->fetch_user_by_id($key);
+		//  }
+		// }
+		// $project_data[]=array_merge($pr,array("assigned_to"=>$user),$taskprogress);
 		$this->load->view('layout/header');
 		$this->load->view("pages/task_details",$data);
 		$this->load->view("layout/footer");
