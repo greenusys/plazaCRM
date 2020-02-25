@@ -122,11 +122,28 @@ class Task extends MY_Controller {
 public function task_details($id=NULL)
 	{
 	 	$this->db->where(array('task_id' => $id));
- 	 	$this->db->join('tbl_users','tbl_task.created_by=tbl_users.user_id');
-        $data['task_details']= $this->db->get('tbl_task')->result();
-        print_r($data['task_details']);
-
-  //       $perm=$pr['permission'];
+ 	 	// $this->db->join('tbl_users','tbl_task.created_by=tbl_users.user_id');
+        $data['task_details']= $this->db->get('tbl_task')->result_array();
+        // print_r($data['task_details']);
+        foreach ($data['task_details'] as $pr) {
+        	# code...
+        	echo $perm=$pr['permission'];
+        	$user=array();
+			if($perm=="all"){
+				$user[]="Everyone";
+			}
+			else{
+			$new=json_decode($perm);
+			foreach($new as $key => $value){
+				$user[]=$this->User_model->fetch_user_by_id($key);
+			 }
+			}
+		$task_data[]=array_merge($pr,array("assigned_to"=>$user));
+        }
+        $data['task_data']=$task_data;
+        // print_r($task_data);
+        // die;
+        
   //       $project_id=$pr['project_id'];
   //      // print_r($project_id.'<br>');
 
