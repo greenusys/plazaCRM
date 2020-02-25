@@ -390,30 +390,41 @@ font-size: 35px;
                                 <label class="col-md-4 text-right">Participants :</label>
                                 <div class="col-md-8">
                                 <?php
-                                
-                                foreach ($task_data as $newtask) 
-                               {
-                                  if($newtask['assigned_to'][0]=='Everyone')
-                                  {
-                                    ?>
+                                // print_r($task_data);
+                                // foreach ($task_data[0]['assigned_to'] as $user_Data) 
+                                //  {
+                                  // print_r($user_Data);
+                                  if(count($task_data[0]['assigned_to'])>0){
+                                    foreach ($task_data[0]['assigned_to'] as $user) {
+                                      if ($user=="Everyone") {
+                                        echo "Everyone";
+                                      }else{
+                                          echo '<img src="'.base_url().$user->avatar.'"  width="20px" class="rounded-circle" alt="'.$user->fullname.'"  title ="'.$user->fullname.'">';
+                                      }
+                                    }
                                   
-                                    <span class=""><strong>Everyone <i class="fas fa-question-circle"></i></strong> &nbsp; &nbsp;<strong data-toggle="modal" data-target="#participantModal" class="text-primary">
-                                    <!--   <i class="fas fa-plus"></i> -->
-                                    </strong></span>
+                                  }
+                                    // if($newtask['assigned_to'][0]=='Everyone')
+                                    // {
+                                      ?>
+                                    
+                                     <!--  <span class=""><strong>Everyone <i class="fas fa-question-circle"></i></strong> &nbsp; &nbsp;<strong data-toggle="modal" data-target="#participantModal" class="text-primary"> -->
+                                      <!--   <i class="fas fa-plus"></i> -->
+                                      <!-- </strong></span> -->
+                                   
+                                    <?php
+                                  // }
+                                  // else
+                                  // {
                                  
+                                    //print_r($newtask['assigned_to'][0]);
+                                    ?>
+                                    <!-- <span class=""><strong><?=$newtask['assigned_to'][0]->avatar?> <i class="fas fa-question-circle"></i></strong> &nbsp; &nbsp;<strong data-toggle="modal" data-target="#participantModal" class="text-primary"> -->
+                                    <!--   <i class="fas fa-plus"></i> -->
+                                    <!-- </strong></span> -->
                                   <?php
-                                }
-                                else
-                                {
-                               
-                                  //print_r($newtask['assigned_to'][0]);
-                                  ?>
-                                  <span class=""><strong><?=$newtask['assigned_to'][0]->avatar?> <i class="fas fa-question-circle"></i></strong> &nbsp; &nbsp;<strong data-toggle="modal" data-target="#participantModal" class="text-primary">
-                                  <!--   <i class="fas fa-plus"></i> -->
-                                  </strong></span>
-                                <?php
-                                }
-                              }
+                                  // }
+                                // }
 
                               ?>
                                </div>
