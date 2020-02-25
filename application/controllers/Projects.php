@@ -13,43 +13,63 @@ class Projects extends MY_Controller {
 		$this->load->model('Notification_model');
 		}
 		
-	public function index()
+	public function index($id=null)
 	{
 		//echo 'Projects';
-		$data['clients']=$this->Client_Model->getClients();
-		$data['users']=$this->User_model->fetch_user();
-		$data['settings']=$this->Projects_Model->fetch_settings();
-		$projects=$this->Projects_Model->fetch_projects();
+        if($id!=""){
 
-		foreach ($projects as $pr) {
-			$perm=$pr['permission'];
-            $project_id=$pr['project_id'];
-           // print_r($project_id.'<br>');
+            $data['particular_project_Detail']=$this->db->where('project_id',$id)->get('tbl_project')->result();
+            $data['hide_all']=true;
+            // print_r($data['particular_project_Detail']);
+        }else{
+             $data['hide_all']=false;
+    		$data['clients']=$this->Client_Model->getClients();
+    		$data['users']=$this->User_model->fetch_user();
+    		$data['settings']=$this->Projects_Model->fetch_settings();
+    		$projects=$this->Projects_Model->fetch_projects();
 
-            $taskprogress['taskprogress']=$this->counttaskprogress($project_id);
-           // print_r($taskprogress);
+    		foreach ($projects as $pr) {
+    			$perm=$pr['permission'];
+                $project_id=$pr['project_id'];
+               // print_r($project_id.'<br>');
+
+                $taskprogress['taskprogress']=$this->counttaskprogress($project_id);
+               // print_r($taskprogress);
+               // die;
+               
+    			$user=array();
+    			if($perm=="all"){
+    				$user[]="Everyone";
+    			}
+    			else{
+    			$new=json_decode($perm);
+    			foreach($new as $key => $value){
+    				$user[]=$this->User_model->fetch_user_by_id($key);
+    			 }
+    			}
+    			$project_data[]=array_merge($pr,array("assigned_to"=>$user),$taskprogress);
+
+    		}
+            // print_r($project_data);
            // die;
-           
-			$user=array();
-			if($perm=="all"){
-				$user[]="Everyone";
-			}
-			else{
-			$new=json_decode($perm);
-			foreach($new as $key => $value){
-				$user[]=$this->User_model->fetch_user_by_id($key);
-			 }
-			}
-			$project_data[]=array_merge($pr,array("assigned_to"=>$user),$taskprogress);
-
-		}
-       // die;
-		$data['project']=$project_data;
-      //  $data['taskprogress']=$taskprogress;
-		$this->load->view('layout/header');
-		$this->load->view("pages/projects",$data);
-		$this->load->view("layout/footer");
+    		$data['project']=$project_data;
+          //  $data['taskprogress']=$taskprogress;
+    		
+        }
+        $this->load->view('layout/header');
+        $this->load->view("pages/projects",$data);
+        $this->load->view("layout/footer");
 	}
+    public function editProject($id){
+        $data['particular_project_Detail']=$this->db->where('project_id',$id)->get('tbl_project')->result();
+        $data['clients']=$this->Client_Model->getClients();
+        $data['users']=$this->User_model->fetch_user();
+        $data['settings']=$this->Projects_Model->fetch_settings();
+        $projects=$this->Projects_Model->fetch_projects();
+        $this->load->view('layout/header');
+        $this->load->view("pages/editProject",$data);
+        $this->load->view("layout/footer");
+    }
     public function counttaskprogress($project_id=NULL)
     {
 
