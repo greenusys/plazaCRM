@@ -348,18 +348,22 @@
                       <thead class="">
                        <tr>
                           <th></th>
+                         
                          <th>What To Do</th>
                          <th>Status</th>
                          <th>End Date</th>
+                         <th></th>
                        </tr>
                       </thead>
             
                     <tbody>
                       <?php
+                     // print_r($to_do);
                       foreach ($to_do as $todo) {
                       ?>
                         <tr>
                             <td class="sorter"></td>
+                       
                             <td><?=$todo->title?></td>
                             <td><?php
                             if ($todo->status==1) {
@@ -373,6 +377,11 @@
                             }
                             ?></td>
                             <td><?=$todo->due_date?></td>
+                            <td>
+                              
+                              <button class="btn btn-danger ml-2 p-1 deleter" todo_id="<?=$todo->todo_id?>"><i class="far fa-trash-alt"></i></button>
+                              
+                            </td>
                         </tr>
                       <?php } ?>
                         <!--  <tr>
@@ -409,6 +418,45 @@
                   </table>
                 </div>
               </div>
+<script type="text/javascript">
+  $(document).on("click",".edit_todo",function(){
+    $("#addTodoModal").modal('show');
+  })
+
+    $(document).on('click','.deleter',function(){
+         var todo_id=$(this).attr('todo_id');
+           swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover!",
+                icon: "warning",
+                buttons: [
+                  'No, cancel it!',
+                  'Yes, I am sure!'
+                ],
+                dangerMode: true,
+              }).then(function(isConfirm) {
+                if (isConfirm) {
+                  $.ajax({
+                    type:'POST',
+                    data:{
+                      todo_id:todo_id
+                    },
+                    url:'<?=base_url()?>User/delete_todo',
+                    success:function(response){
+                      if (response==1) {
+                        swal('Deleted','To Do List Removed','success');
+                        location.reload();
+                      }
+                      else{
+                        swal('OOPS','Something Went Wrong','warning');
+                      }
+                    }
+                  })
+                }
+              })
+     })
+</script>
+
               <!-----------todo add modal----------->
 <div class="modal fade" id="addTodoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -563,6 +611,9 @@
 </script>
     <script>
 $(document).ready(function(){
+   
+
+
   // document.addEventListener('DOMContentLoaded', function() {
     var d = new Date();
 
