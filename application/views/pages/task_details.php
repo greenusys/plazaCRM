@@ -274,9 +274,7 @@ font-size: 35px;
         <div class="col-md-12">
             <div class="tab-content">
                 <!----------Task Details------->
-                <?php
-                    print_r($task_data);
-                ?>
+               
                 <?php foreach ($task_data as $task) {
                  ?>
                 <div class="tab-pane active" id="details">
@@ -391,8 +389,34 @@ font-size: 35px;
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Participants :</label>
                                 <div class="col-md-8">
-                                  <span class=""><strong>Everyone <i class="fas fa-question-circle"></i></strong> &nbsp; &nbsp;<strong data-toggle="modal" data-target="#participantModal" class="text-primary"><i class="fas fa-plus"></i></strong></span>
-                                </div>
+                                <?php
+                                
+                                foreach ($task_data as $newtask) 
+                               {
+                                  if($newtask['assigned_to'][0]=='Everyone')
+                                  {
+                                    ?>
+                                  
+                                    <span class=""><strong>Everyone <i class="fas fa-question-circle"></i></strong> &nbsp; &nbsp;<strong data-toggle="modal" data-target="#participantModal" class="text-primary">
+                                    <!--   <i class="fas fa-plus"></i> -->
+                                    </strong></span>
+                                 
+                                  <?php
+                                }
+                                else
+                                {
+                               
+                                  //print_r($newtask['assigned_to'][0]);
+                                  ?>
+                                  <span class=""><strong><?=$newtask['assigned_to'][0]->avatar?> <i class="fas fa-question-circle"></i></strong> &nbsp; &nbsp;<strong data-toggle="modal" data-target="#participantModal" class="text-primary">
+                                  <!--   <i class="fas fa-plus"></i> -->
+                                  </strong></span>
+                                <?php
+                                }
+                              }
+
+                              ?>
+                               </div>
                               </div>
                             
                             </div>
