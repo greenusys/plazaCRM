@@ -121,14 +121,23 @@
 							<th>Invoice Date</th>
 							<th>Due Date</th>
 							<th>Client Name</th>
-							<th>Due Amount</th>
 						   	<th>Status </th>
 							<th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                           
-                          
+                        	<?php
+                        	foreach ($fetch_invoices as $invoicer) {
+                        	?>
+                           <tr>
+                           	<td><?=$invoicer->reference_no?></td>
+                       		<td><?=$invoicer->invoice_date?></td>
+                           	<td><?=$invoicer->due_date?></td>
+                           	<td><?=$invoicer->name?></td>
+                           	<td><?=$invoicer->status?></td>
+                           	<td>Action</td>
+                           </tr>
+                             <?php }?>
                         </tbody>
                         <!--<tfoot>-->
                         <!--   <tr>-->
@@ -146,7 +155,7 @@
 			</div>
 
 			<div id="Create" class="tabcontent">
-				<form>
+				<form id="update_invoice">
 			        <div class="row mt-3">
 				        <div class="col-md-7 straight">
 					        <div class="form-group">
@@ -155,13 +164,34 @@
 										<label for="exampleInputEmail1" class=" label-style">Ref No  <span class="text-danger">*</span></label>
 									</div>
 									<div class="col-sm-7">
-										<input type="text" class="form-control" id="designation" aria-describedby="emailHelp" placeholder="INV-2020-Feb-18-0001">
+										<input type="text" class="form-control" name="reference_no" id="designation" aria-describedby="emailHelp" placeholder="">
 									</div>
 									<div class="col-sm-2">
 										<label class="bg-info p-1 text-white" id="recur">Recurring</label>
 									</div>
 								</div>
 							</div>
+<script>
+	$(document).ready(function(){
+		$('#moredata').hide();
+	  $("#recur").click(function(){
+
+		var attr = $('.check_recur_frequency').attr('name');
+		if (typeof attr !== typeof undefined && attr !== false) {
+		    $('.check_recur_frequency').removeAttr("name");
+		    $('.check_recur_start_date').removeAttr("name");
+		    $('.check_recur_end_date').removeAttr("name");
+		}
+		else{
+			$('.check_recur_frequency').attr('name','recur_frequency');
+		    $('.check_recur_start_date').attr('name','recur_start_date');
+		    $('.check_recur_end_date').attr('name','recur_end_date');
+		}
+	    $("#moredata").toggle();
+	  });
+	 
+	});
+</script>
 							<div id="moredata">
 								<div class="form-group">
 									<div class="row">
@@ -169,7 +199,7 @@
 											<label for="exampleInputEmail1" class="ml-4 label-style">Recur Every </label>
 										</div>
 										<div class="col-sm-5">
-											<select class=" form-control" name="department">
+											<select class="form-control check_recur_frequency">
 												<option value="none">None</option>
 												<option value="7D">Week</option>
 												<option value="1M">Month</option>
@@ -188,10 +218,10 @@
 											<label for="exampleInputEmail1" class="label-style ml-4">Start Date</label>
 										</div>
 										<div class="col-sm-6">
-											<input type="text" id="datepicker" placeholder="" class="form-control">
+											<input type="text" id="datepicker" placeholder="" class="form-control check_recur_start_date">
 										</div>
 										<div class="col-sm-1">
-											<button type="button" id="acount" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
+											<span type="button" id="acount" class="btn btn-light butn"><i class="fa fa-calendar"></i></span>
 										</div>
 									</div>
 								</div>
@@ -202,10 +232,10 @@
 											<label for="exampleInputEmail1" class="label-style ml-4">End Date </label>
 										</div>
 										<div class="col-sm-6">
-											<input type="text" id="datepicker1" placeholder="" class="form-control">
+											<input type="text" id="datepicker1" placeholder="" class="form-control check_recur_end_date">
 										</div>
 										<div class="col-sm-1">
-											<button type="button" id="acount" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
+											<span type="button" id="acount" class="btn btn-light butn"><i class="fa fa-calendar"></i></span>
 										</div>
 									</div>
 								</div>
@@ -230,42 +260,15 @@
 									</div>
 								</div>
 							</div>
-<script>
-$(document).on('change','#client_main_id',function(){
-	var client_id = $(this).val();
-	$.ajax({
-		type:'POST',
-		data:{
-			client_id:client_id
-		},
-		url:'<?=base_url()?>Sales/fetch_project',
-		success:function(response){
-			var response = JSON.parse(response);
-			var html='';
-			html+='<option value="" selected="" disabled="">Select Project</option>';
-			if (response.status==1) {
-				for(var i=0;i<response.data.length;i++){
-				html+='<option value="'+response.data[i].project_id+'">'+response.data[i].project_name+'</option>';
-				}
-			  $('#project_main_id').empty();
-			  $('#project_main_id').append(html);
-			}
-			else{
-			  $('#project_main_id').empty();
-			  $('#project_main_id').append(html);
-			}
-		}
-	})
-})	
-</script>
+
 				<div class="form-group">
 								<div class="row">
 									<div class=" col-sm-3">
 										<label for="exampleInputEmail1" class="ml-5 label-style">Projects </label>
 									</div>
 									<div class="col-sm-7">
-										<select class=" form-control" name="department" id="project_main_id">
-											<option value="high">None</option>
+										<select class=" form-control" name="project_id" id="project_main_id">
+											<option >None</option>
 										</select>
 									</div>
 								</div>
@@ -276,10 +279,10 @@ $(document).on('change','#client_main_id',function(){
 											<label for="exampleInputEmail1" class="label-style ml-4">Invoice Date</label>
 										</div>
 										<div class="col-sm-6">
-											<input type="text" id="datepicker2" placeholder="" class="form-control">
+											<input type="text" id="datepicker2" name="invoice_date" placeholder="" class="form-control">
 										</div>
 										<div class="col-sm-1">
-											<button type="button" id="acount" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
+											<span type="button" id="acount" class="btn btn-light butn"><i class="fa fa-calendar"></i></span>
 										</div>
 									</div>
 								</div>
@@ -290,10 +293,10 @@ $(document).on('change','#client_main_id',function(){
 											<label for="exampleInputEmail1" class="label-style ml-5">Due Date </label>
 										</div>
 										<div class="col-sm-6">
-											<input type="text" id="datepicker3" placeholder="" class="form-control">
+											<input type="text" id="datepicker3" name="due_date" placeholder="" class="form-control">
 										</div>
 										<div class="col-sm-1">
-											<button type="button" id="acount" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
+											<span type="button" id="acount" class="btn btn-light butn"><i class="fa fa-calendar"></i></span>
 										</div>
 									</div>
 								</div>
@@ -304,11 +307,10 @@ $(document).on('change','#client_main_id',function(){
 										<label for="exampleInputEmail1"  id="d_type" class="label-style ml-3">Discount Type</label>
 									</div>
 									<div class="col-sm-7">
-										<select class=" form-control disType" name="department">
-											<option selected="" value="no_discount">No Discount</option>
-											<option value="before_tax">Before Tax</option>
-											<option value="after_tax">After Tax</option>
-											
+										<select class=" form-control disType" name="discount_type">
+											<option selected="" value="">No Discount</option>
+											<option value="1">Before Tax</option>
+											<option value="2">After Tax</option>
 										</select>
 									</div>
 								</div>
@@ -387,59 +389,6 @@ $(document).ready(function(){
               </div>
             </div>
           </div>
-
-<!-- 							<div class="form-group">
-								<div class="row">
-									<div class=" col-sm-3">
-										<label for="exampleInputEmail1" class=" label-style ml-4">Permission<span class="text-danger">*</span></label>
-									</div>
-									<div class="col-sm-7">
-									
-										<div class="checkbox c-radio needsclick ">
-											<input type="radio" name="gender" value="male" class="btn1"> Everyone<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
-										</div>
-										<div class="checkbox c-radio needsclick">
-											<input type="radio" name="gender" value="male" id="chkPassport" onclick="ShowHideDiv(this)" > Customise Permission<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
-										</div>
-									</div>
-								</div>
-						    </div> -->
-<!-- 							<div class="form-group"  id="dvPassport" style="display: none">
-						        <div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1" class="label-style ml-3">select Users<span class="text-danger">*</span></label>
-									</div>
-									<div class="col-sm-8">
-										 <input type="checkbox" name="vehicle1" value="Bike"  id="chkPassport1" onclick="ShowHideDiv(this)"> admin <strong class="badge btn-danger">Admin</strong>
-										 <br>
-										 <div class="row"  id="dvPassport1" style="display: none">
-										    <div class="col-md-3">
-											 <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> View
-											</div>
-											<div class="col-md-3">
-											     <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Edit
-											</div>
-											<div class="col-md-3">
-											    <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Delete
-											</div>
-										 </div>
-										 
-		                                 <input type="checkbox" name="vehicle2" value="Car"  id="chkPassport2" onclick="ShowHideDiv(this)" > adminko <strong class="badge btn-danger">Admin</strong>
-										 <br>
-										 <div class="row"  id="dvPassport2" style="display: none">
-										    <div class="col-md-3">
-											 <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> View
-											</div>
-											<div class="col-md-3">
-											     <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Edit
-											</div>
-											<div class="col-md-3">
-											    <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Delete
-											</div>
-										 </div>
-									</div>
-							    </div>
-						    </div> -->
 						</div>
 						<div class=" col-sm-5">
 							<div class="form-group">
@@ -448,7 +397,7 @@ $(document).ready(function(){
 										<label for="exampleInputEmail1" class="label-style ml-4 ">Sales Agent</label>
 									</div>
 									<div class="col-sm-7">
-										<select class=" form-control" name="department">
+										<select class=" form-control" name="user_id">
 											<option value="" selected="" disabled="">Select Sales Agent</option>
 											<?php
 											foreach ($users as $user) {
@@ -459,97 +408,6 @@ $(document).ready(function(){
 									</div>
 								</div>
 							</div>
-<!-- 							<div class="form-group">
-								<div class="row">
-									<div class="offset-1 col-sm-4">
-										<label for="exampleInputEmail1" class="label-style ml-4">Allow Paypal</label>
-									</div>
-									<div class="col-sm-7">
-										<label class="small-box">
-										   <input type="checkbox">
-										   <span class="checkmark"></span>
-										</label>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="row">
-									<div class="offset-1 col-sm-4">
-										<label for="exampleInputEmail1" class="label-style ml-4">Allow Stripe</label>
-									</div>
-									<div class="col-sm-7">
-										<label class="small-box">
-										   <input type="checkbox">
-										   <span class="checkmark"></span>
-										</label>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-5">
-										<label for="exampleInputEmail1" class="label-style ml-3">Allow Authorize.net</label>
-									</div>
-									<div class="col-sm-7">
-										<label class="small-box">
-										   <input type="checkbox">
-										   <span class="checkmark"></span>
-										</label>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="row">
-									<div class="offset-1 col-sm-4">
-										<label for="exampleInputEmail1" class="label-style">Allow CCAvenue</label>
-									</div>
-									<div class="col-sm-7">
-										<label class="small-box">
-										   <input type="checkbox">
-										   <span class="checkmark"></span>
-										</label>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="row">
-									<div class="offset-1 col-sm-4">
-										<label for="exampleInputEmail1" class="label-style ml-2">Allow Braintree</label>
-									</div>
-									<div class="col-sm-7">
-										<label class="small-box">
-										   <input type="checkbox">
-										   <span class="checkmark"></span>
-										</label>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="row">
-									<div class="offset-1 col-sm-4">
-										<label for="exampleInputEmail1" class="label-style ml-4">Allow Mollie</label>
-									</div>
-									<div class="col-sm-7">
-										<label class="small-box">
-										   <input type="checkbox">
-										   <span class="checkmark"></span>
-										</label>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-5">
-										<label for="exampleInputEmail1" class="label-style ml-4">Allow PayUmoney</label>
-									</div>
-									<div class="col-sm-7">
-										<label class="small-box">
-										   <input type="checkbox">
-										   <span class="checkmark"></span>
-										</label>
-									</div>
-								</div>
-							</div> -->
 						</div>
 				    </div>
 				    <div class="row mt-3">
@@ -560,11 +418,11 @@ $(document).ready(function(){
 										<label for="exampleInputEmail1" class=" label-style ml-4">Notes</label>
 									</div>
 									<div class="col-sm-10">
-										<textarea name="remarks" id="reset1" cols="100" rows="1" >
+										<textarea id="editor1" cols="100" rows="1" >
 						  							
 										</textarea>
 										<script>
-										   CKEDITOR.replace('reset1');
+										   CKEDITOR.replace('editor1');
 										</script>
 									</div>
 								</div>
@@ -572,7 +430,7 @@ $(document).ready(function(){
 						</div>
 				    </div>
 				    <div class="row">
-				    	<div class="col-sm-4">
+<!-- 				    	<div class="col-sm-4">
 				    		<div class="form-group">
 								<div class="row">
 									<div class="col-sm-12">
@@ -582,7 +440,7 @@ $(document).ready(function(){
 									</div>
 								</div>
 							</div>
-				    	</div>
+				    	</div> -->
                         <div class="offset-2 col-sm-6">
                         	<div class="form-group">
 								<div class="row">
@@ -592,15 +450,15 @@ $(document).ready(function(){
 									<div class="col-sm-9">
 										<div class="example d-flex">
 										    <label class="container1">Qty
-												<input type="radio" checked="checked" name="radio">
+												<input type="radio" checked="checked" head="Qty" class="quant" value="qty" name="show_quantity_as">
 												<span class="checkmark1"></span>
 											</label>
 											<label class="container1 ml-5">Hours
-											   <input type="radio" name="radio">
+											   <input type="radio" name="show_quantity_as" class="quant" head="Hours" value="hours">
 											   <span class="checkmark1"></span>
 											</label>
 											<label class="container1 ml-5">Qty/hours
-											   <input type="radio" name="radio">
+											   <input type="radio" name="show_quantity_as" class="quant" head="Qty/Hours" value="qty_hours">
 											   <span class="checkmark1"></span>
 											</label>
 										</div>
@@ -609,13 +467,19 @@ $(document).ready(function(){
 							</div>
 				    	</div>
 				    </div>
+<script type="text/javascript">
+	$(document).on('change','.quant',function(){
+		var quant=$('input[name="show_quantity_as"]:checked').attr('head');
+		$('.table_qty').html(quant);
+	})
+</script>
 				    <div class="row">
-				    	<table class="table ">
+				    	<table class="table " id="mytable">
 							<thead>
 								<tr class="text-center">
 									<th>Item Name</th>
 									<th>Description</th>
-									<th>Qty</th>
+									<th class="table_qty">Qty</th>
 									<th>Price</th>
 									<th>Tax Rate</th>
 								   	<th>Total</th>
@@ -638,15 +502,15 @@ $(document).ready(function(){
 										<input type="text" class="form-control item_prc p-1" placeholder="Price">
 									</td>
 									<td>
-										<select class=" form-control" name="department">
+										<select class=" form-control">
 											<option value="minor">NO Tax</option>
 										</select>
 									</td>
 									<td class="total_prc text-center"></td>
 									<td >
-									   <button type="button" class="btn btn-info small-box" id="add">
+									   <span type="button" class="btn btn-info small-box" id="add">
 										  <i class="fas fa-check"></i>
-										</button> 
+										</span> 
 									</td>
 								</tr>
 							
@@ -665,7 +529,7 @@ $(document).ready(function(){
 									<td></td>
 									<td></td>
 								    <td >Discount (%)</td>
-									<td ><input type="text" class="form-control discount" placeholder="0"></td>
+									<td ><input type="text" class="form-control discount" name="discount_percent" placeholder="0"></td>
 									<td>- <span class="dis_tt">0.00</span></td>
 								</tr>
 								<tr>
@@ -693,16 +557,19 @@ $(document).ready(function(){
 											
 				    <div class="row mt-5">
 		               <div class="offset-6 col-sm-6">
-		                 <button type="submit" class="btn btn-primary ">Save as Draft</button>
+		                 <!-- <button type="submit" class="btn btn-primary ">Save as Draft</button> -->
 		                  <button type="submit" class="btn btn-success ">Update</button>
 		               </div>
 		            </div>
 		        </form>
+<!-- 		        <button class="btn btn-primary checker">Checker</button> -->
 			</div>
 		</div> 
 	</div>
 	
 <script>
+
+
 	$(document).ready(function(){
 $(document).on("click","body",function(){
 	$(".qty_amt").each(function() {
@@ -717,30 +584,30 @@ $(document).on("click","body",function(){
 
 	  $("#add").click(function(){
 	   // $("#data").show();
-	     html=' <tr>'+
+	     html=' <tr class="main_row">'+
 				'<td>'+
-						'<textarea cols="30" rows="2" class="text-center">Item Name</textarea>'+
+						'<textarea cols="30" rows="2" class="text-center item_name" placeholder="Item Name"></textarea>'+
 					'</td>'+
 					'<td>'+
-						'<textarea cols="30" rows="2" class="text-center">Description</textarea>'+
+						'<textarea cols="30" rows="2" class="text-center description" placeholder="Description"></textarea>'+
 					'</td>'+
 					'<td>'+
-						'<input type="text" class="form-control qty_amt p-1" value="1">'+
-						'<span><input type="text" name="" class="border-0 p-1" placeholder="Unit Type"></span>'+
+						'<input type="text" class="form-control qty_amt p-1 quantity_table" value="1">'+
+						'<span><input type="text" class="border-0 p-1 unit" placeholder="Unit Type"></span>'+
 					'</td>'+
 					'<td class="">'+
 						'<input type="text" class="form-control item_prc p-1" placeholder="Price">'+
 					'</td>'+
 					'<td>'+
-						'<select class=" form-control" name="department">'+
+						'<select class=" form-control">'+
 							'<option value="minor">NO Tax</option>'+
 						'</select>'+
 					'</td>'+
 					'<td class="total_prc"></td>'+
 					'<td >'+
-					   '<button type="button" class="btn btn-danger small-box del_row">'+
+					   '<span type="button" class="btn btn-danger small-box del_row">'+
 						  '<i class="far fa-trash-alt"></i>'+
-						'</button> '+
+						'</span> '+
 					'</td>'+
 				'</tr>';
 			//$("#apnd_table").append(html);
@@ -795,330 +662,124 @@ $(document).on("click","body",function(){
 	});
 </script>
 
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content style">
-			    <div class="modal-header border-bottom-0">
-				    <h5 class="modal-title" id="exampleModalLabel">Client list</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					  <span aria-hidden="true">&times;</span>
-					</button>
-			    </div>
-			    <div class="line"></div>
-				<div class="modal-body">
-					<div class="card">
-						<div class="tab">
-						    <div class="container tabsb ">
-								<button class="tablinks" onclick="openCity(event, 'general')">General</button>
-								<button class="tablinks" onclick="openCity(event, 'contact')">Contact Details</button>
-								<button class="tablinks" onclick="openCity(event, 'web')">Web</button>
-								<button class="tablinks" onclick="openCity(event, 'host')">Hosting</button>
-							</div>
-						</div>
-						<div id="general" class="tabcontent">
-						    <form>
-						    <div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Company Name <span class="text-danger">*</span> </label>
-									</div>
-									<div class="col-sm-9">
-										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-									</div>
-								</div>
-					        </div>
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Company Email <span class="text-danger">*</span> </label>
-									</div>
-									<div class="col-sm-9">
-										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-									</div>
-								</div>
-					        </div>
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Company VAT </label>
-									</div>
-									<div class="col-sm-9">
-										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-									</div>
-								</div>
-					        </div>
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Customer Group  </label>
-									</div>
-									<div class="col-sm-9">
-										<div class="input-group">
-											<select name="client_id" class="form-control select_box select2-hidden-accessible" style="width: 100%" required="" data-parsley-id="6" tabindex="-1" aria-hidden="true">
-												<option value=""></option>
-											</select>
-										</div>
-									</div>
-								</div>
-					        </div>
-					        <div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Language  </label>
-									</div>
-									<div class="col-sm-9">
-										<div class="input-group">
-											<select name="client_id" class="form-control select_box select2-hidden-accessible" style="width: 100%" required="" data-parsley-id="6" tabindex="-1" aria-hidden="true">
-												<option value=""></option>
-											</select>
-										</div>
-									</div>
-								</div>
-					        </div>
-					        <div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Currency </label>
-									</div>
-									<div class="col-sm-9">
-										<div class="input-group">
-											<select name="client_id" class="form-control select_box select2-hidden-accessible" style="width: 100%" required="" data-parsley-id="6" tabindex="-1" aria-hidden="true">
-												<option value=""></option>
-											</select>
-										</div>
-									</div>
-								</div>
-					        </div>
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Short Note  </label>
-									</div>
-									<div class="col-sm-9">
-										<textarea class="form-control" name="short_note"></textarea>
-									</div>
-								</div>
-					        </div>
-							</form>
-						</div>
+	<script>
+$(document).on('change','#client_main_id',function(){
+	var client_id = $(this).val();
+	$.ajax({
+		type:'POST',
+		data:{
+			client_id:client_id
+		},
+		url:'<?=base_url()?>Sales/fetch_project',
+		success:function(response){
+			var response = JSON.parse(response);
+			var html='';
+			html+='<option value="" selected="" disabled="">Select Project</option>';
+			if (response.status==1) {
+				for(var i=0;i<response.data.length;i++){
+				html+='<option value="'+response.data[i].project_id+'">'+response.data[i].project_name+'</option>';
+				}
+			  $('#project_main_id').empty();
+			  $('#project_main_id').append(html);
+			}
+			else{
+			  $('#project_main_id').empty();
+			  $('#project_main_id').append(html);
+			}
+		}
+	})
+})	
+</script>
 
-						<div id="contact" class="tabcontent">
-						  <form>
-						  <div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Company Phone</label>
-									</div>
-									<div class="col-sm-9">
-										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-									</div>
-								</div>
-					        </div>
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Company Mobile </label>
-									</div>
-									<div class="col-sm-9">
-										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-									</div>
-								</div>
-					        </div>
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Zip code </label>
-									</div>
-									<div class="col-sm-9">
-										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-									</div>
-								</div>
-					        </div> 
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Company City</label>
-									</div>
-									<div class="col-sm-9">
-										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-									</div>
-								</div>
-					        </div> 
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Company Country</label>
-									</div>
-									<div class="col-sm-9">
-										<div class="input-group">
-											<select name="client_id" class="form-control select_box select2-hidden-accessible" style="width: 100%" required="" data-parsley-id="6" tabindex="-1" aria-hidden="true">
-												<option value="">India</option>
-											</select>
-										</div>
-									</div>
-								</div>
-					        </div>
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Company Fax</label>
-									</div>
-									<div class="col-sm-9">
-										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-									</div>
-								</div>
-					        </div>
-                            <div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Company Address </label>
-									</div>
-									<div class="col-sm-9">
-										<textarea class="form-control" name="short_note"></textarea>
-									</div>
-								</div>
-					        </div>	
-                            <div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1"> Latitude( Google Map ) </label>
-									</div>
-									<div class="col-sm-9">
-										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-									</div>
-								</div>
-					        </div>
-                            <div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Longitude( Google Map ) </label>
-									</div>
-									<div class="col-sm-9">
-										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-									</div>
-								</div>
-					        </div>
-                          </form>							
-						</div>
+<script type="text/javascript">
+        $("#update_invoice").submit(function(e){
+         e.preventDefault();
+         var ar=[];
+           var count=1;
+           var obj = {};
+            $('.admind').each(function(){
+              var pass_id="#dvPassport"+count;
+              if($(this).is(':checked')){
+               var user_id=$(this).val();
+               var data=$(pass_id).find('.data');
+               data.each(function(){
+                if($(this).is(':checked')){
+                  ar.push($(this).val());
+                }
+               })
+               obj[user_id] = ar;
+               ar=[];
+               }
+               count++;
+            })
+         var permission=JSON.stringify(obj);
+         if(Object.keys(permission).length==2){
+          permission="all";
+         }
+         if($('#everyone').is(':checked')) { permission="all"; }
+         var formData= new FormData($(this)[0]);
+         var discount_total=$('.dis_tt').html();
+         var adjustment=$('.adjs_tt').html();
+         formData.append('adjustment',adjustment);
+         formData.append('discount_total',discount_total);
+         formData.append('permission',permission);
+         formData.append('notes', CKEDITOR.instances.editor1.getData());
+         $.ajax({
+             url:"<?=base_url()?>Sales/create_invoice",
+              type:"post",
+              data:formData,
+              contentType:false,
+              processData:false,
+              cache:false,
+             success:function(response)
+             {
+               var response=JSON.parse(response);
+               if(response.status==1){
+               	var invoices_id=response.invoice_id;
+				var item_name=[];
+				var item_desc=[];
+				var quantity=[];
+				var unit=[];
+				var unit_cost=[];
+				var total_cost=[];
+				$('.main_row').each(function() {
+				  	item_name.push($(this).find('.item_name').val());
+				  	item_desc.push($(this).find('.description').val());
+				  	quantity.push($(this).find('.quantity_table').val());
+				  	unit.push($(this).find('.unit').val());
+				  	unit_cost.push($(this).find('.item_prc').val());
+				  	total_cost.push($(this).find('.total_prc').html());
+				});
+				$.ajax({
+					type:'POST',
+					data:{
+						invoices_id:invoices_id,
+						item_name:item_name,
+						item_desc:item_desc,
+						quantity:quantity,
+						unit:unit,
+						unit_cost:unit_cost,
+						total_cost:total_cost
+					},
+					url:'<?=base_url()?>Sales/main_invoice',
+					success:function(resp){
+						if (resp==1) {
+							swal("Success", "Invoice Created Successfully", "success");
+						}
+						else{
+							swal("OOPS", "Something Went Wrong", "warning");
+						}
+					}
+				})
+               }
+               else if(response.status=="0"){
+                swal(response.msg, "Already Exists", "error");
+              }
+             }
+         });
+    });
+</script>
 
-						<div id="web" class="tabcontent">
-						   <form>
-						    <div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Company Website</label>
-									</div>
-									<div class="col-sm-9">
-										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-									</div>
-								</div>
-					        </div>
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Skype id</label>
-									</div>
-									<div class="col-sm-9">
-										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-									</div>
-								</div>
-					        </div>
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Facebook URL</label>
-									</div>
-									<div class="col-sm-9">
-										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-									</div>
-								</div>
-					        </div>
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Twitter URL</label>
-									</div>
-									<div class="col-sm-9">
-										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-									</div>
-								</div>
-					        </div>
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Linkedin URL</label>
-									</div>
-									<div class="col-sm-9">
-										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-									</div>
-								</div>
-					        </div>
-						  </form>
-						</div>
-
-						<div id="host" class="tabcontent">
-						  <form>
-						    <div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Hosting Company</label>
-									</div>
-									<div class="col-sm-9">
-										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-									</div>
-								</div>
-					        </div>
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Hosting</label>
-									</div>
-									<div class="col-sm-9">
-										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-									</div>
-								</div>
-					        </div>
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Username</label>
-									</div>
-									<div class="col-sm-9">
-										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-									</div>
-								</div>
-					        </div>
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Password</label>
-									</div>
-									<div class="col-sm-9">
-										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-									</div>
-								</div>
-					        </div>
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-3">
-										<label for="exampleInputEmail1">Port</label>
-									</div>
-									<div class="col-sm-9">
-										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-									</div>
-								</div>
-					        </div>
-							</form>
-						</div>
-					</div>
-				</div>
-			    <div class="modal-footer border-top-0 modal-butn">
-     				<button type="button" class="btn btn-primary">Save</button>
-			    </div>
-			</div>
-		</div>
-	</div>
-	
       <script>
 	    function openCity(evt, cityName) {
 	      var i, tabcontent, tablinks;
@@ -1175,7 +836,9 @@ $(document).on("click","body",function(){
 
 <script>
   $( function() {
-	$( "#datepicker1" ).datepicker();
+	$( "#datepicker1" ).datepicker(
+		{ dateFormat: 'yy-mm-dd' }
+		);
   } );
 </script>
 <script>
@@ -1246,15 +909,7 @@ $(document).ready(function(){
 	});
 </script>
 
-<script>
-	$(document).ready(function(){
-		$('#moredata').hide();
-	  $("#recur").click(function(){
-	    $("#moredata").toggle();
-	  });
-	 
-	});
-</script>
+
 
 
 </body>

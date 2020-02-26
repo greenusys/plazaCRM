@@ -52,6 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'Installation';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+$route['Projects/(:num)'] = "Projects/index/$1";
 $route['User/userDetails/(:num)/(:num)'] = "User/userDetails/$1/$2/";
 $route['Payroll/manageSalary'] = 'Payroll/manageSalary';
 $route['Payroll/manageSalary/(:num)'] = 'Payroll/fetch_department_data';
