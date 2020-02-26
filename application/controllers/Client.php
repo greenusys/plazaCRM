@@ -6,6 +6,8 @@ class Client extends MY_Controller {
 public function __construct(){
 		parent::__construct();
 		$this->load->model('Client_Model','Client');
+		$this->load->model('Invoice_model');
+		
 		}
 
 
@@ -208,6 +210,7 @@ public function __construct(){
         $data['client_contacts'] = $this->Client->get_client_contacts($id);
         // get Project  by client id
         $data['clint_project'] = $this->Client->get_client_project($id);
+         $data['recently_paid'] = $this->db->where('paid_by', $id)->order_by('created_date', 'desc')->get('tbl_payments')->result();
 		$this->load->view('layout/header');
 		$this->load->view("pages/client_details",$data);
 		$this->load->view("layout/footer");

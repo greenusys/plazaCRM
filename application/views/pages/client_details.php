@@ -256,18 +256,18 @@ font-size: 35px;
                     <a href="#contacts" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Contacts</a>
                 </li>
            
-                <li class="w-100 side_br">
+                <!-- <li class="w-100 side_br">
                     <a href="#notes" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Notes</a>
-                </li>
+                </li> -->
                 <li class="w-100 side_br">
                     <a href="#invoices" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Invoices</a>
                 </li>
                 <li class="w-100 side_br">
                     <a href="#payments" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Payments</a>
                 </li>
-                <li class="w-100 side_br">
+              <!--   <li class="w-100 side_br">
                     <a href="#estimates" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Estimates</a>
-                </li>
+                </li> -->
 
                <!--  <li class="w-100 side_br">
                     <a href="#proposals" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Proposals</a>
@@ -284,9 +284,9 @@ font-size: 35px;
                  <!-- <li class="w-100 side_br">
                     <a href="#bugs" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Bugs</a>
                 </li> -->
-                <li class="w-100 side_br">
+              <!--   <li class="w-100 side_br">
                     <a href="#reminder" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Reminder</a>
-                </li>
+                </li> -->
              <!--     <li class="w-100 side_br">
                     <a href="#file_manager" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> File Manager</a>
                 </li>
@@ -727,7 +727,26 @@ font-size: 35px;
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+                                    <?php
+                            //                            setlocale(LC_ALL, config_item('locale') . ".UTF-8");
+                                  $total_invoice = 0;
+                                foreach ($client_invoices as $key => $invoice) {
+                                    $total_invoice += $this->invoice_model->invoice_payable($invoice->invoices_id);
+                                    ?>
+                                    <tr>
+                                        <td><a class="text-info"
+                                               href="<?= base_url() ?>admin/invoice/manage_invoice/invoice_details/<?= $invoice->invoices_id ?>"><?= $invoice->reference_no ?></a>
+                                        </td>
+                                        <td><?= strftime(config_item('date_format'), strtotime($invoice->date_saved)); ?> </td>
+                                        <td><?= strftime(config_item('date_format'), strtotime($invoice->due_date)); ?> </td>
+                                        <td>
+                                            <?= display_money($this->invoice_model->invoice_payable($invoice->invoices_id), $cur); ?>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                }
+                            
+                            ?>
                                 </tbody>
                             </table>
                            
@@ -761,14 +780,50 @@ font-size: 35px;
                                     </tr>
                                 </thead>
                                 <tbody>
+                                <?php
+                                $total_amount = 0;
+                                foreach ($recently_paid as $key => $v_paid) {
+                                    $invoice_info = $this->db->where(array('invoices_id' => $v_paid->invoices_id))->get('tbl_invoices')->row();
+                                    $payment_method = $this->db->where(array('payment_methods_id' => $v_paid->payment_method))->get('tbl_payment_methods')->row();
+
+                                    if ($v_paid->payment_method == '1') {
+                                        $label = 'success';
+                                    } elseif ($v_paid->payment_method == '2') {
+                                        $label = 'danger';
+                                    } else {
+                                        $label = 'dark';
+                                    }
+                                    $total_amount += $v_paid->amount;
+                                    ?>
                                     <tr>
-                                      <td>a</td>
-                                      <td>s</td>
-                                      <td>d</td>
-                                      <td>f</td>
-                                      <td>d</td>
-                                      <td>f</td>
+                                        <td>
+                                            <a href="<?= base_url() ?>admin/invoice/manage_invoice/payments_details/<?= $v_paid->payments_id ?>"> <?= strftime(config_item('date_format'), strtotime($v_paid->payment_date)); ?></a>
+                                        </td>
+                                        <td><?= strftime(config_item('date_format'), strtotime($invoice_info->date_saved)) ?></td>
+                                        <td><a class="text-info"
+                                               href="<?= base_url() ?>admin/invoice/manage_invoice/invoice_details/<?= $v_paid->invoices_id ?>"><?= $invoice_info->reference_no; ?></a>
+                                        </td>
+                                        <?php $currency = $this->invoice_model->client_currency_sambol($invoice_info->client_id); ?>
+                                        <td><?= display_money($v_paid->amount, $currency->symbol) ?></td>
+                                        <td><span
+                                                    class="label label-<?= $label ?>"><?= !empty($payment_method->method_name) ? $payment_method->method_name : '-'; ?></span>
+                                        </td>
+                                        <td>
+                                            <?= btn_edit('admin/invoice/all_payments/' . $v_paid->payments_id) ?>
+                                            <?= btn_view('admin/invoice/manage_invoice/payments_details/' . $v_paid->payments_id) ?>
+                                            <?= btn_delete('admin/invoice/delete/delete_payment/' . $v_paid->payments_id) ?>
+                                            <a data-toggle="tooltip" data-placement="top"
+                                               href="<?= base_url() ?>admin/invoice/send_payment/<?= $v_paid->payments_id . '/' . $v_paid->amount ?>"
+                                               title="<?= lang('send_email') ?>"
+                                               class="btn btn-xs btn-success">
+                                                <i class="fa fa-envelope"></i> </a>
+                                        </td>
                                     </tr>
+
+                                    <?php
+                                    }
+                                
+                                ?>
                                 </tbody>
                             </table>    
                       </div>
