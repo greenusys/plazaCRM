@@ -121,14 +121,23 @@
 							<th>Invoice Date</th>
 							<th>Due Date</th>
 							<th>Client Name</th>
-							<th>Due Amount</th>
 						   	<th>Status </th>
 							<th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                           
-                          
+                        	<?php
+                        	foreach ($fetch_invoices as $invoicer) {
+                        	?>
+                           <tr>
+                           	<td><?=$invoicer->reference_no?></td>
+                       		<td><?=$invoicer->invoice_date?></td>
+                           	<td><?=$invoicer->due_date?></td>
+                           	<td><?=$invoicer->name?></td>
+                           	<td><?=$invoicer->status?></td>
+                           	<td>Action</td>
+                           </tr>
+                             <?php }?>
                         </tbody>
                         <!--<tfoot>-->
                         <!--   <tr>-->
@@ -465,7 +474,7 @@ $(document).ready(function(){
 	})
 </script>
 				    <div class="row">
-				    	<table class="table ">
+				    	<table class="table " id="mytable">
 							<thead>
 								<tr class="text-center">
 									<th>Item Name</th>
@@ -553,11 +562,14 @@ $(document).ready(function(){
 		               </div>
 		            </div>
 		        </form>
+<!-- 		        <button class="btn btn-primary checker">Checker</button> -->
 			</div>
 		</div> 
 	</div>
 	
 <script>
+
+
 	$(document).ready(function(){
 $(document).on("click","body",function(){
 	$(".qty_amt").each(function() {
@@ -572,22 +584,22 @@ $(document).on("click","body",function(){
 
 	  $("#add").click(function(){
 	   // $("#data").show();
-	     html=' <tr>'+
+	     html=' <tr class="main_row">'+
 				'<td>'+
-						'<textarea cols="30" rows="2" class="text-center">Item Name</textarea>'+
+						'<textarea cols="30" rows="2" class="text-center item_name" placeholder="Item Name"></textarea>'+
 					'</td>'+
 					'<td>'+
-						'<textarea cols="30" rows="2" class="text-center">Description</textarea>'+
+						'<textarea cols="30" rows="2" class="text-center description" placeholder="Description"></textarea>'+
 					'</td>'+
 					'<td>'+
-						'<input type="text" class="form-control qty_amt p-1" value="1">'+
-						'<span><input type="text" name="" class="border-0 p-1" placeholder="Unit Type"></span>'+
+						'<input type="text" class="form-control qty_amt p-1 quantity_table" value="1">'+
+						'<span><input type="text" class="border-0 p-1 unit" placeholder="Unit Type"></span>'+
 					'</td>'+
 					'<td class="">'+
 						'<input type="text" class="form-control item_prc p-1" placeholder="Price">'+
 					'</td>'+
 					'<td>'+
-						'<select class=" form-control" name="department">'+
+						'<select class=" form-control">'+
 							'<option value="minor">NO Tax</option>'+
 						'</select>'+
 					'</td>'+
@@ -700,14 +712,6 @@ $(document).on('change','#client_main_id',function(){
                }
                count++;
             })
-        // var new_ar=[];
-          // $('.song').each(function(){
-          //     if($(this).is(':checked'))
-          //     {
-          //         new_ar.push($(this).val()); 
-          //     }        
-          // });
-         //var project_settings=JSON.stringify(new_ar);
          var permission=JSON.stringify(obj);
          if(Object.keys(permission).length==2){
           permission="all";
@@ -729,15 +733,48 @@ $(document).on('change','#client_main_id',function(){
               cache:false,
              success:function(response)
              {
-             	console.log(response);
-              //   var response=JSON.parse(response);
-              //  if(response.status==1){
-              //    swal("Project Created Successfully!", "Created", "success");
-              //    //window.location.href='<?=base_url()?>Home';
-              //  }
-              //  else if(response.status=="0"){
-              //   swal(response.msg, "Already Exists", "error");
-              // }
+               var response=JSON.parse(response);
+               if(response.status==1){
+               	var invoices_id=response.invoice_id;
+				var item_name=[];
+				var item_desc=[];
+				var quantity=[];
+				var unit=[];
+				var unit_cost=[];
+				var total_cost=[];
+				$('.main_row').each(function() {
+				  	item_name.push($(this).find('.item_name').val());
+				  	item_desc.push($(this).find('.description').val());
+				  	quantity.push($(this).find('.quantity_table').val());
+				  	unit.push($(this).find('.unit').val());
+				  	unit_cost.push($(this).find('.item_prc').val());
+				  	total_cost.push($(this).find('.total_prc').html());
+				});
+				$.ajax({
+					type:'POST',
+					data:{
+						invoices_id:invoices_id,
+						item_name:item_name,
+						item_desc:item_desc,
+						quantity:quantity,
+						unit:unit,
+						unit_cost:unit_cost,
+						total_cost:total_cost
+					},
+					url:'<?=base_url()?>Sales/main_invoice',
+					success:function(resp){
+						if (resp==1) {
+							swal("Success", "Invoice Created Successfully", "success");
+						}
+						else{
+							swal("OOPS", "Something Went Wrong", "warning");
+						}
+					}
+				})
+               }
+               else if(response.status=="0"){
+                swal(response.msg, "Already Exists", "error");
+              }
              }
          });
     });

@@ -13,6 +13,7 @@ date_default_timezone_set('Asia/Kolkata');
 	{
 		$data['users']=$this->User_model->fetch_user();
 		$data['clients']=$this->Client_Model->getClients();
+		$data['fetch_invoices']=$this->Sales_Model->fetch_invoices();
 		$this->load->view('layout/header');
 		$this->load->view("pages/invoice",$data);
 		$this->load->view("layout/footer");
@@ -26,6 +27,35 @@ date_default_timezone_set('Asia/Kolkata');
 		else{
 			die(json_encode(array('status'=>'0')));
 		}
+	}
+
+	public function main_invoice(){
+		$invoices_id=$_POST['invoices_id'];
+		$itemname=$_POST['item_name'];
+		$itemdesc=$_POST['item_desc'];
+		$quantity1=$_POST['quantity'];
+		$unit1=$_POST['unit'];
+		$unitcost=$_POST['unit_cost'];
+		$totalcost=$_POST['total_cost'];
+		for ($i=0; $i <count($itemname) ; $i++) { 
+			$item_name=$itemname[$i];
+			$item_desc=$itemdesc[$i];
+			$quantity=$quantity1[$i];
+			$unit=$unit1[$i];
+			$unit_cost=$unitcost[$i];
+			$total_cost=$totalcost[$i];
+			$data=array('invoices_id'=>$invoices_id,
+						'item_name'=>$item_name,
+						'item_desc'=>$item_desc,
+						'quantity'=>$quantity,
+						'unit'=>$unit,
+						'unit_cost'=>$unit_cost,
+						'total_cost'=>$total_cost
+						);
+			$result=$this->Sales_Model->main_invoice($data);
+			$data=array();
+		}
+		echo "1";
 	}
 
 	public function create_invoice(){

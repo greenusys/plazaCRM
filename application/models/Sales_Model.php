@@ -17,5 +17,19 @@ class Sales_Model extends MY_Model
 	       return  $insert_id;
         }
     }
+
+    public function main_invoice($data){
+    	$this->db->insert('tbl_items', $data);
+	    return true;
+    }
+
+    public function fetch_invoices(){
+        $this->db->select('*');
+        $this->db->from('tbl_invoices');
+        $this->db->join('tbl_client', 'tbl_invoices.client_id = tbl_client.client_id');
+        $query_result = $this->db->get();
+        $result = $query_result->result();
+        return $result;
+    }
 }
 ?>
