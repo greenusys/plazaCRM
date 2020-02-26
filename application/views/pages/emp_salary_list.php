@@ -70,7 +70,23 @@
                                 <td>
                                     <div class="">
 <!--                                       <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a> -->
+                                      <?php
+                                      foreach($Assign_permission as $checkpermission)
+                                        {
+                                          $permission=$checkpermission->permission;
+                                          if(strpos($permission,'Delete')!==false)
+                                          {?>
                                       <span class="sele_staus bg-danger p-1 text-white delete_payroll" payroll_id="<?=$emp_data->payroll_id?>"><i class="far fa-trash-alt"></i></span>
+                                      <?php }
+                                         else
+                                         {
+                                          ?>
+                                           <span style="visibility: hidden" class="sele_staus bg-danger p-1 text-white delete_payroll" payroll_id="<?=$emp_data->payroll_id?>"><i class="far fa-trash-alt"></i></span>
+                                           <?php
+                                          }
+
+                                        }?>
+
 <!--                                        <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span> -->
                                     </div>
                                 </td>

@@ -12,7 +12,9 @@ public function __construct(){
 	public function index()
 	{
 
-
+		$session=$this->session->userdata('logged_user');
+		$designation_id=$session[0]->designations_id;
+		$data['Assign_permission']=$this->Client->CheckPermission($designation_id);
 		$data['Clients']= $this->Client->getAllClient();
 		$this->load->view('layout/header');
 		$this->load->view("pages/client",$data);

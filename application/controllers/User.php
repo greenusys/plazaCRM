@@ -149,6 +149,9 @@ class User extends MY_Controller {
 	 	foreach ($data['all_dept_info'] as $v_dept_info) {
             $data['all_department_info'][] = $this->Job_circular_model->get_add_department_by_id($v_dept_info->departments_id);
         }
+        $session=$this->session->userdata('logged_user');
+        $designation_id=$session[0]->designations_id;
+        $data['Assign_permission']=$this->User_model->CheckPermission($designation_id);
         $data['all_users']=$this->User_model->fetch_all_users();
 		$this->load->view('layout/header');
 		$this->load->view("pages/user_list",$data);

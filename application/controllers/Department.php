@@ -26,6 +26,9 @@
 			$data['Deatils']=$dat;
 			// print_r($data['Deatils']);
 			// die;
+			$session=$this->session->userdata('logged_user');
+		$designation_id=$session[0]->designations_id;
+		$data['Assign_permission']=$this->DPT->CheckPermission($designation_id);
 			$this->load->view('layout/header');
 			$this->load->view('pages/department',$data);
 			$this->load->view('layout/footer');

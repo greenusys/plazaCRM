@@ -93,15 +93,31 @@
                                             <td>
                                                 <div class="">
                                                     <!--<a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>-->
+                                                    <?php
+                                      foreach($Assign_permission as $checkpermission)
+                                        {
+                                          $permission=$checkpermission->permission;
+                                          if(strpos($permission,'Delete')!==false)
+                                          {?>
                                                     <a href="javascript:void(0)" leave_app_id="<?=$leaseAllData->leave_application_id?>" class="deletetPendingApplication"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
-                                                    <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
+                                                    <?php }
+                                         else
+                                         {
+                                          ?>
+                                          <a href="javascript:void(0)" style="visibility: hidden" ><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+
+
+                                                    <!-- <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span> -->
                                                 </div>
     
                                             </td>
                                         </tr>
                                     <?php
                                     }
-                                    ?>
+
+                                          }
+
+                                        }?>
 
                                   
                                 </tbody>
@@ -667,38 +683,6 @@
                                                             </div>
                                                         </div>
                                                         
-                                                       <!--  <div class="form-group">
-                                                            <div class="row">
-                                                                <div class=" col-sm-6 col-6">
-                                                                    <label for="exampleInputEmail1">Marriage :</label>
-                                                                </div>
-                                                                <div class="col-sm-6 col-6">
-                                                                    <label for="exampleInputEmail1">0/3</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                         -->
-                                                        <!-- <div class="form-group">
-                                                            <div class="row">
-                                                                <div class="offset-1 col-sm-5 col-5">
-                                                                    <label for="exampleInputEmail1">:</label>
-                                                                </div>
-                                                                <div class="col-sm-6 col-6">
-                                                                    <label for="exampleInputEmail1">0/0</label>
-                                                                </div>
-                                                            </div>
-                                                        </div> -->
-                                                        <!-- 
-                                                        <div class="form-group">
-                                                            <div class="row">
-                                                                <div class=" col-sm-6 col-6">
-                                                                    <label for="exampleInputEmail1">Emergency:</label>
-                                                                </div>
-                                                                <div class="col-sm-6 col-6">
-                                                                    <label for="exampleInputEmail1">0/0</label>
-                                                                </div>
-                                                            </div>
-                                                        </div> -->
                                                         <div class="form-group bg-dark p-1 text-white">
                                                             <div class="row">
                                                                 <div class=" col-sm-6 col-6">

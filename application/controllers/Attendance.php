@@ -138,6 +138,9 @@ class Attendance extends MY_Controller {
 	}
 	public function timeChaneRequest()
 	{
+		$session=$this->session->userdata('logged_user');
+		$designation_id=$session[0]->designations_id;
+		$data['Assign_permission']=$this->ATND->CheckPermission($designation_id);
 		$data['Employee']=$this->ATND->fetchEmployee();
 		$data['EmpAttendanceDetail']=$this->ATND->fetchEmployeeATNDDetails();
 		$this->load->view('layout/header');

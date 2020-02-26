@@ -10,6 +10,7 @@ class Leavemanagement extends MY_Controller {
 	{
 		// print_r($this->session->logged_user);
 		// die();
+
 		$usersdetail=$this->session->logged_user;
 		$designation_id=$usersdetail[0]->designations_id;
 	    $formyleave=$usersdetail[0]->user_id;
@@ -18,6 +19,9 @@ class Leavemanagement extends MY_Controller {
 		$data['fetch_leave_category_data']=$this->leave->fetchLeaveCategoryData($designation_id);
 		$data['fetch_Myleave_data']=$this->leave->fetchMyLeaveDetails($formyleave);
 		$data['fetch_Designation_data']=$this->leave->fetchDesignationforLeave();
+		$session=$this->session->userdata('logged_user');
+		$designation_id=$session[0]->designations_id;
+		$data['Assign_permission']=$this->leave->CheckPermission($designation_id);
 // 		print_r($data['fetch_leave_data']);
 		$this->load->view('layout/header');
 		$this->load->view("pages/leave_management",$data);
@@ -56,6 +60,9 @@ class Leavemanagement extends MY_Controller {
 	{
 		// print_r($this->session->logged_user);
 		//  die();
+		$session=$this->session->userdata('logged_user');
+		$designation_id=$session[0]->designations_id;
+		$data['Assign_permission']=$this->leave->CheckPermission($designation_id);
 		$data['fetch_Designation_data']=$this->leave->fetchDesignationforLeave();
 		
 		$data['fetch_Yearly_data']=$this->leave->fetchLeaveYearlyData();

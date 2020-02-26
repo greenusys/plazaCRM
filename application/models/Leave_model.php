@@ -266,6 +266,11 @@ class Leave_Model extends CI_Model
  		
 	
 	   }
+	   public function CheckPermission($designation_id)
+    {
+        $this->db->where('designations_id',$designation_id);
+        return $this->db->get('tbl_designations')->result();
+    }
 	}
 
 ?>

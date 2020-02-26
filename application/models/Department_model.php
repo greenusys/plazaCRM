@@ -118,6 +118,11 @@ class Department_Model extends MY_Model
             return false;
         }
     }
+    public function CheckPermission($designation_id)
+    {
+        $this->db->where('designations_id',$designation_id);
+        return $this->db->get('tbl_designations')->result();
+    }
 
 
 }

@@ -110,8 +110,33 @@
 				   			<h6>Department head:<span class="text-info"><?=$value['fullname']?></span></h6>		
 						</div>
 						<div class="col-md-3">
+							<?php
+                                      foreach($Assign_permission as $checkpermission)
+                                        {
+                                          $permission=$checkpermission->permission;
+                                          if(strpos($permission,'Edit')!==false)
+                                          {?>
 						   <a href="javascript:void(0)" class="btn btn-primary fs " id="ditDept"  data-toggle="modal" data-target="#updateDepartment" d-id="<?=$value['Dept_id']?>" d-name="<?=$value['Dept_name']?>"><i class="fas fa-edit"></i></a>
+						    <?php }
+                                         else
+                                         {
+                                          ?>
+                                           <a href="javascript:void(0)" style="visibility: hidden"class="btn btn-primary fs " id="ditDept"  data-toggle="modal" data-target="#updateDepartment" d-id="<?=$value['Dept_id']?>" d-name="<?=$value['Dept_name']?>"><i class="fas fa-edit"></i></a>
+                                          <?php
+                                          }
+                                         if(strpos($permission,'Delete')!==false)
+                                          {?>
 						   <a href="javascript:void(0)" class="btn btn-danger fs deleteDepartment" d-id="<?=$value['Dept_id']?>" data-toggle="tooltip" data-placement="top" title="Delete"><i class="far fa-trash-alt"></i></a>
+						   <?php }
+                                         else
+                                         {
+                                          ?>
+                                             <a href="javascript:void(0)" style="visibility: hidden"class="btn btn-danger fs deleteDepartment" d-id="<?=$value['Dept_id']?>" data-toggle="tooltip" data-placement="top" title="Delete"><i class="far fa-trash-alt"></i></a>
+                                           <?php
+                                          }
+
+                                        }?>
+
 						</div>
 					</div>
 					<div class="row">
@@ -134,9 +159,35 @@
 													<td scope="row" class="text-info"><?=$j?></td>
 													<td scope="row" ><?=$desg->designations?></td>
 													<td scope="row" >
+														<?php
+                                      foreach($Assign_permission as $checkpermission)
+                                        {
+                                          $permission=$checkpermission->permission;
+                                          if(strpos($permission,'Edit')!==false)
+                                          {?>
 													    <a href="departmentform.php"><button type="button" class="btn btn-primary fs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></button></a>
+									    	 <?php }
+                                         else
+                                         {
+                                          ?>
+                                           <a href="#" style="visibility: hidden"><button type="button" class="btn btn-primary fs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></button></a>
+                                             <?php
+                                          }
+                                         if(strpos($permission,'Delete')!==false)
+                                          {?>
+
 														
 														<a href="javascript:void(0)" type="button" class="btn btn-danger fs deleteDesignation" d-id="<?=$desg->designations_id?>" data-toggle="tooltip" data-placement="top" title="Delete"><i class="far fa-trash-alt"></i></a>
+														<?php }
+                                         else
+                                         {
+                                          ?>
+
+														<a href="javascript:void(0)" type="button"style="visibility: hidden" class="btn btn-danger fs deleteDesignation" d-id="<?=$desg->designations_id?>" data-toggle="tooltip" data-placement="top" title="Delete"><i class="far fa-trash-alt"></i></a>
+                                          <?php
+                                          }
+
+                                        }?>
 													</td>
 												</tr>
 											<?php

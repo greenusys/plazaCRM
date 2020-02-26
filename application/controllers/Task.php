@@ -16,10 +16,13 @@ class Task extends MY_Controller {
 	{
 		$session=$this->session->userdata('logged_user');
 		$id=$session[0]->user_id;
+		$designation_id=$session[0]->designations_id;
+		$data['Assign_permission']=$this->Tasks_Model->CheckPermission($designation_id);
+		// print_r($data['Assign_permission']);
+		// die();
 		$data['all_tasks']=$this->Tasks_Model->fetch_all_task(null);
 		$data['users']=$this->User_model->fetch_user();
       	$data['profile_info'] = $this->db->where('user_id', $id)->get('tbl_account_details')->row();
-
 
 		$this->load->view('layout/header');
 		$this->load->view("pages/tasks",$data);
