@@ -55,20 +55,28 @@ class Tasks_Model extends CI_Model{
         return $return_result;
     }
 
-	    public function fetch_all_task($filterBy)
+	public function fetch_all_task($filterBy)
     {
-        $tasks = array();
-        $all_tasks = array_reverse($this->get_permission('tbl_task'));
-        if (empty($filterBy)) {
-            return $all_tasks;
-        } else {
-            foreach ($all_tasks as $v_tasks) {
-                if ($v_tasks->task_status == $filterBy) {
-                    array_push($tasks, $v_tasks);
-                }
-            }
-        }
-        return $tasks;
+        // $tasks = array();
+        // $all_tasks = array_reverse($this->get_permission('tbl_task'));
+        // if (empty($filterBy)) {
+        //     return $all_tasks;
+        // } else {
+        //     foreach ($all_tasks as $v_tasks) {
+        //         if ($v_tasks->task_status == $filterBy) {
+        //             array_push($tasks, $v_tasks);
+        //         }
+        //     }
+        // }
+        // return $tasks;
+        // $this->db->where($checker);
+        $this->db->order_by('task_id','desc');
+        $check = $this->db->get("tbl_task")->result_array();
+        if(count($check)==0 ){
+            return false;
+        }else{
+            return $check;
+        } 
     }
 
 	public function fetch_task($id){

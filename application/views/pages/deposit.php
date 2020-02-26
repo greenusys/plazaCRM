@@ -148,8 +148,8 @@
               </div>
             </div>
           </div>
-          <div class="form-group">
-              <div class="row">
+          <div class="form-group" id="depoacccc">
+              <div class="row" >
               <div class="col-sm-3">
                 <label for="exampleInputEmail1">Accounts <sub class="text-danger">*</sub> </label>
               </div>
@@ -214,7 +214,7 @@
               </div>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group" id="depocattt">
               <div class="row">
               <div class="col-sm-3">
                 <label for="exampleInputEmail1">Category</label>
@@ -264,7 +264,7 @@
               </div>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group" id="depometttt">
               <div class="row">
               <div class="col-sm-3">
                 <label for="exampleInputEmail1">Payment Method</label>
@@ -902,13 +902,14 @@
                 </div>
               </div>
             </div>
-          </form>
-        </div>
+         
+        
         <div class="modal-footer border-top-0 modal-butn">
-          <button type="button" class="btn btn-primary">Save</button>
+          <button type="submit" class="btn btn-primary">Save</button>
           <button type="button" class="btn btn-secondary">close</button>
           </div>
             </form>
+            </div>
       </div>
       
     </div>
@@ -1020,7 +1021,7 @@
                           <label for="exampleInputEmail1"><strong>Attachment :</strong></label>
                         </div>
                         <div class="col-sm-4 col-6">
-                            <!--<?php echo base_url().'assets/uploads/expense/'.$myImages[$i]?>-->
+                            <!--<?php echo base_url().'./uploads/deposit/'.$myImages[$i]?>-->
                         <img style="width:6em;height:6em;" id="trans_image" src="" alt="" />
                         
                         </div>
@@ -1109,7 +1110,7 @@
                 var paymentmethod=response.data[0].method_name;
                 var notes=response.data[0].notes;
                  var trans_status=response.data[0].transaction_status;
-                var trans_image='<?=base_url("assets/uploads/deposit/")?>'+response.data[0].attachement;
+                var trans_image='<?=base_url("./uploads/deposit/")?>'+response.data[0].attachement;
     //            
                  $("#reference").append(reference);
                  $("#transname").append(transaction_name);
@@ -1370,7 +1371,8 @@ $(document).ready(function(){
                     if(response.status==1)
                     {
                         alert(response.msg);
-                    //   location.reload();
+                        $("#depoacccc").load(location.href + " #depoacccc");
+                       // location.reload();
                     }
                     else
                     {
@@ -1404,6 +1406,7 @@ $(document).ready(function(){
                     if(response.status==1)
                     {
                         alert(response.msg);
+                         $("#depocattt").load(location.href + " #depocattt");
                     //   location.reload();
                     }
                     else
@@ -1438,6 +1441,7 @@ $(document).ready(function(){
                         if(response.status==1)
                         {
                             alert(response.msg);
+                             $("#depometttt").load(location.href + " #depometttt");
                         
                         }
                         else

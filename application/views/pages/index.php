@@ -48,7 +48,7 @@
               </div>
             </div>
           </div>
-          <div class="row ">
+          <!-- <div class="row ">
            
             <div class="col-lg-6 col-md-6 col-sm-12">
               <div class="card card-statistic-2">
@@ -65,7 +65,7 @@
                       </div>
                       <div class="card-body">
                        In Progress Bugs<br>
-                    <span><a href="">More Info <i class="fas fa-arrow-circle-right"></i></a></span>
+                    <span><a href="<?=base_url('Dashboard/inProgressBugs')?>">More Info <i class="fas fa-arrow-circle-right"></i></a></span>
                       </div>
                     </div>
                  </div>
@@ -97,7 +97,7 @@
              
               </div>
             </div>
-          </div>
+          </div> -->
           
           <div class="row mt-4">
             <div class="col-lg-12">
@@ -140,6 +140,7 @@
                         <tbody>
                           <?php
                           // print_r($Overproject);
+                          // die;
                             foreach ($Overproject as $proj_detail) {
                               // print_r($proj_detail);
                               ?>
@@ -178,12 +179,39 @@
                                       
                                   </td>
                                   <td>
-                                    <?php
+                                    <?php 
+                                    if($proj_detail['assigned_to'][0]!=""){
+                                      $total = count((array)$proj_detail);
+                  // print_r($total);
+                                      // if($total>8)
+                                      // {
+                                      //   $total=$total-8;
+                                      //   for($i=0;$i<$total;$i++)
+                                      //   {
+                                      //     if($proj_detail[$i]=="Everyone ")
+                                      //     {
+                                      //       echo "Everyone";
+                                      //     }
+                                      //     else{
+                                      //       echo $proj_detail[$i]->fullname;
+                                      //     }
+                                      //  }
+                                      // }
+                                      // else{
+                                      //   echo "Everyone";
+                                      // }
+
+
+
                                       foreach($proj_detail['assigned_to'] as $user){
                                         // print_r($user);
                                         echo '<img src="'.base_url().$user->avatar.'" class="rounded-circle" width="20px">';
                                       }
-                                    ?>
+                                    }
+                                      echo '<a href="javascript:void(0)" id="open_modal"><i class="fa fa-plus" aria-hidden="true"></i></a>';
+                                   ?> 
+                                    
+                                
                                   </td>
                                   <td>
                                     <?php
@@ -293,7 +321,7 @@
                         </tfoot>
                     </table>
                   </div>
-                 <!--  <div class="tab-pane fade px-4" id="contact-just" role="tabpanel" aria-labelledby="contact-tab-just">
+            <!--       <div class="tab-pane fade px-4" id="contact-just" role="tabpanel" aria-labelledby="contact-tab-just">
                     <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro
                       fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone
                       skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings
@@ -320,18 +348,22 @@
                       <thead class="">
                        <tr>
                           <th></th>
+                         
                          <th>What To Do</th>
                          <th>Status</th>
                          <th>End Date</th>
+                         <th></th>
                        </tr>
                       </thead>
             
                     <tbody>
                       <?php
+                     // print_r($to_do);
                       foreach ($to_do as $todo) {
                       ?>
                         <tr>
                             <td class="sorter"></td>
+                       
                             <td><?=$todo->title?></td>
                             <td><?php
                             if ($todo->status==1) {
@@ -345,9 +377,14 @@
                             }
                             ?></td>
                             <td><?=$todo->due_date?></td>
+                            <td>
+                              
+                              <button class="btn btn-danger ml-2 p-1 deleter" todo_id="<?=$todo->todo_id?>"><i class="far fa-trash-alt"></i></button>
+                              
+                            </td>
                         </tr>
                       <?php } ?>
-<!--                         <tr>
+                        <!--  <tr>
                             <td class="sorter"></td>
                             <td>Row 2</td>
                             <td>Record 2</td>
@@ -372,15 +409,54 @@
                             <td>Record 5</td>
                         </tr> -->
                     </tbody>
-              <!--       <tfoot>
-                        <tr>
+                 <tfoot>
+                  <!--       <tr>
                             <td colspan="4">&nbsp;</td>
-                        </tr>
-                    </tfoot> -->
+                        </tr> -->
+                    </tfoot> 
 
                   </table>
                 </div>
               </div>
+<script type="text/javascript">
+  $(document).on("click",".edit_todo",function(){
+    $("#addTodoModal").modal('show');
+  })
+
+    $(document).on('click','.deleter',function(){
+         var todo_id=$(this).attr('todo_id');
+           swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover!",
+                icon: "warning",
+                buttons: [
+                  'No, cancel it!',
+                  'Yes, I am sure!'
+                ],
+                dangerMode: true,
+              }).then(function(isConfirm) {
+                if (isConfirm) {
+                  $.ajax({
+                    type:'POST',
+                    data:{
+                      todo_id:todo_id
+                    },
+                    url:'<?=base_url()?>User/delete_todo',
+                    success:function(response){
+                      if (response==1) {
+                        swal('Deleted','To Do List Removed','success');
+                        location.reload();
+                      }
+                      else{
+                        swal('OOPS','Something Went Wrong','warning');
+                      }
+                    }
+                  })
+                }
+              })
+     })
+</script>
+
               <!-----------todo add modal----------->
 <div class="modal fade" id="addTodoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -535,6 +611,9 @@
 </script>
     <script>
 $(document).ready(function(){
+   
+
+
   // document.addEventListener('DOMContentLoaded', function() {
     var d = new Date();
 
@@ -642,4 +721,165 @@ $(document).ready(function(){
     calendar.render();
   // });
 })
+$(document).on('click','#open_modal',function(){
+    var task_id=$(this).attr('task_id');
+    $('#tasker_id').val(task_id);
+    $('#assign_to').modal('show');
+})
+$("#updater").submit(function(e){
+         e.preventDefault();
+         var ar=[];
+           var count=1;
+           var obj = {};
+            $('.admindModal').each(function(){
+              var pass_id="#dvPassportModal"+count;
+              if($(this).is(':checked')){
+               var user_id=$(this).val();
+               var data=$(pass_id).find('.data');
+               data.each(function(){
+                if($(this).is(':checked')){
+                  ar.push($(this).val());
+                }
+               })
+               obj[user_id] = ar;
+               ar=[];
+               }
+               count++;
+            })
+         // var new_ar=[];
+         //  $('.song').each(function(){
+         //      if($(this).is(':checked'))
+         //      {
+         //          new_ar.push($(this).val()); 
+         //      }        
+         //  });
+         // var project_settings=JSON.stringify(new_ar);
+         var permission=JSON.stringify(obj);
+         if(Object.keys(permission).length==2){
+          permission="all";
+         }
+        // if($('#everyone').is(':checked')) { permission="all"; }
+         var formData= new FormData($(this)[0]);
+         formData.append('permission',permission);
+         $.ajax({
+             url:"<?=base_url()?>Dashboard/assign_to",
+              type:"post",
+              data:formData,
+              contentType:false,
+              processData:false,
+              cache:false,
+             success:function(response)
+             {
+                //var response=JSON.parse(response);
+               if(response==1){
+                location.reload();
+                 // swal("Task Created Successfully!", "Created", "success");
+                 //window.location.href='<?=base_url()?>Home';
+               }
+               else{
+                swal("Error", "Error", "error");
+              }
+             }
+         });
+    });
+</script>
+
+
+<div id="assign_to" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+     <div class="modal-header border-bottom">
+          <h5 class="modal-title" id="exampleModalLabel">All Users</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <form id="updater">
+          <input type="hidden" value="" id="tasker_id" name="task_id">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-sm-3">
+              <label for="exampleInputEmail1">Assigned To <span class="text-danger">*</span></label>
+            </div>
+            <div class="col-sm-9">
+              <div class="checkbox c-radio needsclick">
+                <input type="radio" name="radio_admin" value="" class="btn1"> Everyone<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
+                              </div>
+              <div class="checkbox c-radio needsclick">
+                <input type="radio" name="radio_admin" value=""  class="chkPassport"> Customise Permission<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
+              </div>
+            </div>
+          </div>
+        </div>
+           <div class="form-group dvPassport"  style="display: none">
+              <div class="row">
+              <div class="col-sm-3">
+                <label for="exampleInputEmail1">select Users<span class="text-danger">*</span></label>
+              </div>
+              <div class="col-sm-9">
+                  <?php
+                   $count=1;
+                   // print_r($users);
+                   foreach ($users as $user) {
+                   ?>
+
+                     <input type="checkbox" value="<?=$user['user_id']?>" class=" admindModal" ><?=$user['username']?><?php 
+                     if ($user['role_id']==1) {
+                       echo "<strong class='badge btn-danger'>Admin</strong>";
+                     }
+                     else{
+                      echo "<strong class='badge btn-primary'>Staff</strong>";
+                     }
+                     ?>
+                   <br>
+                   <div class="row dvPassport"  id="dvPassportModal<?=$count?>" style="display: none">
+                      <div class="col-md-3">
+                     <input type="checkbox" class="data" value="View"> Can View
+                    </div>
+                    <div class="col-md-3">
+                         <input type="checkbox" class="data" value="Edit" > Can Edit
+                    </div>
+                    <div class="col-md-3">
+                        <input type="checkbox" class="data" value="Delete"> Can Delete
+                    </div>
+                   </div>
+                   <?php
+                   $count++;
+                    }
+                   ?>
+              </div>
+            </div>
+          </div>
+          <div class="text-center" > <button type="submit" class="btn btn-success" >Update</button></div>
+        </form>
+      </div>
+      <div class="modal-footer">
+
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+      </div>
+    </div>
+
+  </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $(".chkPassport").click(function () {
+            if ($(this).is(":checked")) {
+                $(".dvPassport").show();
+            } else {
+                $(".dvPassport").hide();
+            }
+        });
+    });
+</script>
+
+<script>
+$(document).ready(function(){
+  $(".btn1").click(function(){
+    $(".dvPassport").hide();
+  });
+});
 </script>

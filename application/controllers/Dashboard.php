@@ -11,6 +11,7 @@ class Dashboard extends MY_Controller {
 		$this->load->model('User_model');
 		$this->load->model('Rahul_Model','Demo');
 		$this->load->model('Global_Model');
+		$this->load->model('Bugs_model');
 		$this->load->model('Projects_Model');
 	}
 
@@ -64,6 +65,7 @@ class Dashboard extends MY_Controller {
 
 		}
         // print_r($project_data);
+        $data['users']=$this->User_model->fetch_user();
 		$data['Overtask']=$task_data;
 		$this->load->view('layout/header');
 		$this->load->view('pages/index',$data);
@@ -154,6 +156,63 @@ class Dashboard extends MY_Controller {
 		$this->load->view('layout/header');
 		$this->load->view("pages/inProgressTask",$data);
 		$this->load->view("layout/footer");
+    }
+    public function inProgressBugs($id=""){
+    	 $data['assign_user'] = $this->Bugs_model->allowad_user('58');
+        $data['all_bugs_info'] = $this->Bugs_model->get_permission('tbl_bug');
+        if ($id) { // retrive data from db by id
+            $data['active'] = 2;
+            $can_edit = $this->Bugs_model->can_action('tbl_bug', 'edit', array('bug_id' => $id));
+            $edited = can_action('58', 'edited');
+            if ($id == 'project') {
+                $data['project_id'] = $opt_id;
+                $project_info = get_row('tbl_project', array('project_id' => $opt_id));
+                if ($project_info->permission == 'all') {
+                    $data['assign_user'] = $this->Bugs_model->allowad_user('57');
+                } else {
+                    $data['assign_user'] = $this->Bugs_model->permitted_allowad_user($project_info->permission);
+                }
+            } elseif ($id == 'opportunities') {
+                $data['opportunities_id'] = $opt_id;
+                $option_info = get_row('tbl_opportunities', array('opportunities_id' => $opt_id));
+                if ($option_info->permission == 'all') {
+                    $data['assign_user'] = $this->Bugs_model->allowad_user('56');
+                } else {
+                    $data['assign_user'] = $this->Bugs_model->permitted_allowad_user($option_info->permission);
+                }
+            } else {
+                if (!empty($can_edit) && !empty($edited)) {
+                    if (is_numeric($id)) {
+                        // get all bug information
+                        $data['bug_info'] = $this->db->where('bug_id', $id)->get('tbl_bug')->row();
+                    }
+                }
+            }
+            $data['all_opportunities_info'] = $this->Bugs_model->get_permission('tbl_opportunities');
+        } else {
+            $data['active'] = 1;
+        }
+        //$data['editor'] = $this->data;
+        //$data['subview'] = $this->load->view('admin/bugs/bugs', $data, TRUE);
+        //$this->load->view('admin/_layout_main', $data);
+
+			$data['admin_staff']=$this->User_model->fetch_all_users();
+			$data['users']=$this->User_model->fetch_user();
+			// print_r($data['users']);
+			$this->load->view('layout/header');
+			$this->load->view('pages/bugs',$data);
+			$this->load->view('layout/footer');
+    }
+    public function assign_to(){
+    	$task_id=$_POST['project_id'];
+		$permission=$_POST['permission'];
+		$updater=$this->Tasks_Model->update_permission($task_id,$permission);
+		if ($updater) {
+			echo "1";
+		}
+		else{
+			echo "0";
+		}
     }
 }
 ?>

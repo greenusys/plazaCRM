@@ -25,26 +25,67 @@ class Transaction extends MY_Controller {
 	    $data['fetch_Client_Data']=$this->Client->getClientDetails();
 	    $data['fetch_Method_Data']=$this->Payments->fetchMethodData();
 	    $data['All_expense_Data']=$this->Transaction->fetchAllTransactionData();
-    
- 
 		$this->load->view('layout/header');
 		$this->load->view("pages/expense",$data);
 		$this->load->view("layout/footer");
 	}
-	public function deposit(){
+	public function Edit_Expense($id)
+	{
+	    $data['fetch_Account_Data']=$this->Accounts->AllAccountData();
+	    $data['Expense_DataById']=$this->Transaction->fetchTransactionDataById($id);
+	    $data['fetch_Expenses_Category']=$this->Expenses->fetchExpensesCategory();
+	    $data['fetch_Client_Data']=$this->Client->getClientDetails();
+	    $data['fetch_Method_Data']=$this->Payments->fetchMethodData();
+    	$this->load->view('layout/header');
+		$this->load->view("pages/edit_expense",$data);
+		$this->load->view("layout/footer");
+	}
+	public function Expense_Modal_Detailss()
+	{
+	  
+	   $transid=$this->input->post('transactions_id');
+	   $data=$this->Transaction->fetchTransactionDataByIdToModal($transid);
+	   die(json_encode(array('msg'=>1,'data'=>$data)));
+	   //print_r($transid); 
+	}
+	public function Deposit_Modal_Detailss()
+	{
+	   $transid=$this->input->post('transactions_id');
+	   $data=$this->Transaction->fetchDepositTransactionDataByIdToModal($transid);
+	   die(json_encode(array('msg'=>1,'data'=>$data)));
+	   //print_r($transid);
+	  
+	   
+	}
+	public function deposit()
+	{
 		$data['fetch_Account_Data']=$this->Accounts->AllAccountData();
-        $data['fetch_Expenses_Category']=$this->Expenses->fetchExpensesCategory();
-        $data['fetch_Client_Data']=$this->Client->getClientDetails();
-        $data['fetch_Method_Data']=$this->Payments->fetchMethodData();
-        $data['All_expense_Data']=$this->Transaction->fetchAllDepositTransactionData();
+	    $data['fetch_Expenses_Category']=$this->Expenses->fetchExpensesCategory();
+	    $data['fetch_Client_Data']=$this->Client->getClientDetails();
+	    $data['fetch_Method_Data']=$this->Payments->fetchMethodData();
+	    $data['All_expense_Data']=$this->Transaction->fetchAllDepositTransactionData();
 		$this->load->view('layout/header');
-		$this->load->view("pages/deposit");
+		$this->load->view("pages/deposit",$data);
 		$this->load->view("layout/footer");
 	}
 
 	public function transfer(){
+		 $data['fetch_Account_Data']=$this->Accounts->AllAccountData();
+        $data['fetch_Method_Data']=$this->Payments->fetchMethodData();
+         $data['All_Transfer_Data']=$this->Transaction->fetchAllTransferData();
+         // print_r( $data['All_Transfer_Data']);
+         // die();
 		$this->load->view('layout/header');
-		$this->load->view("pages/transfer");
+		$this->load->view("pages/transfer",$data);
+		$this->load->view("layout/footer");
+	}
+	public function Edit_Transfer($id)
+	{
+		$data['fetch_Method_Data']=$this->Payments->fetchMethodData();
+		$data['fetch_Account_Data']=$this->Accounts->AllAccountData();
+	 	$data['Transfer_DataById']=$this->Transaction->fetchTransferDataById($id);
+		$this->load->view('layout/header');
+		$this->load->view("pages/edit_tranfer",$data);
 		$this->load->view("layout/footer");
 	}
 	public function TransactionReport(){
@@ -213,8 +254,7 @@ class Transaction extends MY_Controller {
 	    $data=array('account_id'=>$this->input->post('user_id'));
 	    $results=$this->Accounts->fetchBalanceBy_id($data);
 	    die(json_encode(array('status'=>1,'data'=>$results)));
-	    
-	   
+   
 	}
 	public function AddNewAccountforDeposit()
 	{
@@ -355,6 +395,17 @@ class Transaction extends MY_Controller {
 		}
 	
 	}
+	public function Edit_Deposit($id)
+	{
+	    $data['fetch_Account_Data']=$this->Accounts->AllAccountData();
+	    $data['Deposit_DataById']=$this->Transaction->fetchDepositDataById($id);
+	    $data['fetch_Expenses_Category']=$this->Expenses->fetchExpensesCategory();
+	    $data['fetch_Client_Data']=$this->Client->getClientDetails();
+	    $data['fetch_Method_Data']=$this->Payments->fetchMethodData();
+    	$this->load->view('layout/header');
+		$this->load->view("pages/edit_deposit",$data);
+		$this->load->view("layout/footer");
+	}
 	
 	public function AddTransferData()
 	{
@@ -377,7 +428,7 @@ class Transaction extends MY_Controller {
 		                $_FILES['file']['error']     = $_FILES['files']['error'][$i];
 		                $_FILES['file']['size']     = $_FILES['files']['size'][$i];
 		                // File upload configuration
-	            $uploadPath = 'assets/uploads/transfer/';
+	            $uploadPath = './uploads/transfer/';
 		                $config['upload_path'] = $uploadPath;
 		                $config['allowed_types'] = 'jpg|jpeg|png|gif';
 	 
@@ -481,7 +532,7 @@ class Transaction extends MY_Controller {
 		                $_FILES['file']['error']     = $_FILES['files']['error'][$i];
 		                $_FILES['file']['size']     = $_FILES['files']['size'][$i];
 		                // File upload configuration
-	            $uploadPath = 'assets/uploads/expense/';
+	            $uploadPath = './uploads/expense/';
 		                $config['upload_path'] = $uploadPath;
 		                $config['allowed_types'] = 'jpg|jpeg|png|gif';
 	 
@@ -582,7 +633,7 @@ class Transaction extends MY_Controller {
 		                $_FILES['file']['error']     = $_FILES['files']['error'][$i];
 		                $_FILES['file']['size']     = $_FILES['files']['size'][$i];
 		                // File upload configuration
-	                    $uploadPath = 'assets/uploads/deposit/';
+	                    $uploadPath = './uploads/deposit';
 		                $config['upload_path'] = $uploadPath;
 		                $config['allowed_types'] = 'jpg|jpeg|png|gif';
 	 
@@ -690,6 +741,95 @@ class Transaction extends MY_Controller {
 		die(json_encode($results));
 
 	}
+	public function UpdateTransferData()
+	{  
+	    $type='Transfer';
+		$data = array();
+			if(!empty($_FILES['files']['name']))
+			{
+			   $filesCount = count($_FILES['files']['name']);
+			     for($i = 0; $i < $filesCount; $i++)
+		        {
+		            $ext = pathinfo($_FILES['files']['name'][$i], PATHINFO_EXTENSION);
+		                $_FILES['file']['name']     = "transfer-image".date("Y-m-d-H-i-s").$i.".".$ext;
+		                $_FILES['file']['type']     = $_FILES['files']['type'][$i];
+		                $_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i];
+		                $_FILES['file']['error']     = $_FILES['files']['error'][$i];
+		                $_FILES['file']['size']     = $_FILES['files']['size'][$i];
+		                // File upload configuration
+	            $uploadPath = './uploads/transfer/';
+		                $config['upload_path'] = $uploadPath;
+		                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+	 
+	            // Load and initialize upload library
+	             $this->load->library('upload', $config);
+		                $this->upload->initialize($config);
+	            
+	            // Upload file to server
+	            if($this->upload->do_upload('file'))
+		                {
+		                    // Uploaded file data
+		                    $fileData = $this->upload->data();
+		                    $uploadData[$i]['file_name'] = $fileData['file_name'];
+		                    $uploadData[$i]['uploaded_on'] = date("Y-m-d H:i:s");
+		                }
+		                $attach[]=$_FILES['file']['name'];	
+    	            
+		        }
+	            $tranferFiles=implode(",",$attach);
+			    // $videos=implode(",",$images);
+			    
+			        // Insert files data into the database
+				$uploadDate=date("Y-m-d H:i:s");
+				$transId=$this->input->post('trans_id');
+	            $data = array(
+        	        	'from_account_id'=>$this->input->post('from_account'),
+                        'to_account_id'=>$this->input->post('to_account'),
+                        'date'=>$this->input->post('transdate'),
+                        'notes'=>$this->input->post('short_note'),
+                        'amount'=>$this->input->post('transfer_amount'),
+                        'payment_methods_id'=>$this->input->post('payment_methods_id'),
+                        'reference'=>$this->input->post('transferreference'),
+                        'permission'=>$this->input->post('permission'),
+                        // 'added_by'=>$users_seesion_id,
+                        // 'total_balance'=>$total_balance,
+                        'type'=>$type,
+                        'attachement'=>$tranferFiles,
+                        );
+	            
+	             }
+
+			else
+			{
+				$data = array(
+	    	        	'from_account_id'=>$this->input->post('from_account'),
+	                    'to_account_id'=>$this->input->post('to_account'),
+	                    'date'=>$this->input->post('transdate'),
+	                    'notes'=>$this->input->post('short_note'),
+	                    'amount'=>$this->input->post('transfer_amount'),
+	                    'payment_methods_id'=>$this->input->post('payment_methods_id'),
+	                    'reference'=>$this->input->post('transferreference'),
+	                    'permission'=>$this->input->post('permission'),
+	                    // 'added_by'=>$users_seesion_id,
+	                    // 'total_balance'=>$total_balance,
+	                    'type'=>$type
+	                    );
+			}
+			 $results=$this->Transaction->UpdateTransferData($data,$transId);
+        	  switch ($results) 
+			{
+				case 0:$this->session->set_flashdata('msg','Error');
+					break;
+				case 1:$this->session->set_flashdata('msg','update Transfer Successfully');
+					break;
+				
+				default:$this->session->set_flashdata('default','Error');
+					break;
+			}
+				redirect('Transaction/transfer');
+
+	}
+	  
 
 }
 ?>

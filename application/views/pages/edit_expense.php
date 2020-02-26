@@ -293,7 +293,7 @@ else{
                     {
                       ?>
                       <li>
-                        <img style="width:4em;height:4em;"src="<?php echo base_url().'assets/uploads/expense/'.$myImages[$i]?>" class="img-reponsive thumbnail ">
+                        <img style="width:4em;height:4em;"src="<?php echo base_url().'./uploads/expense/'.$myImages[$i]?>" class="img-reponsive thumbnail ">
                      
                        <a href="javascript:void(0)" img_id="<?=$i?>"  img_String="<?=$dataById->transactions_id?>" class=" deleteimage fa fa-times-circle"></a>
                      </li>
