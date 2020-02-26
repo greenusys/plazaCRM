@@ -44,7 +44,8 @@
           </div>
           -->
         <?php
-        $tasks_info = $this->User_model->my_permission('tbl_task', $profile_info->user_id);
+        $tasks_info = $this->db->get('tbl_task')->result();
+        // $tasks_info = $this->User_model->my_permission('tbl_task', $profile_info->user_id);
 
         $t_not_started = 0;
         $t_in_progress = 0;
@@ -88,9 +89,9 @@
                  </div>
                </div>
                <div class="progress">
-                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width
-                    <?=$startper?>%">
-                   <?=$startper?>%
+                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:
+                    <?=$startper?>%;">
+                    <?=$startper?>% 
                   </div>
                 </div>
               </div>
@@ -175,24 +176,24 @@
                         </thead>
                         <tbody>
                           <?php
-                          foreach ($all_tasks as $tasker) {
+                          foreach ($task_data as $tasker) {
                           ?>
                             <tr>
                               <td><input type="checkbox" name=" " class="h_22 form-control"></td>
-                                <td><a href="<?=base_url('Task/task_details').'/'.$tasker->task_id?>"><?=$tasker->task_name?></a></td>
-                                <td><?=$tasker->due_date?></td>
+                                <td><a href="<?=base_url('Task/task_details').'/'.$tasker['task_id']?>"><?=$tasker['task_name']?></a></td>
+                                <td><?=$tasker['due_date']?></td>
                                 <td>
                                   <?php
-                                  if ($tasker->task_status=="completed") {
+                                  if ($tasker['task_status']=="completed") {
                                     echo "<span class='text-white bg-success sele_staus'>Completed</span>";
                                   }
-                                  elseif ($tasker->task_status=="deferred") {
+                                  elseif ($tasker['task_status']=="deferred") {
                                     echo "<span class='text-white bg-danger sele_staus'>Deferred</span>";
                                   }
-                                  elseif ($tasker->task_status=="waiting_for_someone") {
+                                  elseif ($tasker['task_status']=="waiting_for_someone") {
                                     echo "<span class='text-white bg-warning sele_staus'>Waiting For Someone</span>";
                                   }
-                                  elseif ($tasker->task_status=="in_progress") {
+                                  elseif ($tasker['task_status']=="in_progress") {
                                     echo "<span class='text-white bg-warning sele_staus'>In Progresse</span>";
                                   }
                                   else{
@@ -203,32 +204,30 @@
                                   <div class="btn-group open">
                                       <button class="btn btn-xs p-0 border btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> Change <span class="caret"></span></button>
                                       <ul class="dropdown-menu animated zoomIn">
-                                        <li><a href="<?=base_url()?>Task/update_tasks/<?=$tasker->task_id?>/waiting_for_someone">Waiting For Someone</a></li>
-                                        <li><a href="<?=base_url()?>Task/update_tasks/<?=$tasker->task_id?>/deferred">Deferred</a></li>
-                                        <li><a href="<?=base_url()?>Task/update_tasks/<?=$tasker->task_id?>/completed">Completed</a></li>
-                                        <li><a href="<?=base_url()?>Task/update_tasks/<?=$tasker->task_id?>/in_progress">In Progress</a></li>
-                                        <li><a href="<?=base_url()?>Task/update_tasks/<?=$tasker->task_id?>/not_started">Not Started</a></li>
+                                        <li><a href="<?=base_url()?>Task/update_tasks/<?=$tasker['task_id']?>/waiting_for_someone">Waiting For Someone</a></li>
+                                        <li><a href="<?=base_url()?>Task/update_tasks/<?=$tasker['task_id']?>/deferred">Deferred</a></li>
+                                        <li><a href="<?=base_url()?>Task/update_tasks/<?=$tasker['task_id']?>/completed">Completed</a></li>
+                                        <li><a href="<?=base_url()?>Task/update_tasks/<?=$tasker['task_id']?>/in_progress">In Progress</a></li>
+                                        <li><a href="<?=base_url()?>Task/update_tasks/<?=$tasker['task_id']?>/not_started">Not Started</a></li>
                                       </ul>
                                   </div>
                                  </td>
                                 <td><?php
-                                if ($tasker->permission=="all") {
-                                  echo "Everyone";
-                                }
-                                else{
-                                  $user_data=json_decode($tasker->permission);
-                                  foreach ($user_data as $key => $value) {
-                                    $user_id=$key;
-                                    $checker=array('user_id'=>$user_id);
-                                    $this->db->where($checker);
-                                    $check = $this->db->get("tbl_account_details")->result_array();
-                                    // print_r($check);
-                                    echo '<img src="'.base_url().$check[0]['avatar'].'" style="height:28px;width:28px" class="rounded-circle ml-2 img-circle img-xs" title="'.$check[0]['fullname'].'" alt="'.$check[0]['fullname'].'">';
+                                if(count($tasker['assigned_to'])>0){
+                                  foreach ($tasker['assigned_to'] as $user) {
+                                    if ($user=="Everyone") {
+                                      echo "Everyone";
+                                    }else{
+                                        echo '<img src="'.base_url().$user->avatar.'"  width="20px" class="rounded-circle" alt="'.$user->fullname.'"  title ="'.$user->fullname.'">';
+                                    }
                                   }
+                                
                                 }
-                                ?> <span class="ml-2" id="open_modal" task_id="<?=$tasker->task_id?>"><i class="fa fa-plus" aria-hidden="true"></i></span></td>
+                                
+                                ?> <span class="ml-2" id="open_modal" task_id="<?=$tasker['task_id']?>"><i class="fa fa-edit" aria-hidden="true"></i></span></td>
                                 <td>
                                     <div class="">
+<<<<<<< HEAD
                                       <?php
                                       foreach($Assign_permission as $checkpermission)
                                         {
@@ -264,6 +263,11 @@
                                     
                                   
                                        
+=======
+                                      <a href="<?=base_url('Task/task_details').'/'.$tasker['task_id']?>" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                      <a href=""><span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+                                       <!-- <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span> -->
+>>>>>>> b632a5ed616b29f26a631a513eb0676f32f41755
                                     </div>
 
                                 </td>

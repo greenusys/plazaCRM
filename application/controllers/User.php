@@ -174,10 +174,10 @@ class User extends MY_Controller {
 			$data['main_id']=$user_id;
 		}
 		else{
-		$session=$this->session->userdata('logged_user');
-		$user_id=$session[0]->user_id;
-		$data['fetch_to_do']=$this->Tasks_Model->fetch_todo($user_id);
-		$data['main_id']=$user_id;
+    		$session=$this->session->userdata('logged_user');
+    		$user_id=$session[0]->user_id;
+    		$data['fetch_to_do']=$this->Tasks_Model->fetch_todo($user_id);
+    		$data['main_id']=$user_id;
 		}
 		$this->load->view('layout/header');
 		$this->load->view("pages/todo_list",$data);

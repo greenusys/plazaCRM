@@ -1,4 +1,4 @@
-<script>
+  <script>
     function openCity(evt, cityName) {
       console.log(evt);
       var i, tabcontent, tablinks;
@@ -89,9 +89,53 @@ $(document).ready(function(){
   });
  
 });
+$(document).on('click','.dlt_project',function(){
+  var projectId=$(this).attr('d-Pro');
+  swal('success','Yeah you have deleted : '+ projectId,'success');
+});
+$(document).on('click','.edt_project',function(){
+  var projectId=$(this).attr('d-Pro');
+  window.location.href="<?=base_url('Projects/')?>"+project_id;
+  swal('success','Yeah','success');
+});
 </script>
 
-           <div class="p-3">
+<?php
+  // $pover
+  
+  $all_project_info = $this->db->get('tbl_project')->result();
+  $totalProject=count($all_project_info);
+  // echo ' ***  '.
+  $p_started = 0;
+  $p_in_progress = 0;
+  $p_completed = 0;
+  $project_time = 0;
+  // $project_time = $this->User_model->my_spent_time($profile_info->user_id, true);
+
+  if (!empty($all_project_info)) {
+    // print_r($all_project_info);
+      foreach ($all_project_info as $v_user_project) {
+        // print_r($v_user_project->project_status);
+        // echo ' || <br>';
+          if ($v_user_project->project_status == 'started') {
+            $p_started += 1;
+              // $p_started += count($v_user_project->project_status);
+          }
+          if ($v_user_project->project_status == 'in_progress') {
+            $p_in_progress += 1;
+              // $p_in_progress += count($v_user_project->project_status);
+          }
+          if ($v_user_project->project_status == 'completed') {
+            $p_completed += 1;
+              // $p_completed += count($v_user_project->project_status);
+          }
+      }
+
+  }
+  // $totalProject=$p_started+$p_in_progress+$p_completed;
+
+?>
+          <!--  <div class="p-3">
             <div class="row bg-white mt-3">
                 <div class="col-md-2 ">
                   <div class="p-3 pro_status">
@@ -133,10 +177,67 @@ $(document).ready(function(){
 
                 </div>
             </div>  
-          </div>
+          </div> -->
          
           <div class="row mt-4">
-            <div class="col-lg-2 col-md-2 col-sm-12">
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="card card-statistic-2 px-2">
+                <div class="row  py-1">
+                 <div class="col-md-8">
+                   <div class=" ">
+                      <h6 class="text_col">In Progress</h6>
+                   </div>
+                 </div>
+                 <div class="col-md-4">
+                    <span><?=$p_in_progress?>/<?=$totalProject?></span>
+                 </div>
+               </div>
+               <div class="progress">
+                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:<?=($p_in_progress/$totalProject)*100?>%">
+                    <?=(int)(($p_in_progress/$totalProject)*100)?>%
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="card card-statistic-2 px-2">
+                <div class="row  py-1">
+                 <div class="col-md-8">
+                   <div class=" ">
+                      <h6 class="text_col">Completed</h6>
+                   </div>
+                 </div>
+                 <div class="col-md-4">
+                    <span><?=$p_completed?>/<?=$totalProject?></span>
+                 </div>
+               </div>
+               <div class="progress">
+                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:<?=($p_completed/$totalProject)*100?>%">
+                    <?=(int)(($p_completed/$totalProject)*100)?>%
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="card card-statistic-2 px-2">
+                <div class="row  py-1">
+                 <div class="col-md-8">
+                   <div class=" ">
+                      <h6 class="text_col">Started</h6>
+                   </div>
+                 </div>
+                 <div class="col-md-4">
+                    <span><?=$p_started?>/<?=$totalProject?></span>
+                 </div>
+               </div>
+               <div class="progress">
+                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:<?=($p_started/$totalProject)*100?>%%">
+                    <?=(int)(($p_started/$totalProject)*100)?>%
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-lg-2 col-md-2 col-sm-12">
               <div class="card card-statistic-2 px-2">
                 <div class="row  py-1">
                  <div class="col-md-8">
@@ -145,7 +246,26 @@ $(document).ready(function(){
                    </div>
                  </div>
                  <div class="col-md-4">
-                    <span>9/48</span>
+                    <span>9/<?=$totalProject?></span>
+                 </div>
+               </div>
+               <div class="progress">
+                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
+                    40%
+                  </div>
+                </div>
+              </div>
+            </div> -->
+           <!--  <div class="col-lg-2 col-md-2 col-sm-12">
+              <div class="card card-statistic-2 px-2">
+                <div class="row  py-1">
+                 <div class="col-md-8">
+                   <div class=" ">
+                      <h6 class="text_col">Overdue</h6>
+                   </div>
+                 </div>
+                 <div class="col-md-4">
+                    <span>9/<?=$totalProject?></span>
                  </div>
                </div>
                <div class="progress">
@@ -164,7 +284,7 @@ $(document).ready(function(){
                    </div>
                  </div>
                  <div class="col-md-4">
-                    <span>9/48</span>
+                    <span>9/<?=$totalProject?></span>
                  </div>
                </div>
                <div class="progress">
@@ -173,83 +293,7 @@ $(document).ready(function(){
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="col-lg-2 col-md-2 col-sm-12">
-              <div class="card card-statistic-2 px-2">
-                <div class="row  py-1">
-                 <div class="col-md-8">
-                   <div class=" ">
-                      <h6 class="text_col">Overdue</h6>
-                   </div>
-                 </div>
-                 <div class="col-md-4">
-                    <span>9/48</span>
-                 </div>
-               </div>
-               <div class="progress">
-                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
-                    40%
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-2 col-md-2 col-sm-12">
-              <div class="card card-statistic-2 px-2">
-                <div class="row  py-1">
-                 <div class="col-md-8">
-                   <div class=" ">
-                      <h6 class="text_col">Overdue</h6>
-                   </div>
-                 </div>
-                 <div class="col-md-4">
-                    <span>9/48</span>
-                 </div>
-               </div>
-               <div class="progress">
-                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
-                    40%
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-2 col-md-2 col-sm-12">
-              <div class="card card-statistic-2 px-2">
-                <div class="row  py-1">
-                 <div class="col-md-8">
-                   <div class=" ">
-                      <h6 class="text_col">Overdue</h6>
-                   </div>
-                 </div>
-                 <div class="col-md-4">
-                    <span>9/48</span>
-                 </div>
-               </div>
-               <div class="progress">
-                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
-                    40%
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-2 col-md-2 col-sm-12">
-              <div class="card card-statistic-2 px-2">
-                <div class="row  py-1">
-                 <div class="col-md-8">
-                   <div class=" ">
-                      <h6 class="text_col">Overdue</h6>
-                   </div>
-                 </div>
-                 <div class="col-md-4">
-                    <span>9/48</span>
-                 </div>
-               </div>
-               <div class="progress">
-                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
-                    40%
-                  </div>
-                </div>
-              </div>
-            </div>
+            </div> -->
   
           </div>
           <div class="row mt-4">
@@ -342,25 +386,47 @@ $(document).ready(function(){
                                  </td>
                                 <td>
                                   <?php
-                                  $total = count((array)$pr);
-              // print_r($total);
-                                  if($total>8)
-                                  {
-                                    $total=$total-8;
-                                    for($i=0;$i<$total;$i++)
-                                    {
-                                      if($pr[$i]=="Everyone ")
-                                      {
+                                  // if(count($pr['assigned_to'])>0){
+                                  //   foreach ($pr['assigned_to'] as $assigned_to) {
+                                  //     print_r($assigned_to);
+                                  //    echo '<img src="'.base_url().'" class="rounded-circle"> <a href="javascript:void(0)" id="open_modal"><i class="fa fa-plus" aria-hidden="true"></i></a>';
+                                  //   }
+                                  // // print_r($pr['assigned_to']);
+                                  
+                                  // }else{
+                                  //    echo '<a href="javascript:void(0)" id="open_modal"><i class="fa fa-plus" aria-hidden="true"></i></a>';
+                                  // }
+
+                                  if(count($pr['assigned_to'])>0){
+                                    foreach ($pr['assigned_to'] as $user) {
+                                      if ($user=="Everyone") {
                                         echo "Everyone";
+                                      }else{
+                                          echo '<a href="'.base_url('User/userDetails/').$user->userid.'"><img src="'.base_url().$user->avatar.'"  width="20px" class="rounded-circle" alt="'.$user->fullname.'"  title ="'.$user->fullname.'"></a>';
                                       }
-                                      else{
-                                        // echo $pr[$i]->fullname;
-                                      }
-                                   }
+                                    }
+                                  
                                   }
-                                  else{
-                                    echo "Everyone";
-                                  }
+                                  // die(json_encode($pr));
+                                  // $total = count($pr);
+                                  // print_r($pr);
+                                  // if($total>8)
+                                  // {
+                                  //   $total=$total-8;
+                                  //   for($i=0;$i<$total;$i++)
+                                  //   {
+                                  //     if($pr[$i]=="Everyone ")
+                                  //     {
+                                  //       echo "Everyone";
+                                  //     }
+                                  //     else{
+                                  //       // echo $pr[$i]->fullname;
+                                  //     }
+                                  //  }
+                                  // }
+                                  // else{
+                                  //   echo "Everyone";
+                                  // }
                                   //print_r($pr[0]->fullname);
                                  
                                   ?>
@@ -377,9 +443,9 @@ $(document).ready(function(){
                                 </td>
                                 <td>
                                     <div class="">
-                                      <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                      <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                       <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
+                                      <a href="<?=base_url('Projects/editProject/').$pr['project_id']?>" class="sele_staus bg-info p-1 text-white " d-Pro="<?=$pr['project_id']?>"><span><i class="far fa-edit"></i></span></a>
+                                      <a href="javascript:void(0)" class="dlt_project" d-Pro="<?=$pr['project_id']?>"><span class="sele_staus bg-danger p-1  text-white"><i class="far fa-trash-alt"></i></span></a>
+                                       <!-- <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span> -->
                                     </div>
 
                                 </td>
@@ -398,17 +464,17 @@ $(document).ready(function(){
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label for="exampleInputEmail1">Project Name <span class="text-danger">*</span> </label>
+                <label >Project Name <span class="text-danger">*</span> </label>
               </div>
               <div class="col-sm-9">
-                <input type="text" name="project_name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input type="text" name="project_name" class="form-control" >
               </div>
             </div>
           </div>
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label for="exampleInputEmail1">Select Client  <span class="text-danger">*</span> </label>
+                <label >Select Client  <span class="text-danger">*</span> </label>
               </div>
               <div class="col-sm-8">
                 <div class="input-group">
@@ -432,7 +498,7 @@ $(document).ready(function(){
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label for="exampleInputEmail1">Progress </label>
+                <label >Progress </label>
               </div>
               <div class="col-sm-9">
                   <div id="slider-range-min"></div>
@@ -463,7 +529,7 @@ $(document).ready(function(){
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label for="exampleInputEmail1">Start Date  <span class="text-danger">*</span> </label>
+                <label >Start Date  <span class="text-danger">*</span> </label>
               </div>
               <div class="col-sm-8">
                 <input type="text" name="start_date" class="form-control datepicker">
@@ -476,7 +542,7 @@ $(document).ready(function(){
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label for="exampleInputEmail1">End Date  <span class="text-danger">*</span> </label>
+                <label >End Date  <span class="text-danger">*</span> </label>
               </div>
               <div class="col-sm-8">
                 <input type="text" name="end_date" class="form-control datepicker">
@@ -489,7 +555,7 @@ $(document).ready(function(){
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label for="exampleInputEmail1">Billing Type  <span class="text-danger">*</span> </label>
+                <label >Billing Type  <span class="text-danger">*</span> </label>
               </div>
               <div class="col-sm-9">
                 <div class="input-group">
@@ -506,17 +572,17 @@ $(document).ready(function(){
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label for="exampleInputEmail1">Fixed Price  </label>
+                <label >Fixed Price  </label>
               </div>
               <div class="col-sm-9">
-                <input type="text" name="fixed_rate" class="form-control" placeholder="50" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input type="text" name="fixed_rate" class="form-control" placeholder="50" >
               </div>
             </div>
           </div>
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label for="exampleInputEmail1">Estimate Hours  </label>
+                <label >Estimate Hours  </label>
               </div>
               <div class="col-sm-9">
                 <input type="number" step="0.01" value="" class="form-control" name="estimate_hours" data-parsley-id="23">
@@ -526,7 +592,7 @@ $(document).ready(function(){
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label for="exampleInputEmail1">Status  <span class="text-danger">*</span> </label>
+                <label >Status  <span class="text-danger">*</span> </label>
               </div>
               <div class="col-sm-9">
                 <div class="input-group">
@@ -544,17 +610,17 @@ $(document).ready(function(){
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label for="exampleInputEmail1">Demo Url </label>
+                <label >Demo Url </label>
               </div>
               <div class="col-sm-9">
-                <input type="text" name="demo_url" class="form-control" placeholder="http://www.demo.com" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input type="text" name="demo_url" class="form-control" placeholder="http://www.demo.com" >
               </div>
             </div>
           </div>
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label for="exampleInputEmail1">Assigned To <span class="text-danger">*</span></label>
+                <label >Assigned To <span class="text-danger">*</span></label>
               </div>
               <div class="col-sm-9">
                 <div class="checkbox c-radio needsclick">
@@ -580,7 +646,7 @@ $(document).ready(function(){
           <div class="form-group dvPassport"  style="display: none">
               <div class="row">
               <div class="col-sm-3">
-                <label for="exampleInputEmail1">Select Users<span class="text-danger">*</span></label>
+                <label >Select Users<span class="text-danger">*</span></label>
               </div>
               <div class="col-sm-9">
                  <?php
@@ -625,7 +691,7 @@ $(document).ready(function(){
     </div>
       <div class="row">
         <div class=" col-md-2">
-          <label for="exampleInputEmail1">Description <span class="text-danger">*</span> </label>
+          <label >Description <span class="text-danger">*</span> </label>
       </div>
       <div class="col-md-10">
            <textarea name="editor1"></textarea>
@@ -801,37 +867,37 @@ $(document).ready(function(){
                 <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Company Name <span class="text-danger">*</span> </label>
+                    <label >Company Name <span class="text-danger">*</span> </label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" name="name" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" class="form-control" name="name" >
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Company Email <span class="text-danger">*</span> </label>
+                    <label >Company Email <span class="text-danger">*</span> </label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="email" class="form-control" name="email" >
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Company VAT </label>
+                    <label >Company VAT </label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" name="vat" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" class="form-control" name="vat" >
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Customer Group  </label>
+                    <label >Customer Group  </label>
                   </div>
                   <div class="col-sm-9">
                     <div class="input-group">
@@ -845,7 +911,7 @@ $(document).ready(function(){
                   <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Language  </label>
+                    <label >Language  </label>
                   </div>
                   <div class="col-sm-9">
                     <div class="input-group">
@@ -859,7 +925,7 @@ $(document).ready(function(){
                   <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Currency </label>
+                    <label >Currency </label>
                   </div>
                   <div class="col-sm-9">
                     <div class="input-group">
@@ -873,7 +939,7 @@ $(document).ready(function(){
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Short Note  </label>
+                    <label >Short Note  </label>
                   </div>
                   <div class="col-sm-9">
                     <textarea class="form-control" name="short_note"></textarea>
@@ -889,40 +955,40 @@ $(document).ready(function(){
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Company Phone</label>
+                    <label >Company Phone</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="number" name="phone" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="number" name="phone" class="form-control" >
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Company Mobile </label>
+                    <label >Company Mobile </label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="number" class="form-control" name="mobile" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="number" class="form-control" name="mobile" >
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Zip code </label>
+                    <label >Zip code </label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="zipcode" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" name="zipcode" class="form-control" >
                   </div>
                 </div>
                   </div> 
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Company City</label>
+                    <label >Company City</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="city" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" name="city" class="form-control" >
                   </div>
                 </div>
                   </div> 
@@ -943,17 +1009,17 @@ $(document).ready(function(){
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Company Fax</label>
+                    <label >Company Fax</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="fax" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" name="fax" class="form-control" >
                   </div>
                 </div>
                   </div>
                 <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Company Address </label>
+                    <label >Company Address </label>
                   </div>
                   <div class="col-sm-9">
                     <textarea class="form-control" name="address"></textarea>
@@ -963,20 +1029,20 @@ $(document).ready(function(){
                             <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1"> Latitude( Google Map ) </label>
+                    <label > Latitude( Google Map ) </label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="latitude" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" name="latitude" class="form-control" >
                   </div>
                 </div>
                   </div>
                             <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Longitude( Google Map ) </label>
+                    <label >Longitude( Google Map ) </label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="longitude" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" name="longitude" class="form-control" >
                   </div>
                 </div>
                   </div>   
@@ -989,50 +1055,50 @@ $(document).ready(function(){
                 <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Company Website</label>
+                    <label >Company Website</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="website" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" name="website" class="form-control" >
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Skype id</label>
+                    <label >Skype id</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="skype_id" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" name="skype_id" class="form-control" >
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Facebook URL</label>
+                    <label >Facebook URL</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="facebook" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" name="facebook" class="form-control" >
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Twitter URL</label>
+                    <label >Twitter URL</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="twitter" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" name="twitter" class="form-control" >
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Linkedin URL</label>
+                    <label >Linkedin URL</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="linkedin" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" name="linkedin" class="form-control" >
                   </div>
                 </div>
                   </div>
@@ -1044,50 +1110,50 @@ $(document).ready(function(){
                 <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Hosting Company</label>
+                    <label >Hosting Company</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="hosting_company" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" name="hosting_company" class="form-control" >
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Hosting</label>
+                    <label >Hosting</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="hostname" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" name="hostname" class="form-control" >
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Username</label>
+                    <label >Username</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" name="username" class="form-control" >
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Password</label>
+                    <label >Password</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="password" name="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="password" name="password" class="form-control" >
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label for="exampleInputEmail1">Port</label>
+                    <label >Port</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="port" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" name="port" class="form-control" >
                   </div>
                 </div>
                   </div>

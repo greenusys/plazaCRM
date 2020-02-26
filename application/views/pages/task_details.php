@@ -274,13 +274,14 @@ font-size: 35px;
         <div class="col-md-12">
             <div class="tab-content">
                 <!----------Task Details------->
-                <?php foreach ($task_details as $task) {
+               
+                <?php foreach ($task_data as $task) {
                  ?>
                 <div class="tab-pane active" id="details">
                     <div class=" card ">
                         <div class="row m-0">
                             <div class="col-md-10">
-                              <h6 class="m-0 mt-1"><?=$task->task_name?></h6></div>
+                              <h6 class="m-0 mt-1"><?=$task['task_name']?></h6></div>
                             <div class="col-md-2 text-right"> 
                                 <a href="" class="text-primary font-weight-bold " id="update"><i class="far fa-edit"></i> Edit</a>
                             </div>
@@ -293,17 +294,17 @@ font-size: 35px;
                                 <label class="col-md-4 text-right">Task Status :</label>
                                 <div class="col-md-8 d-flex">
                                   <?php
-                                  if($task->task_status=='completed')
+                                  if($task['task_status']=='completed')
                                   {
                                     ?>
                                   <span class="bg-success text-white p-1">completed</span>
                                   <?php
                                 }
-                                elseif ($task->task_status=='not_started') {
+                                elseif ($task['task_status']=='not_started') {
                                ?>
                                 <span class="bg-info text-white p-1">Not Started</span>
                                <?php }
-                               elseif ($task->task_status=='deferred') {
+                               elseif ($task['task_status']=='deferred') {
                                ?>
                                 <span class="bg-danger text-white p-1">Deferred</span>
                                <?php }
@@ -329,25 +330,25 @@ font-size: 35px;
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Start Date :</label>
                                 <div class="col-md-8">
-                                  <span class=""><?=$task->task_start_date?></span>
+                                  <span class=""><?=$task['task_start_date']?></span>
                                 </div>
                               </div>
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Created By :</label>
                                 <div class="col-md-8">
-                                  <span class=""><?=$task->full_name?></span>
+                                  <span class=""><?=$task['full_name']?></span>
                                 </div>
                               </div>
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Hourly Rate :</label>
                                 <div class="col-md-8">
-                                  <span class=""><?=$task->task_hour?></span>
+                                  <span class=""><?=$task['task_hour']?></span>
                                 </div>
                               </div>
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Billable :</label>
                                 <div class="col-md-8">
-                                  <span class="text-white bg-danger p-1"><?=$task->billable?></span>
+                                  <span class="text-white bg-danger p-1"><?=$task['billable']?></span>
                                 </div>
                               </div>
                             
@@ -370,26 +371,63 @@ font-size: 35px;
                               <div class="row form-group">
                                 <label class="col-md-4 text-right text-danger">Due Date :</label>
                                 <div class="col-md-8">
-                                  <span class=""><?=$task->due_date?></span>
+                                  <span class=""><?=$task['due_date']?></span>
                                 </div>
                               </div>
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Created Date :</label>
                                 <div class="col-md-8">
-                                  <span class=""><?=$task->task_created_date?></span>
+                                  <span class=""><?=$task['task_created_date']?></span>
                                 </div>
                               </div>
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Estimated Hour  :</label>
                                 <div class="col-md-8">
-                                  <span class=""><?=$task->task_hour?></span>
+                                  <span class=""><?=$task['task_hour']?></span>
                                 </div>
                               </div>
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Participants :</label>
                                 <div class="col-md-8">
-                                  <span class=""><strong>Everyone <i class="fas fa-question-circle"></i></strong> &nbsp; &nbsp;<strong data-toggle="modal" data-target="#participantModal" class="text-primary"><i class="fas fa-plus"></i></strong></span>
-                                </div>
+                                <?php
+                                // print_r($task_data);
+                                // foreach ($task_data[0]['assigned_to'] as $user_Data) 
+                                //  {
+                                  // print_r($user_Data);
+                                  if(count($task_data[0]['assigned_to'])>0){
+                                    foreach ($task_data[0]['assigned_to'] as $user) {
+                                      if ($user=="Everyone") {
+                                        echo "Everyone";
+                                      }else{
+                                          echo '<img src="'.base_url().$user->avatar.'"  width="20px" class="rounded-circle" alt="'.$user->fullname.'"  title ="'.$user->fullname.'">';
+                                      }
+                                    }
+                                  
+                                  }
+                                    // if($newtask['assigned_to'][0]=='Everyone')
+                                    // {
+                                      ?>
+                                    
+                                     <!--  <span class=""><strong>Everyone <i class="fas fa-question-circle"></i></strong> &nbsp; &nbsp;<strong data-toggle="modal" data-target="#participantModal" class="text-primary"> -->
+                                      <!--   <i class="fas fa-plus"></i> -->
+                                      <!-- </strong></span> -->
+                                   
+                                    <?php
+                                  // }
+                                  // else
+                                  // {
+                                 
+                                    //print_r($newtask['assigned_to'][0]);
+                                    ?>
+                                    <!-- <span class=""><strong><?=$newtask['assigned_to'][0]->avatar?> <i class="fas fa-question-circle"></i></strong> &nbsp; &nbsp;<strong data-toggle="modal" data-target="#participantModal" class="text-primary"> -->
+                                    <!--   <i class="fas fa-plus"></i> -->
+                                    <!-- </strong></span> -->
+                                  <?php
+                                  // }
+                                // }
+
+                              ?>
+                               </div>
                               </div>
                             
                             </div>
@@ -399,8 +437,8 @@ font-size: 35px;
                           <label class="col-md-2 text-right">Completed :</label>
                           <div class="col-md-10 pr-5">
                              <div class="progress" style="height: 1.6rem;">
-                                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:<?=$task->task_progress?>%">
-                                  <?=$task->task_progress?>%
+                                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:<?=$task['task_progress']?>%">
+                                  <?=$task['task_progress']?>%
                                 </div>
                               </div>
                           </div>
