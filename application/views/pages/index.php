@@ -131,9 +131,9 @@
                                 <th>Client</th>
                                 <th>End Date</th>
                                 <th>Status</th>
-                                <th>Assigned To</th>
+                                <!-- <th>Assigned To</th> -->
                                 <th>Downloads</th>
-                                <th>Action</th>
+                                <!-- <th>Action</th> -->
                              
                             </tr>
                         </thead>
@@ -178,7 +178,7 @@
                                         </div>
                                       
                                   </td>
-                                  <td>
+                                  <!-- <td>
                                     <?php 
                                     if($proj_detail['assigned_to'][0]!=""){
                                       $total = count((array)$proj_detail);
@@ -209,10 +209,10 @@
                                       }
                                     }
                                       echo '<a href="javascript:void(0)" id="open_modal"><i class="fa fa-plus" aria-hidden="true"></i></a>';
-                                   ?> 
+                                   ?>  -->
                                     
                                 
-                                  </td>
+                                  <!-- </td> -->
                                   <td>
                                     <?php
                                       if ($proj_detail['project_uploads']==null) {
@@ -223,14 +223,14 @@
                                       }
                                       ?>
                                   </td>
-                                  <td>
+                                  <!-- <td>
                                     <div class="">
                                       <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
                                       <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
                                        <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
                                     </div>
 
-                                </td>
+                                </td> -->
                                 </tr>
                               <?php
                             }
@@ -256,7 +256,7 @@
                                 <th>Task Name</th>
                                 <th>End Date</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <!-- <th>Action</th> -->
                                
                             </tr>
                         </thead>
@@ -299,13 +299,13 @@
                                       </ul>
                                   </div>
                                  </td>
-                                  <td>
+                                  <!-- <td>
                                     <div class="">
                                       <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
                                       <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
                                        <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
                                     </div>
-                                  </td>
+                                  </td> -->
                                 </tr>
                               <?php
                             }
@@ -316,7 +316,7 @@
                                 <th>Task Name</th>
                                 <th>End Date</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <!-- <th>Action</th> -->
                             </tr>
                         </tfoot>
                     </table>
@@ -571,16 +571,16 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-6">
+            <!-- <div class="col-lg-6">
               <div class="card card-height">
                 <div class="card-header row border-bottom py-1">
                   <div class="col-md-6">
                     <span><strong>Recent Activities</strong></span> 
-                   </div>
+                   </div> -->
                     <!-- <div class="col-md-6 text-right"><button class="btn btn-success rounded-0">Add New</button></div> -->
-                </div>
+                <!-- </div> -->
               
-                <div class="">
+              <!--   <div class="">
                   <ul class="list-unstyled p-4">
                     <li class="row">
                       <div class="rec_act">
@@ -596,7 +596,7 @@
              
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         
           
