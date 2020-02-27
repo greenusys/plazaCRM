@@ -604,6 +604,8 @@ class User extends MY_Controller {
 	function reportList(){
 		$session=$this->session->userdata('logged_user');
 		$user_id=$session[0]->user_id;
+        $designation_id=$session[0]->designations_id;
+        $data['Assign_permission']=$this->User_model->CheckPermission($designation_id);
 		 $data['reports_list']=$this->User_model->fetch_report_list($user_id);
 		$this->load->view('layout/header');
 		$this->load->view("pages/view_reports",$data);

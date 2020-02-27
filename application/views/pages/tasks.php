@@ -227,7 +227,6 @@
                                 ?> <span class="ml-2" id="open_modal" task_id="<?=$tasker['task_id']?>"><i class="fa fa-edit" aria-hidden="true"></i></span></td>
                                 <td>
                                     <div class="">
-<<<<<<< HEAD
                                       <?php
                                       foreach($Assign_permission as $checkpermission)
                                         {
@@ -260,14 +259,10 @@
 
                                         }?>
 
-                                    
-                                  
-                                       
-=======
-                                      <a href="<?=base_url('Task/task_details').'/'.$tasker['task_id']?>" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                      <a href=""><span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+                                     <!--  <a href="<?=base_url('Task/task_details').'/'.$tasker['task_id']?>" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                      <a href=""><span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a> -->
                                        <!-- <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span> -->
->>>>>>> b632a5ed616b29f26a631a513eb0676f32f41755
+
                                     </div>
 
                                 </td>

@@ -37,9 +37,35 @@
                                                 <td><?=$announce->status?></td>
                                                 <td>
                                                     <div class="">
+                                                        <?php
+                                                        foreach($Assign_permission as $checkpermission)
+                                        {
+                                          $permission=$checkpermission->permission;
+                                                
+                                          if(strpos($permission,'Edit')!==false)
+                                          {?>
                                                         <a href="javascript:void(0)" class="sele_staus bg-info p-1 text-white " data-id="<?=$announce->announcements_id?>"><span><i class="far fa-edit"></i></span></a>
+                                                         <?php }
+                                         else
+                                         {
+                                          ?>
+                                            <a href="javascript:void(0)" style="visibility: hidden"class="sele_staus bg-info p-1 text-white " data-id="<?=$announce->announcements_id?>"><span><i class="far fa-edit"></i></span></a>
+                                            <?php
+                                          }
+                                         if(strpos($permission,'Delete')!==false)
+                                          {?>
                                                         <a href="javascript:void(0)" class="deleteAnnuo" data-id="<?=$announce->announcements_id?>"><span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
-                                                        <a><span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span></a>
+                                                          <?php }
+                                         else
+                                         {
+                                          ?>
+                                            <a href="javascript:void(0)" style="visibility: hidden"
+                                            class="deleteAnnuo" data-id="<?=$announce->announcements_id?>"><span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+                                          <?php
+                                          }
+
+                                        }?>
+                                                      <!--   <a><span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span></a> -->
                                                     </div>
 
                                                 </td>
