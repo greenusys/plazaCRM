@@ -231,8 +231,12 @@
                                       foreach($Assign_permission as $checkpermission)
                                         {
                                           $permission=$checkpermission->permission;
+<<<<<<< HEAD
+                                            
+=======
                                           print_r($permission);
                                                 
+>>>>>>> 347f8e4eb2720e2324c47426aa82b98e7c225138
                                           if(strpos($permission,'Edit')!==false)
                                           {?>
                                               <a href="" id="edit_p"class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
