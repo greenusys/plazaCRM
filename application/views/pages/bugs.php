@@ -76,9 +76,35 @@
 						<td>Undefined User</td>
 						<td>Everyone<i class="fa fa-question-circle"></i> <i class="fa fa-plus text-primary"></i></td>
 						<td scope="row" >
-							<button type="button"  id="edit" class="btn btn-primary fs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil-square-o"></i></button>
-							
-							<button type="button" class="btn btn-danger fs " data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash-o"></i></button>
+							<?php
+                                      foreach($Assign_permission as $checkpermission)
+                                        {
+                                          $permission=$checkpermission->permission;
+                                          if(strpos($permission,'Edit')!==false)
+                                          {?>
+                                       <a href="#"><span class="sele_staus bg-success p-1 text-white"><i class="far fa-edit"></i></span></a>
+                                        <?php }
+                                         else
+                                         {
+                                          ?>
+                                          <a href="javascript:void(0)" style="visibility: hidden"><span class="sele_staus bg-success p-1 text-white"><i class="far fa-edit"></i></span></a>
+                                          <?php
+                                          }
+                                         if(strpos($permission,'Delete')!==false)
+                                          {?>
+
+                                       <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
+                                        <?php }
+                                         else
+                                         {
+                                          ?>
+
+                                       <span style="visibility: hidden" class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
+
+                                          <?php
+                                          }
+
+                                        }?>
 						</td>
 				
 					</tr>

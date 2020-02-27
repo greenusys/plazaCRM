@@ -36,9 +36,38 @@
                     <td class="text-capitalize text-center"><?=$fetch->status?></td>
                     <td>
                       <div class="">
+                        <?php
+                                      foreach($Assign_permission as $checkpermission)
+                                        {
+                                          $permission=$checkpermission->permission;
+                                          if(strpos($permission,'Edit')!==false)
+                                          {?>
+                        
                         <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                        <?php }
+                                         else
+                                         {
+                                          ?>
+                                           <a href="" style="visibility: hidden"class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                           <?php
+                                          }
+                                         if(strpos($permission,'Delete')!==false)
+                                          {?>
+
                         <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                         <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
+                         <?php }
+                                         else
+                                         {
+                                          ?>
+                                           <span style="visibility: hidden"class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
+                                           
+                                          <?php
+                                          }
+
+                                        }?>
+
+
+                         <!-- <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span> -->
                       </div>
                     </td>
                   </tr>

@@ -475,4 +475,9 @@ class Payroll_Model extends MY_Model
            $res = $this->db->query("select * from tbl_salary_payment_allowance where salary_payment_id = '$salary_payment_id'")->result();
            return $res;
     }
+    public function CheckPermission($designation_id)
+    {
+        $this->db->where('designations_id',$designation_id);
+        return $this->db->get('tbl_designations')->result();
+    }
 }

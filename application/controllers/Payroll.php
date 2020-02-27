@@ -61,6 +61,9 @@ class Payroll extends MY_Controller {
 
 	public function salaryTemplate()
 	{
+        $session=$this->session->userdata('logged_user');
+        $designation_id=$session[0]->designations_id;
+        $data['Assign_permission']=$this->Payroll_model->CheckPermission($designation_id);
 		$data['templates']=$this->Payroll_model->fetch_templates();
 		$this->load->view('layout/header');
 		$this->load->view("pages/salary_template",$data);
@@ -99,6 +102,9 @@ class Payroll extends MY_Controller {
 
 	public function hourlyTemplate()
 	{
+        $session=$this->session->userdata('logged_user');
+        $designation_id=$session[0]->designations_id;
+        $data['Assign_permission']=$this->Payroll_model->CheckPermission($designation_id);
 		$data['templates']=$this->Payroll_model->fetch_hourly_templates();
 		$this->load->view('layout/header');
 		$this->load->view("pages/hourly_rate",$data);
@@ -173,6 +179,9 @@ class Payroll extends MY_Controller {
 
 	public function empSalary()
 	{
+         $session=$this->session->userdata('logged_user');
+        $designation_id=$session[0]->designations_id;
+        $data['Assign_permission']=$this->Payroll_model->CheckPermission($designation_id);
 		$data['employee']=$this->Payroll_model->get_emp_salary_list();
 		$this->load->view('layout/header');
 		$this->load->view("pages/emp_salary_list",$data);

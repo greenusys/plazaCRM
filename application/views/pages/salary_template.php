@@ -46,9 +46,46 @@
                                 <td><?=$template->overtime_salary?></td>
                                 <td>
                                     <div class="">
-                                      <a href="javascript:void(0);" onclick="open_modal(<?=$template->salary_template_id?>)" class="sele_staus bg-info p-1 text-white"><span><i class="far fa-edit"></i></span></a>
+                                      <?php
+                                      foreach($Assign_permission as $checkpermission)
+                                        {
+                                          $permission=$checkpermission->permission;
+                                              
+                                          if(strpos($permission,'View')!==false)
+                                          {?>
+                                      <a href="javascript:void(0);" onclick="open_modal(<?=$template->salary_template_id?>)" class="sele_staus bg-info p-1 text-white"><span><i class="far fa-clock"></i></span></a>
+                                       <?php }
+                                         else
+                                         {
+                                          ?>
+                                           <a href="javascript:void(0);" style="visibility: hidden" onclick="open_modal(<?=$template->salary_template_id?>)" class="sele_staus bg-info p-1 text-white"><span><i class="far fa-clock"></i></span></a>
+                                            <?php
+                                          }
+                                         if(strpos($permission,'Edit')!==false)
+                                          {?>
+
+                                       <a href="<?=base_url()?>Payroll/salaryTemplate/<?=$template->salary_template_id?>"><span class="sele_staus bg-success p-1 text-white"><i class="far fa-edit"></i></span></a>
+                                       <?php }
+                                         else
+                                         {
+                                          ?>
+                                           <a href="javascript:void(0)" style="visibility: hidden"><span class="sele_staus bg-success p-1 text-white"><i class="far fa-edit"></i></span></a>
+                                           <?php
+                                          }
+                                         if(strpos($permission,'Delete')!==false)
+                                          {?>
+
                                       <span class="sele_staus bg-danger p-1 text-white del_template" temp_id="<?=$template->salary_template_id?>"><i class="far fa-trash-alt"></i></span>
-                                       <a href="<?=base_url()?>Payroll/salaryTemplate/<?=$template->salary_template_id?>"><span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span></a>
+                                        <?php }
+                                         else
+                                         {
+                                          ?>
+                                            <span style="visibility: hidden" class="sele_staus bg-danger p-1 text-white del_template" temp_id="<?=$template->salary_template_id?>"><i class="far fa-trash-alt"></i></span>
+                                           <?php
+                                          }
+
+                                        }?>
+                                      
                                     </div>
                                 </td>
                             </tr>

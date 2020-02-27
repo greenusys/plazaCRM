@@ -116,7 +116,8 @@
               <div class="col-sm-7">
                 <div class="input-group">
                   <select name="lpolicy_designation_id" class="form-control fetchdesigid" id="designationforleave">
-                    <option selected="" disabled="" value="0">Select Designation</option>
+                    <option selected disabled="" value="0">Select Designation</option>
+                     
                      </select>
                 </div>
               </div>

@@ -194,4 +194,10 @@ class Transactions_model extends MY_Model
                 return 0;
             }
     }
+    public function CheckPermission($designation_id)
+    {
+        $this->db->where('designations_id',$designation_id);
+        return $this->db->get('tbl_designations')->result();
+    }
+    
 }
