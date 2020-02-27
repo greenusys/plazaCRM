@@ -455,8 +455,38 @@ $(document).on('click','.edt_project',function(){
                                 </td>
                                 <td>
                                     <div class="">
+                                      <?php
+                                      foreach($Assign_permission as $checkpermission)
+                                        {
+                                          $permission=$checkpermission->permission;
+                                          print_r($permission);
+                                                
+                                          if(strpos($permission,'Edit')!==false)
+                                          {?>
                                       <a href="<?=base_url('Projects/editProject/').$pr['project_id']?>" class="sele_staus bg-info p-1 text-white " d-Pro="<?=$pr['project_id']?>"><span><i class="far fa-edit"></i></span></a>
+                                       <?php }
+                                         else
+                                         {
+                                          ?>
+                                           <a href="#"
+                                           style="visibility: hidden" class="sele_staus bg-info p-1 text-white " d-Pro="<?=$pr['project_id']?>"><span><i class="far fa-edit"></i></span></a>
+                                           <?php
+                                          }
+                                         if(strpos($permission,'Delete')!==false)
+                                          {?>
+
+
                                       <a href="javascript:void(0)" class="dlt_project" d-Pro="<?=$pr['project_id']?>"><span class="sele_staus bg-danger p-1  text-white"><i class="far fa-trash-alt"></i></span></a>
+                                       <?php }
+                                         else
+                                         {
+                                          ?>
+
+                                      <a href="javascript:void(0)" style="visibility: hidden"class="dlt_project" d-Pro="<?=$pr['project_id']?>"><span class="sele_staus bg-danger p-1  text-white"><i class="far fa-trash-alt"></i></span></a>
+                                      <?php
+                                          }
+
+                                        }?>
                                        <!-- <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span> -->
                                     </div>
 
