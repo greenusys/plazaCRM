@@ -91,7 +91,19 @@ $(document).ready(function(){
 });
 $(document).on('click','.dlt_project',function(){
   var projectId=$(this).attr('d-Pro');
-  swal('success','Yeah you have deleted : '+ projectId,'success');
+  $.ajax({
+    url:"<?=base_url('Projects/delete_project')?>",
+    type:"post",
+    data:{project_id:projectId},
+    success:function(response){
+        response=JSON.parse(response);
+        if(response.status==1){
+            swal('success','Project Deleted Successfully.','success');      
+            $('#myTabContentJust').load(document.URL +  ' #myTabContentJust');  
+        }
+    }
+  });
+  
 });
 $(document).on('click','.edt_project',function(){
   var projectId=$(this).attr('d-Pro');
