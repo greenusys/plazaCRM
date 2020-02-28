@@ -79,7 +79,7 @@
                                 <th>Date</th>
                                 <th>Account Name</th>
                                  <th>Paid By</th>
-                                <th>Ammount</th>
+                                <th>Amount</th>
                                   <th>Balance</th>
                                 <!--<th>Status</th>-->
                                 <th>Attachment</th>

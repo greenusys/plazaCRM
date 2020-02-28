@@ -217,6 +217,14 @@ public function __construct(){
 		$this->load->view("pages/client_details",$data);
 		$this->load->view("layout/footer");
 	} 
+	public function DeleteClient()
+	{
+
+		$data=array('client_id'=>$this->input->post('client_id'));
+		$results=$this->Client->DeleteClient($data);
+		die(json_encode($results));
+
+	}
 	// public function client_detaisls($id, $action = null)
  //    {
  //        if ($action == 'add_contacts') {

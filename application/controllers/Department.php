@@ -38,6 +38,7 @@
 			// $this->db->where('');
 			return $this->DPT->getDesignations($departments_id);
 		}
+		
 
 		public function getDesignations_ajax(){
 			$departments_id=$_POST['dept_id'];
@@ -107,6 +108,65 @@
 				die(json_encode(array("code"=>0, "data"=>"Failed To Delete Designation")));
 			}
 		}
+		public function Edit_Dept($id)
+	{
+	    // $data['fetch_leave_yearly']=$this->leave->EditYearlyleave($id);
+	   $data['Edit_Designation_']=$this->DPT->fetchDesignationforedit($id);
+	    // print_r( $data['fetch_leave_yearly']);
+    	$this->load->view('layout/header');
+		$this->load->view("pages/edit_designation",$data);
+		$this->load->view("layout/footer");	
+	
+	}
+	public function Edit_Deptarmentsss($id)
+	{
+	    // $data['fetch_leave_yearly']=$this->leave->EditYearlyleave($id);
+	   $data['Edit_Department']=$this->DPT->fetchDepartmentforedit($id);
+	    // print_r( $data['fetch_leave_yearly']);
+    	$this->load->view('layout/header');
+		$this->load->view("pages/edit_deptttt",$data);
+		$this->load->view("layout/footer");	
+	
+	}
+
+	public function updatedepttt()
+	{
+		$designation_id=$this->input->post('designation_id');
+		$designation=$this->input->post('designation'); 	 
+		$data = array(
+        	'designations'=>$designation
+        );
+   
+        $result=$this->DPT->UpdatedepttData($data,$designation_id);
+		if($result==1){
+			die(json_encode(array('status' =>'1' ,'msg'=>'Update Successfully')));
+		}
+		elseif($result==0){
+			die(json_encode(array('status' =>'0' ,'msg'=>'Error')));
+		}
+		else{
+			die(json_encode(array('status' =>'2' ,'msg'=>'Try Again')));
+		}
+	}
+	public function updatedepartmentsbyid()
+	{
+		$department_id=$this->input->post('department_id');
+		$department=$this->input->post('department'); 	 
+		$data = array(
+        	'deptname'=>$department
+        );
+   
+        $result=$this->DPT->UpdatedepartmentsData($data,$department_id);
+		if($result==1){
+			die(json_encode(array('status' =>'1' ,'msg'=>'Update Successfully')));
+		}
+		elseif($result==0){
+			die(json_encode(array('status' =>'0' ,'msg'=>'Error')));
+		}
+		else{
+			die(json_encode(array('status' =>'2' ,'msg'=>'Try Again')));
+		}
+	}
 		
 		
 

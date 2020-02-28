@@ -29,71 +29,82 @@
 			$('#edit_dept_name').val(depName);
 		});
 
-		$(document).on('submit','#updDe',function(e){
-			e.preventDefault();
-			var depId=$('#edit_dept_id').val();
-			var depHead=$('#dp_head').val();
-			if($depHead==0){
-				alert("Please Select Department Head.");
-			}
+		// $(document).on('submit','#updDe',function(e){
+		// 	e.preventDefault();
+		// 	var depId=$('#edit_dept_id').val();
+		// 	var depHead=$('#dp_head').val();
+		// 	if($depHead==0){
+		// 		alert("Please Select Department Head.");
+		// 	}
 			
-			var depName=$('#edit_dept_name').val();
-			$.ajax({
-				url:"<?=base_url('Department/updateDeptName')?>",
-				type:"post",
-				data:{dptId:depId, dptName:depName,depHead:depHead},
-				success:function(response){
-					console.log(response);
-					response=JSON.parse(response);
-					if(response.code==1){
-						// swal('Success')
-						swal("Good job!", response.data, "success");
-						setInterval(function(){ location.reload()}, 2000);
-					}else{
-						swal("Oops!", response.data, "warning");
-						setInterval(function(){ location.reload()}, 2000);
-					}
+		// 	var depName=$('#edit_dept_name').val();
+		// 	$.ajax({
+		// 		url:"<?=base_url('Department/updateDeptName')?>",
+		// 		type:"post",
+		// 		data:{dptId:depId, dptName:depName,depHead:depHead},
+		// 		success:function(response){
+		// 			console.log(response);
+		// 			response=JSON.parse(response);
+		// 			if(response.code==1){
+		// 				// swal('Success')
+		// 				swal("Good job!", response.data, "success");
+		// 				setInterval(function(){ location.reload()}, 2000);
+		// 			}else{
+		// 				swal("Oops!", response.data, "warning");
+		// 				setInterval(function(){ location.reload()}, 2000);
+		// 			}
 					
-				}
-			})
-		});
+		// 		}
+		// 	})
+		// });
 		$(document).on('click','.deleteDepartment',function(){
 			var depId=$(this).attr('d-id');
+			if(confirm("Are you Sure want to delete this record?") ==true)
+            {  
 			$.ajax({
 				url:"<?=base_url('Department/deleteDepartment')?>",
 				type:"post",
 				data:{depID:depId},
+
 				success:function(response){
 					response=JSON.parse(response);
+
 					if(response.code==1){
 						swal("Good job!", response.data, "success");
 						setInterval(function(){ location.reload()}, 2000);
-					}else{
-						swal("Oops!", response.data, "warning");
-						setInterval(function(){ location.reload()}, 2000); 
 					}
 					
 				}
 			})
+			 }
+			 else{
+						swal("Oops!", 'error', "warning");
+						setInterval(function(){ location.reload()}, 2000); 
+					}
 		});
 		$(document).on('click','.deleteDesignation',function(){
 			var desID=$(this).attr('d-id');
-			$.ajax({
-				url:"<?=base_url('Department/deleteDesignation')?>",
-				type:"post",
-				data:{desID:desID},
-				success:function(response){
-					response=JSON.parse(response);
-					if(response.code==1){
-						swal("Good job!", response.data, "success");
-						setInterval(function(){ location.reload()}, 2000);
-					}else{
-						swal("Oops!", response.data, "warning");
-						setInterval(function(){ location.reload()}, 2000); 
-					}
-					
-				}
-			})
+			if(confirm("Are you Sure want to delete this record?") ==true)
+            {
+					$.ajax({
+						url:"<?=base_url('Department/deleteDesignation')?>",
+						type:"post",
+						data:{desID:desID},
+						success:function(response){
+							response=JSON.parse(response);
+							if(response.code==1){
+								swal("Good job!", response.data, "success");
+								setInterval(function(){ location.reload()}, 2000);
+							}
+							
+						}
+					})
+			}
+				else{
+								swal("Oops!", 'error', "warning");
+								setInterval(function(){ location.reload()}, 2000); 
+							}
+
 		});
 	</script>
 	<div class="line"></div>
@@ -101,7 +112,7 @@
 		<?php
 			// print_r($Deatils);
 			foreach ($Deatils as $value ) {
-			 // print_r($value);
+			  // print_r($value);
 			?>
 				<div class="col-sm-6">
 					<div class="row">
@@ -116,7 +127,10 @@
                                           $permission=$checkpermission->permission;
                                           if(strpos($permission,'Edit')!==false)
                                           {?>
-						   <a href="javascript:void(0)" class="btn btn-primary fs " id="ditDept"  data-toggle="modal" data-target="#updateDepartment" d-id="<?=$value['Dept_id']?>" d-name="<?=$value['Dept_name']?>"><i class="fas fa-edit"></i></a>
+
+                                          	 <a href="<?=base_url('Department/Edit_Deptarmentsss/').$value['Dept_id']?>"><span class="btn btn-primary fs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></span></a>
+
+						 <!--  <a href="<?=base_url('Department/Edit_Deptarmentsss/').$value->Dept_id?>"><i class="fas fa-edit"></i></a> -->
 						    <?php }
                                          else
                                          {
@@ -153,6 +167,7 @@
 									<?php
 									$j=1;
 										foreach ($value['designation'] as $desg) {
+											// print_r($desg);
 											# code...
 											?>
 												<tr>
@@ -165,7 +180,7 @@
                                           $permission=$checkpermission->permission;
                                           if(strpos($permission,'Edit')!==false)
                                           {?>
-													    <a href="departmentform.php"><button type="button" class="btn btn-primary fs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></button></a>
+													    <a href="<?=base_url('Department/Edit_Dept/').$desg->designations_id?>"><span class="btn btn-primary fs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></span></a>
 									    	 <?php }
                                          else
                                          {
@@ -227,7 +242,7 @@
 	    </div>
 	</div>
 </div>
-<div class="modal" id="updateDepartment" tabindex="-1" role="dialog" aria-labelledby="updateDepartmentLabel" aria-hidden="true">
+<!-- <div class="modal" id="updateDepartment" tabindex="-1" role="dialog" aria-labelledby="updateDepartmentLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -276,4 +291,42 @@
       </div>
     </div>
   </div>
-</div>	
+<!-- </div>	 -->
+ <script> 
+
+       $(document).ready(function(){
+            $("#depttt").submit(function(e){
+                e.preventDefault();
+                var formData= new FormData($(this)[0]); 
+                $.ajax({
+                    url:"<?=base_url('Department/updatedepttt')?>",
+                     type:"post",
+                     data:formData,
+                     // enctype:"multipart/form-data",
+                     contentType:false,
+                     processData:false,
+                     cache:false,
+                    success:function(response)
+                    {
+                     var obj=JSON.parse(response);
+                     console.log(obj.status);
+                     if(obj.status==0)
+                     {
+                        swal("Designation", "Error", "error")
+                     }
+                     if(obj.status==1)
+                     {
+                      swal("Designation", "Updated", "success")
+                     }
+                     if(obj.status==2)
+                     {
+                     swal("Designation", "Try Again", "error")
+                     }
+                     window.location.href='<?=base_url("Department/index")?>';
+                    }
+                });
+            });
+
+        });
+
+    </script>

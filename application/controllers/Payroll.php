@@ -938,6 +938,14 @@ class Payroll extends MY_Controller {
 		$this->load->view("pages/employee_award");
 		$this->load->view("layout/footer");
 	}
+    public function DeleteHourly()
+    {
+
+        $data=array('hourly_rate_id'=>$this->input->post('hourly_id'));
+        $results=$this->Payroll_model->DeleteHourly($data);
+        die(json_encode($results));
+
+    }
 	
 	
 }

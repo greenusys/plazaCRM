@@ -79,7 +79,7 @@
                                 <th>Name/Title</th>
                                 <th>Date</th>
                                 <th>Account Name</th>
-                                <th>Ammount</th>
+                                <th>Amount</th>
                                 <th>Status</th>
                                 <th>Attachment</th>
                                 <th>Action</th>
