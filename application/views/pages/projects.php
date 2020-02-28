@@ -459,7 +459,7 @@ $(document).on('click','.edt_project',function(){
                                       foreach($Assign_permission as $checkpermission)
                                         {
                                           $permission=$checkpermission->permission;
-                                          print_r($permission);
+                                          // print_r($permission);
                                                 
                                           if(strpos($permission,'Edit')!==false)
                                           {?>
