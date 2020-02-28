@@ -371,7 +371,7 @@ $(document).ready(function(){
                                     echo "No Downloads";
                                   }
                                   else{
-                                    echo "<a href='".base_url()."Projects/downloader/".$pr['project_id']."'>Download Now</a>";
+                                    echo "<a href='".base_url('Projects/downloader/').$pr['project_id']."'>Download Now</a>";
                                   }
                                   ?>
                                 </td>

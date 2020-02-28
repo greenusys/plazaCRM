@@ -442,21 +442,38 @@
                                             </div>
 
                                         </div>
+                                        <?php
+                                            // print_r($MyApprovedLeave);
+                                        ?>
                                         <div class="">
                                             <table class="table ">
                                                 <tbody>
-                                                    <tr class="border-bottom">
-                                                        <td><strong>Slick:</strong></td>
-                                                        <td>0/2</td>
-                                                    </tr>
-                                                    <tr class="border-bottom">
-                                                        <td><strong>Marriage:</strong></td>
-                                                        <td>0/3</td>
-                                                    </tr>
-                                                    <tr class="bg-dark text-white">
-                                                        <td><strong>Total:</strong></td>
-                                                        <td>0/5</td>
-                                                    </tr>
+                                                    <?php
+                                                    // print_r($myLeaveDetails);
+                                                    $sum=0;
+                                                    $cat_id=0;
+                                                    foreach ($myLeaveDetails as $cat) {
+                                                        $temp=0;
+                                                            if($cat_id==$cat['cate_id']){
+                                                                $sum+=$cat['leaveDuration'];
+                                                               $temp=1;
+                                                            }
+                                                            if($temp==0){
+                                                                ?>
+                                                                <tr class="border-bottom">
+                                                                    <td><strong><?=ucwords($cat['cat_name'])?>:</strong></td>
+                                                                    <td><?=$sum?>/<?=$cat['leaveDays']?></td>
+                                                                </tr>
+                                                                <?php
+                                                            }
+                                                            $sum=$cat['leaveDuration'];
+                                                            // echo ' Cate Id : '.$cat_id.'  ';
+                                                            $cat_id=$cat['cate_id'];
+                                                            // echo ' Cate Id : '.$cat_id.' || ';
+                                                        }
+
+                                                    ?>
+                                                   
                                                 </tbody>
                                             </table>
                                         </div>

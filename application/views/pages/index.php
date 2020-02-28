@@ -1,6 +1,6 @@
 
           <div class="row mt-4">
-            <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="col-lg-4 col-md-4 col-sm-12">
               <div class="card card-statistic-2">
                 <div class="row">
                  <div class="col-md-3">
@@ -23,7 +23,7 @@
                
               </div>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="col-lg-4 col-md-4 col-sm-12">
               <div class="card card-statistic-2">
                <div class="row">
                  <div class="col-md-3">
@@ -38,6 +38,54 @@
                       </div>
                       <div class="card-body">
                        In Progress Task<br>
+                    <span><a href="<?=base_url('Dashboard/inProgressTasks')?>">More Info <i class="fas fa-arrow-circle-right"></i></a></span>
+                      </div>
+                    </div>
+                 </div>
+               </div>
+                
+             
+              </div>
+            </div>
+            <!-- <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="card card-statistic-2">
+               <div class="row">
+                 <div class="col-md-3">
+                   <div class="card-icon shadow-primary bg-primary">
+                     <i class="far fa-folder-open"></i>
+                  </div>
+                 </div>
+                 <div class="col-md-9">
+                    <div class="card-wrap text-center">
+                      <div class="card-header">
+                        <h4><?=count($in_progress_task)?></h4>
+                      </div>
+                      <div class="card-body">
+                       In Progress Task<br>
+                    <span><a href="<?=base_url('Dashboard/inProgressTasks')?>">More Info <i class="fas fa-arrow-circle-right"></i></a></span>
+                      </div>
+                    </div>
+                 </div>
+               </div>
+                
+             
+              </div>
+            </div> -->
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="card card-statistic-2">
+               <div class="row">
+                 <div class="col-md-3">
+                   <div class="card-icon shadow-primary bg-primary">
+                     <i class="fas fa-bug"></i>
+                  </div>
+                 </div>
+                 <div class="col-md-9">
+                    <div class="card-wrap text-center">
+                      <div class="card-header">
+                        <h4><?=count($in_progress_task)?></h4>
+                      </div>
+                      <div class="card-body">
+                       In Progress Bugs<br>
                     <span><a href="<?=base_url('Dashboard/inProgressTasks')?>">More Info <i class="fas fa-arrow-circle-right"></i></a></span>
                       </div>
                     </div>
@@ -111,7 +159,7 @@
                 <ul class="nav nav-tabs nav-justified md-tabs indigo" id="myTabJust" role="tablist">
                   <li class="nav-item">
                     <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
-                      aria-selected="true">Overdue Projects(<?=count($over_due_project)?>)</a>
+                      aria-selected="true">Overdue Projects(<?=count($Overproject)?>)</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
@@ -160,7 +208,7 @@
                                           echo "<span class='text-white bg-warning sele_staus'>Waiting For Someone</span>";
                                         }
                                         elseif ($proj_detail['project_status']=="in_progress") {
-                                          echo "<span class='text-white bg-warning sele_staus'>In Progresse</span>";
+                                          echo "<span class='text-white bg-warning sele_staus'>In Progress</span>";
                                         }
                                         else{
                                           echo "<span class='text-white bg-danger sele_staus'>Not Started</span>";
@@ -242,9 +290,9 @@
                                 <th>Client</th>
                                 <th>End Date</th>
                                 <th>Status</th>
-                                <th>Assigned To</th>
+                                <!-- <th>Assigned To</th> -->
                                 <th>Downloads</th>
-                                <th>Action</th>
+                                <!-- <th>Action</th> -->
                           </tr>
                         </tfoot>
                     </table>
@@ -281,7 +329,7 @@
                                     echo "<span class='text-white bg-warning sele_staus'>Waiting For Someone</span>";
                                   }
                                   elseif ($task_detail['task_status']=="in_progress") {
-                                    echo "<span class='text-white bg-warning sele_staus'>In Progresse</span>";
+                                    echo "<span class='text-white bg-warning sele_staus'>In Progress</span>";
                                   }
                                   else{
                                     echo "<span class='text-white bg-danger sele_staus'>Not Started</span>";

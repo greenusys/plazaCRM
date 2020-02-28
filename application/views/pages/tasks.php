@@ -137,7 +137,7 @@
    
   
           </div>
-          <div class="row mt-4">
+          <div class="row mt-4" >
             <div class="col-lg-12">
               <div class="card">
                <!--  <div class="card-header">
@@ -194,7 +194,7 @@
                                     echo "<span class='text-white bg-warning sele_staus'>Waiting For Someone</span>";
                                   }
                                   elseif ($tasker['task_status']=="in_progress") {
-                                    echo "<span class='text-white bg-warning sele_staus'>In Progresse</span>";
+                                    echo "<span class='text-white bg-warning sele_staus'>In Progress</span>";
                                   }
                                   else{
                                     echo "<span class='text-white bg-danger sele_staus'>Not Started</span>";
@@ -246,7 +246,7 @@
                                           }
                                          if(strpos($permission,'Delete')!==false)
                                           {?>
-                                              <a href="" class="sele_staus  p-1 text-white ">  <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+                                              <a href="javascript:void(0)" class="sele_staus  p-1 text-white delete_task" d-id="<?=$tasker['task_id']?>">  <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
 
                                          <?php }
                                          else
@@ -940,6 +940,24 @@ $(document).ready(function(){
 });
 </script>
 <script>
+  $(document).on('click','.delete_task',function(){
+    var taskId=$(this).attr('d-id');
+    
+    $.ajax({
+      url:'<?=base_url('Task/delete_task')?>',
+      type:"post",
+      data:{task_id:taskId},
+      success:function(response){
+
+        response=JSON.parse(response);
+        swal("Action",response.msg,'info');
+        $(this).parent().parent().remove();
+        $('#example').load(document.URL +  ' #example');
+  
+          
+      }
+    });
+  });
     function openCity(evt, cityName) {
       var i, tabcontent, tablinks;
       tabcontent = document.getElementsByClassName("tabcontent");

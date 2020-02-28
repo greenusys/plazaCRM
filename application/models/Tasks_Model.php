@@ -139,8 +139,8 @@ class Tasks_Model extends CI_Model{
 	}
 
 	public function delete_task($data){
-			$this->db->where('id', $data);
-			if($this->db->delete('tasks_')){
+			$this->db->where('task_id', $data);
+			if($this->db->delete('tbl_task')){
 				return TRUE;
 			}
 			else{

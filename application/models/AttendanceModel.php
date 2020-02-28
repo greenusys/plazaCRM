@@ -151,7 +151,15 @@
         $this->db->where('designations_id',$designation_id);
         return $this->db->get('tbl_designations')->result();
     }
-
+    public function delete_clock($id){
+        $this->db->where('clock_id', $id);
+        if($this->db->delete('tbl_clock')){
+            return TRUE;
+        }
+        else{
+            return FALSE;
+        }
+    }
 
     } 
 ?>
