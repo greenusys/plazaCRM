@@ -26,45 +26,47 @@ class Dashboard extends MY_Controller {
 		$data['over_due_project']=$this->Demo->get_over_due_project();
 		$data['over_due_task']=$this->Demo->get_over_due_task();
 		$data['fetch_holiday']=$this->Global_Model->fetch_holidays();
-		// $data['over_due_task']=$this->Demo->get_online_user();
-		$projects=$this->Demo->get_over_due_project();
-		// print_r($projects);
-		foreach ($projects as $pr) {
-			$perm=$pr['permission'];
-			$user=array();
-			if($perm=="all"){
-				$user[]="Everyone";
-			}
-			else{
-			$new=json_decode($perm);
-			foreach($new as $key => $value){
-				$user[]=$this->User_model->fetch_user_by_id($key);
-			 }
-			}
-			$project_data[]=array_merge($pr,array("assigned_to"=>$user));
-
-		}
-        // print_r($project_data);
-		$data['Overproject']=$project_data;
-
 		$tasks=$this->Demo->get_over_due_task();
-		// print_r($projects);
-		foreach ($tasks as $pr) {
-			$perm=$pr['permission'];
-			$user=array();
-			if($perm=="all"){
-				$user[]="Everyone";
-			}
-			else{
-			$new=json_decode($perm);
-			foreach($new as $key => $value){
-				$user[]=$this->User_model->fetch_user_by_id($key);
-			 }
-			}
-			$task_data[]=array_merge($pr,array("assigned_to"=>$user));
+		$projects=$this->Demo->get_over_due_project();
+		if(count($projects)>0){
+			foreach ($projects as $pr) {
+				$perm=$pr['permission'];
+				$user=array();
+				if($perm=="all"){
+					$user[]="Everyone";
+				}
+				else{
+				$new=json_decode($perm);
+				foreach($new as $key => $value){
+					$user[]=$this->User_model->fetch_user_by_id($key);
+				 }
+				}
+				$project_data[]=array_merge($pr,array("assigned_to"=>$user));
 
+			}
+		}else{
+			$project_data=array();
 		}
-        // print_r($project_data);
+		if(count($tasks)>0){
+			foreach ($tasks as $pr) {
+				$perm=$pr['permission'];
+				$user=array();
+				if($perm=="all"){
+					$user[]="Everyone";
+				}
+				else{
+				$new=json_decode($perm);
+				foreach($new as $key => $value){
+					$user[]=$this->User_model->fetch_user_by_id($key);
+				 }
+				}
+				$task_data[]=array_merge($pr,array("assigned_to"=>$user));
+			}
+		}else{
+			$task_data=array();
+		}
+		
+        $data['Overproject']=$project_data;
         $data['users']=$this->User_model->fetch_user();
 		$data['Overtask']=$task_data;
 		$this->load->view('layout/header');
@@ -90,7 +92,7 @@ class Dashboard extends MY_Controller {
 		// $data['clients']=$this->Client_Model->getClients();
 		// $data['users']=$this->User_model->fetch_user();
 		// $data['settings']=$this->Projects_Model->fetch_settings();
-		$projects=$this->Projects_Model->fetch_Inprojects();
+		$projects=$this->Demo->get_in_progress_project();
 
 		foreach ($projects as $pr) {
 			$perm=$pr['permission'];

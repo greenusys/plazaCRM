@@ -429,7 +429,16 @@ class Attendance extends MY_Controller {
 	// public function addAttendanceData($data){
 	// 	return $this->ATND->insATNDData($data);
 	// }
-	
+	public function delete_clock(){
+		$id=$_POST['clock_id'];
+		$result=$this->ATND->delete_clock($id);
+		if($result == TRUE){
+			die(json_encode(array('status' =>'1' ,'msg'=>'Successfully Deleted')));
+		}
+		else{
+			die(json_encode(array('status' =>'0' ,'msg'=>'Failed')));
+		}
+	}
 	
 }
 ?>
