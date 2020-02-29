@@ -2,19 +2,12 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login extends CI_Controller {
-	public $timzone;
 	function __construct(){
 		parent::__construct();
 		$this->load->model('LoginModel','Login');
 		$this->load->model('AttendanceModel','ATND');
-		$this->getTimeZone();   
-        date_default_timezone_set($this->timzone);
 	}
-	public function getTimeZone(){
-        $res=$this->db->get('installer')->result_array();
-        $this->timzone=$res[0]['timezone'];
-        // print_r($res);
-    }
+
 	public function index()
 	{
 		// if($this->session->userdata('logged_user')){
@@ -30,11 +23,7 @@ class Login extends CI_Controller {
 		if($res=$this->Login->verifyThisUser($data)){
 			$this->session->set_userdata('logged_user',$res);
 			//update login status
-			
-			if($this->updateLoginStatus(1)){
-					// echo 'Perfect';
-				redirect('Dashboard');
-			}
+			$this->updateLoginStatus(1);
 			// redirect('Dashboard');
 		}else{
 			$this->session->set_flashdata('msg','Invalid Username Or Password');
@@ -113,10 +102,6 @@ class Login extends CI_Controller {
 		// return $this->db->get('tbl_attendance')->result();
 	}
 	public function updateLoginStatus($var){
-
-
-		// echo 'Value of Var : '.$var;
-		// die;
 		$session=$this->session->userdata('logged_user');
 		// print_r($session);
 		// die;
@@ -124,9 +109,9 @@ class Login extends CI_Controller {
 		$condition=array('user_id'=>$my_Id);
 		if($var==1){
 			// echo 'log in';
-			 // redirect('Dashboard');
+			 redirect('Dashboard');
 			// 2020-02-05 22:37:01
-			$dTime=date('Y-m-d H:i:s');
+			$dTime=date('Y-m-d h:i:s');
 			$data=array('online_time'=>1,"last_ip"=>$this->input->ip_address(),"last_login"=>$dTime);
 			$this->db->where($condition);
 			if($this->db->update('tbl_users',$data)){

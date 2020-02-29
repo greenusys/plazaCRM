@@ -129,6 +129,7 @@ class Attendance extends MY_Controller {
 	public function getTimeHistory(){
 		$userId=$this->input->post('emp_id');
 		$data['active'] = date('Y');
+		$data['EmpDetails']=$this->db->where('tbl_users.user_id',$userId)->join('tbl_account_details','tbl_account_details.user_id=tbl_users.user_id')->get('tbl_users')->row();
 		$attendance_info = $this->ATND->get_attendance(array('user_id' => $userId));
         $data['mytime_info'] = $this->get_mytime_info($attendance_info);
         // print_r($data['mytime_info']);

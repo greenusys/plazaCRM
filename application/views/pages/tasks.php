@@ -1,4 +1,9 @@
-
+<?php
+    $session=$this->session->userdata('logged_user');
+   
+$myId=$session[0]->user_id;
+$role_id=$session[0]->role_id;
+?>
             <!--  <div class="p-3">
             <div class="row bg-white mt-3">
                 <div class="col-md-2 ">
@@ -151,10 +156,12 @@
                     <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
                       aria-selected="true">All Tasks</a>
                   </li>
+                  <?php if($role_id!=3):?>
                   <li class="nav-item">
                     <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
                       aria-selected="false">New Tasks</a>
                   </li>
+                <?php endif; ?>
 <!--                   <li class="nav-item ">
                   <a class="nav-link" id="import_project" data-toggle="tab" href="#imp_project" role="tab" aria-controls="imp_project" aria-selected="false">Import Tasks</a>
                   </li> -->
@@ -231,14 +238,7 @@
                                       foreach($Assign_permission as $checkpermission)
                                         {
                                           $permission=$checkpermission->permission;
-<<<<<<< HEAD
-                                            
 
-                                          // print_r($permission);
-                                                
-=======
-
->>>>>>> e801382c78a6ac20f5bd8fcd5608a4e21f157c36
                                           if(strpos($permission,'Edit')!==false)
                                           {?>
                                               <a href="" id="edit_p"class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
