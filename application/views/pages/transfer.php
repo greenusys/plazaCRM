@@ -30,7 +30,7 @@
                             <tr>
                                 <th>From Account</th>
                                 <th>To Account</th>
-                                <th>Ammount</th>
+                                <th>Amount</th>
                                 <th>Date</th>
                                 <th>Attachment</th>
                                 <th>Action</th>

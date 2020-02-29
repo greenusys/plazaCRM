@@ -98,7 +98,7 @@ class Transaction extends MY_Controller {
 		$this->load->view("layout/footer");
 	}
 	public function TransactionReport(){
-		$data['transaction_report']=$this->Transactions_model->fetch_transactions();
+		$data['transaction_report']=$this->Transaction->fetch_transactions();
 		$this->load->view('layout/header');
 		$this->load->view("pages/transaction_report",$data);
 		$this->load->view("layout/footer");

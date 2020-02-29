@@ -287,5 +287,19 @@ class User_model extends MY_Model
         $this->db->where('designations_id',$designation_id);
         return $this->db->get('tbl_designations')->result();
     }
+    public function DeleteUsers($data)
+    {
+        $this->db->where($data);
+         $results=$this->db->delete('tbl_users');
+         if($results)
+            {
+                return 1;
+            }
+    
+            else
+            {
+                return 0;
+            }
+    }
 }
 ?>

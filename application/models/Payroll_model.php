@@ -480,4 +480,18 @@ class Payroll_Model extends MY_Model
         $this->db->where('designations_id',$designation_id);
         return $this->db->get('tbl_designations')->result();
     }
+    public function DeleteHourly($data)
+    {
+        $this->db->where($data);
+         $results=$this->db->delete('tbl_hourly_rate');
+         if($results)
+            {
+                return 1;
+            }
+    
+            else
+            {
+                return 0;
+            }
+    }
 }

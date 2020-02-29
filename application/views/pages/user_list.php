@@ -27,6 +27,8 @@
                 <tbody>
               <?php
               foreach ($all_users as $user) {
+                // print_r($user);
+                // die;
               ?>
                   <tr>
                     <td class="text-capitalize text-center"><img style="height: 50px" src="<?=base_url().$user->avatar?>"></td>
@@ -66,7 +68,8 @@
                                          if(strpos($permission,'Delete')!==false)
                                           {?>
 
-                                       <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
+
+                                       <span class="deletetusers sele_staus bg-danger p-1 text-white" users_id="<?=$user->user_id?>" ><i class="far fa-trash-alt"></i></span>
                                         <?php }
                                          else
                                          {
@@ -269,6 +272,41 @@
     </div>
   </section>
 </div>
+
+   <script type="text/javascript">
+        $(document).ready(function(){
+          $('.deletetusers').on('click',function(){ 
+             var users_id=$(this).attr("users_id");
+              // alert(users_id);
+           if(confirm("Are you Sure want to delete this record?") ==true)
+            {       
+            // alert(owner_id);         
+                $.ajax({
+                  url:"<?=base_url('User/DeleteUsers')?>",
+                  type:"post",
+                  data:{users_id:users_id},
+                  success:function(response)
+                  {   
+                  response=JSON.parse(response);             
+                     if (response==1)
+                      {
+                   alert('Record Delete successfully');
+                    location.reload();
+                    
+                       }
+                  }
+                 })                           
+             // userPreference = "Data Delete successfully!";
+
+             }
+             else 
+             {
+              userPreference = "Save Canceled!";
+              }
+              
+          })
+        })  
+      </script>
 
 <script type="text/javascript">
   $(document).ready(function() {
