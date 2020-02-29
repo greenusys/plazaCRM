@@ -1,5 +1,4 @@
 <?php
-date_default_timezone_set('Asia/Kolkata');
 	class Bugs extends MY_Controller
 	{	
 	public function __construct(){

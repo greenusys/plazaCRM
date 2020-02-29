@@ -1,5 +1,5 @@
 <?php
-date_default_timezone_set('Asia/Kolkata');
+
 	class Sales extends MY_Controller
 	{	
 	function __construct(){

@@ -4,6 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class MY_Controller extends CI_Controller 
 {
     public $my_id;
+    public $timeZone;
+
 	function __construct(){
 		parent::__construct();
 		$this->load->model('global_model');
@@ -15,6 +17,8 @@ class MY_Controller extends CI_Controller
         	$this->session->set_flashdata('msg','Invalid Username Or Password');
 			redirect('Login');
         }
+        $this->getTimeZone();   
+        date_default_timezone_set($this->timeZone);
 		$session=$this->session->userdata('logged_user');
 		$my_Id=$session[0]->user_id;
         $auto_loaded_vars = array(
@@ -27,6 +31,11 @@ class MY_Controller extends CI_Controller
 	public function checkFunction(){
 		echo 'working Fine';
 	}
+    public function getTimeZone(){
+        $res=$this->db->get('installer')->result_array();
+        $this->timeZone=$res[0]['timezone'];
+        // print_r($res);
+    }
 
 }
 

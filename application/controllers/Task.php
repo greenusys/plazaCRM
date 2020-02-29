@@ -1,5 +1,5 @@
 <?php
-date_default_timezone_set('Asia/Kolkata');
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Task extends MY_Controller {
