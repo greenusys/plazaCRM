@@ -286,7 +286,7 @@ $(document).ready(function(){
                                 <!-- <th>Status</th> -->
                                 <th>Assigned To</th>
                                 <th>Downloads</th>
-                                <th>Action</th>
+                                <!-- <th>Action</th> -->
                              
                             <!-- </tr> -->
                         </thead>
@@ -371,18 +371,53 @@ $(document).ready(function(){
                                     echo "No Downloads";
                                   }
                                   else{
-                                    echo "<a href='".base_url()."Projects/downloader/".$pr['project_id']."'>Download Now</a>";
+                                    echo "<a href='".base_url('Projects/downloader/').$pr['project_id']."'>Download Now</a>";
                                   }
                                   ?>
                                 </td>
-                                <td>
-                                    <div class="">
+                                <!-- <td> -->
+                                  <!--  <?php
+                                      foreach($Assign_permission as $checkpermission)
+                                        {
+                                          $permission=$checkpermission->permission;
+                                              // print_r($permission);
+                                          // $permission=explode(',',$checkpermission->permission);
+
+                                            // print_r($permission);
+                                            // die;  
+                                          if(strpos($permission,'Edit')!==false)
+                                          {?>
+                                              <a href="" id="edit_p"class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+
+                                         <?php }
+                                         else
+                                         {
+                                          ?>
+                                            <a href="" id="edit_p"class="sele_staus bg-info p-1 text-white " style="visibility: hidden"><span><i class="far fa-edit"></i></span></a>
+
+                                         <?php
+                                          }
+                                         if(strpos($permission,'Delete')!==false)
+                                          {?>
+                                              <a href="" class="sele_staus  p-1 text-white ">  <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+
+                                         <?php }
+                                         else
+                                         {
+                                          ?>
+                                            <a href="" class="sele_staus  p-1 text-white " style="visibility: hidden">  <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+
+                                         <?php
+                                          }
+
+                                        }?> -->
+                                    <!-- <div class="">
                                       <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
                                       <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
                                        <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                    </div>
+                                    </div> -->
 
-                                </td>
+                                <!-- </td> -->
                              
                             </tr>
                             <?php

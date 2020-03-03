@@ -1,3 +1,10 @@
+   <?php
+    $session=$this->session->userdata('logged_user');
+   
+$myId=$session[0]->user_id;
+$role_id=$session[0]->role_id;
+?>
+
     <div class="row mt-4">
       <div class="col-lg-12">
         <div class="card">
@@ -6,10 +13,12 @@
               <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
                 aria-selected="true">All Users</a>
             </li>
+            <?php if($role_id!=3):?>
             <li class="nav-item">
               <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
                 aria-selected="false">New Users</a>
             </li>
+          <?php endif;?>
           </ul>
           <div class="tab-content card pt-5" id="myTabContentJust">
             <div class="tab-pane fade show active px-4" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
@@ -27,6 +36,8 @@
                 <tbody>
               <?php
               foreach ($all_users as $user) {
+                // print_r($user);
+                // die;
               ?>
                   <tr>
                     <td class="text-capitalize text-center"><img style="height: 50px" src="<?=base_url().$user->avatar?>"></td>
@@ -49,9 +60,36 @@
                       if ($user->role_id!=1) {
                       ?>
                       <div class="">
-                        <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                        <a onclick="return confirm('Are you sure?')" href="<?=base_url()?>User/delete_user/<?=$user->user_id?>"><span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                         <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
+                          <?php
+                                      foreach($Assign_permission as $checkpermission)
+                                        {
+                                          $permission=$checkpermission->permission;
+                                          if(strpos($permission,'Edit')!==false)
+                                          {?>
+                                       <a href="#"><span class="sele_staus bg-success p-1 text-white"><i class="far fa-edit"></i></span></a>
+                                        <?php }
+                                         else
+                                         {
+                                          ?>
+                                          <a href="javascript:void(0)" style="visibility: hidden"><span class="sele_staus bg-success p-1 text-white"><i class="far fa-edit"></i></span></a>
+                                          <?php
+                                          }
+                                         if(strpos($permission,'Delete')!==false)
+                                          {?>
+
+
+                                       <span class="deletetusers sele_staus bg-danger p-1 text-white" users_id="<?=$user->user_id?>" ><i class="far fa-trash-alt"></i></span>
+                                        <?php }
+                                         else
+                                         {
+                                          ?>
+
+                                       <span style="visibility: hidden" class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
+
+                                          <?php
+                                          }
+
+                                        }?>
                       </div>
                     <?php } ?>
                     </td>
@@ -243,6 +281,41 @@
     </div>
   </section>
 </div>
+
+   <script type="text/javascript">
+        $(document).ready(function(){
+          $('.deletetusers').on('click',function(){ 
+             var users_id=$(this).attr("users_id");
+              // alert(users_id);
+           if(confirm("Are you Sure want to delete this record?") ==true)
+            {       
+            // alert(owner_id);         
+                $.ajax({
+                  url:"<?=base_url('User/DeleteUsers')?>",
+                  type:"post",
+                  data:{users_id:users_id},
+                  success:function(response)
+                  {   
+                  response=JSON.parse(response);             
+                     if (response==1)
+                      {
+                   alert('Record Delete successfully');
+                    location.reload();
+                    
+                       }
+                  }
+                 })                           
+             // userPreference = "Data Delete successfully!";
+
+             }
+             else 
+             {
+              userPreference = "Save Canceled!";
+              }
+              
+          })
+        })  
+      </script>
 
 <script type="text/javascript">
   $(document).ready(function() {

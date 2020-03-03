@@ -44,10 +44,19 @@
         }
         public function getClock($st){
             $this->db->where('attendance_id',$st);
+            $this->db->order_by('clock_id','desc');
+            $this->db->limit(1);
             if(count($res=$this->db->get('tbl_clock')->result())>0){
                return $res;
             }else{
                return false;
+            }
+        }
+        public function updateClockDetails($toUpdate,$clock_id){
+            if($this->db->where('clock_id',$clock_id)->update('tbl_clock',$toUpdate)){
+                return true;
+            }else{
+                return false;
             }
         }
         // public function updateAttendanceTable($user_id,$date){
@@ -90,7 +99,13 @@
         
         }
 
-
+        public function updateAttendData($attendance_id,$date_out){
+            if($this->db->where('attendance_id',$attendance_id)->update('tbl_attendance',array("date_out"=>$date_out))){
+                return $this->db->where('attendance_id',$attendance_id)->order_by('clock_id','desc')->limit(1)->get('tbl_clock')->result();
+            }else{
+                return false;
+            }
+        }
         public function insClockData($data){
             $this->db->where($data);
             if(count($this->db->get('tbl_clock')->result())==0){
@@ -145,6 +160,20 @@
             $result[] = (object)$val;
         }
         return $result;
+    }
+    public function CheckPermission($designation_id)
+    {
+        $this->db->where('designations_id',$designation_id);
+        return $this->db->get('tbl_designations')->result();
+    }
+    public function delete_clock($id){
+        $this->db->where('clock_id', $id);
+        if($this->db->delete('tbl_clock')){
+            return TRUE;
+        }
+        else{
+            return FALSE;
+        }
     }
 
     } 

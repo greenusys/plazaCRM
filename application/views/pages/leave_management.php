@@ -15,6 +15,12 @@
    }
 }
 </style>
+<?php
+    $session=$this->session->userdata('logged_user');
+   
+$myId=$session[0]->user_id;
+$role_id=$session[0]->role_id;
+?>
 
         <div class="row mt-4">
             <div class="col-lg-12">
@@ -26,18 +32,23 @@
                   <canvas id="myChart" height="158"></canvas>
                 </div> -->
                     <ul class="nav nav-tabs nav-justified md-tabs indigo col-md-8" id="myTabJust" role="tablist">
+                      <?php if($role_id!=3):?>
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just" aria-selected="true">Pending Approval</a>
                         </li>
+                        <?php endif;?>
                         <li class="nav-item">
                             <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just" aria-selected="false">My Leave</a>
                         </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" id="all_leave_tab" data-toggle="tab" href="#all_leave" role="tab" aria-controls="all_leave" aria-selected="false">All Leave </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" id="leave_report_tab" data-toggle="tab" href="#leave_report" role="tab" aria-controls="leave_report" aria-selected="false">Leave Report</a>
-                        </li>
+                        <?php if($role_id!=3):?>
+                            <li class="nav-item ">
+                                <a class="nav-link" id="all_leave_tab" data-toggle="tab" href="#all_leave" role="tab" aria-controls="all_leave" aria-selected="false">All Leave </a>
+                            </li>
+                        <?php endif;?>
+                           <!--  <li class="nav-item ">
+                                <a class="nav-link" id="leave_report_tab" data-toggle="tab" href="#leave_report" role="tab" aria-controls="leave_report" aria-selected="false">Leave Report</a>
+                            </li> -->
+                       
                         <li class="nav-item ">
                             <a class="nav-link" id="apply_leave_tab" data-toggle="tab" href="#apply_leave" role="tab" aria-controls="apply_leave" aria-selected="false">Apply Leave</a>
                         </li>
@@ -93,15 +104,31 @@
                                             <td>
                                                 <div class="">
                                                     <!--<a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>-->
+                                                    <?php
+                                      foreach($Assign_permission as $checkpermission)
+                                        {
+                                          $permission=$checkpermission->permission;
+                                          if(strpos($permission,'Delete')!==false)
+                                          {?>
                                                     <a href="javascript:void(0)" leave_app_id="<?=$leaseAllData->leave_application_id?>" class="deletetPendingApplication"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
-                                                    <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
+                                                    <?php }
+                                         else
+                                         {
+                                          ?>
+                                          <a href="javascript:void(0)" style="visibility: hidden" ><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+
+
+                                                    <!-- <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span> -->
                                                 </div>
     
                                             </td>
                                         </tr>
                                     <?php
                                     }
-                                    ?>
+
+                                          }
+
+                                        }?>
 
                                   
                                 </tbody>
@@ -426,21 +453,38 @@
                                             </div>
 
                                         </div>
+                                        <?php
+                                            // print_r($MyApprovedLeave);
+                                        ?>
                                         <div class="">
                                             <table class="table ">
                                                 <tbody>
-                                                    <tr class="border-bottom">
-                                                        <td><strong>Slick:</strong></td>
-                                                        <td>0/2</td>
-                                                    </tr>
-                                                    <tr class="border-bottom">
-                                                        <td><strong>Marriage:</strong></td>
-                                                        <td>0/3</td>
-                                                    </tr>
-                                                    <tr class="bg-dark text-white">
-                                                        <td><strong>Total:</strong></td>
-                                                        <td>0/5</td>
-                                                    </tr>
+                                                    <?php
+                                                    // print_r($myLeaveDetails);
+                                                    $sum=0;
+                                                    $cat_id=0;
+                                                    foreach ($myLeaveDetails as $cat) {
+                                                        $temp=0;
+                                                            if($cat_id==$cat['cate_id']){
+                                                                $sum+=$cat['leaveDuration'];
+                                                               $temp=1;
+                                                            }
+                                                            if($temp==0){
+                                                                ?>
+                                                                <tr class="border-bottom">
+                                                                    <td><strong><?=ucwords($cat['cat_name'])?>:</strong></td>
+                                                                    <td><?=$sum?>/<?=$cat['leaveDays']?></td>
+                                                                </tr>
+                                                                <?php
+                                                            }
+                                                            $sum=$cat['leaveDuration'];
+                                                            // echo ' Cate Id : '.$cat_id.'  ';
+                                                            $cat_id=$cat['cate_id'];
+                                                            // echo ' Cate Id : '.$cat_id.' || ';
+                                                        }
+
+                                                    ?>
+                                                   
                                                 </tbody>
                                             </table>
                                         </div>
@@ -667,38 +711,6 @@
                                                             </div>
                                                         </div>
                                                         
-                                                       <!--  <div class="form-group">
-                                                            <div class="row">
-                                                                <div class=" col-sm-6 col-6">
-                                                                    <label for="exampleInputEmail1">Marriage :</label>
-                                                                </div>
-                                                                <div class="col-sm-6 col-6">
-                                                                    <label for="exampleInputEmail1">0/3</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                         -->
-                                                        <!-- <div class="form-group">
-                                                            <div class="row">
-                                                                <div class="offset-1 col-sm-5 col-5">
-                                                                    <label for="exampleInputEmail1">:</label>
-                                                                </div>
-                                                                <div class="col-sm-6 col-6">
-                                                                    <label for="exampleInputEmail1">0/0</label>
-                                                                </div>
-                                                            </div>
-                                                        </div> -->
-                                                        <!-- 
-                                                        <div class="form-group">
-                                                            <div class="row">
-                                                                <div class=" col-sm-6 col-6">
-                                                                    <label for="exampleInputEmail1">Emergency:</label>
-                                                                </div>
-                                                                <div class="col-sm-6 col-6">
-                                                                    <label for="exampleInputEmail1">0/0</label>
-                                                                </div>
-                                                            </div>
-                                                        </div> -->
                                                         <div class="form-group bg-dark p-1 text-white">
                                                             <div class="row">
                                                                 <div class=" col-sm-6 col-6">

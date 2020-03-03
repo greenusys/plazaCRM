@@ -1,3 +1,10 @@
+<?php
+    $session=$this->session->userdata('logged_user');
+   
+$myId=$session[0]->user_id;
+$role_id=$session[0]->role_id;
+?>
+
   <script>
     function openCity(evt, cityName) {
       console.log(evt);
@@ -91,7 +98,19 @@ $(document).ready(function(){
 });
 $(document).on('click','.dlt_project',function(){
   var projectId=$(this).attr('d-Pro');
-  swal('success','Yeah you have deleted : '+ projectId,'success');
+  $.ajax({
+    url:"<?=base_url('Projects/delete_project')?>",
+    type:"post",
+    data:{project_id:projectId},
+    success:function(response){
+        response=JSON.parse(response);
+        if(response.status==1){
+            swal('success','Project Deleted Successfully.','success');      
+            $('#myTabContentJust').load(document.URL +  ' #myTabContentJust');  
+        }
+    }
+  });
+  
 });
 $(document).on('click','.edt_project',function(){
   var projectId=$(this).attr('d-Pro');
@@ -310,6 +329,7 @@ $(document).on('click','.edt_project',function(){
                     <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
                       aria-selected="true">All Projects</a>
                   </li>
+                  <?php if($role_id!=3):?>
                   <li class="nav-item">
                     <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
                       aria-selected="false">New Project</a>
@@ -317,6 +337,7 @@ $(document).on('click','.edt_project',function(){
                   <li class="nav-item ">
                   <a class="nav-link" id="import_project" data-toggle="tab" href="#imp_project" role="tab" aria-controls="imp_project" aria-selected="false">Import Projects</a>
                   </li>
+                <?php endif;?>
                 </ul>
                 <div class="tab-content card pt-3" id="myTabContentJust">
                   <div class="tab-pane fade show active px-4" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
@@ -443,8 +464,38 @@ $(document).on('click','.edt_project',function(){
                                 </td>
                                 <td>
                                     <div class="">
+                                      <?php
+                                      foreach($Assign_permission as $checkpermission)
+                                        {
+                                          $permission=$checkpermission->permission;
+                                          // print_r($permission);
+                                                
+                                          if(strpos($permission,'Edit')!==false)
+                                          {?>
                                       <a href="<?=base_url('Projects/editProject/').$pr['project_id']?>" class="sele_staus bg-info p-1 text-white " d-Pro="<?=$pr['project_id']?>"><span><i class="far fa-edit"></i></span></a>
+                                       <?php }
+                                         else
+                                         {
+                                          ?>
+                                           <a href="#"
+                                           style="visibility: hidden" class="sele_staus bg-info p-1 text-white " d-Pro="<?=$pr['project_id']?>"><span><i class="far fa-edit"></i></span></a>
+                                           <?php
+                                          }
+                                         if(strpos($permission,'Delete')!==false)
+                                          {?>
+
+
                                       <a href="javascript:void(0)" class="dlt_project" d-Pro="<?=$pr['project_id']?>"><span class="sele_staus bg-danger p-1  text-white"><i class="far fa-trash-alt"></i></span></a>
+                                       <?php }
+                                         else
+                                         {
+                                          ?>
+
+                                      <a href="javascript:void(0)" style="visibility: hidden"class="dlt_project" d-Pro="<?=$pr['project_id']?>"><span class="sele_staus bg-danger p-1  text-white"><i class="far fa-trash-alt"></i></span></a>
+                                      <?php
+                                          }
+
+                                        }?>
                                        <!-- <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span> -->
                                     </div>
 

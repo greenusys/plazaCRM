@@ -139,8 +139,8 @@ class Tasks_Model extends CI_Model{
 	}
 
 	public function delete_task($data){
-			$this->db->where('id', $data);
-			if($this->db->delete('tasks_')){
+			$this->db->where('task_id', $data);
+			if($this->db->delete('tbl_task')){
 				return TRUE;
 			}
 			else{
@@ -173,6 +173,12 @@ class Tasks_Model extends CI_Model{
         $query_result = $this->db->get();
         $result = $query_result->result();
         return $result;
+    }
+
+    public function CheckPermission($designation_id)
+    {
+        $this->db->where('designations_id',$designation_id);
+        return $this->db->get('tbl_designations')->result();
     }
 
 }

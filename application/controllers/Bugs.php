@@ -1,5 +1,4 @@
 <?php
-date_default_timezone_set('Asia/Kolkata');
 	class Bugs extends MY_Controller
 	{	
 	public function __construct(){
@@ -50,7 +49,9 @@ date_default_timezone_set('Asia/Kolkata');
         //$data['editor'] = $this->data;
         //$data['subview'] = $this->load->view('admin/bugs/bugs', $data, TRUE);
         //$this->load->view('admin/_layout_main', $data);
-
+        $session=$this->session->userdata('logged_user');
+        $designation_id=$session[0]->designations_id;
+        $data['Assign_permission']=$this->User_model->CheckPermission($designation_id);
 			$data['admin_staff']=$this->User_model->fetch_all_users();
 			$data['users']=$this->User_model->fetch_user();
 			$this->load->view('layout/header');
@@ -80,7 +81,8 @@ date_default_timezone_set('Asia/Kolkata');
 			}
 		}
 
-        function  progessBugs{
+        public function  progessBugs()
+        {
             $this->load->view('layout/header');
             $this->load->view('pages/inProgressBugs',$data);
             $this->load->view('layout/footer');

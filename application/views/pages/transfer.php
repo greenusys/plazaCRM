@@ -30,7 +30,7 @@
                             <tr>
                                 <th>From Account</th>
                                 <th>To Account</th>
-                                <th>Ammount</th>
+                                <th>Amount</th>
                                 <th>Date</th>
                                 <th>Attachment</th>
                                 <th>Action</th>
@@ -40,10 +40,10 @@
                             <?php
                                 foreach($All_Transfer_Data as $ATD)
                                 {
-                                     // print_r($ATD);
+                                      // print_r($ATD);
                                 ?>
                             <tr>
-                               
+                               <input type="hidden" name="from_account_id" value="<?=$ATD->from_account_id?>"class="fetch_fromAcc">
                               <td><?=$ATD->account_name?></td>
                                 <td><?=$ATD->account_name?></td>
                                <td><?=$ATD->amount?></td>
@@ -52,13 +52,37 @@
                            
                                 <td>
                                     <div class="">
+                                      <?php
+                                      foreach($Assign_permission as $checkpermission)
+                                        {
+                                          $permission=$checkpermission->permission;
+                                                
+                                          if(strpos($permission,'Edit')!==false)
+                                          {?>
                                      <a href="<?=base_url('Transaction/Edit_Transfer/').$ATD->transfer_id?>" class="bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                     <?php }
+                                         else
+                                         {
+                                          ?>
+                                          <a href="#" style="visibility: hidden"class="bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                          <?php
+                                          }
+                                             if(strpos($permission,'Delete')!==false)
+                                          {?>
+                                            <a href="javascript:void(0)" transactions_id="<?=$ATD->transfer_id?>" class="deletettransfertransaction"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+                                             <?php }
+                                         else
+                                         {
+                                          ?>
+                                    <a href="javascript:void(0)" style="visibility: hidden" ><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+                                     <?php
+                                          }
 
-                                    
+                                        }?>
 
-                                      <a href="javascript:void(0)" transactions_id="<?=$ATD->transfer_id?>" class="deletettransfertransaction"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
-                                       <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                    </disessionv>
+                                      <!-- 
+                                       <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span> -->
+                                    </div>
 
                                 </td>
                                
@@ -323,6 +347,7 @@
           </div>
         </section>
       </div>
+      
         <script type="text/javascript">
         $(document).ready(function(){
           $('.deletettransfertransaction').on('click',function(){ 

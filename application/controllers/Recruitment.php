@@ -20,6 +20,9 @@ class Recruitment extends MY_Controller {
 	 	foreach ($data['all_dept_info'] as $v_dept_info) {
             $data['all_department_info'][] = $this->Job_circular_model->get_add_department_by_id($v_dept_info->departments_id);
         }
+        $session=$this->session->userdata('logged_user');
+		$designation_id=$session[0]->designations_id;
+		$data['Assign_permission']=$this->Job_circular_model->CheckPermission($designation_id);
         $data['fetchjob']=$this->Job_circular_model->fetch_job($data);
 		$this->load->view('layout/header');
 		$this->load->view("pages/job_posted",$data);
@@ -27,8 +30,11 @@ class Recruitment extends MY_Controller {
 	}
 	public function jobsApplications()
 	{
+		$session=$this->session->userdata('logged_user');
+		$designation_id=$session[0]->designations_id;
+		$data['Assign_permission']=$this->Job_circular_model->CheckPermission($designation_id);
 		$this->load->view('layout/header');
-		$this->load->view("pages/jobs_applications");
+		$this->load->view("pages/jobs_applications",$data);
 		$this->load->view("layout/footer");
 	}
 	public function create_job()

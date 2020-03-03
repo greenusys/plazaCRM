@@ -47,9 +47,37 @@
                                     </td>
                                     <td>
                                         <div class="">
-                                          <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                          <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                           <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
+                                          <?php
+                                      foreach($Assign_permission as $checkpermission)
+                                        {
+                                          $permission=$checkpermission->permission;
+                                              
+                                          if(strpos($permission,'Edit')!==false)
+                                          {?>
+                                              <a href="" id="edit_p"class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+
+                                         <?php }
+                                         else
+                                         {
+                                          ?>
+                                            <a href="javascript:void(0)" id="edit_p"class="sele_staus bg-info p-1 text-white " style="visibility: hidden"><span><i class="far fa-edit"></i></span></a>
+
+                                         <?php
+                                          }
+                                         if(strpos($permission,'Delete')!==false)
+                                          {?>
+                                              <a href="javascript:void(0)" class="sele_staus  delete_time_change p-1 text-white " d-id="<?=$value->clock_id?>">  <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+
+                                         <?php }
+                                         else
+                                         {
+                                          ?>
+                                            <a href="" class="sele_staus  p-1 text-white " style="visibility: hidden">  <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+
+                                         <?php
+                                          }
+
+                                        }?>
                                         </div>
 
                                     </td>
@@ -226,6 +254,20 @@
   </div>
 </div>
 <script type="text/javascript">
+  $(document).on('click','.delete_time_change',function(){
+    var clock_id=$(this).attr('d-id');
+    $.ajax({
+      url:'<?=base_url('Attendance/delete_clock')?>',
+      type:"post",
+      data:{clock_id:clock_id},
+      success:function(response){
+        response=JSON.parse(response);
+        swal("Action",response.msg,'info');
+        $(this).parent().parent().remove();
+        $('#example').load(document.URL +  ' #example');  
+      }
+    });
+  });
    $(function () {
       $('.datetimepicker1').datetimepicker();
    });

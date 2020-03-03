@@ -37,6 +37,7 @@
                           <?php
                           $count=1;
                           foreach ($templates as $data) {
+                            // print_r($data);
                           ?>
                             <tr>
                                 <td><?=$count?></td>
@@ -44,8 +45,35 @@
                                 <td><?=$data->hourly_rate?></td> 
                                 <td>
                                     <div class="">
-                                       <a href="<?=base_url()?>Payroll/hourlyTemplate/<?=$data->hourly_rate_id?>"><span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span></a>
-                                       <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
+                                      <?php
+                                      foreach($Assign_permission as $checkpermission)
+                                        {
+                                          $permission=$checkpermission->permission;
+                                          if(strpos($permission,'Edit')!==false)
+                                          {?>
+                                       <a href="<?=base_url()?>Payroll/hourlyTemplate/<?=$data->hourly_rate_id?>"><span class="sele_staus bg-success p-1 text-white"><i class="far fa-edit"></i></span></a>
+                                        <?php }
+                                         else
+                                         {
+                                          ?>
+                                          <a href="javascript:void(0)" style="visibility: hidden"><span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span></a>
+                                          <?php
+                                          }
+                                         if(strpos($permission,'Delete')!==false)
+                                          {?>
+
+                                       <a href="javascript:void(0)" class="deletehourlyrate" hourlyrate_id="<?=$data->hourly_rate_id?>"><span class=" sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+                                        <?php }
+                                         else
+                                         {
+                                          ?>
+
+                                       <span style="visibility: hidden" class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
+
+                                          <?php
+                                          }
+
+                                        }?>
                                     </div>
 
                                 </td>
@@ -171,3 +199,37 @@
           </div>
         </section>
       </div>
+            <script type="text/javascript">
+        $(document).ready(function(){
+          $('.deletehourlyrate').on('click',function(){ 
+             var hourly_id=$(this).attr("hourlyrate_id");
+              alert(hourly_id);
+           if(confirm("Are you Sure want to delete this record?") ==true)
+            {       
+            // alert(owner_id);         
+                $.ajax({
+                  url:"<?=base_url('Payroll/DeleteHourly')?>",
+                  type:"post",
+                  data:{hourly_id:hourly_id},
+                  success:function(response)
+                  {   
+                  response=JSON.parse(response);             
+                     if (response==1)
+                      {
+                   alert('Record Delete successfully');
+                    location.reload();
+                    
+                       }
+                  }
+                 })                           
+             // userPreference = "Data Delete successfully!";
+
+             }
+             else 
+             {
+              userPreference = "Save Canceled!";
+              }
+              
+          })
+        })  
+      </script>

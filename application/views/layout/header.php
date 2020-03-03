@@ -1,7 +1,7 @@
 <?php
 
   $session=$this->session->userdata('logged_user');
-  // print_r($session);
+   
 $myId=$session[0]->user_id;
 $role_id=$session[0]->role_id;
 
@@ -317,18 +317,50 @@ background: #f3f3f3;
           <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
           
             <img alt="image" src=" <?=base_url().'uploads/profile_pic/'.$session[0]->avatar?>" onerror="this.src='<?=base_url()?>assets/img/avatar/avatar-5.png';" class="rounded-circle mr-1">
+
             <div class="d-sm-none d-lg-inline-block">Hi, <?=$session[0]->fullname?></div></a>
             <div class="dropdown-menu dropdown-menu-right ml-n5">
-              <div class="dropdown-title">Logged in 5 min ago</div>
+              <?php
+              // echo $lastLogin=date('H:i:s',strtotime($session[0]->last_login));
+              // $cur=date_create(date('H:i:s'));
+               // date_diff($cur,$lastLogin);
+               // $date1=date_create("2013-03-15");
+               //  $date2=date_create("2013-12-12");
+               //  $diff=date_diff($date1,$date2);
+                $datetime1 = new DateTime();
+                $datetime2 = new DateTime($session[0]->last_login);
+                $interval = $datetime1->diff($datetime2);
+                $elapsed = $interval->format('Last Login: %h h %i min ago');
+                
+              // $date=date_create($session[0]->last_login);
+              // echo date('Y-m-d');
+              // $login_date = new DateTime($session[0]->last_login);
+              //  $cur_date=date_default_timezone_set("Asia/kolkata");
+              // // print_r($login_date);
+              // $cur_date= date('H:i:s');
+              // print_r( $login_date);
+              // print_r($cur_date);
+              // die;
+              
+
+              // $interval = $start_date->diff($end_date);
+              // $hours   = $interval->format('%h'); 
+              // $minutes = $interval->format('%i');
+              // echo  'Diff. in minutes is: '.($hours * 60 + $minutes);
+                              // echo date_format($date,"d/m/y H:i:s");
+              ?>
+
+              <!-- <div class="dropdown-title"><?echo date_format($date,'h:i:s');?></div> -->
+              <div class="dropdown-title" style="padding: 10px"><?=$elapsed?></div>
               <a href="<?=base_url('User/userProfile')?>" class="dropdown-item has-icon">
                 <i class="far fa-user"></i> Profile
               </a>
             <!--   <a href="features-activities.html" class="dropdown-item has-icon">
                 <i class="fas fa-bolt"></i> Activities
               </a> -->
-              <a href="features-settings.html" class="dropdown-item has-icon">
+             <!--  <a href="features-settings.html" class="dropdown-item has-icon">
                 <i class="fas fa-cog"></i> Settings
-              </a>
+              </a> -->
               <div class="dropdown-divider"></div>
               <a href="<?=base_url('Login/logout')?>" class="dropdown-item has-icon text-danger">
                 <i class="fas fa-sign-out-alt"></i> Logout
@@ -340,25 +372,56 @@ background: #f3f3f3;
       <div class="main-sidebar">
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
-            <a href="index.html">PlazaCRM</a>
+            <a href="<?=base_url('Dashboard/index')?>">PlazaCRM</a>
           </div>
 
           <ul class="sidebar-menu">
             <li><a class="nav-link" href="<?=base_url('Dashboard')?>"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
-            <li><a class="nav-link" href="<?=base_url('Projects')?>"><i class="far fa-folder-open"></i><span>Projects  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></span></a></li>
-            <li><a class="nav-link" href="<?=base_url('Task')?>"><i class="fas fa-tasks"></i><span>Tasks <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></span></a></li>
-            <li><a class="nav-link" href="<?=base_url('Client')?>"><i class="fas fa-users"></i><span>Client  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></span></a></li>
-            <li class="nav-item dropdown">
+             <?php if($role_id!=3):?>
+             <li><a class="nav-link" href="<?=base_url('Announcement/')?>"><i class="fas fa-bullhorn"></i> <span>Announcements </span>  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
+           <?php endif; ?>
+              <li class="nav-item dropdown">
               <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Attendance</span></a>
               <ul class="dropdown-menu">
                 <li><a class="nav-link" href="<?=base_url('Attendance/timeHistory')?>"><span> <i class="far fa-clock"></i></span>Time History</a></li>
-                <li><a class="nav-link" href="<?=base_url('Attendance/timeChaneRequest')?>"><span> <i class="far fa-calendar-minus"></i></span>TimeChange Request</a></li>
+                <?php if($role_id!=3):?>
+                  <li><a class="nav-link" href="<?=base_url('Attendance/timeChaneRequest')?>"><span> <i class="far fa-calendar-minus"></i></span>TimeChange Request</a></li>
+                <?php endif;?>
                 <li><a class="nav-link" href="<?=base_url('Attendance/attendanceReport')?>"><span><i class="far fa-file-alt"></i></span>Attendance Report</a></li>
-                <li><a class="nav-link" href="<?=base_url('Attendance/markAttendance')?>"><span><i class="far fa-file-alt"></i></span>Mark Attendance</a></li>
+                <!-- <li><a class="nav-link" href="<?=base_url('Attendance/markAttendance')?>"><span><i class="far fa-file-alt"></i></span>Mark Attendance</a></li> -->
               </ul>
             </li>
+             <li><a class="nav-link" href="<?=base_url('Backupdatabase')?>"><i class="fas fa-database"></i> <span>Backup Database</span></a></li>
 
              <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-bug"></i> <span>Bugs <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></span></a>
+                <ul class="dropdown-menu">
+                  <li><a class="nav-link" href="<?=base_url('Bugs/')?>"><span> <i class="fas fa-bug"></i></span>Bugs<i class="fa fa-check" aria-hidden="true" style="color:orange"></i> </a></li>
+                  <!-- <li><a class="nav-link" href="<?=base_url('B/jobsApplications')?>"><span><i class="far fa-compass"></i></span>Jobs Application</a></li> -->
+                </ul>
+            </li>
+            <?php if($role_id!=3):?>
+            <li><a class="nav-link" href="<?=base_url('Client')?>"><i class="fas fa-users"></i><span>Client  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></span></a></li>
+          <?php endif; ?>
+            <li class="nav-item dropdown">
+                  <a href="#" class="nav-link has-dropdown"><i class="fa fa-user"></i> <span>Department</span></a>
+                  <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?=base_url('Department')?>"><span><i class="fa fa-user"></i></span>Department  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>   
+                  </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link has-dropdown"><i class="fab fa-dribbble"></i> <span>Leave</span></a>
+              <ul class="dropdown-menu">
+                <?php if($role_id!=3):?>
+                <li><a class="nav-link" href="<?=base_url('Leavemanagement/LeaveYearySection')?>"><i class="fab fa-telegram-plane"></i> <span>Leave Yearly</span> <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
+              <li><a class="nav-link" href="<?=base_url('Leavemanagement/LeavePolicySection')?>"><i class="fab fa-telegram-plane"></i> <span>Leave Policy</span> <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
+            <?php endif;?>
+              <li><a class="nav-link" href="<?=base_url('Leavemanagement/index')?>"><i class="fab fa-telegram-plane"></i> <span>Leave Management</span> <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
+              </ul>
+            </li>
+            <?php if($role_id!=3):?>
+            <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-dollar-sign"></i> <span>Payroll</span></a>
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href="<?=base_url('Payroll/salaryTemplate')?>"><span><i class="far fa-money-bill-alt"></i></span>Salary Template  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
@@ -372,25 +435,45 @@ background: #f3f3f3;
                   <li><a class="nav-link" href="<?=base_url('Payroll/advanceSalary')?>"><span><i class="fab fa-cc-mastercard"></i></span>Advance Salary <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
                   <li><a class="nav-link" href="<?=base_url('Payroll/providentFund')?>"><span><i class="fas fa-briefcase"></i></span>Provident Fund</a></li>        
                   <li><a class="nav-link" href="<?=base_url('Payroll/overTime')?>"><span><i class="far fa-clock"></i></span>Overtime</a></li>
-                  <li><a class="nav-link" href="<?=base_url('Payroll/employeeAward')?>"><span><i class="fas fa-trophy"></i></span>Employee Award</a></li>
+                  <!-- <li><a class="nav-link" href="<?=base_url('Payroll/employeeAward')?>"><span><i class="fas fa-trophy"></i></span>Employee Award</a></li> -->
                   
                 </ul>
             </li>
-            <?php
-            // if($role_id!=3){
-              ?>
-                <li class="nav-item dropdown">
-                  <a href="#" class="nav-link has-dropdown"><i class="fa fa-lock"></i> <span>Permission</span></a>
-                  <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="<?=base_url('Permission')?>"><span><i class="fa fa-lock"></i></span>Set Permiss  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
-                    
-                   
-                    
-                  </ul>
-                </li>
+            
+             <!-- <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fab fa-dribbble"></i> <span>Performance</span></a>
+                <ul class="dropdown-menu">
+                  <li><a class="nav-link" href="<?=base_url('Performance/indicator')?>"><span> <i class="fas fa-random"></i></span>Indicator<i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
+                  <li><a class="nav-link" href="<?=base_url('Performance/giveAppraisal')?>"><span><i class="fas fa-plus"></i></span>Give Appraisal</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Performance/performanceReport')?>"><span><i class="far fa-calendar"></i></span>Performance Report</a></li>
+                
+                </ul>
+            </li> -->
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link has-dropdown"><i class="fa fa-lock"></i> <span>Permission</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="<?=base_url('Permission')?>"><span><i class="fa fa-lock"></i></span>Set Permiss  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
+                
+               
+                
+              </ul>
+            </li>
               <?php
-            // }
+            endif;
             ?>
+             <!-- <li><a class="nav-link" href=""><i class="fas fa-envelope"></i> <span>Private Chat </span></a></li> -->
+
+            <li><a class="nav-link" href="<?=base_url('Projects')?>"><i class="far fa-folder-open"></i><span>Projects  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></span></a></li>
+
+           
+            
+
+             
+
+           
+
+             
+            
              <!-- <li class="nav-item dropdown">
                   <a href="#" class="nav-link has-dropdown"><i class="fa fa-briefcase"></i> <span>Designation</span></a>
                   <ul class="dropdown-menu">
@@ -400,24 +483,8 @@ background: #f3f3f3;
                     
                   </ul>
                 </li> -->
-                <li class="nav-item dropdown">
-                  <a href="#" class="nav-link has-dropdown"><i class="fa fa-user"></i> <span>Department</span></a>
-                  <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="<?=base_url('Department')?>"><span><i class="fa fa-user"></i></span>Department  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
-                    
-                   
-                    
-                  </ul>
-                </li>
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fab fa-dribbble"></i> <span>Performance</span></a>
-                <ul class="dropdown-menu">
-                  <li><a class="nav-link" href="<?=base_url('Performance/indicator')?>"><span> <i class="fas fa-random"></i></span>Indicator<i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
-                  <li><a class="nav-link" href="<?=base_url('Performance/giveAppraisal')?>"><span><i class="fas fa-plus"></i></span>Give Appraisal</a></li>
-                  <li><a class="nav-link" href="<?=base_url('Performance/performanceReport')?>"><span><i class="far fa-calendar"></i></span>Performance Report</a></li>
                 
-                </ul>
-            </li>
+           <?php if($role_id!=3):?>
              <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe-europe"></i> <span>Recruitment <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></span></a>
                 <ul class="dropdown-menu">
@@ -425,14 +492,41 @@ background: #f3f3f3;
                   <li><a class="nav-link" href="<?=base_url('Recruitment/jobsApplications')?>"><span><i class="far fa-compass"></i></span>Jobs Application</a></li>
                 </ul>
             </li>
-						<li class="nav-item dropdown">
+          <?php endif;?>
+						<!-- <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-bug"></i> <span>Bugs <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></span></a>
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href="<?=base_url('Bugs/')?>"><span> <i class="fas fa-bug"></i></span>Bugs<i class="fa fa-check" aria-hidden="true" style="color:orange"></i> </a></li>
-                  <!-- <li><a class="nav-link" href="<?=base_url('B/jobsApplications')?>"><span><i class="far fa-compass"></i></span>Jobs Application</a></li> -->
+                 
+                </ul>
+            </li> -->
+
+
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe-europe"></i> <span>Reports </span></a>
+                <ul class="dropdown-menu">
+                  <li><a class="nav-link" href="<?=base_url('User/generateReport')?>"><span> <i class="fas fa-ticket-alt"></i></span>Daily Reports </a></li>
+                  <?php if($role_id!=3):?>
+                  <li><a class="nav-link" href="<?=base_url('User/reportList')?>"><span><i class="far fa-compass"></i></span>View Report</a></li>
+                <?php endif;?>
+                  <!-- <li><a class="nav-link" href="<?=base_url('Utilities/gaolTracking')?>"><span><i class="far fa-compass"></i></span>Monthly Report</a></li>
+                  <li><a class="nav-link" href="<?=base_url('User/TaskReport')?>"><span><i class="far fa-compass"></i></span>Task Report</a></li>
+                  <li><a class="nav-link" href="<?=base_url('User/ProjectReport')?>"><span><i class="far fa-compass"></i></span>Project Reportt</a></li> -->
                 </ul>
             </li>
-            <li class="nav-item dropdown">
+            <?php if($role_id!=3):?>
+             <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe-europe"></i> <span>Sales </span></a>
+                <ul class="dropdown-menu">
+                  <li><a class="nav-link" href="<?=base_url('Sales')?>"><span> <i class="fas fa-ticket-alt"></i></span>Invoice </a></li>
+                </ul>
+              </li>
+              <?php endif;?>
+
+               <li><a class="nav-link" href="<?=base_url('Task')?>"><i class="fas fa-tasks"></i><span>Tasks <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></span></a></li>
+
+              <?php if($role_id!=3):?>
+              <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fab fa-dribbble"></i> <span>Transaction</span></a>
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href="<?=base_url('Transaction/expense')?>"><span> <i class="far fa-circle"></i></span>Expense</a></li>
@@ -443,31 +537,16 @@ background: #f3f3f3;
                   <li><a class="nav-link" href="<?=base_url('Transaction/expense')?>"><span><i class="far fa-circle"></i></span>Balance Sheet</a></li>
                    <li><a class="nav-link" href="<?=base_url('Transaction/BankAndCash')?>"><span><i class="far fa-money-bill-alt"></i></span>Bank & Cash</a></li>
                 </ul>
-            </li>
-             
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe-europe"></i> <span>Reports </span></a>
-                <ul class="dropdown-menu">
-                  <li><a class="nav-link" href="<?=base_url('User/generateReport')?>"><span> <i class="fas fa-ticket-alt"></i></span>Daily Reports </a></li>
-                  <li><a class="nav-link" href="<?=base_url('User/reportList')?>"><span><i class="far fa-compass"></i></span>View Report</a></li>
-                  <!-- <li><a class="nav-link" href="<?=base_url('Utilities/gaolTracking')?>"><span><i class="far fa-compass"></i></span>Monthly Report</a></li>
-									<li><a class="nav-link" href="<?=base_url('User/TaskReport')?>"><span><i class="far fa-compass"></i></span>Task Report</a></li>
-									<li><a class="nav-link" href="<?=base_url('User/ProjectReport')?>"><span><i class="far fa-compass"></i></span>Project Reportt</a></li> -->
-								</ul>
-            </li>
+              </li>
+             <?php endif; ?>
+            
             <li><a class="nav-link" href="<?=base_url('User/user_list')?>"><i class="fas fa-user"></i> <span>Users</span></a></li>
-            <li><a class="nav-link" href="<?=base_url('Backupdatabase')?>"><i class="fas fa-database"></i> <span>Backup Database</span></a></li>
-
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fab fa-dribbble"></i> <span>Leave</span></a>
-                <ul class="dropdown-menu">
-                  <li><a class="nav-link" href="<?=base_url('Leavemanagement/LeaveYearySection')?>"><i class="fab fa-telegram-plane"></i> <span>Leave Yearly</span> <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
-                <li><a class="nav-link" href="<?=base_url('Leavemanagement/LeavePolicySection')?>"><i class="fab fa-telegram-plane"></i> <span>Leave Policy</span> <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
-                <li><a class="nav-link" href="<?=base_url('Leavemanagement/index')?>"><i class="fab fa-telegram-plane"></i> <span>Leave Management</span> <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
-                </ul>
-            </li>
            
-            <li><a class="nav-link" href="<?=base_url('Announcement/')?>"><i class="fas fa-bullhorn"></i> <span>Announcements </span>  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
+
+          
+           
+          
+
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe-europe"></i> <span>Utilities </span></a>
                 <ul class="dropdown-menu">
@@ -475,14 +554,9 @@ background: #f3f3f3;
                   <!-- <li><a class="nav-link" href="<?=base_url('Utilities/gaolTracking')?>"><span><i class="far fa-compass"></i></span>Goal Tracking</a></li> -->
                 </ul>
             </li>
-              <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe-europe"></i> <span>Sales </span></a>
-                <ul class="dropdown-menu">
-                  <li><a class="nav-link" href="<?=base_url('Sales')?>"><span> <i class="fas fa-ticket-alt"></i></span>Invoice </a></li>
-                </ul>
-              </li>
+             
 
-             <li><a class="nav-link" href=""><i class="fas fa-envelope"></i> <span>Private Chat </span></a></li>
+            
             </ul>
         </aside>
       </div>

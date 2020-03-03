@@ -6,11 +6,11 @@
 	{
 		public function get_in_progress_project(){
 			$today=date('Y-m-d');
-			$qy="Select * from tbl_project where project_status='in_progress' and end_date>='$today'";
-			return $this->db->query($qy)->result();
+			$qy="select project_id,tbl_project.uploads as project_uploads, project_name,progress,end_date,project_status,permission,tbl_client.name as client_name from tbl_project join tbl_client on tbl_client.client_id=tbl_project.client_id  where tbl_project.project_status='in_progress' and end_date>='$today'";
+			return $this->db->query($qy)->result_array();
 		}
 		public function get_particualr_user_project(){
-			$qy="Select project_id,tbl_project.uploads as project_uploads, project_name,progress,end_date,project_status,permission,tbl_client.name as client_name from tbl_project join tbl_client on tbl_client.client_id=tbl_project.project_id ";
+			$qy="Select project_id,tbl_project.uploads as project_uploads, project_name,progress,end_date,project_status,permission,tbl_client.name as client_name from tbl_project join tbl_client on tbl_client.client_id=tbl_project.client_id ";
 			return $this->db->query($qy)->result_array();
 		}
 		public function get_over_due_project(){
@@ -24,7 +24,8 @@
 			// }else{
 			// 	return $check;
 			// } 
-			$qy="Select project_id,tbl_project.uploads as project_uploads, project_name,progress,end_date,project_status,permission,tbl_client.name as client_name from tbl_project join tbl_client on tbl_client.client_id=tbl_project.project_id where tbl_project.project_status='in_progress' and tbl_project.end_date < '$today'";
+			$qy="SELECT project_id,tbl_project.uploads as project_uploads, project_name,progress,end_date,project_status,permission,tbl_client.name as client_name FROM `tbl_project` join tbl_client on tbl_client.client_id = tbl_project.client_id WHERE tbl_project.`end_date` < '$today' and tbl_project.project_status='in_progress'";
+			// $qy="Select project_id,tbl_project.uploads as project_uploads, project_name,progsress,end_date,project_status,permission,tbl_client.name as client_name from tbl_project join tbl_client on tbl_client.client_id=tbl_project.project_id where tbl_project.project_status='in_progress' and tbl_project.end_date < '$today'";
 			return $this->db->query($qy)->result_array();
 		}
 		// public function fetch_projects(){

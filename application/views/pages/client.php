@@ -173,7 +173,7 @@
                                 <th>Name</th>
                                 <th>Contacts</th>
                                 <th>Primary Contacts</th>
-                                <th>Projects</th>
+                                <!-- <th>Projects</th> -->
                                 <th>Due Ammount</th>
                                 <th>Received Ammount</th>
                                 <th>Expense</th>
@@ -192,16 +192,49 @@
                                 <td><a href="<?=base_url('Client/client_details/').$client->client_id?>" ><?=$client->name?></a></td>
                                 <td><?=$client->primary_contact?></td>
                                 <td><?=$client->mobile?></td>
-                                <td><?=$client->project_name?></td>
+                                <!-- <td><?=$client->project_name?></td> -->
                                 <td>23131</td>
                                 <td>2700</td>
                                 <td>1212</td>
                                 <td>-</td>
                                 <td>
                                     <div class="">
-                                      <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                      <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
-                                       <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
+                                     <?php
+                                      foreach($Assign_permission as $checkpermission)
+                                        {
+                                          $permission=$checkpermission->permission;
+                                              // print_r($permission);
+                                          // $permission=explode(',',$checkpermission->permission);
+
+                                            // print_r($permission);
+                                            // die;  
+                                          if(strpos($permission,'Edit')!==false)
+                                          {?>
+                                              <a href="" id="edit_p"class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+
+                                         <?php }
+                                         else
+                                         {
+                                          ?>
+                                            <a href="" id="edit_p"class="sele_staus bg-info p-1 text-white " style="visibility: hidden"><span><i class="far fa-edit"></i></span></a>
+
+                                         <?php
+                                          }
+                                         if(strpos($permission,'Delete')!==false)
+                                          {?>
+                                              <a href="javascript:void(0)" client_id="<?=$client->client_id?>" class=" p-1 text-white  sele_staus deletetclient"><span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+
+                                         <?php }
+                                         else
+                                         {
+                                          ?>
+                                            <a href="" class="sele_staus  p-1 text-white " style="visibility: hidden">  <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+
+                                         <?php
+                                          }
+
+                                        }?>
+                                       
                                     </div>
 
                                 </td>
@@ -221,6 +254,41 @@
                                 })
                                });
                              </script>
+
+          <script type="text/javascript">
+        $(document).ready(function(){
+          $('.deletetclient').on('click',function(){ 
+             var client_id=$(this).attr("client_id");
+             // alert(client_id);
+           if(confirm("Are you Sure want to delete this record?") ==true)
+            {       
+            // alert(owner_id);         
+                $.ajax({
+                  url:"<?=base_url('Client/DeleteClient')?>",
+                  type:"post",
+                  data:{client_id:client_id},
+                  success:function(response)
+                  {   
+                  response=JSON.parse(response);             
+                     if (response==1)
+                      {
+                   alert('Record Delete successfully');
+                    location.reload();
+                    
+                       }
+                  }
+                 })                           
+             // userPreference = "Data Delete successfully!";
+
+             }
+             else 
+             {
+              userPreference = "Save Canceled!";
+              }
+              
+          })
+        })  
+      </script>
                             <!-- <tr>
                             
                                 <td>Donna Snider</td>

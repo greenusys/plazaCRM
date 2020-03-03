@@ -40,8 +40,35 @@
                               
                                     <td>
                                         <div class="">
-                                          <a href="javascript:void(0)" rpt_id = "<?=$report->rpt_id?>"class="sele_staus bg-info p-1 text-white view_rpts"><span><i class="far fa-edit"></i></span></a>
-                                          <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
+                                          <?php
+                                      foreach($Assign_permission as $checkpermission)
+                                        {
+                                          $permission=$checkpermission->permission;
+                                          if(strpos($permission,'Edit')!==false)
+                                          {?>
+                                       <a href="#"><span class="sele_staus bg-success p-1 text-white"><i class="far fa-edit"></i></span></a>
+                                        <?php }
+                                         else
+                                         {
+                                          ?>
+                                          <a href="javascript:void(0)" style="visibility: hidden"><span class="sele_staus bg-success p-1 text-white"><i class="far fa-edit"></i></span></a>
+                                          <?php
+                                          }
+                                         if(strpos($permission,'Delete')!==false)
+                                          {?>
+
+                                       <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
+                                        <?php }
+                                         else
+                                         {
+                                          ?>
+
+                                       <span style="visibility: hidden" class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
+
+                                          <?php
+                                          }
+
+                                        }?>
                                           
                                         </div>
 

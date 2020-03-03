@@ -1,3 +1,9 @@
+<?php
+    $session=$this->session->userdata('logged_user');
+   
+$myId=$session[0]->user_id;
+$role_id=$session[0]->role_id;
+?>
 <style type="text/css">
 .back
 {
@@ -80,7 +86,7 @@
               <div class="">
                 <div class="first_div" id="advn_div">
         <div class="row mt-5">
-          <div class="col-md-3">
+          <div class="col-md-4">
                  <div class="yetr__">
                   <form method="POST" action="<?=base_url()?>Utilities/holiday">
                     <ul class="list-unstyled d-flex">
@@ -102,11 +108,13 @@
                   </form>
                 </div>
               </div>
+              <?php if($role_id!=3):?>
               <div class="col-md-7">
                 <div class="mt-3">
                   <a href="#" class="text-danger" data-toggle="modal" data-target="#exampleModal" data-toggle="tooltip" ><i class="fas fa-plus"></i> New Holiday</a>
                 </div>
               </div>
+            <?php endif;?>
               <div class="col-md-2">
                 <div class="text-right">
                   <!-- <button class="btn btn-info" id="advn_salry"><i class="fas fa-undo-alt"></i> Switch</button> -->
@@ -173,10 +181,10 @@ $(document).on("click",".month_sel",function(){
                         <table class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>Event Name</th>
-                                <th class="col-sm-2">Start Date</th>
-                                <th class="col-sm-2">End Date</th>
-                                <th class="col-sm-1">Color</th>
+                                <th  >Event Name</th>
+                                <th >Start Date</th>
+                                <th >End Date</th>
+                                <th >Color</th>
                                 <?php if (!empty($edited) || !empty($deleted)) { ?>
                                     <th class="col-sm-2">Action</th>
                                 <?php } ?>

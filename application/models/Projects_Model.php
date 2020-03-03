@@ -91,14 +91,19 @@ class Projects_Model extends CI_Model{
 	}
 
 	public function delete_project($data){
-			$this->db->where('id', $data);
-			if($this->db->delete('projects_')){
+			$this->db->where('project_id', $data);
+			if($this->db->delete('tbl_project')){
 				return TRUE;
 			}
 			else{
 				return FALSE;
 			}
 	}
+	public function CheckPermission($designation_id)
+    {
+        $this->db->where('designations_id',$designation_id);
+        return $this->db->get('tbl_designations')->result();
+    }
 
 }
 

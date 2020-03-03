@@ -79,7 +79,7 @@
                                 <th>Date</th>
                                 <th>Account Name</th>
                                  <th>Paid By</th>
-                                <th>Ammount</th>
+                                <th>Amount</th>
                                   <th>Balance</th>
                                 <!--<th>Status</th>-->
                                 <th>Attachment</th>
@@ -106,10 +106,38 @@
                            
                                 <td>
                                     <div class="">
+                                      <?php
+                                      foreach($Assign_permission as $checkpermission)
+                                        {
+                                          $permission=$checkpermission->permission;
+                                                
+                                          if(strpos($permission,'Edit')!==false)
+                                          {?>
                                      <a href="<?=base_url('Transaction/Edit_Deposit/').$AED->transactions_id?>" class="bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                     <?php }
+                                         else
+                                         {
+                                          ?>
+                                          <a href="#" style="visibility: hidden"class="bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                          <?php
+                                          }
+                                         if(strpos($permission,'Delete')!==false)
+                                          {?>
+
                                       <a href="javascript:void(0)" transactions_id="<?=$AED->transactions_id?>" class="deletetdeposittransaction"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
-                                       <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
-                                    </disessionv>
+                                       <?php }
+                                         else
+                                         {
+                                          ?>
+                                           <a href="#" style="visibility: hidden"class="deletetdeposittransaction"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+
+                                      <!--  <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span> -->
+                                      <?php
+                                          }
+
+                                        }?>
+
+                                    </div>
 
                                 </td>
                                 

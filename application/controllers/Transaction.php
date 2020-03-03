@@ -20,6 +20,9 @@ class Transaction extends MY_Controller {
 	}
 
 	public function expense(){
+		$session=$this->session->userdata('logged_user');
+		$designation_id=$session[0]->designations_id;
+		$data['Assign_permission']=$this->Transaction->CheckPermission($designation_id);
 		$data['fetch_Account_Data']=$this->Accounts->AllAccountData();
 	    $data['fetch_Expenses_Category']=$this->Expenses->fetchExpensesCategory();
 	    $data['fetch_Client_Data']=$this->Client->getClientDetails();
@@ -59,6 +62,9 @@ class Transaction extends MY_Controller {
 	}
 	public function deposit()
 	{
+		$session=$this->session->userdata('logged_user');
+		$designation_id=$session[0]->designations_id;
+		$data['Assign_permission']=$this->Transaction->CheckPermission($designation_id);
 		$data['fetch_Account_Data']=$this->Accounts->AllAccountData();
 	    $data['fetch_Expenses_Category']=$this->Expenses->fetchExpensesCategory();
 	    $data['fetch_Client_Data']=$this->Client->getClientDetails();
@@ -70,6 +76,9 @@ class Transaction extends MY_Controller {
 	}
 
 	public function transfer(){
+		$session=$this->session->userdata('logged_user');
+		$designation_id=$session[0]->designations_id;
+		$data['Assign_permission']=$this->Transaction->CheckPermission($designation_id);
 		 $data['fetch_Account_Data']=$this->Accounts->AllAccountData();
         $data['fetch_Method_Data']=$this->Payments->fetchMethodData();
          $data['All_Transfer_Data']=$this->Transaction->fetchAllTransferData();
@@ -89,7 +98,7 @@ class Transaction extends MY_Controller {
 		$this->load->view("layout/footer");
 	}
 	public function TransactionReport(){
-		$data['transaction_report']=$this->Transactions_model->fetch_transactions();
+		$data['transaction_report']=$this->Transaction->fetch_transactions();
 		$this->load->view('layout/header');
 		$this->load->view("pages/transaction_report",$data);
 		$this->load->view("layout/footer");
@@ -256,6 +265,7 @@ class Transaction extends MY_Controller {
 	    die(json_encode(array('status'=>1,'data'=>$results)));
    
 	}
+
 	public function AddNewAccountforDeposit()
 	{
 	   // print_r($_POST);

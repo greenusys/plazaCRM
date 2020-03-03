@@ -1,4 +1,9 @@
-
+<?php
+    $session=$this->session->userdata('logged_user');
+   
+$myId=$session[0]->user_id;
+$role_id=$session[0]->role_id;
+?>
             <!--  <div class="p-3">
             <div class="row bg-white mt-3">
                 <div class="col-md-2 ">
@@ -137,7 +142,7 @@
    
   
           </div>
-          <div class="row mt-4">
+          <div class="row mt-4" >
             <div class="col-lg-12">
               <div class="card">
                <!--  <div class="card-header">
@@ -151,10 +156,12 @@
                     <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
                       aria-selected="true">All Tasks</a>
                   </li>
+                  <?php if($role_id!=3):?>
                   <li class="nav-item">
                     <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
                       aria-selected="false">New Tasks</a>
                   </li>
+                <?php endif; ?>
 <!--                   <li class="nav-item ">
                   <a class="nav-link" id="import_project" data-toggle="tab" href="#imp_project" role="tab" aria-controls="imp_project" aria-selected="false">Import Tasks</a>
                   </li> -->
@@ -194,7 +201,7 @@
                                     echo "<span class='text-white bg-warning sele_staus'>Waiting For Someone</span>";
                                   }
                                   elseif ($tasker['task_status']=="in_progress") {
-                                    echo "<span class='text-white bg-warning sele_staus'>In Progresse</span>";
+                                    echo "<span class='text-white bg-warning sele_staus'>In Progress</span>";
                                   }
                                   else{
                                     echo "<span class='text-white bg-danger sele_staus'>Not Started</span>";
@@ -227,9 +234,42 @@
                                 ?> <span class="ml-2" id="open_modal" task_id="<?=$tasker['task_id']?>"><i class="fa fa-edit" aria-hidden="true"></i></span></td>
                                 <td>
                                     <div class="">
-                                      <a href="<?=base_url('Task/task_details').'/'.$tasker['task_id']?>" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
-                                      <a href=""><span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+                                      <?php
+                                      foreach($Assign_permission as $checkpermission)
+                                        {
+                                          $permission=$checkpermission->permission;
+
+                                          if(strpos($permission,'Edit')!==false)
+                                          {?>
+                                              <a href="" id="edit_p"class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+
+                                         <?php }
+                                         else
+                                         {
+                                          ?>
+                                            <a href="" id="edit_p"class="sele_staus bg-info p-1 text-white " style="visibility: hidden"><span><i class="far fa-edit"></i></span></a>
+
+                                         <?php
+                                          }
+                                         if(strpos($permission,'Delete')!==false)
+                                          {?>
+                                              <a href="javascript:void(0)" class="sele_staus  p-1 text-white delete_task" d-id="<?=$tasker['task_id']?>">  <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+
+                                         <?php }
+                                         else
+                                         {
+                                          ?>
+                                            <a href="" class="sele_staus  p-1 text-white " style="visibility: hidden">  <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+
+                                         <?php
+                                          }
+
+                                        }?>
+
+                                     <!--  <a href="<?=base_url('Task/task_details').'/'.$tasker['task_id']?>" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                      <a href=""><span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a> -->
                                        <!-- <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span> -->
+
                                     </div>
 
                                 </td>
@@ -907,6 +947,24 @@ $(document).ready(function(){
 });
 </script>
 <script>
+  $(document).on('click','.delete_task',function(){
+    var taskId=$(this).attr('d-id');
+    
+    $.ajax({
+      url:'<?=base_url('Task/delete_task')?>',
+      type:"post",
+      data:{task_id:taskId},
+      success:function(response){
+
+        response=JSON.parse(response);
+        swal("Action",response.msg,'info');
+        $(this).parent().parent().remove();
+        $('#example').load(document.URL +  ' #example');
+  
+          
+      }
+    });
+  });
     function openCity(evt, cityName) {
       var i, tabcontent, tablinks;
       tabcontent = document.getElementsByClassName("tabcontent");

@@ -42,6 +42,7 @@ class Leave_Model extends CI_Model
 	    return $this->db->get('tbl_leave_category')->result();
 	    
 	}
+	
 	public function fetchMyLeaveDetails($formyleave)
 	{
 	    return $this->db->query("select tbl_leave_application.*,tbl_users.*,tbl_leave_category.*,tbl_account_details.*,tbl_leave_application.user_id as users,tbl_leave_application.leave_category_id as leavecatid from tbl_leave_application join tbl_users on tbl_users.user_id=tbl_leave_application.user_id  join  tbl_account_details on tbl_account_details.user_id= tbl_users.user_id join tbl_leave_category on tbl_leave_category.leave_category_id=tbl_leave_application.leave_category_id where tbl_leave_application.user_id=$formyleave")->result();
@@ -260,12 +261,39 @@ class Leave_Model extends CI_Model
 		return $total = array_sum($days_array);
 		 
 	}
-	 public function checkAvailableleaveforParticularUser($desig_id)
+	public function checkAvailableleaveforParticularUser($desig_id)
  	{
  		return $this->db->query("select designation_id,DATEDIFF(max(leave_end_date),min(leave_start_date))+1 as checkdata from tbl_leave_application where tbl_leave_application.application_status='2' group by tbl_leave_application.designation_id='$desig_id'")->result();
  		
 	
-	   }
 	}
+	public function CheckPermission($designation_id)
+    {
+        $this->db->where('designations_id',$designation_id);
+        return $this->db->get('tbl_designations')->result();
+    }
+    public function  getMyApprovedLeaveDetails($leave_id){
+    	$condition=array("user_id"=>$leave_id,"application_status"=>2);
+    	return $this->db->select('leave_category_id,leave_start_date as start_, leave_end_date as end_')->where($condition)->get('tbl_leave_application')->result_array();
+    }
+     public function getMyApprovedLeaveDetailsCategoryWise($cat_id){
+     	$usersdetail=$this->session->logged_user;
+		$designation_id=$usersdetail[0]->designations_id;
+	    $formyleave=$usersdetail[0]->user_id;
+    	$condition=array("user_id"=>$formyleave,"application_status"=>2,"leave_category_id"=>$cat_id);
+    	return $this->db->select('leave_category_id,leave_start_date as start_, leave_end_date as end_')->where($condition)->get('tbl_leave_application')->result_array();
+    	
+    }
+    public function getLeaveCategory($designation_id)
+	{
+		$this->db->where('leave_cat_desig_id',$designation_id);
+	    return $this->db->get('tbl_leave_category')->result_array();
+	    
+	}
+	public function getLeaveDetailsForCategoryWise($cat_id){
+    	$condition=array("leave_category_id"=>$cat_id);
+    	return $this->db->where($condition)->get('tbl_leave_category')->result_array();
+	}
+}
 
 ?>

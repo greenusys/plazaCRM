@@ -1,5 +1,4 @@
 <?php
-date_default_timezone_set('Asia/Kolkata');
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Projects extends MY_Controller {
@@ -56,6 +55,10 @@ class Projects extends MY_Controller {
           //  $data['taskprogress']=$taskprogress;
     		
         }
+        $session=$this->session->userdata('logged_user');
+        $id=$session[0]->user_id;
+        $designation_id=$session[0]->designations_id;
+        $data['Assign_permission']=$this->Projects_Model->CheckPermission($designation_id);
         $this->load->view('layout/header');
         $this->load->view("pages/projects",$data);
         $this->load->view("layout/footer");
