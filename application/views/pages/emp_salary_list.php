@@ -34,11 +34,12 @@
                         </thead>
                         <tbody>
                           <?php
+
                           foreach ($employee as $emp_data) {
                           ?>
                             <tr>
                               <td><?=$emp_data->employment_id?></td>
-                              <td><?=$emp_data->fullname?></td>
+                              <td><a href="<?=base_url()?>/User/userDetails/<?=$emp_data->user_id?>"><?=$emp_data->fullname?></a></td>
                                 <td>
                                   <?php
                                   if ($emp_data->salary_template_id!=null) {

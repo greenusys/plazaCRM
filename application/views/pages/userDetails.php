@@ -570,7 +570,7 @@ $totalTasks=$t_not_started+$t_in_progress+$t_completed;
                         $m_hour += intval($m_min / 60);
                         $m_min = intval($m_min % 60);
                     }
-                    echo round($m_hour) . " : " . round($m_min) . " m";;
+                    echo round($m_hour) . " h : " . round($m_min) . " min";;
                     ?></h4>
                     <h6 class="text-white">This month Working Hours</h6>
                 </div>  
@@ -589,7 +589,7 @@ $totalTasks=$t_not_started+$t_in_progress+$t_completed;
                         $hour += intval($min / 60);
                         $min = intval($min % 60);
                     }
-                    echo round($hour) . " : " . round($min) . " m";;
+                    echo round($hour) . " h : " . round($min) . " min";;
                     ?></h4>
                     <h6 class="text-white">Working Hours</h6>
                 </div>                  

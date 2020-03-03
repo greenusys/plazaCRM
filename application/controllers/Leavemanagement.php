@@ -50,9 +50,15 @@ class Leavemanagement extends MY_Controller {
 		$tempCatId=0;
 		$levDua=0;
 		$rArray=array();
+<<<<<<< HEAD
 		foreach ($resArray as  $value) {
 			// if($value[''])
 		}
+=======
+		// foreach ($resArray as  $value) {
+		// 	if($value[''])
+		// }
+>>>>>>> 91fdc1154c4bf8e13211e8fb39f85087fb40f74b
 		// print_r($resArray);
 		// echo '********* My Leave Data ********* ';
 		// die;

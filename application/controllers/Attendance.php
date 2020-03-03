@@ -3,6 +3,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Attendance extends MY_Controller {
+	
 	function __construct(){
 		parent::__construct();
 		$this->load->model('AttendanceModel','ATND');
@@ -129,6 +130,7 @@ class Attendance extends MY_Controller {
 	public function getTimeHistory(){
 		$userId=$this->input->post('emp_id');
 		$data['active'] = date('Y');
+		$data['EmpDetails']=$this->db->where('tbl_users.user_id',$userId)->join('tbl_account_details','tbl_account_details.user_id=tbl_users.user_id')->get('tbl_users')->row();
 		$attendance_info = $this->ATND->get_attendance(array('user_id' => $userId));
         $data['mytime_info'] = $this->get_mytime_info($attendance_info);
         // print_r($data['mytime_info']);
@@ -154,10 +156,6 @@ class Attendance extends MY_Controller {
 	{
 		$data['Employee']=$this->ATND->fetchEmployee();
 		$data['all_department'] = $this->db->get('tbl_departments')->result();
-	 	// foreach ($data['all_dept_info'] as $v_dept_info) {
-        //     $data['all_department_info'][] = $this->Job_circular_model->get_add_department_by_id($v_dept_info->departments_id);
-        //
-
 		$this->load->view('layout/header');
 		$this->load->view("pages/attendance_report",$data);
 		$this->load->view("layout/footer");
@@ -173,82 +171,7 @@ class Attendance extends MY_Controller {
         $year = date('Y', strtotime($date));
         $num = cal_days_in_month(CAL_GREGORIAN, $month, $year);
 		$data['employee_info'] = $this->ATND->get_employee_id_by_dept_id($departments_id);
-		
-
-        // $holidays = $this->global_model->get_holidays(); //tbl working Days Holiday
-
-        // if ($month >= 1 && $month <= 9) {
-        //     $yymm = $year . '-' . '0' . $month;
-        // } else {
-        //     $yymm = $year . '-' . $month;
-        // }
-
-        // $public_holiday = $this->global_model->get_public_holidays($yymm);
-
-        // //tbl a_calendar Days Holiday
-        // if (!empty($public_holiday)) {
-        //     foreach ($public_holiday as $p_holiday) {
-        //         $p_hday = $this->ATND->GetDays($p_holiday->start_date, $p_holiday->end_date);
-        //     }
-        // }
-
-        // foreach ($data['employee_info'] as $sl => $v_employee) {
-        //     $key = 1;
-        //     $x = 0;
-        //     for ($i = 1; $i <= $num; $i++) {
-
-        //         if ($i >= 1 && $i <= 9) {
-        //             $sdate = $yymm . '-' . '0' . $i;
-        //         } else {
-        //             $sdate = $yymm . '-' . $i;
-        //         }
-        //         $day_name = date('l', strtotime("+$x days", strtotime($year . '-' . $month . '-' . $key)));
-
-        //         $data['week_info'][date('W', strtotime($sdate))][$sdate] = $sdate;
-
-        //         // get leave info
-        //         if (!empty($holidays)) {
-        //             foreach ($holidays as $v_holiday) {
-        //                 if ($v_holiday->day == $day_name) {
-        //                     $flag = 'H';
-        //                 }
-        //             }
-        //         }
-        //         if (!empty($p_hday)) {
-        //             foreach ($p_hday as $v_hday) {
-        //                 if ($v_hday == $sdate) {
-        //                     $flag = 'H';
-        //                 }
-        //             }
-        //         }
-        //         if (!empty($flag)) {
-        //             $data['attendace_info'][date('W', strtotime($sdate))][$sdate][$v_employee->user_id] = $this->attendance_model->attendance_report_by_empid($v_employee->user_id, $sdate, $flag);
-        //         } else {
-        //             $data['attendace_info'][date('W', strtotime($sdate))][$sdate][$v_employee->user_id] = $this->attendance_model->attendance_report_by_empid($v_employee->user_id, $sdate);
-        //         }
-        //         $key++;
-        //         $flag = '';
-        //     }
-        // }
-        // $data['title'] = lang('attendance_report');
-        // $this->attendance_model->_table_name = "tbl_departments"; //table name
-        // $this->attendance_model->_order_by = "departments_id";
-        // $data['all_department'] = $this->attendance_model->get();
-        // $data['departments_id'] = $this->input->post('departments_id', TRUE);
-        // $data['date'] = $this->input->post('date', TRUE);
-        // $where = array('departments_id' => $departments_id);
-        // $data['dept_name'] = $this->attendance_model->check_by($where, 'tbl_departments');
-
-        // $data['month'] = date('F-Y', strtotime($yymm));
-
-        // $data['subview'] = $this->load->view('admin/attendance/attendance_report', $data, TRUE);
-        // $this->load->view('admin/_layout_main', $data);
     }
-
-
-
-
-
 	 public function get_report()
 	    {
 	        $departments_id = $this->input->post('departments_id', TRUE);
@@ -330,15 +253,6 @@ class Attendance extends MY_Controller {
 			$this->load->view("pages/attendance_report",$data);
 			$this->load->view("layout/footer");
 	    }
-
-
-
-
-
-
-
-
-
 	public function markAttendance()
 	{
 		$data['Employee']=$this->ATND->fetchEmployee();
@@ -348,28 +262,12 @@ class Attendance extends MY_Controller {
 	}
 	public function get_mytime_info($attendance_info)
     {
-
         if (!empty($attendance_info)) {
-
             foreach ($attendance_info as $v_info) {
-            	
-            	
-                // if ($v_info->date_in == $v_info->date_out) {
-                // 	// echo ' ****** ';
-                //     $date = strftime("%m.%d.%Y", strtotime($v_info->date_in));
-                //     // print_r($date);
-                // } else {
-                //     $date = 'Day In'. ' : ' . strftime("%m.%d.%Y", strtotime($v_info->date_in)) . ', ' . 'Day Out'. ': ' . strftime("%m.%d.%Y", strtotime($v_info->date_out));
-				// }
 				$date = strftime("%m.%d.%Y", strtotime($v_info->date_in)) . ' : ' . strftime("%m.%d.%Y", strtotime($v_info->date_out));
-                // echo $v_info->attendance_id;
                 $details_=$this->get_result($v_info->attendance_id);
-                // print_r($details_);
                 $clock_info[date('Y', strtotime($v_info->date_in))][date('W', strtotime($v_info->date_in))][$date] = $details_;
-//                    $this->attendance_model->get_mytime_info($v_info->attendance_id);
             }
-            // print_r($clock_info);
-            // echo '****************************************************************************************************************';
             return $clock_info;
         }
     }
@@ -378,57 +276,132 @@ class Attendance extends MY_Controller {
     }
 	public function markAttendanceManually(){
 		// print_r($_POST);
+		// die;
+		$ip=$this->input->ip_address();
+		// $session=$this->session->userdata('logged_user');
+		// $user_id=$session[0]->user_id;
 		$employeeID=$this->input->post('empl_id');
+		$user_id=$employeeID;
 		$dayInArr=explode(' ',$this->input->post('date_In'));
 		$dayOutArr=explode(' ',$this->input->post('date_Out'));
 		$dayIn=date('Y-m-d',strtotime($dayInArr[0]));
 		$dayOut=date('Y-m-d',strtotime($dayOutArr[0]));
-		$clockIn=date('h:i:s',strtotime($this->input->post('clock_In')));
-		$clockOut=date('h:i:s',strtotime($this->input->post('clock_Out')));
-		 // `tbl_attendance`(`attendance_id`, ``, ``, ``, ``, ``, ``)
-		$forAttendance=array(
-				"user_id"=>$employeeID,
-				"date_in"=>$dayIn,
-				"date_out"=>$dayOut,
-				"attendance_status"=>1,
-				"clocking_status"=>0
-		);
-
-		$ip=$this->input->ip_address();
-		$insertStatus=$this->ATND->insATNDData($forAttendance);
-		// print_r($insertStatus);
-		$attendanceId=$insertStatus[0]->attendance_id;
-		// (`clock_id`, ``, ``, ``, `comments`, ``, ``)
-
-		$forClockIn=array(
-					"attendance_id"=>$attendanceId,
-					"clockin_time"=>$clockIn,
-					"clockout_time"=>$clockOut,
-					"clocking_status"=>0,
-					"ip_address"=>$ip,
-		
-		);
-		$insertClockStatus=$this->ATND->insClockData($forClockIn);
-		if($insertClockStatus!=false){
-			die(json_encode(array("code"=>1,"msg"=>"Success.")));
+		$clockIn=date('H:i:s',strtotime($this->input->post('clock_In')));
+		$clockOut=date('H:i:s',strtotime($this->input->post('clock_Out')));
+		if(count($dat=$this->checkForExistenceIntblAtten($user_id))>0){
+			$date_in=$dat[0]->date_in;
+			$date_out=$dat[0]->date_out;
+			$attendance_id=$dat[0]->attendance_id;
+			if($date_out!=""){
+				//Insert Table Clock
+				$clk_resp=$this->checkForExistenceIntblClock($attendance_id);
+				// print_r($clk_resp);
+				if($clk_resp[0]->clockout_time==""){
+					
+					// print('Update Clock Table');
+					$clock_id=$clk_resp[0]->clock_id;
+					$toUpdate=array(
+						"clockout_time"=>$clockOut,
+						"clocking_status"=>0,
+					);
+					$updateClockStatus=$this->ATND->updateClockDetails($toUpdate,$clock_id);
+					if($updateClockStatus!=false){
+						die(json_encode(array("code"=>1,"msg"=>"Success.")));
+					}else{
+						die(json_encode(array("code"=>0,"msg"=>"Failed.")));
+					}
+				}else{
+					// print('Insert Into Clock Table');
+					$forClockIn=array(
+						"attendance_id"=>$attendance_id,
+						"clockin_time"=>$clockIn,
+						"clockout_time"=>$clockOut,
+						"clocking_status"=>0,
+						"ip_address"=>$ip
+					);
+					$insertClockStatus=$this->ATND->insClockData($forClockIn);
+					if($insertClockStatus!=false){
+						die(json_encode(array("code"=>1,"msg"=>"Success.")));
+					}else{
+						die(json_encode(array("code"=>0,"msg"=>"Failed.")));
+					}
+				}
+			}else{
+				// print('Update Attendance Table -Date Out');
+				if(($res=$this->ATND->updateAttendData($attendance_id,date('Y-m-d')))){
+					// print_r($res[0]->clock_id);
+					if($res[0]->clockin_time!="" && $res[0]->clockout_time=="" ){
+						// print('Update Clock Table');
+						$clock_id=$res[0]->clock_id;
+						$toUpdate=array(
+							"clockout_time"=>$clockOut,
+							"clocking_status"=>0,
+						);
+						$updateClockStatus=$this->ATND->updateClockDetails($toUpdate,$clock_id);
+						if($updateClockStatus!=false){
+							die(json_encode(array("code"=>1,"msg"=>"Success.")));
+						}else{
+							die(json_encode(array("code"=>0,"msg"=>"Failed.")));
+						}
+					}else{
+						// print('Insert Into Clock Table');
+						$forClockIn=array(
+							"attendance_id"=>$res[0]->attendance_id,
+							"clockin_time"=>$clockIn,
+							"clockout_time"=>$clockOut,
+							"clocking_status"=>0,
+							"ip_address"=>$ip
+						);
+						$insertClockStatus=$this->ATND->insClockData($forClockIn);
+						if($insertClockStatus!=false){
+							die(json_encode(array("code"=>1,"msg"=>"Success.")));
+						}else{
+							die(json_encode(array("code"=>0,"msg"=>"Failed.")));
+						}
+					}
+				}else{
+					die(json_encode(array("code"=>0,"msg"=>"Server Error.")));
+				}
+			}
 		}else{
-			die(json_encode(array("code"=>0,"msg"=>"Failed.")));
+			// print('Insert in Both Table');
+			$inAttData=array(
+							"user_id"=>$user_id,
+							"date_in"=>$dayIn,
+							"date_out"=>$dayOut,
+							"attendance_status"=>1,
+							"clocking_status"=>1
+						);
+			if($d=$this->ATND->insATNDData($inAttData)){
+				$forClockIn=array(
+							"attendance_id"=>$d[0]->attendance_id,
+							"clockin_time"=>$clockIn,
+							"clockout_time"=>$clockOut,
+							"clocking_status"=>0,
+							"ip_address"=>$ip
+						);
+				$insertClockStatus=$this->ATND->insClockData($forClockIn);
+				if($insertClockStatus!=false){
+					die(json_encode(array("code"=>1,"msg"=>"Success.")));
+				}else{
+					die(json_encode(array("code"=>0,"msg"=>"Failed.")));
+				}
+
+			}else{
+				die(json_encode(array("code"=>0,"msg"=>"Server Error.")));
+			}
 		}
-		// timeChaneRequest:527 
-		// 	Array
-		// 	(
-		// 	    [empl_id] => 8
-		// 	    [date_In] => 01/24/2020 10:30 PM
-		// 	    [date_Out] => 01/24/2020 10:30 PM
-		// 	    [clock_In] => 9:48 AM
-		// 	    [clock_Out] => 6:43 PM
-		// 	)
 	}
 	public function markAttendanceParticullary(){
 		// print_r($_POST);
 		$employeeID=$this->input->post('empl_id');
 		
 	}
+	public function checkForExistenceIntblAtten($user_id){
+		$condition=array("user_id"=>$user_id,"date_in"=>date('Y-m-d'));
+		return $this->db->where($condition)->get('tbl_attendance')->result();
+	}
+
 	// public function addAttendanceData($data){
 	// 	return $this->ATND->insATNDData($data);
 	// }

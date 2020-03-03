@@ -1,8 +1,8 @@
 <?php
-date_default_timezone_set('Asia/Kolkata');
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Announcement extends MY_Controller {
+
 	function __construct(){
 		parent::__construct();
 		$this->load->model('AnnouncementModel','Anna');

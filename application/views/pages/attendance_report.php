@@ -263,7 +263,7 @@
                             <tr>
                                 <td colspan="2" class="text-right">
                                     <strong
-                                        style="margin-right: 10px; ">total_working_hour
+                                        style="margin-right: 10px; ">Total Working Hours
                                         : </strong>
                                 </td>
                                 <td>
@@ -272,7 +272,7 @@
                                         $total_hour += intval($total_minutes / 60);
                                         $total_minutes = intval($total_minutes % 60);
                                     }
-                                    echo $total_hour . " : " . $total_minutes . " m";
+                                    echo $total_hour . "h : " . $total_minutes . " mins";
                                     ?>
                                 </td>
                             </tr>

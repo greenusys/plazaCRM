@@ -6,6 +6,7 @@ class Dashboard extends MY_Controller {
 
 	public function __construct(){
 		parent::__construct();
+
 		$this->load->model('Tasks_Model');
 		$this->load->model('Notification_model');
 		$this->load->model('User_model');
@@ -17,6 +18,7 @@ class Dashboard extends MY_Controller {
 
 	public function index()
 	{
+		// echo date('H:i:s').' ***  '.date_default_timezone_get();
 		$session=$this->session->userdata('logged_user');
 		$user_id=$session[0]->user_id;
 		$data['admin_employee']=$this->User_model->fetch_all_employees_admin();
@@ -89,6 +91,10 @@ class Dashboard extends MY_Controller {
 		die(json_encode($this->Demo->get_online_user()));
 	}
 	public function projectInprogress(){
+		$session=$this->session->userdata('logged_user');
+        $id=$session[0]->user_id;
+        $designation_id=$session[0]->designations_id;
+        $data['Assign_permission']=$this->Projects_Model->CheckPermission($designation_id);
 		// $data['clients']=$this->Client_Model->getClients();
 		// $data['users']=$this->User_model->fetch_user();
 		// $data['settings']=$this->Projects_Model->fetch_settings();
@@ -157,6 +163,16 @@ class Dashboard extends MY_Controller {
 		$data['users']=$this->User_model->fetch_user();
 		$this->load->view('layout/header');
 		$this->load->view("pages/inProgressTask",$data);
+		$this->load->view("layout/footer");
+    }
+    public function InProgressBugss(){
+    	// $this->db->join('tbl_project','tbl_project.project_id=tbl_bug.project_id');	
+    	$data['all_bugs']=$this->db->join('tbl_project','tbl_project.project_id=tbl_bug.project_id')->where('bug_status','in_progress')->get('tbl_bug')->result();
+    	// print_r($data['all_bugs']);
+    	// die;
+		$data['users']=$this->User_model->fetch_user();
+		$this->load->view('layout/header');
+		$this->load->view("pages/inProgressBugs",$data);
 		$this->load->view("layout/footer");
     }
     public function inProgressBugs($id=""){

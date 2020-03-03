@@ -86,7 +86,7 @@
                       </div>
                       <div class="card-body">
                        In Progress Bugs<br>
-                    <span><a href="<?=base_url('Dashboard/inProgressTasks')?>">More Info <i class="fas fa-arrow-circle-right"></i></a></span>
+                    <span><a href="<?=base_url('Dashboard/InProgressBugss')?>">More Info <i class="fas fa-arrow-circle-right"></i></a></span>
                       </div>
                     </div>
                  </div>

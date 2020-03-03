@@ -49,11 +49,13 @@ min-height: 35px
                               </tr>
                           </thead>
                           <tbody id="user_data">
+
                             <?php
+                            //die(json_encode($department));
                             foreach ($department as $dep) {
                             ?>
                               <tr>
-                                  <td><input type="hidden" name="user_id[]" value="<?php echo $dep->user_id ?>"><?=$dep->fullname?></td>
+                                  <td><input type="hidden" name="user_id[]" value="<?php echo $dep->user ?>"><?=$dep->fullname?></td>
                                   <td><?=$dep->designations?></td>
                                   <td>
                                     <div class="d-flex">

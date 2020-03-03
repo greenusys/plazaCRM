@@ -1,3 +1,10 @@
+   <?php
+    $session=$this->session->userdata('logged_user');
+   
+$myId=$session[0]->user_id;
+$role_id=$session[0]->role_id;
+?>
+
     <div class="row mt-4">
       <div class="col-lg-12">
         <div class="card">
@@ -6,10 +13,12 @@
               <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
                 aria-selected="true">All Users</a>
             </li>
+            <?php if($role_id!=3):?>
             <li class="nav-item">
               <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
                 aria-selected="false">New Users</a>
             </li>
+          <?php endif;?>
           </ul>
           <div class="tab-content card pt-5" id="myTabContentJust">
             <div class="tab-pane fade show active px-4" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">

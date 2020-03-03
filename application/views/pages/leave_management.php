@@ -15,6 +15,12 @@
    }
 }
 </style>
+<?php
+    $session=$this->session->userdata('logged_user');
+   
+$myId=$session[0]->user_id;
+$role_id=$session[0]->role_id;
+?>
 
         <div class="row mt-4">
             <div class="col-lg-12">
@@ -26,18 +32,23 @@
                   <canvas id="myChart" height="158"></canvas>
                 </div> -->
                     <ul class="nav nav-tabs nav-justified md-tabs indigo col-md-8" id="myTabJust" role="tablist">
+                      <?php if($role_id!=3):?>
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just" aria-selected="true">Pending Approval</a>
                         </li>
+                        <?php endif;?>
                         <li class="nav-item">
                             <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just" aria-selected="false">My Leave</a>
                         </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" id="all_leave_tab" data-toggle="tab" href="#all_leave" role="tab" aria-controls="all_leave" aria-selected="false">All Leave </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" id="leave_report_tab" data-toggle="tab" href="#leave_report" role="tab" aria-controls="leave_report" aria-selected="false">Leave Report</a>
-                        </li>
+                        <?php if($role_id!=3):?>
+                            <li class="nav-item ">
+                                <a class="nav-link" id="all_leave_tab" data-toggle="tab" href="#all_leave" role="tab" aria-controls="all_leave" aria-selected="false">All Leave </a>
+                            </li>
+                        <?php endif;?>
+                           <!--  <li class="nav-item ">
+                                <a class="nav-link" id="leave_report_tab" data-toggle="tab" href="#leave_report" role="tab" aria-controls="leave_report" aria-selected="false">Leave Report</a>
+                            </li> -->
+                       
                         <li class="nav-item ">
                             <a class="nav-link" id="apply_leave_tab" data-toggle="tab" href="#apply_leave" role="tab" aria-controls="apply_leave" aria-selected="false">Apply Leave</a>
                         </li>

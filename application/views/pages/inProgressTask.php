@@ -181,7 +181,7 @@
                                 <th>Due Date</th>
                                 <th>Status</th>
                                 <th>Assigned To</th>
-                                <th>Action</th>
+                                <!-- <th>Action</th> -->
                              
                             </tr>
                         </thead>
@@ -238,15 +238,17 @@
                                     echo '<img src="'.base_url().$check[0]['avatar'].'" style="height:28px;width:28px" class="rounded-circle ml-2 img-circle img-xs" title="'.$check[0]['fullname'].'" alt="'.$check[0]['fullname'].'">';
                                   }
                                 }
-                                ?> <span class="ml-2" id="open_modal" task_id="<?=$tasker->task_id?>"><i class="fa fa-plus" aria-hidden="true"></i></span></td>
-                                <td>
+                                ?> 
+                                <!-- <span class="ml-2" id="open_modal" task_id="<?=$tasker->task_id?>"><i class="fa fa-plus" aria-hidden="true"></i></span> -->
+                              </td>
+                                <!-- <td>
                                     <div class="">
                                       <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
                                       <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
                                        <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
                                     </div>
 
-                                </td>
+                                </td> -->
                              
                             </tr>
                             <?php } ?>
@@ -258,7 +260,7 @@
                                 <th>Due Date</th>
                                 <th>Status</th>
                                 <th>Assigned To</th>
-                                <th>Action</th>
+                                <!-- <th>Action</th> -->
                              
                             </tr>
                         </tfoot>

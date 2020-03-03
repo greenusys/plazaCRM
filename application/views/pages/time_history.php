@@ -68,7 +68,7 @@
               <div class="card p-2">
                 <div class="card-header row border-bottom py-1">
                   <div class="col-md-6">
-                    <span><strong>Time History Details</strong></span> 
+                    <span><strong>Select Employee</strong></span> 
                    </div>
                  <!--    <div class="col-md-6 text-right"><button class="btn btn-success rounded-0"><i class="fa fa-plus" aria-hidden="true"></i> Add Time Manually</button></div> -->
                 </div>
@@ -128,7 +128,11 @@
               <div class="card p-2">
                 <div class="card-header row border-bottom py-1">
                   <div class="col-md-6">
-                    <span><strong>Time History Details</strong></span> 
+                    <span><strong>Time History Details For:
+                      <?php if(isset($EmpDetails)):?>
+                     <a href="<?=base_url('User/userDetails/').$EmpDetails->user_id?>"><?=$EmpDetails->full_name?></a>
+                   <?php endif; ?>
+                   </strong></span> 
                    </div>
                  <!--    <div class="col-md-6 text-right"><button class="btn btn-success rounded-0"><i class="fa fa-plus" aria-hidden="true"></i> Add Time Manually</button></div> -->
                 </div>
@@ -237,7 +241,7 @@
                                                                           <th>Clock Out Time</th>
                                                                           <th>IP Address</th>
                                                                           <th>Hours</th>
-                                                                          <th>Action</th>
+                                                                          <!-- <th>Action</th> -->
                                                                       </tr>
                                                                   </thead>
                                                                   <tbody>
@@ -306,13 +310,13 @@
                                                                                   }
                                                                                   ?>
                                                                                 </td>
-                                                                              <td>
+                                                                              <!-- <td>
                                                                                       <div class="">
                                                                                           <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
                                                                                           <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
                                                                                           <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
                                                                                           </div>
-                                                                              </td>
+                                                                              </td> -->
                                                                               </tr>
 
                                                                           <?php
