@@ -50,8 +50,11 @@
                                       foreach($Assign_permission as $checkpermission)
                                         {
                                           $permission=$checkpermission->permission;
+                                          foreach ($UsersPermission as $Uperms) 
+                                            {
+                                             $Userpermi=$Uperms->permission;
                                               
-                                          if(strpos($permission,'View')!==false)
+                                          if(strpos($permission,'View')!==false||strpos($Userpermi,'View')!==false)
                                           {?>
                                       <a href="javascript:void(0);" onclick="open_modal(<?=$template->salary_template_id?>)" class="sele_staus bg-info p-1 text-white"><span><i class="far fa-clock"></i></span></a>
                                        <?php }
@@ -61,7 +64,7 @@
                                            <a href="javascript:void(0);" style="visibility: hidden" onclick="open_modal(<?=$template->salary_template_id?>)" class="sele_staus bg-info p-1 text-white"><span><i class="far fa-clock"></i></span></a>
                                             <?php
                                           }
-                                         if(strpos($permission,'Edit')!==false)
+                                         if(strpos($permission,'Edit')!==false||strpos($Userpermi,'Edit')!==false)
                                           {?>
 
                                        <a href="<?=base_url()?>Payroll/salaryTemplate/<?=$template->salary_template_id?>"><span class="sele_staus bg-success p-1 text-white"><i class="far fa-edit"></i></span></a>
@@ -72,7 +75,7 @@
                                            <a href="javascript:void(0)" style="visibility: hidden"><span class="sele_staus bg-success p-1 text-white"><i class="far fa-edit"></i></span></a>
                                            <?php
                                           }
-                                         if(strpos($permission,'Delete')!==false)
+                                         if(strpos($permission,'Delete')!==false||strpos($Userpermi,'Delete')!==false)
                                           {?>
 
                                       <span class="sele_staus bg-danger p-1 text-white del_template" temp_id="<?=$template->salary_template_id?>"><i class="far fa-trash-alt"></i></span>
@@ -84,7 +87,8 @@
                                            <?php
                                           }
 
-                                        }?>
+                                        }
+                                      }?>
                                       
                                     </div>
                                 </td>

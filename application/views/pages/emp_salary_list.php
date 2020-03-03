@@ -74,7 +74,10 @@
                                       foreach($Assign_permission as $checkpermission)
                                         {
                                           $permission=$checkpermission->permission;
-                                          if(strpos($permission,'Delete')!==false)
+                                          foreach ($UsersPermission as $Uperms) 
+                                            {
+                                             $Userpermi=$Uperms->permission;
+                                          if(strpos($permission,'Delete')!==false||strpos($Userpermi,'Delete')!==false)
                                           {?>
                                       <span class="sele_staus bg-danger p-1 text-white delete_payroll" payroll_id="<?=$emp_data->payroll_id?>"><i class="far fa-trash-alt"></i></span>
                                       <?php }
@@ -85,7 +88,8 @@
                                            <?php
                                           }
 
-                                        }?>
+                                        }
+                                      }?>
 
 <!--                                        <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span> -->
                                     </div>

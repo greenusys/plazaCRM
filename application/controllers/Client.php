@@ -7,6 +7,7 @@ public function __construct(){
 		parent::__construct();
 		$this->load->model('Client_Model','Client');
 		$this->load->model('Invoice_model');
+		$this->load->model('User_model');
 		
 		}
 
@@ -16,6 +17,8 @@ public function __construct(){
 
 		$session=$this->session->userdata('logged_user');
 		$designation_id=$session[0]->designations_id;
+		$user_id=$session[0]->user_id;
+		$data['UsersPermission']=$this->User_model->CheckUserPermission($user_id);
 		$data['Assign_permission']=$this->Client->CheckPermission($designation_id);
 		$data['Clients']= $this->Client->getAllClient();
 		$this->load->view('layout/header');

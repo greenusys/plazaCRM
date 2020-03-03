@@ -460,8 +460,11 @@ $(document).on('click','.edt_project',function(){
                                         {
                                           $permission=$checkpermission->permission;
                                           // print_r($permission);
+                                          foreach ($UsersPermission as $Uperms) 
+                                            {
+                                             $Userpermi=$Uperms->permission;
                                                 
-                                          if(strpos($permission,'Edit')!==false)
+                                          if(strpos($permission,'Edit')!==false||strpos($Userpermi,'Edit')!==false)
                                           {?>
                                       <a href="<?=base_url('Projects/editProject/').$pr['project_id']?>" class="sele_staus bg-info p-1 text-white " d-Pro="<?=$pr['project_id']?>"><span><i class="far fa-edit"></i></span></a>
                                        <?php }
@@ -472,7 +475,7 @@ $(document).on('click','.edt_project',function(){
                                            style="visibility: hidden" class="sele_staus bg-info p-1 text-white " d-Pro="<?=$pr['project_id']?>"><span><i class="far fa-edit"></i></span></a>
                                            <?php
                                           }
-                                         if(strpos($permission,'Delete')!==false)
+                                         if(strpos($permission,'Delete')!==false||strpos($Userpermi,'Delete')!==false)
                                           {?>
 
 
@@ -486,7 +489,8 @@ $(document).on('click','.edt_project',function(){
                                       <?php
                                           }
 
-                                        }?>
+                                        }
+                                      }?>
                                        <!-- <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span> -->
                                     </div>
 

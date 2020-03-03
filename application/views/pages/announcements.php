@@ -25,59 +25,63 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php
-                                    foreach ($Announcement as $announce) {
-                                        # code...?
-                                        ?>
-                                            <tr>
-                                                <td><?=$announce->title?></td>
-                                                <td><?=$announce->fullname?></td>
-                                                <td><?=$announce->start_date?></td>
-                                                <td><?=$announce->end_date?></td>
-                                                <td><?=$announce->status?></td>
-                                                <td>
-                                                    <div class="">
-                                                        <?php
-                                                        foreach($Assign_permission as $checkpermission)
-                                        {
-                                          $permission=$checkpermission->permission;
-                                                
-                                          if(strpos($permission,'Edit')!==false)
-                                          {?>
-                                                        <a href="javascript:void(0)" class="sele_staus bg-info p-1 text-white " data-id="<?=$announce->announcements_id?>"><span><i class="far fa-edit"></i></span></a>
-                                                         <?php }
-                                         else
-                                         {
-                                          ?>
-                                            <a href="javascript:void(0)" style="visibility: hidden"class="sele_staus bg-info p-1 text-white " data-id="<?=$announce->announcements_id?>"><span><i class="far fa-edit"></i></span></a>
-                                            <?php
-                                          }
-                                         if(strpos($permission,'Delete')!==false)
-                                          {?>
-                                                        <a href="javascript:void(0)" class="deleteAnnuo" data-id="<?=$announce->announcements_id?>"><span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
-                                                          <?php }
-                                         else
-                                         {
-                                          ?>
-                                            <a href="javascript:void(0)" style="visibility: hidden"
-                                            class="deleteAnnuo" data-id="<?=$announce->announcements_id?>"><span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
-                                          <?php
-                                          }
+                            <?php
+                            foreach ($Announcement as $announce) {
+                            # code...?
+                            ?>
+                            <tr>
+                            <td><?=$announce->title?></td>
+                            <td><?=$announce->fullname?></td>
+                            <td><?=$announce->start_date?></td>
+                            <td><?=$announce->end_date?></td>
+                            <td><?=$announce->status?></td>
+                            <td>
+                            <div class="">
+                            <?php
+                            foreach($Assign_permission as $checkpermission)
+                            {
+                            $permission=$checkpermission->permission;
+                            foreach ($UsersPermission as $Uperms) 
+                                {
+                                 $Userpermi=$Uperms->permission;
 
-                                        }?>
-                                                      <!--   <a><span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span></a> -->
-                                                    </div>
+                            if(strpos($permission,'Edit')!==false||strpos($Userpermi,'Edit')!==false)
+                            {?>
+                            <a href="javascript:void(0)" class="sele_staus bg-info p-1 text-white " data-id="<?=$announce->announcements_id?>"><span><i class="far fa-edit"></i></span></a>
+                            <?php }
+                            else
+                            {
+                            ?>
+                            <a href="javascript:void(0)" style="visibility: hidden"class="sele_staus bg-info p-1 text-white " data-id="<?=$announce->announcements_id?>"><span><i class="far fa-edit"></i></span></a>
+                            <?php
+                            }
+                            if(strpos($permission,'Delete')!==false||strpos($Userpermi,'Delete')!==false)
+                            {?>
+                            <a href="javascript:void(0)" class="deleteAnnuo" data-id="<?=$announce->announcements_id?>"><span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+                            <?php }
+                            else
+                            {
+                            ?>
+                            <a href="javascript:void(0)" style="visibility: hidden"
+                            class="deleteAnnuo" data-id="<?=$announce->announcements_id?>"><span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+                            <?php
+                            }
 
-                                                </td>
+                            }
+                          }?>
+                            <!--   <a><span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span></a> -->
+                            </div>
 
-                                            </tr>
-                                        <?php
-                                    }
+                            </td>
 
-                                ?>
-                                
+                            </tr>
+                            <?php
+                            }
 
-                                
+                            ?>
+
+
+
 
                             </tbody>
                             <tfoot>

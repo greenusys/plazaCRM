@@ -7,6 +7,7 @@ class Attendance extends MY_Controller {
 		parent::__construct();
 		$this->load->model('AttendanceModel','ATND');
 		$this->load->model('Global_Model');
+		$this->load->model('User_model');
 		
 
 	}
@@ -140,7 +141,9 @@ class Attendance extends MY_Controller {
 	{
 		$session=$this->session->userdata('logged_user');
 		$designation_id=$session[0]->designations_id;
+		$user_id=$session[0]->user_id;
 		$data['Assign_permission']=$this->ATND->CheckPermission($designation_id);
+		$data['UsersPermission']=$this->User_model->CheckUserPermission($user_id);
 		$data['Employee']=$this->ATND->fetchEmployee();
 		$data['EmpAttendanceDetail']=$this->ATND->fetchEmployeeATNDDetails();
 		$this->load->view('layout/header');

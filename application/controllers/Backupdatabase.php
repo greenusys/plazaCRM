@@ -6,11 +6,17 @@ class Backupdatabase extends MY_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->load->model('Global_Model');
+		$this->load->model('User_model');
 	}
 
 	public function index()
 	{
+		$session=$this->session->userdata('logged_user');
+		$designation_id=$session[0]->designations_id;
+		$user_id=$session[0]->user_id;
 		$data['backup']=$this->Global_Model->fetch_backup();
+		$data['Assign_permission']=$this->User_model->CheckPermission($designation_id);
+		$data['UsersPermission']=$this->User_model->CheckUserPermission($user_id);
 		$this->load->view('layout/header');
 		$this->load->view("pages/database_backup",$data);
 		$this->load->view("layout/footer");

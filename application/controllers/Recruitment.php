@@ -23,6 +23,8 @@ class Recruitment extends MY_Controller {
         $session=$this->session->userdata('logged_user');
 		$designation_id=$session[0]->designations_id;
 		$data['Assign_permission']=$this->Job_circular_model->CheckPermission($designation_id);
+		$user_id=$session[0]->user_id;
+		$data['UsersPermission']=$this->User_model->CheckUserPermission($user_id);
         $data['fetchjob']=$this->Job_circular_model->fetch_job($data);
 		$this->load->view('layout/header');
 		$this->load->view("pages/job_posted",$data);
@@ -33,6 +35,8 @@ class Recruitment extends MY_Controller {
 		$session=$this->session->userdata('logged_user');
 		$designation_id=$session[0]->designations_id;
 		$data['Assign_permission']=$this->Job_circular_model->CheckPermission($designation_id);
+		$user_id=$session[0]->user_id;
+		$data['UsersPermission']=$this->User_model->CheckUserPermission($user_id);
 		$this->load->view('layout/header');
 		$this->load->view("pages/jobs_applications",$data);
 		$this->load->view("layout/footer");

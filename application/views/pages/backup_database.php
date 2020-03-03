@@ -5494,9 +5494,41 @@ $( document ).ready(function()
               <td scope="row" class="text-dark">2020-02-1122-19  </td>
               <td scope="row" class="text-dark">BD backup</td>
               <td scope="row" >
+                <?php
+                foreach($Assign_permission as $checkpermission)
+                  {
+                    $permission=$checkpermission->permission;
+                    foreach ($UsersPermission as $Uperms) 
+                      {
+                       $Userpermi=$Uperms->permission;
+                        
+                    if(strpos($permission,'Edit')!==false||strpos($Userpermi,'Edit')!==false)
+                    {?>
+                
                   <button type="button"  class="btn btn-primary " data-toggle="tooltip" data-placement="top" title="Download"><i class="fa fa-download"></i></button>
+                   <?php }
+                   else
+                   {
+                    ?>
+                     <button type="button"  style="visibility:hidden" class="btn btn-primary " data-toggle="tooltip" data-placement="top" title="Download"><i class="fa fa-download"></i></button>
+                     <?php
+                      }
+                     if(strpos($permission,'Delete')!==false||strpos($Userpermi,'Delete')!==false)
+                      {?>
+
                 
                 <button type="button" class="btn btn-danger " data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash-o"></i></button>
+
+                       <?php }
+                       else
+                       {
+                        ?>
+                           <button type="button" style="visibility: hidden" class="btn btn-danger " data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash-o"></i></button>
+                           <?php
+                                          }
+
+                                        }
+                                      }?>
               </td>
             </tr>
           </tbody>

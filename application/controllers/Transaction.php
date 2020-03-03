@@ -11,6 +11,7 @@ class Transaction extends MY_Controller {
  		$this->load->model('Client_Model','Client');
  		$this->load->model('Payments_model','Payments');
  		$this->load->model('Transactions_model','Transaction');
+ 		$this->load->model('User_model');
 	}
 
 	public function index()
@@ -22,6 +23,8 @@ class Transaction extends MY_Controller {
 	public function expense(){
 		$session=$this->session->userdata('logged_user');
 		$designation_id=$session[0]->designations_id;
+		$user_id=$session[0]->user_id;
+		$data['UsersPermission']=$this->User_model->CheckUserPermission($user_id);
 		$data['Assign_permission']=$this->Transaction->CheckPermission($designation_id);
 		$data['fetch_Account_Data']=$this->Accounts->AllAccountData();
 	    $data['fetch_Expenses_Category']=$this->Expenses->fetchExpensesCategory();
@@ -64,6 +67,8 @@ class Transaction extends MY_Controller {
 	{
 		$session=$this->session->userdata('logged_user');
 		$designation_id=$session[0]->designations_id;
+		$user_id=$session[0]->user_id;
+		$data['UsersPermission']=$this->User_model->CheckUserPermission($user_id);
 		$data['Assign_permission']=$this->Transaction->CheckPermission($designation_id);
 		$data['fetch_Account_Data']=$this->Accounts->AllAccountData();
 	    $data['fetch_Expenses_Category']=$this->Expenses->fetchExpensesCategory();
@@ -78,6 +83,8 @@ class Transaction extends MY_Controller {
 	public function transfer(){
 		$session=$this->session->userdata('logged_user');
 		$designation_id=$session[0]->designations_id;
+		$user_id=$session[0]->user_id;
+		$data['UsersPermission']=$this->User_model->CheckUserPermission($user_id);
 		$data['Assign_permission']=$this->Transaction->CheckPermission($designation_id);
 		 $data['fetch_Account_Data']=$this->Accounts->AllAccountData();
         $data['fetch_Method_Data']=$this->Payments->fetchMethodData();

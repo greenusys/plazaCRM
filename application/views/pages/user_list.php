@@ -52,35 +52,39 @@
                       ?>
                       <div class="">
                           <?php
-                                      foreach($Assign_permission as $checkpermission)
-                                        {
-                                          $permission=$checkpermission->permission;
-                                          if(strpos($permission,'Edit')!==false)
-                                          {?>
-                                       <a href="#"><span class="sele_staus bg-success p-1 text-white"><i class="far fa-edit"></i></span></a>
-                                        <?php }
-                                         else
-                                         {
-                                          ?>
-                                          <a href="javascript:void(0)" style="visibility: hidden"><span class="sele_staus bg-success p-1 text-white"><i class="far fa-edit"></i></span></a>
-                                          <?php
-                                          }
-                                         if(strpos($permission,'Delete')!==false)
-                                          {?>
+                            foreach($Assign_permission as $checkpermission)
+                              {
+                                $permission=$checkpermission->permission;
+                                foreach ($UsersPermission as $Uperms) 
+                                {
+                                 $Userpermi=$Uperms->permission;                              
+                                if(strpos($permission,'Edit')!==false||strpos($Userpermi,'Edit')!==false)
+                                {?>
+                             <a href="#"><span class="sele_staus bg-success p-1 text-white"><i class="far fa-edit"></i></span></a>
+                              <?php }
+                               else
+                               {
+                                ?>
+                                <a href="javascript:void(0)" style="visibility: hidden"><span class="sele_staus bg-success p-1 text-white"><i class="far fa-edit"></i></span></a>
+                                <?php
+                                }
+                               if(strpos($permission,'Delete')!==false||strpos($Userpermi,'Delete')!==false)
+                                {?>
 
 
-                                       <span class="deletetusers sele_staus bg-danger p-1 text-white" users_id="<?=$user->user_id?>" ><i class="far fa-trash-alt"></i></span>
-                                        <?php }
-                                         else
-                                         {
-                                          ?>
+                             <span class="deletetusers sele_staus bg-danger p-1 text-white" users_id="<?=$user->user_id?>" ><i class="far fa-trash-alt"></i></span>
+                              <?php }
+                               else
+                               {
+                                ?>
 
-                                       <span style="visibility: hidden" class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
+                             <span style="visibility: hidden" class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
 
-                                          <?php
-                                          }
+                                <?php
+                                }
 
-                                        }?>
+                              }
+                            }?>
                       </div>
                     <?php } ?>
                     </td>

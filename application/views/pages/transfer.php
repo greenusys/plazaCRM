@@ -56,8 +56,10 @@
                                       foreach($Assign_permission as $checkpermission)
                                         {
                                           $permission=$checkpermission->permission;
-                                                
-                                          if(strpos($permission,'Edit')!==false)
+                                            foreach ($UsersPermission as $Uperms) 
+                                            {
+                                             $Userpermi=$Uperms->permission;     
+                                          if(strpos($permission,'Edit')!==false||strpos($Userpermi,'Edit')!==false)
                                           {?>
                                      <a href="<?=base_url('Transaction/Edit_Transfer/').$ATD->transfer_id?>" class="bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
                                      <?php }
@@ -67,7 +69,7 @@
                                           <a href="#" style="visibility: hidden"class="bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
                                           <?php
                                           }
-                                             if(strpos($permission,'Delete')!==false)
+                                             if(strpos($permission,'Delete')!==false||strpos($Userpermi,'Delete')!==false)
                                           {?>
                                             <a href="javascript:void(0)" transactions_id="<?=$ATD->transfer_id?>" class="deletettransfertransaction"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
                                              <?php }
@@ -78,7 +80,8 @@
                                      <?php
                                           }
 
-                                        }?>
+                                        }
+                                      }?>
 
                                       <!-- 
                                        <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span> -->

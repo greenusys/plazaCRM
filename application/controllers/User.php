@@ -20,7 +20,8 @@ class User extends MY_Controller {
 		$this->load->view('pages/auth-register',$data);
 	}
 
-	public function new_user(){
+	public function new_user()
+    {
 		$full_name=$_POST['full_name'];
 		$employment_id=$_POST['Employment_id'];
 		$username=$_POST['username'];
@@ -150,8 +151,14 @@ class User extends MY_Controller {
             $data['all_department_info'][] = $this->Job_circular_model->get_add_department_by_id($v_dept_info->departments_id);
         }
         $session=$this->session->userdata('logged_user');
+        // print_r($session);
+        // die;
         $designation_id=$session[0]->designations_id;
-        $data['Assign_permission']=$this->User_model->CheckPermission($designation_id);
+         $user_id=$session[0]->user_id;
+         $data['Assign_permission']=$this->User_model->CheckPermission($designation_id);
+         $data['UsersPermission']=$this->User_model->CheckUserPermission($user_id);
+          // print_r($data['UsersPermission']);
+          // die;
         $data['all_users']=$this->User_model->fetch_all_users();
 		$this->load->view('layout/header');
 		$this->load->view("pages/user_list",$data);
@@ -195,7 +202,8 @@ class User extends MY_Controller {
 		}
 	}
 
-	public function update_todo_ajax(){
+	public function update_todo_ajax()
+    {
 		$session=$this->session->userdata('logged_user');
 		$user_id=$session[0]->user_id;
 		$_POST['assigned']=$user_id;
@@ -203,10 +211,12 @@ class User extends MY_Controller {
 		$myTime = strtotime($due_date); 
 		$_POST['due_date']=date("Y-m-d", $myTime);
 		$result=$this->Tasks_Model->update_task_ajax($_POST);
-		if ($result) {
+		if ($result)
+         {
 			echo "1";
 		}
-		else{
+		else
+        {
 			echo "0";
 		}
 	}
@@ -605,6 +615,7 @@ class User extends MY_Controller {
 		$session=$this->session->userdata('logged_user');
 		$user_id=$session[0]->user_id;
         $designation_id=$session[0]->designations_id;
+        $data['UsersPermission']=$this->User_model->CheckUserPermission($user_id);
         $data['Assign_permission']=$this->User_model->CheckPermission($designation_id);
 		 $data['reports_list']=$this->User_model->fetch_report_list($user_id);
 		$this->load->view('layout/header');

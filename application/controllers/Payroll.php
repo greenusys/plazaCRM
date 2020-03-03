@@ -6,6 +6,7 @@ class Payroll extends MY_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('Payroll_model');
+        $this->load->model('User_model');
 		}
 
 	public function index()
@@ -64,6 +65,8 @@ class Payroll extends MY_Controller {
         $session=$this->session->userdata('logged_user');
         $designation_id=$session[0]->designations_id;
         $data['Assign_permission']=$this->Payroll_model->CheckPermission($designation_id);
+        $user_id=$session[0]->user_id;
+        $data['UsersPermission']=$this->User_model->CheckUserPermission($user_id);
 		$data['templates']=$this->Payroll_model->fetch_templates();
 		$this->load->view('layout/header');
 		$this->load->view("pages/salary_template",$data);
@@ -104,6 +107,8 @@ class Payroll extends MY_Controller {
 	{
         $session=$this->session->userdata('logged_user');
         $designation_id=$session[0]->designations_id;
+         $user_id=$session[0]->user_id;
+        $data['UsersPermission']=$this->User_model->CheckUserPermission($user_id);
         $data['Assign_permission']=$this->Payroll_model->CheckPermission($designation_id);
 		$data['templates']=$this->Payroll_model->fetch_hourly_templates();
 		$this->load->view('layout/header');
@@ -179,8 +184,10 @@ class Payroll extends MY_Controller {
 
 	public function empSalary()
 	{
-         $session=$this->session->userdata('logged_user');
+        $session=$this->session->userdata('logged_user');
         $designation_id=$session[0]->designations_id;
+        $user_id=$session[0]->user_id;
+        $data['UsersPermission']=$this->User_model->CheckUserPermission($user_id);
         $data['Assign_permission']=$this->Payroll_model->CheckPermission($designation_id);
 		$data['employee']=$this->Payroll_model->get_emp_salary_list();
 		$this->load->view('layout/header');

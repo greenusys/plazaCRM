@@ -231,15 +231,10 @@
                                       foreach($Assign_permission as $checkpermission)
                                         {
                                           $permission=$checkpermission->permission;
-<<<<<<< HEAD
-                                            
-
-                                          // print_r($permission);
-                                                
-=======
-
->>>>>>> e801382c78a6ac20f5bd8fcd5608a4e21f157c36
-                                          if(strpos($permission,'Edit')!==false)
+                                          foreach ($UsersPermission as $Uperms) 
+                                            {
+                                             $Userpermi=$Uperms->permission;
+                                          if(strpos($permission,'Edit')!==false||strpos($Userpermi,'Edit')!==false)
                                           {?>
                                               <a href="" id="edit_p"class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
 
@@ -251,7 +246,7 @@
 
                                          <?php
                                           }
-                                         if(strpos($permission,'Delete')!==false)
+                                         if(strpos($permission,'Delete')!==false||strpos($Userpermi,'Delete')!==false)
                                           {?>
                                               <a href="javascript:void(0)" class="sele_staus  p-1 text-white delete_task" d-id="<?=$tasker['task_id']?>">  <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
 
@@ -264,7 +259,8 @@
                                          <?php
                                           }
 
-                                        }?>
+                                        }
+                                      }?>
 
                                      <!--  <a href="<?=base_url('Task/task_details').'/'.$tasker['task_id']?>" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
                                       <a href=""><span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a> -->

@@ -57,7 +57,6 @@ class User_model extends MY_Model
             return false;
         }
     }
-
     public function fetch_user(){
         $checker=array('role_id'=>'1',
                        'activated'=>'1',
@@ -75,17 +74,18 @@ class User_model extends MY_Model
         } 
     }
 
-    public function fetch_all_users(){
+    public function fetch_all_users()
+    {
         $this->db->select('*');
         $this->db->from('tbl_users');
         $this->db->join('tbl_account_details', 'tbl_users.user_id = tbl_account_details.user_id');
         $query_result = $this->db->get();
         $result = $query_result->result();
         return $result;
-
     }
 
-    public function fetch_all_employees(){
+    public function fetch_all_employees()
+    {
         $checker=array('tbl_users.role_id'=>'3');
         $this->db->select('*');
         $this->db->from('tbl_users');
@@ -96,7 +96,8 @@ class User_model extends MY_Model
         return $result;
     }
 
-    public function update_todo($data){
+    public function update_todo($data)
+    {
         extract($data);
         $new_data=array('status'=>$status);
         $this->db->where(array('todo_id'=>$todo_id));
@@ -110,13 +111,15 @@ class User_model extends MY_Model
 
     }
 
-    public function delete_todo($todo){
+    public function delete_todo($todo)
+    {
             $this->db->where('todo_id', $todo);
             $this->db->delete('tbl_todo');
             return true;
     }
 
-    public function fetch_all_employees_admin(){
+    public function fetch_all_employees_admin()
+    {
         $checker=array('2');
         $this->db->select('*');
         $this->db->from('tbl_users');
@@ -179,11 +182,12 @@ class User_model extends MY_Model
         return $users;
     }
 
-    public function fetch_user_data($id){
+    public function fetch_user_data($id)
+    {
         $this->db->select('tbl_users.*', FALSE);
          $this->db->select('tbl_account_details.*', FALSE);
         $this->db->from('tbl_users');
-        $this->db->join('tbl_account_details', 'tbl_account_details.user_id=tbl_users.user_id');
+        $this->db->join('tbl_account_details','tbl_account_details.user_id=tbl_users.user_id');
         $this->db->where('tbl_users.user_id',$id);
         $res = $this->db->get()->result();
          return $res;   
@@ -286,6 +290,11 @@ class User_model extends MY_Model
     {
         $this->db->where('designations_id',$designation_id);
         return $this->db->get('tbl_designations')->result();
+    }
+    public function CheckUserPermission($user_id)
+    {
+        $this->db->where('user_id',$user_id);
+        return $this->db->get('tbl_users')->result();
     }
     public function DeleteUsers($data)
     {
