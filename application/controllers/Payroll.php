@@ -134,22 +134,29 @@ class Payroll extends MY_Controller {
 	}
 
     public function update_salary_details(){
+        // die(json_encode($_POST));
         $user_id = $this->input->post('user_id', TRUE);
-
+        // print_r($user_id);
+        // die;
         $hourly_status = $this->input->post('hourly_status', TRUE);
+
         $hourly_rate_id = $this->input->post('hourly_rate_id', TRUE);
 
         $monthly_status = $this->input->post('monthly_status', TRUE);
         $salary_template_id = $this->input->post('salary_template_id', TRUE);
+
         foreach ($user_id as $user) {
+            //echo $user;
             $update_null=$this->Payroll_model->update_null_payroll($user);
         }
+        
         foreach($hourly_status as $hourly){
             $hourly_user=$hourly;
             $user_index=array_search($hourly,$user_id);
             $hourly_index=$hourly_rate_id[$user_index];
             $update_hourly=$this->Payroll_model->update_hourly_model($hourly_user,$hourly_index);
         }
+                    # code...
         foreach($monthly_status as $monthly){
             $monthly_user=$monthly;
             $user_index=array_search($monthly,$user_id);

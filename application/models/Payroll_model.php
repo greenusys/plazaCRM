@@ -31,24 +31,59 @@ class Payroll_Model extends MY_Model
     }
 
     public function update_null_payroll($user){
-            $data=array("salary_template_id"=>null,"hourly_rate_id"=>null);
-            $this->db->where('user_id', $user);
-            $this->db->update('tbl_employee_payroll', $data);
-            return true;
+            $query = $this->db->get_where('tbl_employee_payroll', array(//making selection
+            'user_id' => $user
+            ));
+
+            $count = $query->num_rows();
+            if ($count!=0) {
+                $data=array("salary_template_id"=>null,"hourly_rate_id"=>null);
+                $this->db->where('user_id', $user);
+                $this->db->update('tbl_employee_payroll', $data);
+                return true;
+             }
+             else{
+                $data=array("salary_template_id"=>null,"hourly_rate_id"=>null,"user_id"=>$user);
+                $this->db->insert('tbl_employee_payroll', $data);
+                return true;
+             } 
     }
 
     public function update_hourly_model($hourly_user,$hourly_index){
-            $data=array("hourly_rate_id"=>$hourly_index);
-            $this->db->where('user_id', $hourly_user);
-            $this->db->update('tbl_employee_payroll', $data);
-            return true;
+            $query = $this->db->get_where('tbl_employee_payroll', array(//making selection
+            'user_id' => $hourly_user
+            ));
+            $count = $query->num_rows();
+            if ($count!=0) {
+                $count = $query->num_rows();
+                $data=array("hourly_rate_id"=>$hourly_index);
+                $this->db->where('user_id', $hourly_user);
+                $this->db->update('tbl_employee_payroll', $data);
+                return true;
+            }
+            else{
+                $data=array("hourly_rate_id"=>$hourly_index,"user_id"=>$hourly_user);
+                $this->db->insert('tbl_employee_payroll', $data);
+                return true;
+            }
     }
 
     public function update_monthly_model($monthly_user,$monthly_index){
-            $data=array("salary_template_id"=>$monthly_index);
-            $this->db->where('user_id', $monthly_user);
-            $this->db->update('tbl_employee_payroll', $data);
-            return true;
+            $query = $this->db->get_where('tbl_employee_payroll', array(//making selection
+            'user_id' => $monthly_user
+            ));
+            $count = $query->num_rows();
+            if ($count!=0) {
+                $data=array("salary_template_id"=>$monthly_index);
+                $this->db->where('user_id', $monthly_user);
+                $this->db->update('tbl_employee_payroll', $data);
+                return true;
+            }
+            else{
+                $data=array("salary_template_id"=>$monthly_index,"user_id"=>$monthly_user);
+                $this->db->insert('tbl_employee_payroll', $data);
+                return true;
+            }
     }
 
     public function update_hourly($data){
