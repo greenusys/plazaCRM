@@ -84,9 +84,9 @@
 	$(document).on('change','#selDept',function(){
 		
 		if($(this).val()==0){
-			$('#newDpe').show();
+			$('.newDpe').show();
 		}else{
-			$('#newDpe').hide();
+			$('.newDpe').hide();
 		}
 	});
 	$(document).on('submit','#addDeptDesig',function(e){
@@ -153,18 +153,39 @@
 								</div>
 							</div>
 						</div>
-						<div class="form-group" id="newDpe">
+						
+						<div class="form-group newDpe"  >
 							<div class="row">
 								<div class="offset-2 col-sm-2">
 									<label for="exampleInputEmail1"> New Department </label>
 								</div>
+								
 								<div class="col-sm-6">
 									<input type="text" class="form-control" name="newDepartment" aria-describedby="emailHelp" >
 								</div>
 							</div>
 						</div>
-						
-						<div class="form-group">
+						<div class="form-group newDpe" >
+							<div class="row">
+								<div class="offset-2 col-sm-2">
+									<label for="exampleInputEmail1"> Department Head </label>
+								</div>
+
+								<div class="col-sm-6">
+									<select class="form-control" name="departmentHead">
+										<option value="8">Admin</option>
+										<?php
+											foreach ($Employee as $emp) {
+												# code...
+												echo '<option value="'.$emp->user_id.'">'.ucwords($emp->fullname).'</option>';
+											}
+										?>
+									</select>
+									
+								</div>
+							</div>
+						</div>
+						<div class="form-group ">
 							<div class="row">
 								<div class="offset-2 col-sm-2">
 									<label for="exampleInputEmail1"> Designation <span class="text-danger">*</span> </label>

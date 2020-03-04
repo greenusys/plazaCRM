@@ -28,6 +28,7 @@ class Dashboard extends MY_Controller {
 		$data['over_due_project']=$this->Demo->get_over_due_project();
 		$data['over_due_task']=$this->Demo->get_over_due_task();
 		$data['fetch_holiday']=$this->Global_Model->fetch_holidays();
+		$data['get_All_announcement']=$this->db->get('tbl_announcements')->result();
 		$tasks=$this->Demo->get_over_due_task();
 		$projects=$this->Demo->get_over_due_project();
 		if(count($projects)>0){

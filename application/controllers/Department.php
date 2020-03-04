@@ -75,11 +75,11 @@
 		public function addNewDep(){
 			$dep_id=$this->input->post('department');
 			$newDep=$this->input->post('newDepartment');
-			// $departmentHead=$this->input->post('departmentHead');
+			$departmentHead=$this->input->post('departmentHead');
 			$newDesig=$this->input->post('designation');
 			if($dep_id==0){
 				// echo 'Create Department';
-				if($this->DPT->createDepartment($newDep,$newDesig)){
+				if($this->DPT->createDepartment($newDep,$newDesig,$departmentHead)){
 					die(json_encode(array("code"=>1,"msg"=>"Department Added Successfully.")));
 				}else{
 					die(json_encode(array("code"=>0,"msg"=>"Failed To Add Department")));
@@ -87,7 +87,7 @@
 				//create Designation
 			}else{
 				// echo 'Create Designation';
-				if($this->DPT->createDesignation($dep_id,$newDesig)){
+				if($this->DPT->createDesignation($dep_id,$newDesig, $departmentHead)){
 					die(json_encode(array("code"=>1,"msg"=>"Designation Added Successfully.")));
 				}else{
 					die(json_encode(array("code"=>0,"msg"=>"Failed To Add Designation")));

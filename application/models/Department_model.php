@@ -66,15 +66,15 @@ class Department_Model extends MY_Model
             return false;
         }
     }
-    public function createDepartment($newDep,$newDesig){
-        $condition=array("deptname"=>$newDep);
+    public function createDepartment($newDep,$newDesig,$departmentHead=""){
+        $condition=array("deptname"=>$newDep,"department_head_id"=>$departmentHead);
         $this->db->where($condition);
         if(count($this->db->get('tbl_departments')->result())==0){
             if($this->db->insert('tbl_departments',$condition)){
                 $this->db->order_by('departments_id','desc');
                 $this->db->limit(1);
                 $lst_entry=$this->db->get('tbl_departments')->row();
-                $dat=array("departments_id"=>$lst_entry->departments_id,"designations"=>$newDesig,"permission"=>"");
+                $dat=array("departments_id"=>$lst_entry->departments_id,"designations"=>$newDesig);
                 if($this->db->insert('tbl_designations',$dat)){
                     return true;
                 }else{
