@@ -219,6 +219,29 @@ public function __construct(){
 		$this->load->view('layout/header');
 		$this->load->view("pages/client_details",$data);
 		$this->load->view("layout/footer");
+	}
+	public function edit_client($id){
+		$data['client_details']=$this->Client->fetch_client($id);
+		// get all client details
+        $this->Client->_table_name = "tbl_client"; //table name
+        $this->Client->_order_by = "client_id";
+        $data['client_details'] = $this->Client->get_by(array('client_id' => $id), TRUE);
+        // get all invoice by client id
+        $this->Client->_table_name = "tbl_invoices"; //table name
+        $this->Client->_order_by = "client_id";
+        $data['client_invoices'] = $this->Client->get_by(array('client_id' => $id), FALSE);
+        // get all estimates by client id
+        $this->Client->_table_name = "tbl_estimates"; //table name
+        $this->Client->_order_by = "client_id";
+        $data['client_estimates'] = $this->Client->get_by(array('client_id' => $id), FALSE);
+        // get client contatc by client id
+        $data['client_contacts'] = $this->Client->get_client_contacts($id);
+        // get Project  by client id
+        $data['clint_project'] = $this->Client->get_client_project($id);
+         $data['recently_paid'] = $this->db->where('paid_by', $id)->order_by('created_date', 'desc')->get('tbl_payments')->result();
+		$this->load->view('layout/header');
+		$this->load->view("pages/edit_client",$data);
+		$this->load->view("layout/footer");
 	} 
 	public function DeleteClient()
 	{
