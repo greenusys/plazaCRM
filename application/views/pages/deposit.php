@@ -110,8 +110,11 @@
                                       foreach($Assign_permission as $checkpermission)
                                         {
                                           $permission=$checkpermission->permission;
+                                          foreach ($UsersPermission as $Uperms) 
+                                            {
+                                             $Userpermi=$Uperms->permission;
                                                 
-                                          if(strpos($permission,'Edit')!==false)
+                                          if(strpos($permission,'Edit')!==false||strpos($Userpermi,'Edit')!==false)
                                           {?>
                                      <a href="<?=base_url('Transaction/Edit_Deposit/').$AED->transactions_id?>" class="bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
                                      <?php }
@@ -121,7 +124,7 @@
                                           <a href="#" style="visibility: hidden"class="bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
                                           <?php
                                           }
-                                         if(strpos($permission,'Delete')!==false)
+                                         if(strpos($permission,'Delete')!==false||strpos($Userpermi,'Delete')!==false)
                                           {?>
 
                                       <a href="javascript:void(0)" transactions_id="<?=$AED->transactions_id?>" class="deletetdeposittransaction"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
@@ -135,7 +138,8 @@
                                       <?php
                                           }
 
-                                        }?>
+                                        }
+                                      }?>
 
                                     </div>
 

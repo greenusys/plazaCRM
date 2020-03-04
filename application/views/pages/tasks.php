@@ -238,8 +238,15 @@ $role_id=$session[0]->role_id;
                                       foreach($Assign_permission as $checkpermission)
                                         {
                                           $permission=$checkpermission->permission;
+<<<<<<< HEAD
+                                          foreach ($UsersPermission as $Uperms) 
+                                            {
+                                             $Userpermi=$Uperms->permission;
+                                          if(strpos($permission,'Edit')!==false||strpos($Userpermi,'Edit')!==false)
+=======
 
                                           if(strpos($permission,'Edit')!==false)
+>>>>>>> 91fdc1154c4bf8e13211e8fb39f85087fb40f74b
                                           {?>
                                               <a href="" id="edit_p"class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
 
@@ -251,7 +258,7 @@ $role_id=$session[0]->role_id;
 
                                          <?php
                                           }
-                                         if(strpos($permission,'Delete')!==false)
+                                         if(strpos($permission,'Delete')!==false||strpos($Userpermi,'Delete')!==false)
                                           {?>
                                               <a href="javascript:void(0)" class="sele_staus  p-1 text-white delete_task" d-id="<?=$tasker['task_id']?>">  <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
 
@@ -264,7 +271,8 @@ $role_id=$session[0]->role_id;
                                          <?php
                                           }
 
-                                        }?>
+                                        }
+                                      }?>
 
                                      <!--  <a href="<?=base_url('Task/task_details').'/'.$tasker['task_id']?>" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
                                       <a href=""><span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a> -->

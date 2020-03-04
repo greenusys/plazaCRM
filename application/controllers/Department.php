@@ -7,6 +7,7 @@
 			parent::__construct();
 			$this->load->model('Department_model','DPT');
 			$this->load->model('AttendanceModel','ATND');
+			$this->load->model('User_model');
 		}
 		public function index(){
 			$data['Depart']=$this->DPT->getAllDeppartments();
@@ -29,6 +30,8 @@
 			$session=$this->session->userdata('logged_user');
 		$designation_id=$session[0]->designations_id;
 		$data['Assign_permission']=$this->DPT->CheckPermission($designation_id);
+		$user_id=$session[0]->user_id;
+		$data['UsersPermission']=$this->User_model->CheckUserPermission($user_id);
 			$this->load->view('layout/header');
 			$this->load->view('pages/department',$data);
 			$this->load->view('layout/footer');

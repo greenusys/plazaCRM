@@ -125,7 +125,10 @@
                                       foreach($Assign_permission as $checkpermission)
                                         {
                                           $permission=$checkpermission->permission;
-                                          if(strpos($permission,'Edit')!==false)
+                                          foreach ($UsersPermission as $Uperms) 
+                                            {
+                                             $Userpermi=$Uperms->permission;
+                                          if(strpos($permission,'Edit')!==false||strpos($Userpermi,'Edit')!==false)
                                           {?>
 
                                           	 <a href="<?=base_url('Department/Edit_Deptarmentsss/').$value['Dept_id']?>"><span class="btn btn-primary fs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></span></a>
@@ -138,7 +141,7 @@
                                            <a href="javascript:void(0)" style="visibility: hidden"class="btn btn-primary fs " id="ditDept"  data-toggle="modal" data-target="#updateDepartment" d-id="<?=$value['Dept_id']?>" d-name="<?=$value['Dept_name']?>"><i class="fas fa-edit"></i></a>
                                           <?php
                                           }
-                                         if(strpos($permission,'Delete')!==false)
+                                         if(strpos($permission,'Delete')!==false||strpos($Userpermi,'Delete')!==false)
                                           {?>
 						   <a href="javascript:void(0)" class="btn btn-danger fs deleteDepartment" d-id="<?=$value['Dept_id']?>" data-toggle="tooltip" data-placement="top" title="Delete"><i class="far fa-trash-alt"></i></a>
 						   <?php }
@@ -149,7 +152,8 @@
                                            <?php
                                           }
 
-                                        }?>
+                                        }
+                                    }?>
 
 						</div>
 					</div>
@@ -178,7 +182,10 @@
                                       foreach($Assign_permission as $checkpermission)
                                         {
                                           $permission=$checkpermission->permission;
-                                          if(strpos($permission,'Edit')!==false)
+                                          foreach ($UsersPermission as $Uperms) 
+                                            {
+                                             $Userpermi=$Uperms->permission;
+                                          if(strpos($permission,'Edit')!==false||strpos($Userpermi,'Edit')!==false)
                                           {?>
 													    <a href="<?=base_url('Department/Edit_Dept/').$desg->designations_id?>"><span class="btn btn-primary fs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></span></a>
 									    	 <?php }
@@ -188,7 +195,7 @@
                                            <a href="#" style="visibility: hidden"><button type="button" class="btn btn-primary fs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></button></a>
                                              <?php
                                           }
-                                         if(strpos($permission,'Delete')!==false)
+                                         if(strpos($permission,'Delete')!==false||strpos($Userpermi,'Delete')!==false)
                                           {?>
 
 														
@@ -202,7 +209,8 @@
                                           <?php
                                           }
 
-                                        }?>
+                                        }
+                                    }?>
 													</td>
 												</tr>
 											<?php

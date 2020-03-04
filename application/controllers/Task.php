@@ -18,8 +18,8 @@ class Task extends MY_Controller {
 		$id=$session[0]->user_id;
 		$designation_id=$session[0]->designations_id;
 		$data['Assign_permission']=$this->Tasks_Model->CheckPermission($designation_id);
-		// print_r($data['Assign_permission']);
-		// die();
+		$user_id=$session[0]->user_id;
+		$data['UsersPermission']=$this->User_model->CheckUserPermission($user_id);
 		$data['all_tasks']=$this->Tasks_Model->fetch_all_task(null);
 		$data['all_tasks']=$data['all_tasks'];
 		foreach ($data['all_tasks'] as $pr) {

@@ -82,8 +82,11 @@
                                       foreach($Assign_permission as $checkpermission)
                                         {
                                           $permission=$checkpermission->permission;
+                                          foreach ($UsersPermission as $Uperms) 
+                                            {
+                                             $Userpermi=$Uperms->permission;
                                                 
-                                          if(strpos($permission,'Edit')!==false)
+                                          if(strpos($permission,'Edit')!==false||strpos($Userpermi,'Edit')!==false)
                                           {?>
 
                                     <a href="<?=base_url('Leavemanagement/Edit_Yearlyleave/').$FYD->year_leaveid?>" class="bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
@@ -94,7 +97,7 @@
                                             <a href="#"style="visibility: hidden" class="bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
                                              <?php
                                           }
-                                         if(strpos($permission,'Delete')!==false)
+                                         if(strpos($permission,'Delete')!==false||strpos($Userpermi,'Delete')!==false)
                                           {?>
 
                                     <a href="javascript:void(0)" lyear_id="<?=$FYD->year_leaveid?>" class="deletetleaveyearly"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
@@ -106,7 +109,8 @@
                                             <?php
                                           }
 
-                                        }?>
+                                        }
+                                      }?>
                                    </td>
                                   </tr>
                               <?php

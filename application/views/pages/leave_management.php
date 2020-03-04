@@ -108,7 +108,10 @@ $role_id=$session[0]->role_id;
                                       foreach($Assign_permission as $checkpermission)
                                         {
                                           $permission=$checkpermission->permission;
-                                          if(strpos($permission,'Delete')!==false)
+                                           foreach ($UsersPermission as $Uperms) 
+                                            {
+                                             $Userpermi=$Uperms->permission;
+                                          if(strpos($permission,'Delete')!==false||strpos($Userpermi,'Delete')!==false)
                                           {?>
                                                     <a href="javascript:void(0)" leave_app_id="<?=$leaseAllData->leave_application_id?>" class="deletetPendingApplication"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
                                                     <?php }
@@ -127,8 +130,9 @@ $role_id=$session[0]->role_id;
                                     }
 
                                           }
+                                      }}
 
-                                        }?>
+                                        ?>
 
                                   
                                 </tbody>
@@ -150,7 +154,7 @@ $role_id=$session[0]->role_id;
                             <table id="example2" class="display nowrap" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
+                                        <th>Name </th>
                                         <th>Leave Category</th>
                                         <th>Start Date</th>
                                         <th>End Date</th>
@@ -190,9 +194,30 @@ $role_id=$session[0]->role_id;
                                           
                                             <td>
                                                 <div class="">
-                                                    <!--<a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>-->
+                                                    <?php
+                                      foreach($Assign_permission as $checkpermission)
+                                        {
+                                          $permission=$checkpermission->permission;
+                                          foreach ($UsersPermission as $Uperms) 
+                                            {
+                                             $Userpermi=$Uperms->permission;
+                                             if(strpos($permission,'Delete')!==false||strpos($Userpermi,'Delete')!==false)
+                                          {?>
+                                                   
                                                      <a href="javascript:void(0)" myleave_id="<?=$MyleaveAllData->leave_application_id?>" class="deletetMyleave"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
-                                                    <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
+                                                      <?php }
+                                         else
+                                         {
+                                          ?>
+                                          <a href="javascript:void(0)" style="visibility: hidden" myleave_id="<?=$MyleaveAllData->leave_application_id?>" class="deletetMyleave"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+                                                    <!-- <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span> -->
+                                                     <?php
+                                          }
+
+                                        }
+                                      }
+                                      ?>
+
                                                 </div>
     
                                             </td>
@@ -259,9 +284,32 @@ $role_id=$session[0]->role_id;
                                           
                                             <td>
                                                 <div class="">
-                                                    <!--<a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>-->
+
+                                                    <?php
+                                      foreach($Assign_permission as $checkpermission)
+                                        {
+                                          $permission=$checkpermission->permission;
+                                          foreach ($UsersPermission as $Uperms) 
+                                            {
+                                             $Userpermi=$Uperms->permission;
+                                              
+                                          if(strpos($permission,'Delete')!==false||strpos($Userpermi,'Delete')!==false)
+                                          {?>
                                                    <a href="javascript:void(0)" leave_app_id="<?=$leaseAllData->leave_application_id?>" class="deletetAllLeaveApplication"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
-                                                    <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
+                                                     <?php }
+                                         else
+                                         {
+                                          ?>
+                                           <a href="javascript:void(0)" style="visibility: hidden" leave_app_id="<?=$leaseAllData->leave_application_id?>" class="deletetAllLeaveApplication"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+
+                                                    <!-- <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span> -->
+                                                    <?php
+                                          }
+
+                                        }
+                                      }
+                                      ?>
+
                                                 </div>
     
                                             </td>

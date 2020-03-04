@@ -51,7 +51,9 @@
         //$this->load->view('admin/_layout_main', $data);
         $session=$this->session->userdata('logged_user');
         $designation_id=$session[0]->designations_id;
+        $user_id=$session[0]->user_id;
         $data['Assign_permission']=$this->User_model->CheckPermission($designation_id);
+        $data['UsersPermission']=$this->User_model->CheckUserPermission($user_id);
 			$data['admin_staff']=$this->User_model->fetch_all_users();
 			$data['users']=$this->User_model->fetch_user();
 			$this->load->view('layout/header');

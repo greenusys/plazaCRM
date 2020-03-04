@@ -6,6 +6,7 @@ class Payroll extends MY_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('Payroll_model');
+        $this->load->model('User_model');
 		}
 
 	public function index()
@@ -64,6 +65,8 @@ class Payroll extends MY_Controller {
         $session=$this->session->userdata('logged_user');
         $designation_id=$session[0]->designations_id;
         $data['Assign_permission']=$this->Payroll_model->CheckPermission($designation_id);
+        $user_id=$session[0]->user_id;
+        $data['UsersPermission']=$this->User_model->CheckUserPermission($user_id);
 		$data['templates']=$this->Payroll_model->fetch_templates();
 		$this->load->view('layout/header');
 		$this->load->view("pages/salary_template",$data);
@@ -104,6 +107,8 @@ class Payroll extends MY_Controller {
 	{
         $session=$this->session->userdata('logged_user');
         $designation_id=$session[0]->designations_id;
+         $user_id=$session[0]->user_id;
+        $data['UsersPermission']=$this->User_model->CheckUserPermission($user_id);
         $data['Assign_permission']=$this->Payroll_model->CheckPermission($designation_id);
 		$data['templates']=$this->Payroll_model->fetch_hourly_templates();
 		$this->load->view('layout/header');
@@ -140,22 +145,29 @@ class Payroll extends MY_Controller {
 	}
 
     public function update_salary_details(){
+        // die(json_encode($_POST));
         $user_id = $this->input->post('user_id', TRUE);
-
+        // print_r($user_id);
+        // die;
         $hourly_status = $this->input->post('hourly_status', TRUE);
+
         $hourly_rate_id = $this->input->post('hourly_rate_id', TRUE);
 
         $monthly_status = $this->input->post('monthly_status', TRUE);
         $salary_template_id = $this->input->post('salary_template_id', TRUE);
+
         foreach ($user_id as $user) {
+            //echo $user;
             $update_null=$this->Payroll_model->update_null_payroll($user);
         }
+        
         foreach($hourly_status as $hourly){
             $hourly_user=$hourly;
             $user_index=array_search($hourly,$user_id);
             $hourly_index=$hourly_rate_id[$user_index];
             $update_hourly=$this->Payroll_model->update_hourly_model($hourly_user,$hourly_index);
         }
+                    # code...
         foreach($monthly_status as $monthly){
             $monthly_user=$monthly;
             $user_index=array_search($monthly,$user_id);
@@ -179,8 +191,10 @@ class Payroll extends MY_Controller {
 
 	public function empSalary()
 	{
-         $session=$this->session->userdata('logged_user');
+        $session=$this->session->userdata('logged_user');
         $designation_id=$session[0]->designations_id;
+        $user_id=$session[0]->user_id;
+        $data['UsersPermission']=$this->User_model->CheckUserPermission($user_id);
         $data['Assign_permission']=$this->Payroll_model->CheckPermission($designation_id);
 		$data['employee']=$this->Payroll_model->get_emp_salary_list();
 		$this->load->view('layout/header');

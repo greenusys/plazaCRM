@@ -14,6 +14,8 @@ class Announcement extends MY_Controller {
 		$session=$this->session->userdata('logged_user');
 		$designation_id=$session[0]->designations_id;
 		$data['Assign_permission']=$this->Anna->CheckPermission($designation_id);
+		$user_id=$session[0]->user_id;
+		$data['UsersPermission']=$this->User_model->CheckUserPermission($user_id);
 		$data['Announcement']=$this->getAllAnnouncements();
 		$this->load->view('layout/header');
 		$this->load->view("pages/announcements",$data);

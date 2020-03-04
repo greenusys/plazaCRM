@@ -5,6 +5,7 @@ class Leavemanagement extends MY_Controller {
 	function __construct(){
 		parent::__construct();
  		$this->load->model('Leave_model','leave');
+ 		$this->load->model('User_model','usersss');
 	}
 	public function index()
 	{
@@ -49,9 +50,15 @@ class Leavemanagement extends MY_Controller {
 		$tempCatId=0;
 		$levDua=0;
 		$rArray=array();
+<<<<<<< HEAD
+		foreach ($resArray as  $value) {
+			// if($value[''])
+		}
+=======
 		// foreach ($resArray as  $value) {
 		// 	if($value[''])
 		// }
+>>>>>>> 91fdc1154c4bf8e13211e8fb39f85087fb40f74b
 		// print_r($resArray);
 		// echo '********* My Leave Data ********* ';
 		// die;
@@ -81,6 +88,8 @@ class Leavemanagement extends MY_Controller {
 		$session=$this->session->userdata('logged_user');
 		$designation_id=$session[0]->designations_id;
 		$data['Assign_permission']=$this->leave->CheckPermission($designation_id);
+		$user_id=$session[0]->user_id;
+		$data['UsersPermission']=$this->usersss->CheckUserPermission($user_id);
 		// die;
 // 		print_r($data['fetch_leave_data']);
 		$this->load->view('layout/header');
@@ -129,6 +138,8 @@ class Leavemanagement extends MY_Controller {
 		$session=$this->session->userdata('logged_user');
 		$designation_id=$session[0]->designations_id;
 		$data['Assign_permission']=$this->leave->CheckPermission($designation_id);
+		$user_id=$session[0]->user_id;
+		$data['UsersPermission']=$this->usersss->CheckUserPermission($user_id);
 		$data['fetch_Designation_data']=$this->leave->fetchDesignationforLeave();
 		
 		$data['fetch_Yearly_data']=$this->leave->fetchLeaveYearlyData();

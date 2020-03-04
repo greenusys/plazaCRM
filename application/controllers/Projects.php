@@ -59,6 +59,8 @@ class Projects extends MY_Controller {
         $id=$session[0]->user_id;
         $designation_id=$session[0]->designations_id;
         $data['Assign_permission']=$this->Projects_Model->CheckPermission($designation_id);
+        $user_id=$session[0]->user_id;
+        $data['UsersPermission']=$this->User_model->CheckUserPermission($user_id);
         $this->load->view('layout/header');
         $this->load->view("pages/projects",$data);
         $this->load->view("layout/footer");

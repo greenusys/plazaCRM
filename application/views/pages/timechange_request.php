@@ -51,8 +51,11 @@
                                       foreach($Assign_permission as $checkpermission)
                                         {
                                           $permission=$checkpermission->permission;
+                                          foreach ($UsersPermission as $Uperms) 
+                                            {
+                                             $Userpermi=$Uperms->permission;
                                               
-                                          if(strpos($permission,'Edit')!==false)
+                                          if(strpos($permission,'Edit')!==false||strpos($Userpermi,'Edit')!==false)
                                           {?>
                                               <a href="" id="edit_p"class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
 
@@ -64,7 +67,7 @@
 
                                          <?php
                                           }
-                                         if(strpos($permission,'Delete')!==false)
+                                         if(strpos($permission,'Delete')!==false||strpos($Userpermi,'Delete')!==false)
                                           {?>
                                               <a href="javascript:void(0)" class="sele_staus  delete_time_change p-1 text-white " d-id="<?=$value->clock_id?>">  <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
 
@@ -77,7 +80,9 @@
                                          <?php
                                           }
 
-                                        }?>
+                                        }
+                                      }
+                                      ?>
                                         </div>
 
                                     </td>
