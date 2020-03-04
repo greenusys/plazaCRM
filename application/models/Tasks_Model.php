@@ -180,6 +180,17 @@ class Tasks_Model extends CI_Model{
         $this->db->where('designations_id',$designation_id);
         return $this->db->get('tbl_designations')->result();
     }
+    public function changeTaskStatusById($dataaa,$task_id)
+    {
+        $this->db->where('task_id',$task_id);
+        if($this->db->update('tbl_task',$dataaa)){
+                return 1;
+            }
+            else{
+                return 0;
+            }
+
+    }
 
 }
 

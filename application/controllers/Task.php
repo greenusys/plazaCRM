@@ -215,5 +215,13 @@ public function task_details($id=NULL)
 		$this->load->view("pages/task_details",$data);
 		$this->load->view("layout/footer");
 	}
+	 public function ChangeStatusByTask_id()
+    {
+        $task_id=$this->input->post('task_id');
+        $dataaa=array('task_status'=>$this->input->post('task_status'));
+        $data=$this->Tasks_Model->changeTaskStatusById($dataaa,$task_id);
+        die(json_encode(array('code'=>1,'data'=>$data)));
+
+    }
 }
 ?>

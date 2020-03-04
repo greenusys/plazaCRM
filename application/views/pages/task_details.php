@@ -276,6 +276,7 @@ font-size: 35px;
                 <!----------Task Details------->
                
                 <?php foreach ($task_data as $task) {
+                  // print_r($task);
                  ?>
                 <div class="tab-pane active" id="details">
                     <div class=" card ">
@@ -288,11 +289,12 @@ font-size: 35px;
                         </div>
                       <div class="line mt-2"></div>
                       <div class="row">
-                          <div class="col-sm-6">
+                          <div class="col-sm-4">
                              <div class="">
                               <div class="row form-group">
                                 <label class="col-md-4 text-right">Task Status :</label>
                                 <div class="col-md-8 d-flex">
+                                  <div class="refreshlocation">
                                   <?php
                                   if($task['task_status']=='completed')
                                   {
@@ -313,18 +315,43 @@ font-size: 35px;
                                    <span class="bg-warning text-white p-1">In Progress</span>
                                    <?php }
                                 ?>
-                                  <div class="dropdown ml-2">
+                              </div>
+                                  <div class="form-group">
+                            <div class="row">
+                              <div class="offset-1 col-sm-3 text-right">
+                                <!-- <label class="label-style ml-3">Status :</label> -->
+                              </div>
+                              <div class="col-sm-5 d-flex ">
+                                <!-- <div class="refreshlocation">
+                                
+                                 <label class=" bg-warning p-1 he  text-white" ><?=$project_details->project_status?></label>
+                               </div> -->
+                                 <!-- <label class=" p-1 ml-3 top"><span class="bg-primary p-1 text-white"></span> -->
+                                  <input type="hidden" id="taskidss" value="<?=$task['task_id']?>">
+                                     <select class="taskstatus form-control bg-success text-white" name="department">
+                                          <option value="change">Change</option>
+                                          <option value="not_started">Not Started</option>
+                                          <option value="in_progress">In progress</option>
+                                          <option value="completed">Completed</option>
+                                          <option value="deferred">Deferred</option>
+                                          <option value="waiting_for_someone">Waiting For Someone</option>
+                                    </select>
+                                
+                              </div>
+                            </div>
+                          </div>
+                                  <!-- <div class="dropdown ml-2">
                                     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
                                       Change 
                                     </button>
                                     <div class="dropdown-menu">
-                                      <a class="dropdown-item" href="#">Not Started</a>
-                                      <a class="dropdown-item" href="#">In Progress</a>
-                                      <a class="dropdown-item" href="#">Completed</a>
-                                      <a class="dropdown-item" href="#">Deferred</a>
-                                      <a class="dropdown-item" href="#">Waiting For Someone</a>
+                                      <a class="dropdown-item" href="#"></a>
+                                      <a class="dropdown-item" href="#"></a>
+                                      <a class="dropdown-item" href="#"></a>
+                                      <a class="dropdown-item" href="#"></a>
+                                      <a class="dropdown-item" href="#"></a>
                                     </div>
-                                  </div>
+                                  </div> -->
                                 </div>
                               </div>
                               <div class="row form-group">
@@ -887,6 +914,31 @@ font-size: 35px;
       this.className += " active";
       });
     }
+</script>
+<script type="text/javascript">
+   $('.taskstatus').on('change',function(){
+        var task_status=$(this).val();
+        var task_id=$('#taskidss').val();
+           // alert(task_status);
+           // alert(task_id);
+        $.ajax({
+            url:'<?=base_url('Task/ChangeStatusByTask_id')?>',
+            type:"POST",
+            data:{task_status:task_status,task_id:task_id},
+        //   dataType:'JSON',
+            success:function(response)
+            {
+              var response =JSON.parse(response);
+                console.log(response.data);
+                {
+                        
+                    swal("Task Status", "Updated", "success");
+
+                         }
+                          $(".refreshlocation").load(location.href + " .refreshlocation");            
+            }              
+        });
+    });
 </script>
 
 

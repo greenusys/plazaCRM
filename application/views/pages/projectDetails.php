@@ -215,7 +215,7 @@
 														<option value="cancel">Cancel</option>
 														<option value="completed">Completed</option>
 												   </select>
-							                   </label>
+							                  
 							                </div>
 							              </div>
 							            </div>
