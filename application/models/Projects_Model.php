@@ -104,6 +104,17 @@ class Projects_Model extends CI_Model{
         $this->db->where('designations_id',$designation_id);
         return $this->db->get('tbl_designations')->result();
     }
+    public function changeProStatusById($dataaa,$pro_id)
+    {
+    	$this->db->where('project_id',$pro_id);
+    	if($this->db->update('tbl_project',$dataaa)){
+    			return 1;
+    		}
+    		else{
+    			return 0;
+    		}
+
+    }
 
 }
 

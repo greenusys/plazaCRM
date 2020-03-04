@@ -1,5 +1,5 @@
 <?php
-	print_r($project_details);
+	// print_r($project_details);
 	$project_details=$project_details[0];
 ?>
 <style type="text/css">
@@ -142,7 +142,7 @@
 				            </div>
 				        </div>
 					    <div class="line"></div>
-					    <form id="projectstatus">
+					    <form >
 						    <div class="row mt-4">
 						    	<!-- <div class="col-md-12"> -->
 							        
@@ -203,16 +203,17 @@
 							                  <label class="label-style ml-3">Status :</label>
 							                </div>
 							                <div class="col-sm-5 d-flex">
-							                   <label class="bg-warning p-1 he  text-white" ><?=$project_details->project_status?></label>
+							                	<div class="refreshlocation">
+							                	<input type="hidden" id="projectidss" value="<?=$project_details->project_id?>">
+							                   <label class=" bg-warning p-1 he  text-white" ><?=$project_details->project_status?></label></div>
 							                   <!-- <label class=" p-1 ml-3 top"><span class="bg-primary p-1 text-white"></span> -->
-							                   	   <select class=" form-control bg-success text-white" name="department">
-
-							                   	   	    <option value="minor">Change</option>
-														<option value="minor">Started</option>
-														<option value="major">In progress</option>
-														<option value="show">On Hold</option>
-														<option value="major">Cancel</option>
-														<option value="show">Completed</option>
+							                   	   <select class=" projectstatus form-control bg-success text-white" name="department">
+							                   	   	    <option value="Change">Change</option>
+														<option value="Started">Started</option>
+														<option value="In progress">In progress</option>
+														<option value="On Hold">On Hold</option>
+														<option value="Cancel">Cancel</option>
+														<option value="Completed">Completed</option>
 												   </select>
 							                   </label>
 							                </div>
@@ -1575,11 +1576,28 @@ $(document).on("click","#edits",function(){
 	  });
 	});
 </script>
-<!-- <script type="text/javascript">
-		$('.projectstatus').on('change'.function(){
-			var project_id=$('.project_id').val('');
-			var updatestatus=$('.statusvalue').val('');
-			
+ <script type="text/javascript">
+   $('.projectstatus').on('change',function(){
+        var pro_status=$(this).val();
+        var project_id=$('#projectidss').val();
+           // alert(status_id);
+           // alert(project_id);
+        $.ajax({
+            url:'<?=base_url('Projects/ChangeStatusByPro_id')?>',
+            type:"POST",
+            data:{pro_status:pro_status,project_id:project_id},
+        //   dataType:'JSON',
+            success:function(response)
+            {
+              var response =JSON.parse(response);
+                console.log(response.data);
+                {
+                        
+                    swal("Project Status", "Updated", "success");
 
-		});
-</script> -->
+                         }
+                            $(".refreshlocation").load(location.href + " .refreshlocation");            
+            }              
+        });
+    });
+</script>

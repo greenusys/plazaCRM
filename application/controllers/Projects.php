@@ -422,6 +422,14 @@ class Projects extends MY_Controller {
 	// function projectDetails($id){
 		
 	// }
+    public function ChangeStatusByPro_id()
+    {
+        $pro_id=$this->input->post('project_id');
+        $dataaa=array('project_status'=>$this->input->post('pro_status'));
+        $data=$this->Projects_Model->changeProStatusById($dataaa,$pro_id);
+        die(json_encode(array('code'=>1,'data'=>$data)));
+
+    }
 
 }
 ?>
