@@ -41,6 +41,17 @@ class Client_Model extends MY_Model{
 			return $check;
 		} 
     }
+  //   public function get_clients_project_details($client_id)
+  //   {
+  //   	$this->db->where('client_id',$client_id);
+  //   	$check =$this->db->get('tbl_project')->result();
+  //   	if(count($check)==0 ){
+		// 	return false;
+		// }else{
+		// 	return $check;
+		// } 
+
+  //   }
 	public function fetch_client($id){
 		$checker=array('client_id'=>$id);
 		$this->db->where($checker);

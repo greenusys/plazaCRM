@@ -252,19 +252,19 @@ font-size: 35px;
                 <li class="w-100 side_br active">
                     <a href="#details" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Details</a>
                 </li>
-                <li class="w-100 side_br">
+              <!--   <li class="w-100 side_br">
                     <a href="#contacts" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Contacts</a>
-                </li>
+                </li> -->
            
                 <!-- <li class="w-100 side_br">
                     <a href="#notes" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Notes</a>
                 </li> -->
-                <li class="w-100 side_br">
+                <!-- <li class="w-100 side_br">
                     <a href="#invoices" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Invoices</a>
-                </li>
-                <li class="w-100 side_br">
+                </li> -->
+                <!-- <li class="w-100 side_br">
                     <a href="#payments" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Payments</a>
-                </li>
+                </li> -->
               <!--   <li class="w-100 side_br">
                     <a href="#estimates" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Estimates</a>
                 </li> -->
@@ -319,6 +319,8 @@ font-size: 35px;
                                     <label class="">Name</label>
                                   </div>
                                   <div class="col-md-8 ">
+
+
                                     <span><?=$client_details->name?></span>
                                   </div>
                                 </div>
@@ -462,28 +464,29 @@ font-size: 35px;
                             <table id="example" class="display nowrap" style="width:100%">
                                 <thead>
                                     <tr>
-                                       <th scope="col" class="fs1">Full Name</th>
+                                       <!-- <th scope="col" class="fs1">Full Name</th>
                                        <th scope="col" class="fs1">Email</th>
-                                       <th scope="col" class="fs1">Phone</th>
+                                       <th scope="col" class="fs1">Phone</th> -->
                                        <th scope="col" class="fs1">Mobile</th>
-                                       <th scope="col" class="fs1">Skype ID</th>
+                                       <!-- <th scope="col" class="fs1">Skype ID</th>
                                        <th scope="col" class="fs1">Last login</th>
-                                       <th scope="col" class="fs1">Action</th>
+                                       <th scope="col" class="fs1">Action</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
                                       foreach ($client_contacts as $contact) {
+                                        print_r($contact);
                                         # code...
                                         ?>
                                           <tr>
-                                             <td scope="col" class="fs1"><?=$contact->fullname?></td>
+                                             <!-- <td scope="col" class="fs1"><?=$contact->fullname?></td>
                                              <td scope="col" class="fs1"><?=$contact->email?></td>
-                                             <td scope="col" class="fs1"><?=$contact->phone?></td>
+                                             <td scope="col" class="fs1"><?=$contact->phone?></td> -->
                                              <td scope="col" class="fs1"><?=$contact->mobile?></td>
-                                             <td scope="col" class="fs1"><?=$contact->skype?></td>
+                                             <!-- <td scope="col" class="fs1"><?=$contact->skype?></td>
                                              <td scope="col" class="fs1"><?=$contact->last_login?></td>
-                                             <td scope="col" class="fs1">Action</td>
+                                             <td scope="col" class="fs1">Action</td> -->
                                           </tr>
                                         <?php
                                       }
@@ -983,19 +986,24 @@ font-size: 35px;
                                       </tr>
                                   </thead>
                                   <tbody>
-                                    <?php
-                                      foreach ($clint_project as $project) {
-                                        // print_r($project);
-                                        ?>
-                                          <tr>
-                                            <td><?=$project['project_name']?></td>
-                                            <td><?=$project['end_date']?></td>
-                                            <td><?=$project['project_status']?></td>
-                                          </tr>
-                                        <?php
-                                      }
-
+                                    <?php 
+                                    if (is_array($clint_project) || is_object($clint_project))
+                                      {
+                                    foreach($clint_project as $cli_pro)
+                                     {
+                                      // print_r($cli_pro);
+                                      # code...
                                     ?>
+                                    
+                                          <tr>
+                                            <td><?=ucwords($cli_pro['project_name'])?></td>
+                                            <td><?=$cli_pro['end_date']?></td>
+                                            <td><?=ucwords($cli_pro['project_status'])?></td>
+                                          </tr>
+                                          <?php
+                                          } 
+                                  }?>
+                                        
                                       
                                   </tbody>
                               </table>    
