@@ -601,19 +601,27 @@
               
                 <div class="">
                   <ul class="list-unstyled p-4">
-                    <li class="row">
-                      <div class="col-md-2">
-                        <div class="annouce_date_col">
-                          <div class="month">June</div>
-                          <div class="date">13</div>
-                        </div>
-                      </div>
-                      <div class="col-md-10">
-                         <a href=""><h6>Create an external account</h6></a>
-                         <span>https://web-nostromo.com/</span>
-                         <div class="text-right"><a href="">View Details</a></div>
-                      </div>
-                    </li>
+                    <?php
+                      // print_r($get_All_announcement);
+                      foreach ($get_All_announcement as $ann_details) {
+                        ?>
+                          <li class="row">
+                            <div class="col-md-2">
+                              <div class="annouce_date_col">
+                                <div class="month"><?=date('M',strtotime($ann_details->start_date))?></div>
+                                <div class="date"><?=date('d',strtotime($ann_details->start_date))?></div>
+                              </div>
+                            </div>
+                            <div class="col-md-10">
+                               <a href="<?=base_url('Announcement/announcement_detail/').$ann_details->announcements_id?>"><h6><?=ucfirst($ann_details->title)?></h6></a>
+                               <span><?=$ann_details->description?></span>
+                               <div class="text-right"><a href="<?=base_url('Announcement/announcement_detail/').$ann_details->announcements_id?>">View Details</a></div>
+                            </div>
+                          </li>
+                        <?php
+                      }
+                    ?>
+                    
                   </ul>  
              
                 </div>
