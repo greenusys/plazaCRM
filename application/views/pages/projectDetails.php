@@ -208,12 +208,12 @@
 							                   <label class=" bg-warning p-1 he  text-white" ><?=$project_details->project_status?></label></div>
 							                   <!-- <label class=" p-1 ml-3 top"><span class="bg-primary p-1 text-white"></span> -->
 							                   	   <select class=" projectstatus form-control bg-success text-white" name="department">
-							                   	   	    <option value="Change">Change</option>
-														<option value="Started">Started</option>
-														<option value="In progress">In progress</option>
-														<option value="On Hold">On Hold</option>
-														<option value="Cancel">Cancel</option>
-														<option value="Completed">Completed</option>
+							                   	   	    <option value="change">Change</option>
+														<option value="started">Started</option>
+														<option value="in_progress">In progress</option>
+														<option value="on_hold">On Hold</option>
+														<option value="cancel">Cancel</option>
+														<option value="completed">Completed</option>
 												   </select>
 							                   </label>
 							                </div>
