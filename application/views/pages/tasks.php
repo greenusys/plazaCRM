@@ -238,15 +238,12 @@ $role_id=$session[0]->role_id;
                                       foreach($Assign_permission as $checkpermission)
                                         {
                                           $permission=$checkpermission->permission;
-<<<<<<< HEAD
+
                                           foreach ($UsersPermission as $Uperms) 
                                             {
                                              $Userpermi=$Uperms->permission;
                                           if(strpos($permission,'Edit')!==false||strpos($Userpermi,'Edit')!==false)
-=======
 
-                                          if(strpos($permission,'Edit')!==false)
->>>>>>> 91fdc1154c4bf8e13211e8fb39f85087fb40f74b
                                           {?>
                                               <a href="" id="edit_p"class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
 

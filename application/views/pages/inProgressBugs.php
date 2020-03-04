@@ -191,7 +191,7 @@
                           ?>
                             <tr>
                               <td><input type="checkbox" name=" " class="h_22 form-control"></td>
-                                <td><a href="<?=base_url('Task/task_details')?>"><?=$tasker->project_name?></a></td>
+                                <td><a href="<?=base_url('Bugs/bugs_Details/').$tasker->bug_id?>"><?=$tasker->project_name?></a></td>
                                 <td><?=$tasker->bug_title?></td>
                                 <td>
                                   <?php
@@ -205,7 +205,7 @@
                                     echo "<span class='text-white bg-warning sele_staus'>Waiting For Someone</span>";
                                   }
                                   elseif ($tasker->bug_status=="in_progress") {
-                                    echo "<span class='text-white bg-warning sele_staus'>In Progresse</span>";
+                                    echo "<span class='text-white bg-warning sele_staus'>In Progress</span>";
                                   }
                                   else{
                                     echo "<span class='text-white bg-danger sele_staus'>Not Started</span>";

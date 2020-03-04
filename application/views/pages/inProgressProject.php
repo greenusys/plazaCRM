@@ -323,7 +323,7 @@ $(document).ready(function(){
                                     echo "<span class='text-white bg-warning sele_staus'>Waiting For Someone</span>";
                                   }
                                   elseif ($pr['project_status']=="in_progress") {
-                                    echo "<span class='text-white bg-warning sele_staus'>In Progresse</span>";
+                                    echo "<span class='text-white bg-warning sele_staus'>In Progress</span>";
                                   }
                                   else{
                                     echo "<span class='text-white bg-danger sele_staus'>Not Started</span>";

@@ -193,7 +193,7 @@
                               // print_r($proj_detail);
                               ?>
                                 <tr>
-                                  <td><?=$proj_detail['project_name']?></td>
+                                  <td><a href="<?=base_url('Projects/project_details/').$proj_detail['project_id']?>"><?=$proj_detail['project_name']?></a></td>
                                   <td><?=$proj_detail['client_name']?></td>
                                   <td><?=$proj_detail['end_date']?></td>
                                   <td>
@@ -315,7 +315,7 @@
                               // print_r($proj_detail);
                               ?>
                                 <tr>
-                                  <td><?=$task_detail['task_name']?></td>
+                                  <td><a href="<?=base_url('Task/task_details/').$task_detail['task_id']?>"><?=$task_detail['task_name']?></a></td>
                                   <td><?=$task_detail['due_date']?></td>
                                   <td>
                                   <?php

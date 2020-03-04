@@ -89,6 +89,12 @@
             $this->load->view('pages/inProgressBugs',$data);
             $this->load->view('layout/footer');
         }
+        public function bugs_Details($id){
+            echo 'Bugs Detail';
+            // $this->load->view('layout/header');
+            // $this->load->view('pages/inProgressBugs',$data);
+            // $this->load->view('layout/footer');
+        }
     
 
 	}
