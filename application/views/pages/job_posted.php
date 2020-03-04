@@ -283,7 +283,7 @@
                         </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                       <div class="row">
                         <div class="col-sm-3">
                           <label for="exampleInputEmail1">Permission<span class="text-danger">*</span></label>
@@ -297,7 +297,7 @@
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> -->
                     <div class="form-group"  id="dvPassport" style="display: none">
                       <div class="row">
                         <div class="col-sm-3">

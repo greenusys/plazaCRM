@@ -241,17 +241,18 @@ $role_id=$session[0]->role_id;
 
                                           foreach ($UsersPermission as $Uperms) 
                                             {
+
                                              $Userpermi=$Uperms->permission;
                                           if(strpos($permission,'Edit')!==false||strpos($Userpermi,'Edit')!==false)
 
                                           {?>
-                                              <a href="" id="edit_p"class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                              <a href="<?=base_url('Task/editTaskpage/').$tasker['task_id']?>" id="edit_p"class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
 
                                          <?php }
                                          else
                                          {
                                           ?>
-                                            <a href="" id="edit_p"class="sele_staus bg-info p-1 text-white " style="visibility: hidden"><span><i class="far fa-edit"></i></span></a>
+                                            <a href="<?=base_url('Task/editTaskpage/').$tasker['task_id']?>" id="edit_p"class="sele_staus bg-info p-1 text-white " style="visibility: hidden"><span><i class="far fa-edit"></i></span></a>
 
                                          <?php
                                           }
