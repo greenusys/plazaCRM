@@ -1,5 +1,5 @@
 <?php
-//	print_r($project_details);
+	print_r($project_details);
 	$project_details=$project_details[0];
 ?>
 <style type="text/css">
@@ -131,7 +131,8 @@
  -->
 			<div class="col-md-12">
 				<div id="proj" class="card tabcontent  d-block  border-0">
-					<div class= p-3" id="project" >
+					<div class=" p-3" id="project" >
+						
 						<div class="row">
 							<div class="col-sm-10">
 				                <h6><?=$project_details->project_name?></h6>
@@ -141,7 +142,7 @@
 				            </div>
 				        </div>
 					    <div class="line"></div>
-					    <form>
+					    <form id="projectstatus">
 						    <div class="row mt-4">
 						    	<!-- <div class="col-md-12"> -->
 							        
@@ -261,6 +262,7 @@
 							                </div>
 							              </div>
 							            </div>
+
 							       <!--      <div class="form-group">
 							              <div class="row">
 							                <div class="offset-1 col-sm-4">
@@ -444,6 +446,7 @@
 					           <div class="row p-2 bg-light">
 					           	<h6>dsgdfgfdgdf</h6>
 					           </div> -->
+
 					        </form>
 					    </div>
 				    </div>
@@ -1572,3 +1575,11 @@ $(document).on("click","#edits",function(){
 	  });
 	});
 </script>
+<!-- <script type="text/javascript">
+		$('.projectstatus').on('change'.function(){
+			var project_id=$('.project_id').val('');
+			var updatestatus=$('.statusvalue').val('');
+			
+
+		});
+</script> -->
