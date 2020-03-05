@@ -95,13 +95,13 @@
                   <select name="lpolicy_department_id" class="form-control fetchdeptid" id="emply">
                     <option selected="" disabled="" value="0">Select Department</option>
                      <?php
-                                        foreach($fetch_Department_data as $deptdata)
-                                        {
-                                        ?>
-              <option  value="<?=$deptdata->departments_id?>"><?=$deptdata->deptname?></option>;
-                                    <?php
-                                        }
-                                        ?>
+                        foreach($fetch_Department_data as $deptdata)
+                        {
+                        ?>
+                          <option  value="<?=$deptdata->departments_id?>"><?=$deptdata->deptname?></option>;
+                        <?php
+                            }
+                        ?>
                   </select>
                 </div>
               </div>
@@ -116,7 +116,7 @@
               <div class="col-sm-7">
                 <div class="input-group">
                   <select name="lpolicy_designation_id" class="form-control fetchdesigid" id="designationforleave">
-                    <option selected disabled="" value="0">Select Designation</option>
+                    <option value="0">Select Designation</option>
                      
                      </select>
                 </div>
@@ -126,21 +126,12 @@
           <div class="form-group mb-0">
             <div class="row">
               <div class="offset-1 col-sm-2 text-right">
-                  <label for="exampleInputEmail1" class="pt-2">Category<sup class="text-danger">*</sup></label>
+                  <label for="exampleInputEmail1" class="pt-2">Category Name : <sup class="text-danger">*</sup></label>
               </div>
               <div class="col-sm-7">
                 <div class='input-group date form-group' id=''>
-                   <select name="lpolicy_category_id" class="form-control " id="emply">
-                    <option selected="" disabled="" value="0">Select Category</option>
-                     <?php
-                                        foreach($fetch_leave_category_data as $LCdata)
-                                        {
-                                        ?>
-              <option  value="<?=$LCdata->leave_category_id?>"><?=$LCdata->leave_category?></option>;
-                                    <?php
-                                        }
-                                        ?>
-                  </select>
+                  <input type="text" class="form-control" name="lpolicy_category_id">
+                   
                     
                </div>
               </div>
@@ -149,11 +140,11 @@
           <div class="form-group mb-0">
             <div class="row">
               <div class="offset-1 col-sm-2 text-right">
-                  <label for="exampleInputEmail1" class="pt-2">Days<sup class="text-danger">*</sup></label>
+                  <label for="exampleInputEmail1" class="pt-2">Days : <sup class="text-danger">*</sup></label>
               </div>
               <div class="col-sm-7">
                 <div class='input-group date form-group' id=''>
-                   <input type="number" class="form-control" name="lpolicy_days">
+                   <input type="text" class="form-control" id="lpolicy_days" name="lpolicy_days" >
                     
                </div>
               </div>
@@ -162,7 +153,7 @@
           <div class="form-group mb-0">
             <div class="row">
               <div class="offset-1 col-sm-2 text-right">
-                  <label for="exampleInputEmail1" class="pt-2">Gender<sup class="text-danger">*</sup></label>
+                  <label for="exampleInputEmail1" class="pt-2">Gender : <sup class="text-danger">*</sup></label>
               </div>
               <div class="col-sm-7">
                 <div class='input-group date form-group' id=''>
@@ -183,18 +174,38 @@
           </div>
            <div class="form-group mb-0">
             <div class="row">
+              <div class="offset-2  col-md-5">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label for="exampleInputEmail1" class="pt-2">Effective Date : <sup class="text-danger">*</sup></label>
+                  </div>
+                  <div class="col-md-6">
+                    <input type="date" class="form-control" name="lpolicy_effective_date">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label for="exampleInputEmail1" class="pt-2">Available Leave : <sup class="text-danger">*</sup></label>
+                  </div>
+                  <div class="col-md-4">
+                    <strong><input type="text"  id="availableleave" placeholder="Available Leaves" class=" form-control" readonly>  </strong>
+                  </div>
+                </div>
+              </div>
               <div class="offset-1 col-sm-2 text-right">
-                  <label for="exampleInputEmail1" class="pt-2">Effective Date<sup class="text-danger">*</sup></label>
+                  
               </div>
               <div class="col-sm-7">
                 <div class='input-group date form-group' id=''>
-                   <input type="date" class="form-control" name="lpolicy_effective_date">
+                   
                     
                </div>
               </div>
             </div>
           </div>
-          <div class="form-group mb-0">
+         <!--  <div class="form-group mb-0">
             <div class="row">
               <div class="offset-1 col-sm-2 text-right">
                   <label for="exampleInputEmail1" class="pt-2">Activate<sup class="text-danger">*</sup></label>
@@ -208,14 +219,14 @@
               </div>
             </div>
 
-          </div>
+          </div> -->
            <div class="row">
               <div class="offset-1 col-sm-2 text-right">
-                  <label for="exampleInputEmail1" class="pt-2">Available Leave<sup class="text-danger">*</sup></label>
+                  
               </div>
               <div class="col-sm-7">
                 <div class='input-group date form-group' >
-                   <strong><input type="text"  id="availableleave" class="w_20 form-control">  </strong>   
+                      
                </div>
               </div>
             </div>
@@ -292,6 +303,7 @@
 </script>
 
      <script>
+      var availLeave;
         // $('.checkagain').on('click',function(){
           $('.fetchdeptid').on('change',function(){
             var dept_id=$(this).val();
@@ -329,8 +341,7 @@
                   
               });
             });  
-      </script>
-       <script>
+      
         // $('.checkagain').on('click',function(){
           $('.fetchdesigid').on('change',function(){
             var desig_id=$(this).val();
@@ -366,9 +377,11 @@
                           var availableleave=totalleave-takenleave;
                           console.log(totalleave,takenleave);
                           console.log('available leave',availableleave);
-                          if(availableleave>0)
+                          if(availableleave >0   )
                           {
+                            availLeave=availableleave;
                             $('#availableleave').val(availableleave);
+                            $('#lpolicy_days').attr('maxlength',availableleave);
                             // alert('empty');
                           }
                           else
@@ -394,10 +407,7 @@
             });
    
        
-      </script>
-
-
-<script>
+     
     $(document).ready(function(){
     $("#policydata").submit(function(e){
     e.preventDefault();
@@ -432,6 +442,16 @@
     });
     });
 
+    });
+
+    $('#lpolicy_days').on('keyup',function(){
+      var AvailLe=$(this).attr('maxlength');
+      var pressValue=parseInt($(this).val());
+      console.log("Press Value : "+pressValue);
+      if(pressValue > AvailLe){
+        alert("Leaves Out Of Stock");
+        $($(this).val(""));
+      }
     });
 
 </script>

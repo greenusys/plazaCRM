@@ -16,6 +16,16 @@ class Tasks_Model extends CI_Model{
 		} 
 	}
 
+        public function update_task_main($task_id,$data){
+            $this->db->where('task_id', $task_id);
+            if($this->db->update('tbl_task',$data)){
+                return true;
+            }
+            else{
+                return false;
+            }
+    }
+
 	    public function get_permission($table, $where = null)
     {
         $role = $this->session->logged_user[0]->role_id;

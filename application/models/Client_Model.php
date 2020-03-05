@@ -110,6 +110,16 @@ class Client_Model extends MY_Model{
     		}
 	}
 
+	public function update_client_ajax($client_id,$data){
+			$this->db->where('client_id', $client_id);
+    		if($this->db->update('tbl_client',$data)){
+    			return true;
+    		}
+    		else{
+    			return false;
+    		}
+	}
+
 	public function delete_client($data){
 			$this->db->where('id', $data);
 			if($this->db->delete('client_')){
