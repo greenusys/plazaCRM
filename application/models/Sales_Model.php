@@ -31,5 +31,29 @@ class Sales_Model extends MY_Model
         $result = $query_result->result();
         return $result;
     }
+    public function CheckPermission($designation_id)
+    {
+        $this->db->where('designations_id',$designation_id);
+        return $this->db->get('tbl_designations')->result();
+    }
+    public function CheckUserPermission($user_id)
+    {
+        $this->db->where('user_id',$user_id);
+        return $this->db->get('tbl_users')->result();
+    }
+    public function Deleteinvoice($dataa)
+    {
+        $this->db->where($dataa);
+         $results=$this->db->delete('tbl_invoices');
+         if($results)
+            {
+                return 1;
+            }
+    
+            else
+            {
+                return 0;
+            }
+    }
 }
 ?>

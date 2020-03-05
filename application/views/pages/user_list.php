@@ -379,13 +379,15 @@ $role_id=$session[0]->role_id;
             {
               var response=JSON.parse(response);
               console.log(response);
-              if(response.status==1)
+              if(response.status=='1')
               {
+                swal("User", " Added Successfully", "success");
                 location.reload();
               }
-              else if(response.status=="0")
+              else 
               {
                swal("OOPS", "Something Went Wrong", "error");
+                location.reload();
               }
             }
          });

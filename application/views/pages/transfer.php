@@ -250,9 +250,9 @@
                 <div class="checkbox c-radio needsclick ">
                   <input type="radio" name="permission" value="all" class="btn1"> Everyone<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
                                 </div>
-                <div class="checkbox c-radio needsclick">
+                <!-- <div class="checkbox c-radio needsclick">
                   <input type="radio" name="permission" value="" id="chkPassport" onclick="ShowHideDiv(this)" > Customise Permission<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
-                                </div>
+                                </div> -->
               </div>
             </div>
           </div>

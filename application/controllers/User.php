@@ -72,7 +72,7 @@ class User extends MY_Controller {
 								'direction'=>$direction);
 				$final=$this->User_model->insert_account($new_data);
 				if($final){
-					die(json_encode(array('status'=>'1','msg'=>'success')));
+					die(json_encode(array('status'=>1,'msg'=>'success')));
 				}
 				else{
 					die(json_encode(array('status'=>'0','msg'=>'failed')));

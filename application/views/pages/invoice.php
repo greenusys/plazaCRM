@@ -128,6 +128,7 @@
                         <tbody>
                         	<?php
                         	foreach ($fetch_invoices as $invoicer) {
+                        		// print_r($invoicer);
                         	?>
                            <tr>
                            	<td><?=$invoicer->reference_no?></td>
@@ -135,7 +136,30 @@
                            	<td><?=$invoicer->due_date?></td>
                            	<td><?=$invoicer->name?></td>
                            	<td><?=$invoicer->status?></td>
-                           	<td>Action</td>
+                           	<td>
+                           		<?php
+                                      foreach($Assign_permission as $checkpermission)
+                                        {
+                                          $permission=$checkpermission->permission;
+                                          foreach ($UsersPermission as $Uperms) 
+                                            {
+                                             $Userpermi=$Uperms->permission;
+                                             if(strpos($permission,'Delete')!==false||strpos($Userpermi,'Delete')!==false)
+                                          {?>
+                             <a href="javascript:void(0)" invoice_id="<?=$invoicer->invoices_id?>" class="deleteinvoice"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+                           	  <?php }
+                                         else
+                                         {
+                                          ?>
+                                           <a href="javascript:void(0)" style="visibility: hidden"  class="deleteinvoice"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+                                         
+                                           <?php
+                                          }
+
+                                        }
+                                    }?>
+                                      </td>
+
                            </tr>
                              <?php }?>
                         </tbody>
@@ -489,17 +513,22 @@ $(document).ready(function(){
 							<tbody id="apnd_table">
 							    <tr id="show">
 									<td>
-										<textarea cols="30" rows="2" class="text-center">Item Name</textarea>
+										<label class="form-control">Item Name</label>
+										<!-- <textarea cols="30" rows="2" class="text-center"></textarea> -->
 									</td>
 									<td>
-										<textarea cols="30" rows="2" class="text-center">Description</textarea>
+										<label class="form-control">Description</label>
+									
 									</td>
 									<td>
-										<input type="text" class="form-control qty_amt p-1" value="1">
+
 										<h6><input type="text" name="" class="p-1 border-0" placeholder="Unit Type"></h6>
+										<label class="form-control">1</label>
+										<!-- <input type="text" class="form-control qty_amt p-1" value="1"> -->
+										
 									</td>
 									<td class="">
-										<input type="text" class="form-control item_prc p-1" placeholder="Price">
+										<label class="form-control">Price</label>
 									</td>
 									<td>
 										<select class=" form-control">
@@ -765,6 +794,7 @@ $(document).on('change','#client_main_id',function(){
 					success:function(resp){
 						if (resp==1) {
 							swal("Success", "Invoice Created Successfully", "success");
+							location.reload();
 						}
 						else{
 							swal("OOPS", "Something Went Wrong", "warning");
@@ -907,6 +937,35 @@ $(document).ready(function(){
 	  });
 	 
 	});
+</script>
+<script type="text/javascript">
+	$(document).on('click','.deleteinvoice',function(){
+			var invoice_id=$(this).attr('invoice_id');
+			// alert(invoice_id);
+			if(confirm("Are you Sure want to delete this record?") ==true)
+            {  
+			$.ajax({
+				url:"<?=base_url('Sales/deleteInvoice')?>",
+				type:"post",
+				data:{invoice_id:invoice_id},
+
+				success:function(response){
+					response=JSON.parse(response);
+					console.log(response.data);
+
+					if(response.code==1){
+						swal("Invoice!","Deleted Successfully","success");
+						 location.reload()
+					}
+					
+				}
+			})
+			 }
+			 else{
+						swal("Oops!", 'error', "warning");
+						location.reload(); 
+					}
+		});
 </script>
 
 

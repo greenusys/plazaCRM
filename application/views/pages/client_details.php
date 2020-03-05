@@ -971,7 +971,7 @@ font-size: 35px;
                             <div class="col-md-10">
                               <h6 class="m-0 mt-1">Projects</h6></div>
                             <div class="col-md-2 text-right"> 
-                                <span class="text-primary font-weight-bold pointer" >New Projects</span>
+                                <!-- <span class="text-primary font-weight-bold pointer" >New Projects</span> -->
                             </div>
                         </div>
                         <div class="line mt-2"></div>

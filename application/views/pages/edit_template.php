@@ -414,7 +414,9 @@ $("#set_template").submit(function(e){
              {
               //console.log(response);
                 if(response==1){
-                  location.reload();
+                   swal("Salary Template!", "Updated!", "success");
+
+                  window.location.href="<?=base_url()?>"+"Payroll/salaryTemplate";
                 }
                 else{
                   swal("OOPS!", "Something Went Wrong!", "error");

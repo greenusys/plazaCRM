@@ -7,13 +7,22 @@
 		$this->load->model('User_model');
 		$this->load->model('Client_Model');
 		$this->load->model('Sales_Model');
+		
 	}
 
 	public function index()
 	{
+		
 		$data['users']=$this->User_model->fetch_user();
 		$data['clients']=$this->Client_Model->getClients();
 		$data['fetch_invoices']=$this->Sales_Model->fetch_invoices();
+
+		$session=$this->session->userdata('logged_user');
+		$designation_id=$session[0]->designations_id;
+		$user_id=$session[0]->user_id;
+		$data['Assign_permission']=$this->Sales_Model->CheckPermission($designation_id);
+		$data['UsersPermission']=$this->Sales_Model->CheckUserPermission($user_id);
+
 		$this->load->view('layout/header');
 		$this->load->view("pages/invoice",$data);
 		$this->load->view("layout/footer");
@@ -107,6 +116,14 @@
 		else{
 			die(json_encode(array('status'=>'1','invoice_id'=>$result)));
 		}
+	}
+	
+			public function deleteInvoice()
+	{
+		$dataa=array('invoices_id'=>$this->input->post('invoice_id'));
+		$data=$this->Sales_Model->Deleteinvoice($dataa);
+		die(json_encode(array('code'=>1,'data'=>$data)));
+
 	}
 }
 ?>	

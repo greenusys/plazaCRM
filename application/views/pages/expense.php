@@ -65,9 +65,9 @@
                     <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
                       aria-selected="false">New Expense</a>
                   </li>
-                  <li class="nav-item ">
+                 <!--  <li class="nav-item ">
                   <a class="nav-link" id="import_project" data-toggle="tab" href="#imp_project" role="tab" aria-controls="imp_project" aria-selected="false">Import Expense</a>
-                  </li>
+                  </li> -->
                 </ul>
                 <div class="tab-content card pt-5" id="myTabContentJust">
                   <div class="tab-pane fade show active px-4" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
@@ -378,9 +378,9 @@
                 <div class="checkbox c-radio needsclick ">
                   <input type="radio" name="permission" value="all" class="btn1"> Everyone<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
                                 </div>
-                <div class="checkbox c-radio needsclick">
+              <!--   <div class="checkbox c-radio needsclick">
                   <input type="radio" name="permission" value="" id="chkPassport" onclick="ShowHideDiv(this)" > Customise Permission<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
-                                </div>
+                                </div> -->
               </div>
             </div>
           </div>
@@ -435,12 +435,12 @@
                   </div>
                   <div class="tab-pane fade show px-4 " id="imp_project" role="tabpanel" aria-labelledby="import_project">
                       <div class="text-right dnld_sample"><button class="btn btn-primary"> <i class="fas fa-download"></i>Download Sample</div>
-                    <div class="row">
+                  <!--   <div class="row">
                       <div class="col-md-12 card p-4">
                           <div class="col-md-5 offset-md-1 mt-3">
                             <form action="/action_page.php">
                                 <div class="form-group  row">
-                                  <label for="staticEmail" class="text-right col-sm-5 col-form-label font-weight-bold">Choose File <sup class="text-danger">*</sup></label>
+                                  <label for="staticEmail" class="text-right col-sm-5 col-form-label font-weight-bold">Choosvve File <sup class="text-danger">*</sup></label>
                                   <div class="col-sm-7">
                                       <input type="file" class="text-right form-control border-0 d-none" id="img" placeholder="">
                                   <label for="img" class="border w-50 pl-3">Select File</label>
@@ -515,7 +515,7 @@
                             </form>   
                           </div>
                         </div>
-                      </div>
+                      </div> -->
               
 
                   </div>

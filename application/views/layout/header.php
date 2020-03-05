@@ -431,7 +431,7 @@ background: #f3f3f3;
                   <li><a class="nav-link" href="<?=base_url('Payroll/makePayment')?>"><span><i class="fas fa-tasks"></i></span>Make Payment  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
 
                   <li><a class="nav-link" href="<?=base_url('Payroll/generatePaySlip')?>"><span><i class="fas fa-list"></i></span>Generate Payslip <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
-                  <li><a class="nav-link" href="<?=base_url('Payroll/payrollSummary')?>"><span><i class="fas fa-camera-retro"></i></span>Payroll Summary <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
+                  <!-- <li><a class="nav-link" href="<?=base_url('Payroll/payrollSummary')?>"><span><i class="fas fa-camera-retro"></i></span>Payroll Summary <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li> -->
                   <li><a class="nav-link" href="<?=base_url('Payroll/advanceSalary')?>"><span><i class="fab fa-cc-mastercard"></i></span>Advance Salary <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
                   <li><a class="nav-link" href="<?=base_url('Payroll/providentFund')?>"><span><i class="fas fa-briefcase"></i></span>Provident Fund</a></li>        
                   <li><a class="nav-link" href="<?=base_url('Payroll/overTime')?>"><span><i class="far fa-clock"></i></span>Overtime</a></li>
@@ -533,9 +533,9 @@ background: #f3f3f3;
                   <li><a class="nav-link" href="<?=base_url('Transaction/deposit')?>"><span><i class="far fa-circle"></i></span>Deposit</a></li>
                   <li><a class="nav-link" href="<?=base_url('Transaction/transfer')?>"><span><i class="far fa-circle"></i></span>Transfer</a></li>
                   <li><a class="nav-link" href="<?=base_url('Transaction/TransactionReport')?>"><span><i class="far fa-circle"></i></span>Transaction Report</a></li>
-                  <li><a class="nav-link" href="<?=base_url('Transaction/TransferReport')?>"><span><i class="far fa-circle"></i></span>Transfer Report</a></li>
-                  <li><a class="nav-link" href="<?=base_url('Transaction/expense')?>"><span><i class="far fa-circle"></i></span>Balance Sheet</a></li>
-                   <li><a class="nav-link" href="<?=base_url('Transaction/BankAndCash')?>"><span><i class="far fa-money-bill-alt"></i></span>Bank & Cash</a></li>
+                 <!--  <li><a class="nav-link" href="<?=base_url('Transaction/TransferReport')?>"><span><i class="far fa-circle"></i></span>Transfer Report</a></li> -->
+                  <!-- <li><a class="nav-link" href="<?=base_url('Transaction/expense')?>"><span><i class="far fa-circle"></i></span>Balance Sheet</a></li>
+                   <li><a class="nav-link" href="<?=base_url('Transaction/BankAndCash')?>"><span><i class="far fa-money-bill-alt"></i></span>Bank & Cash</a></li> -->
                 </ul>
               </li>
              <?php endif; ?>
