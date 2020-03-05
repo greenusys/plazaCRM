@@ -43,12 +43,13 @@
                                       // print_r($ATD);
                                 ?>
                             <tr>
-                               <input type="hidden" name="from_account_id" value="<?=$ATD->from_account_id?>"class="fetch_fromAcc">
-                              <td><?=$ATD->account_name?></td>
-                                <td><?=$ATD->account_name?></td>
-                               <td><?=$ATD->amount?></td>
-                                <td><?=$ATD->date?></td>
-                                <td><a href="">Download</a></td>
+                               <!-- <input type="hidden" name="from_account_id" value="<?=$ATD->from_account_id?>"class="fetch_fromAcc"> -->
+                              <td><?=ucwords($ATD['From'])?></td>
+                                <td><?=ucwords($ATD['To'])?></td>
+                               <td><?=$ATD['Amount']?></td>
+                                <td><?=$ATD['Date']?></td>
+                              
+                                <td><a href="<?=base_url('uploads/transfer/').$ATD['Attachement']?>" download>Download</a></td>
                            
                                 <td>
                                     <div class="">
@@ -61,7 +62,7 @@
                                              $Userpermi=$Uperms->permission;     
                                           if(strpos($permission,'Edit')!==false||strpos($Userpermi,'Edit')!==false)
                                           {?>
-                                     <a href="<?=base_url('Transaction/Edit_Transfer/').$ATD->transfer_id?>" class="bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                     <a href="<?=base_url('Transaction/Edit_Transfer/').$ATD['TransferId']?>" class="bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
                                      <?php }
                                          else
                                          {
@@ -71,7 +72,7 @@
                                           }
                                              if(strpos($permission,'Delete')!==false||strpos($Userpermi,'Delete')!==false)
                                           {?>
-                                            <a href="javascript:void(0)" transactions_id="<?=$ATD->transfer_id?>" class="deletettransfertransaction"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+                                            <a href="javascript:void(0)" transactions_id="<?=$ATD['TransferId']?>" class="deletettransfertransaction"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
                                              <?php }
                                          else
                                          {

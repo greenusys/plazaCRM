@@ -88,12 +88,32 @@ class Transaction extends MY_Controller {
 		$data['Assign_permission']=$this->Transaction->CheckPermission($designation_id);
 		 $data['fetch_Account_Data']=$this->Accounts->AllAccountData();
         $data['fetch_Method_Data']=$this->Payments->fetchMethodData();
-         $data['All_Transfer_Data']=$this->Transaction->fetchAllTransferData();
-         // print_r( $data['All_Transfer_Data']);
+        $TransaferAAray=$this->Transaction->fetchAllTransferData();
+        $finalTransferDetail=array();
+         foreach ($TransaferAAray as $key => $value) {
+         	# code...
+         	// echo  ' To Account : '.$this->getName($value->to_account_id);
+         	// echo  ' From Account : '.$this->getName($value->from_account_id);
+         	$finalTransferDetail[]=array(
+         		"From"=>$this->getName($value->from_account_id),
+         		"To"=>$this->getName($value->to_account_id),
+         		"Amount"=>$value->amount,
+         		"Date"=>$value->date,
+         		"Attachement"=>$value->attachement,
+         		"TransferId"=>$value->transfer_id
+         	);
+         }
+         // print_r($finalTransferDetail);
+         // print_r( $TransaferAAray);
          // die();
+         $data['All_Transfer_Data']=$finalTransferDetail;
 		$this->load->view('layout/header');
 		$this->load->view("pages/transfer",$data);
 		$this->load->view("layout/footer");
+	}
+	public function getName($user_id){
+		$result= $this->db->where('user_id',$user_id)->get('tbl_account_details')->result();
+		return $result[0]->fullname;
 	}
 	public function Edit_Transfer($id)
 	{
