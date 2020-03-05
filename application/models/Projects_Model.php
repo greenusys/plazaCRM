@@ -79,10 +79,11 @@ class Projects_Model extends CI_Model{
 	}
 
 	public function update_project($data){
-			$id=$data['id'];
-			unset($data['id']);
-			$this->db->where('id', $id);
-    		if($this->db->update('projects_',$data)){
+			$id=$data['project_id'];
+			unset($data['project_id']);
+			unset($data['editor1']);
+			$this->db->where('project_id', $id);
+    		if($this->db->update('tbl_project',$data)){
     			return true;
     		}
     		else{

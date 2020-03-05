@@ -367,7 +367,7 @@ $(document).on('click','.edt_project',function(){
                               <div class="col-sm-3">
                                 <label for="exampleInputEmail1">Progress </label>
                               </div>
-                              <div class="col-sm-9">
+<!--                               <div class="col-sm-9">
                                   <div id="slider-range-min"></div>
                                 <div class="d-flex bg-light">
                                     <div class="col-sm-4">
@@ -383,14 +383,14 @@ $(document).on('click','.edt_project',function(){
                                     // });
                                     // })
                                     </script>
-                                  <!-- <div class="col-sm-4">
+                                  <- <div class="col-sm-4">
                                     <input type="checkbox" name="vehicle1" value="hours"> Project Hours<br>
                                   </div> -->
                                  <!--  <div class="col-sm-4">
                                     <input type="checkbox" name="vehicle1" value="task"> Through Tasks<br>
                                   </div> -->
                                 </div>
-                              </div>
+                              </div> 
                             </div>
                           </div>
                           <div class="form-group">
@@ -419,7 +419,7 @@ $(document).on('click','.edt_project',function(){
                               </div>
                             </div>
                           </div>
-                          <div class="form-group">
+<!--                           <div class="form-group">
                               <div class="row">
                               <div class="col-sm-3">
                                 <label for="exampleInputEmail1">Billing Type  <span class="text-danger">*</span> </label>
@@ -436,7 +436,7 @@ $(document).on('click','.edt_project',function(){
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          </div> -->
                           <div class="form-group">
                               <div class="row">
                               <div class="col-sm-3">
@@ -453,7 +453,7 @@ $(document).on('click','.edt_project',function(){
                                 <label for="exampleInputEmail1">Estimate Hours  </label>
                               </div>
                               <div class="col-sm-9">
-                                <input type="number" step="0.01" value="" class="form-control" name="estimate_hours" data-parsley-id="23">
+                                <input type="number" step="0.01" value="<?=$particular_project_Detail[0]->estimate_hours?>" class="form-control" name="estimate_hours" data-parsley-id="23">
                               </div>
                             </div>
                           </div>
@@ -465,16 +465,27 @@ $(document).on('click','.edt_project',function(){
                               <div class="col-sm-9">
                                 <div class="input-group">
                                   <select name="project_status" class="form-control" id="stat_br" style="width: 100%"  required="" >
-                                      <option value="started">Started </option>
-                                      <option value="in_progress">In progress</option>
-                                      <option value="on_hold">Hold</option>
-                                      <option value="cancelled">Cancel</option>
-                                     <option value="completed">Completed</option>
+                       <option value="not_started" <?php if ($particular_project_Detail[0]->project_status=="not_started") {
+                         echo "selected";
+                       }?>>Not Started </option>
+                        <option value="in_progress" <?php if ($particular_project_Detail[0]->project_status=="in_progress") {
+                         echo "selected";
+                       }?>>In progress</option>
+                        <option value="completed" <?php if ($particular_project_Detail[0]->project_status=="completed") {
+                         echo "selected";
+                       }?>>Completed</option>
+                        <option value="deferred" <?php if ($particular_project_Detail[0]->project_status=="deferred") {
+                         echo "selected";
+                       }?>>Deferred</option>
+                        <option value="waiting_for_someone" <?php if ($particular_project_Detail[0]->project_status=="waiting_for_someone") {
+                         echo "selected";
+                       }?>>Waiting For Someone</option>
                                   </select>
                                 </div>
                               </div>
                             </div>
                           </div>
+                          <input type="hidden" name="project_id" value="<?=$this->uri->segment(3)?>">
                           <div class="form-group">
                               <div class="row">
                               <div class="col-sm-3">
@@ -485,7 +496,7 @@ $(document).on('click','.edt_project',function(){
                               </div>
                             </div>
                           </div>
-                          <div class="form-group">
+<!--                           <div class="form-group">
                               <div class="row">
                               <div class="col-sm-3">
                                 <label for="exampleInputEmail1">Assigned To <span class="text-danger">*</span></label>
@@ -499,9 +510,9 @@ $(document).on('click','.edt_project',function(){
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          </div> -->
 
-                          <div class="form-group dvPassport"  style="display: none">
+<!--                           <div class="form-group dvPassport"  style="display: none">
                               <div class="row">
                               <div class="col-sm-3">
                                 <label for="exampleInputEmail1">Select Users<span class="text-danger">*</span></label>
@@ -531,20 +542,7 @@ $(document).on('click','.edt_project',function(){
                                  ?>
                               </div>
                             </div>
-                          </div>
-                      </div>
-                      <div class="offset-1 col-sm-4 cl-md-4 col-lg-4 ">
-                      <?php
-                      foreach ($settings as $setting) {
-                      ?>
-                      <label class="small-box"> <?=$setting['description']?>
-                        <input type="checkbox" class="song" checked="checked" value="<?=$setting['settings']?>"> 
-                        <span class="checkmark"></span>
-                      </label>
-                      <hr>
-                      <?php
-                      }
-                      ?>
+                          </div> -->
                       </div>
                     </div>
                 <div class="row">
@@ -552,7 +550,7 @@ $(document).on('click','.edt_project',function(){
                       <label for="exampleInputEmail1">Description <span class="text-danger">*</span> </label>
                   </div>
                   <div class="col-md-10">
-                       <textarea name="editor1" value="<?=$particular_project_Detail[0]->description?>"></textarea>
+                       <textarea name="editor1"><?=$particular_project_Detail[0]->description?></textarea>
                             <script>
                                     CKEDITOR.replace( 'editor1' );
                             </script>
@@ -578,43 +576,10 @@ $(document).on('click','.edt_project',function(){
 <script type="text/javascript">
         $("#create_project").submit(function(e){
          e.preventDefault();
-         var ar=[];
-           var count=1;
-           var obj = {};
-            $('.admind').each(function(){
-              var pass_id="#dvPassport"+count;
-              if($(this).is(':checked')){
-               var user_id=$(this).val();
-               var data=$(pass_id).find('.data');
-               data.each(function(){
-                if($(this).is(':checked')){
-                  ar.push($(this).val());
-                }
-               })
-               obj[user_id] = ar;
-               ar=[];
-               }
-               count++;
-            })
-         var new_ar=[];
-          $('.song').each(function(){
-              if($(this).is(':checked'))
-              {
-                  new_ar.push($(this).val()); 
-              }        
-          });
-         var project_settings=JSON.stringify(new_ar);
-         var permission=JSON.stringify(obj);
-         if(Object.keys(permission).length==2){
-          permission="all";
-         }
-         if($('#everyone').is(':checked')) { permission="all"; }
          var formData= new FormData($(this)[0]);
-         formData.append('permission',permission);
-         formData.append('project_settings',project_settings);
          formData.append('description', CKEDITOR.instances.editor1.getData());
          $.ajax({
-             url:"<?=base_url()?>Projects/create_project",
+             url:"<?=base_url()?>Projects/update_project",
               type:"post",
               data:formData,
               contentType:false,
@@ -622,95 +587,21 @@ $(document).on('click','.edt_project',function(){
               cache:false,
              success:function(response)
              {
+              //console.log(response);
                 var response=JSON.parse(response);
                if(response.status==1){
-                 swal("Project Created Successfully!", "Created", "success");
+                 swal("Project Update Successfully!", "Created", "success");
                  //window.location.href='<?=base_url()?>Home';
                }
                else if(response.status=="0"){
-                swal(response.msg, "Already Exists", "error");
+                swal('OOPS', "Something Went Wrong", "error");
               }
              }
          });
     });
 </script>
                   </div>
-                  <div class="tab-pane fade show px-4" id="imp_project" role="tabpanel" aria-labelledby="import_project">
-<!--                     <div class="text-right">
-                      <button class="btn btn-success rounded-0"><i class="fa fa-download" aria-hidden="true"></i> Download Sample</button>
-                    </div> -->
-                    <div class="row">
-                      <form id="upload_project" class="w-100">
-                       <div class="col-md-12 card p-4">
-                          <div class="col-md-5 offset-md-1 mt-3">
-                                                       <div class="form-group row">
-                                  <label for="staticEmail" class="text-right col-sm-3 col-form-label font-weight-bold">Select Project <sup class="a1">*</sup></label>
-                                  <div class="col-sm-8">
-
-                                     <select  name="project_id" class="form-control " id="task_status" style="width: 100%" required="">
-                                      <option value="" selected="" disabled="">Select Project</option>
-                                      <?php
-                                      foreach ($project as $pr) {
-                                      ?>
-                                      <option value="<?=$pr['project_id']?>"><?=$pr['project_name']?></option>
-                                    <?php } ?>
-                                     </select>            
-                                  </div>
-                              </div>
-                                <div class="form-group  row">
-                                  <label for="staticEmail" class="text-right col-sm-3 col-form-label font-weight-bold">Choose Files <sup class="a1">*</sup></label>
-                                  <div class="col-sm-8">
-                                      <input type="file" name="files[]" multiple class="text-right form-control border-0 d-none" id="img" placeholder="">
-                                  <label for="img" class="border w-50 pl-3">Select Files</label>
-                                  </div>
-                                </div>
-        
-                               </div>
-                                <div class="" style="padding-left: 26%">
-                                  <button type="submit" class="btn btn-primary">Upload</button>
-                              </div>  
-                               </div>
-                            </form>   
-                         
-                        </div>
-                      </div>
-              
-
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-<script type="text/javascript">
-      $("#upload_project").submit(function(e){
-       e.preventDefault();
-          var formData= new FormData($(this)[0]);
-          $.ajax({
-            url:"<?=base_url()?>Projects/upload_project",
-            type:"post",
-             data:formData,
-             contentType:false,
-             processData:false,
-             cache:false,
-            success:function(response)
-            {
-              //console.log(response);
-              var response=JSON.parse(response);
-              if(response.status==1)
-              {
-                swal("Uploaded", "success", "success");
-                location.reload();
-              }
-              else if(response.status=="0")
-              {
-               swal("OOPS", "Something Went Wrong", "error");
-              }
-            }
-         });
-    });
-</script>
+                
   <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content style">

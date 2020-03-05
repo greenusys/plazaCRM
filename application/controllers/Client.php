@@ -221,6 +221,19 @@ public function __construct(){
 		$this->load->view("pages/client_details",$data);
 		$this->load->view("layout/footer");
 	}
+
+	public function update_client_ajax(){
+		$client_id=$_POST['client_id'];
+		unset($_POST['client_id']);
+		$result = $this->Client->update_client_ajax($client_id,$_POST);
+		if ($result) {
+			echo "1";
+		}
+		else{
+			echo "0";
+		}
+	}
+
 	public function edit_client($id){
 		$data['client_details']=$this->Client->fetch_client($id);
 		// get all client details

@@ -305,12 +305,13 @@ font-size: 35px;
                     <div class=" card ">
                         <div class="row m-0">
                             <div class="col-md-10">
-                              <h6 class="m-0 mt-1">Company Name: <input type="text" value="<?=$client_details->name?>" class="form-control col-md-4"></h6></div>
+                              <h6 class="m-0 mt-1">Company Name: <?=$client_details->name?></h6></div>
                             <div class="col-md-2 text-right"> 
                                 <a href="" class="text-primary font-weight-bold " id="update"><i class="far fa-edit"></i> Edit</a>
                             </div>
                         </div>
                       <div class="line mt-2"></div>
+                      <form id="update_client">
                       <div class="row">
                           <div class="col-sm-6">
                              <div class="">
@@ -320,23 +321,23 @@ font-size: 35px;
                                     <label class="">Name</label>
                                   </div>
                                   <div class="col-md-8 ">
-                                    <span><input type="text" value="<?=$client_details->name?>" class="form-control"></span>
+                                    <span><input type="text" name="name" value="<?=$client_details->name?>" class="form-control"></span>
                                   </div>
                                 </div>
-                                <div class="row">
+<!--                                 <div class="row">
                                   <div class="col-md-4 text-right">
                                     <label class="">Contact Person</label>
                                   </div>
                                   <div class="col-md-8 ">
-                                    <span><input type="text" value="<?=$client_details->name?>" class="form-control"></span>
+                                    <span><input type="text" name="primary_contact" value="<?=$client_details->name?>" class="form-control"></span>
                                   </div>
-                                </div>
+                                </div> -->
                                 <div class="row">
                                   <div class="col-md-4 text-right">
                                     <label class="">Email</label>
                                   </div>
                                   <div class="col-md-8 ">
-                                    <span><input type="text" value="<?=$client_details->email?>" class="form-control" readonly></span>
+                                    <span><input type="text" name="email" value="<?=$client_details->email?>" class="form-control" readonly></span>
                                   </div>
                                 </div>
                                 <div class="row">
@@ -344,7 +345,7 @@ font-size: 35px;
                                     <label class="">City</label>
                                   </div>
                                   <div class="col-md-8 ">
-                                    <span><input type="text" value="<?=$client_details->city?>" class="form-control" ></span>
+                                    <span><input type="text" name="city" value="<?=$client_details->city?>" class="form-control" ></span>
                                   </div>
                                 </div>
                                 <div class="row">
@@ -352,7 +353,7 @@ font-size: 35px;
                                     <label class="">Zip code</label>
                                   </div>
                                   <div class="col-md-8 ">
-                                    <span><input type="text" value="<?=$client_details->zipcode?>" class="form-control" ></span>
+                                    <span><input type="text" name="zipcode" value="<?=$client_details->zipcode?>" class="form-control" ></span>
                                   </div>
                                 </div>
                               </div>
@@ -363,7 +364,7 @@ font-size: 35px;
                                   <label class="">Address</label>
                                 </div>
                                 <div class="col-md-8 ">
-                                  <span><input type="text" value="<?=$client_details->address?>" class="form-control" ></span>
+                                  <span><input type="text" name="address" value="<?=$client_details->address?>" class="form-control" ></span>
                                 </div>
                             </div>
                             <div class="row">
@@ -371,7 +372,7 @@ font-size: 35px;
                                 <label class="">Phone</label>
                               </div>
                               <div class="col-md-8 ">
-                                <span><input type="text" value="<?=$client_details->phone?>" class="form-control" > </span>
+                                <span><input type="text" name="phone" value="<?=$client_details->phone?>" class="form-control" > </span>
                               </div>
                             </div>
                             <div class="row">
@@ -379,13 +380,16 @@ font-size: 35px;
                                 <label class="">Fax</label>
                               </div>
                               <div class="col-md-8 ">
-                                <span><input type="text" value="<?=$client_details->fax?>" class="form-control" > </span>
+                                <span><input type="text" name="fax" value="<?=$client_details->fax?>" class="form-control" > </span>
                               </div>
                             </div>
+                            <input type="hidden" name="client_id" value="<?=$this->uri->segment(3)?>">
+
                             <div class="text-center">
                                 <h4 class="text-gray">Received Amount</h4>
                                 <h3 class="text-danger ">$00</h3> 
                             </div> 
+
                           </div>
                       </div>
                       <div class="text-center">
@@ -400,7 +404,10 @@ font-size: 35px;
                                 <div class="h2 font-weight-bold">50<span class="small">%</span></div>
                               </div>
                             </div>
+                            <br>
+                            <button class="btn btn-primary" type="submit">Update</button>
                       </div>
+                      </form>
 
                       <div class="row m-0 mt-4 bg-gray p-2 ">
                         <div class="col-md-4">Invoice Amount : <span class="bg-primary text-white rounded p-1">$ 00.00</span></div>
@@ -410,6 +417,31 @@ font-size: 35px;
                 </div>
 
 <script type="text/javascript">
+       $(document).on('submit','#update_client',function(e){
+        e.preventDefault();
+        var formData= new FormData($(this)[0]);
+        $.ajax({
+            url:"<?=base_url()?>Client/update_client_ajax",
+             type:"post",
+             data:formData,
+             contentType:false,
+             processData:false,
+             cache:false,
+            success:function(response)
+            {
+              // console.log(response);
+              var response=JSON.parse(response);
+              if(response==1){
+                //$("#profile-just").load(location.href + " #profile-just");
+                swal("Client Updated Successfully", "Success", "success");
+              }
+              else{
+                swal('OOPS', "Something Went Wrong!!", "error");
+              }
+            }
+        });
+       })
+
   $(function() {
    $(".circular").each(function() {
     var value = $(this).attr('data-value');
