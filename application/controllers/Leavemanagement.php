@@ -31,7 +31,15 @@ class Leavemanagement extends MY_Controller {
 		$leaveDeatils=array();
 		$resArray=array();
 		// print_r($MyApprovedLeave);
+		// print_r($LeaveCate);
 		foreach ($LeaveCate as $key => $cat) {
+
+		$calLEa=$this->countMyLeaveOfThisCategory($cat['leave_category_id']);
+		print_r($calLEa);
+		// if($calLEa!=""){
+			
+		// }
+// die;
 			$result=$this->checkForLeaveApplication($cat['leave_category_id']);
 			// print_r($result);
 			$leaveDaysArr=$this->functionToCheckLeaveDays($cat['leave_category_id']);
@@ -40,7 +48,7 @@ class Leavemanagement extends MY_Controller {
     				$date1=date_create($value['start_']);
 					$date2=date_create($value['end_']);
 					$diff=date_diff($date1,$date2);
-					$resArray[]=array("cate_id"=>$cat['leave_category_id'],'cat_name'=>$cat['leave_category'], 'leaveDuration'=>$diff->d,'leaveDays'=>$leaveDaysArr[0]['leave_quota']);
+					$resArray[]=array("cate_id"=>$cat['leave_category_id'],'cat_name'=>$cat['leave_category'], 'leaveDuration'=>$calLEa[0]->leave_d,'leaveDays'=>$leaveDaysArr[0]['leave_quota']);
     			}
     			 // print_r($resArray);
     		}else{
@@ -51,7 +59,7 @@ class Leavemanagement extends MY_Controller {
 		$levDua=0;
 		$rArray=array();
 		
-		// print_r($resArray);
+		print_r($resArray);
 		// echo '********* My Leave Data ********* ';
 		// die;
 		
@@ -87,6 +95,13 @@ class Leavemanagement extends MY_Controller {
 		$this->load->view('layout/header');
 		$this->load->view("pages/leave_management",$data);
 		$this->load->view("layout/footer");
+	}
+	public function countMyLeaveOfThisCategory($cat_id){
+		$usersdetail=$this->session->logged_user;
+		$designation_id=$usersdetail[0]->designations_id;
+	    $formyleave=$usersdetail[0]->user_id;
+		return $this->db->query("SELECT SUM(leave_duration ) as leave_d FROM tbl_leave_application WHERE application_status='2' and leave_category_id='$cat_id' and user_id='$formyleave'")->result();
+		
 	}
 	public function checkForLeaveApplication($leave_category_id){
 		return $this->leave->getMyApprovedLeaveDetailsCategoryWise($leave_category_id);
@@ -302,6 +317,9 @@ class Leavemanagement extends MY_Controller {
 // 		$view_status=$this->input->post('attachment');
 		$comments=$this->input->post('comments');
 		$approve_by=$this->input->post('approve_by');
+		$date1=date_create($leave_start_date);
+        $date2=date_create($leave_end_date);
+        $diff=date_diff($date1,$date2);
 		$data = array();
 		// If file upload form submitted
 			if(!empty($_FILES['files']['name']))
@@ -359,6 +377,7 @@ class Leavemanagement extends MY_Controller {
 	        	'application_date'=>$application_date,
 	        	'attachment'=>$attachfiles,
 	        	'comments'=>$comments,
+	        	'leave_duration'=>$diff->d,
 	        	'approve_by'=>$approve_by);
 	       //	print_r($data);
 	        $results=$this->leave->addLeaveData($data);
