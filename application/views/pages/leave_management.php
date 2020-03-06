@@ -505,9 +505,12 @@ $role_id=$session[0]->role_id;
                                                 <tbody>
                                                     
                                                     <?php foreach($myLeaveDetails as $leave):?>
+                                                        <?php
+                                                         $red=($leave['leaveDuration']==$leave['leaveDays']) ? "text-danger" : "text-success";
+                                                        ?>
                                                     <tr class="border-bottom">
                                                         <td><strong><?=ucwords($leave['cat_name'])?>:</strong></td>
-                                                        <td><?=$leave['leaveDuration']?>/<?=$leave['leaveDays']?></td>
+                                                        <td class="<?=$red?> font-weight-bold"><?=$leave['leaveDuration']?>/<?=$leave['leaveDays']?></td>
                                                     </tr>
                                                     <?php endforeach;?>
                                                             
