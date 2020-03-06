@@ -446,5 +446,29 @@ class Leavemanagement extends MY_Controller {
 		}
 
 	}
+	public function DeletePendingLeaveData()
+	{
+
+		$data=array('leave_application_id'=>$this->input->post('leave_app_id'));
+		$results=$this->leave->DeletePendingLeave($data);
+		die(json_encode($results));
+
+	}
+	public function DeleteMyLeaveData()
+	{
+
+		$data=array('leave_application_id'=>$this->input->post('myleave_id'));
+		$results=$this->leave->DeleteMyLeave($data);
+		die(json_encode($results));
+
+	}
+	public function DeleteAllLeaveData()
+	{
+
+		$data=array('leave_application_id'=>$this->input->post('leave_app_id'));
+		$results=$this->leave->DeleteAllLeave($data);
+		die(json_encode($results));
+
+	}
 }
 ?>

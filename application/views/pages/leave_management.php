@@ -1046,9 +1046,13 @@ $role_id=$session[0]->role_id;
                   response=JSON.parse(response);             
                      if (response==1)
                       {
-                   alert('Record Delete successfully');
+                    swal("Leave", "Delete successfully", "success")
                     location.reload();
                     
+                       }
+                       else
+                       {
+                         swal("Leave", "Try Again", "error")
                        }
                   }
                  })                           
@@ -1080,7 +1084,8 @@ $role_id=$session[0]->role_id;
                   response=JSON.parse(response);             
                      if (response==1)
                       {
-                   alert('Record Delete successfully');
+                          swal("Leave", "Delete successfully", "success")
+                   // alert('Record ');
                     // $(".refreshmyleave").load(location.href + " .refreshmyleave");
                      location.reload();
                     
@@ -1115,9 +1120,13 @@ $role_id=$session[0]->role_id;
                   response=JSON.parse(response);             
                      if (response==1)
                       {
-                   alert('Record Delete successfully');
+                   swal("Leave", "Delete successfully", "success")
                     location.reload();
                     
+                       }
+                       else
+                       {
+                         swal("Leave", "Try Again", "error")
                        }
                   }
                  })                           
