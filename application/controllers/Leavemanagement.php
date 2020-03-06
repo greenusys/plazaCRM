@@ -49,6 +49,7 @@ class Leavemanagement extends MY_Controller {
 		// die;
 		// foreach ($LeaveCate as $key => $cat) {
 
+<<<<<<< HEAD
 		// $calLEa=$this->countMyLeaveOfThisCategory($cat['leave_category_id']);
 		// 	$leaveDaysArr=$this->functionToCheckLeaveDays($cat['leave_category_id']);
   //   		if(count($result)>0){
@@ -62,13 +63,22 @@ class Leavemanagement extends MY_Controller {
   //   		}else{
   //   			$resArray[]=array("cate_id"=>$cat['leave_category_id'],'cat_name'=>$cat['leave_category'], 'leaveDuration'=>0,'leaveDays'=>$leaveDaysArr[0]['leave_quota']);
   //   		}
+=======
+		$calLEa=$this->countMyLeaveOfThisCategory($cat['leave_category_id']);
+		// print_r($calLEa);
+		// if($calLEa!=""){
+			
+>>>>>>> 5c1cddf417fcb9d4ecc62c22f3f136735bf6b326
 		// }
 		// $tempCatId=0;
 		// $levDua=0;
 		// $rArray=array();
 		
 		// print_r($resArray);
+<<<<<<< HEAD
 		// die;
+=======
+>>>>>>> 5c1cddf417fcb9d4ecc62c22f3f136735bf6b326
 		// echo '********* My Leave Data ********* ';
 		// die;
 		

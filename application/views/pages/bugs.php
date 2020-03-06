@@ -379,7 +379,7 @@
           </div>
 						    <div class="row mt-5">
 				               <div class="offset-4 col-sm-4">
-				                 <button type="submit" class="btn bg-color m-auto text-center w-50">Save</button>
+				                 <button type="submit" class="btn btn-info  m-auto text-center w-50">Save</button>
 				               </div>
 				            </div>
 						<form>
