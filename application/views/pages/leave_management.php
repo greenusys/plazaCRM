@@ -503,9 +503,12 @@ $role_id=$session[0]->role_id;
                                         <div class="">
                                             <table class="table ">
                                                 <tbody>
-                                                    
+                                                    <?php $leaveSum=0;?>
+                                                    <?php $leaveTaken=0;?>
                                                     <?php foreach($myLeaveDetails as $leave):?>
                                                         <?php
+                                                        $leaveSum+=$leave['leaveDays'];
+                                                        $leaveTaken+=$leave['leaveDuration'];
                                                          $red=($leave['leaveDuration']==$leave['leaveDays']) ? "text-danger" : "text-success";
                                                         ?>
                                                     <tr class="border-bottom">
@@ -513,10 +516,14 @@ $role_id=$session[0]->role_id;
                                                         <td class="<?=$red?> font-weight-bold"><?=$leave['leaveDuration']?>/<?=$leave['leaveDays']?></td>
                                                     </tr>
                                                     <?php endforeach;?>
-                                                            
+                                                    <tr class="border-bottom">
+                                                        <td><strong>Leaves :</strong></td>
+                                                        <td class="<?=$red?> font-weight-bold"><?=$leaveTaken?>/<?=$leaveSum?></td>
+                                                    </tr>     
                                                    
                                                 </tbody>
                                             </table>
+
                                         </div>
                                     </div>
                                 </div>
