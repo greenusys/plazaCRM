@@ -337,32 +337,8 @@ $role_id=$session[0]->role_id;
                         <div class="tab-pane fade show px-4" id="apply_leave" role="tabpanel" aria-labelledby="apply_leave">
                             <div class="row">
                                 <div class="offset-1 col-sm-7 cl-md-7 col-lg-7">
-                                    <form action="<?=base_url('Leavemanagement/addleaveapplication')?>" method="post" enctype="multipart/form-data">
+                                    <form id="apply_for_leave" action="<?=base_url('Leavemanagement/addleaveapplication')?>" method="post" enctype="multipart/form-data">
 
-                                       <!--  <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <label for="exampleInputEmail1">Select Client <span class="text-danger">*</span> </label>
-                                                </div>
-                                                <div class="col-sm-8">
-                                                    <div class="input-group">
-                                                        <select name="user_id" class="form-control" id="e1" style="width: 100%">
-                                                            
-                                                            <option value="0">Select Client</option>
-                                                            <?php
-                                                            foreach($fetch_users_data as $usersdata)
-                                                            {
-                                                            ?>
-                                                        <option  value="<?=$usersdata->user_id?>"><?=$usersdata->full_name?></option>';
-                                                        <?php
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                               
-                                            </div>
-                                        </div> -->
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-sm-3">
@@ -370,13 +346,13 @@ $role_id=$session[0]->role_id;
                                                 </div>
                                                 <div class="col-sm-8">
                                                     <div class="input-group refreshCatdiv">
-                                                        <select name="leave_category_id" class="form-control" style="width: 100%" id="e2">
+                                                        <select name="leave_category_id" class="form-control leave_category_id_" style="width: 100%" id="e2">
                                                             <option value="0">Leave Category</option>
                                                            <?php
                                                            foreach($fetch_leave_category_data as $leaveCat)
                                                            {
                                                            ?>
-                                                            <option value="<?=$leaveCat->leave_category_id?>"><?=$leaveCat->leave_category?></option>';
+                                                            <option value="<?=$leaveCat->leave_category_id?>"><?=ucwords($leaveCat->leave_category) ?></option>';
                                                         
                                                             <?php
                                                             }
@@ -393,40 +369,62 @@ $role_id=$session[0]->role_id;
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-sm-3">
-                                                    <label for="exampleInputEmail1"> Duration <span class="text-danger">*</span> </label>
+                                                    <label for="exampleInputEmail1">For:   <span class="text-danger">*</span> </label>
                                                 </div>
                                                 <div class="col-sm-9 d-flex">
                                                     <!-- <ul></ul> -->
                                                     <div class="radio">
-                                                        <input id="radio1" value="1"name="duration" type="radio" checked>
+                                                        <input id="radio1" value="1" name="duration" type="radio" checked>
                                                         <label for="radio1" class="radio-label">Single day</label>
                                                     </div>
                                                     <div class="radio">
                                                         <input id="radio2" value="2"name="duration" type="radio">
                                                         <label for="radio2" class="radio-label">Multiple days</label>
                                                     </div>
-                                                    <div class="radio">
+                                                    <!-- <div class="radio">
                                                         <input id="radio3" value="3"name="duration" type="radio">
                                                         <label for="radio3" class="radio-label">Hours</label>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <label for="exampleInputEmail1">Leave Duration:   <span class="text-danger">*</span> </label>
+                                                </div>
+                                                <div class="col-sm-9 d-flex">
+                                                    <input type="number" class="form-control " name="leave_duration" id="leave_duration" value="0" readonly >
+                                                    <!-- <ul></ul> -->
+                                                    <!-- <div class="radio">
+                                                        <input id="radio1" value="1" name="duration" type="radio" checked>
+                                                        <label for="radio1" class="radio-label">Single day</label>
+                                                    </div>
+                                                    <div class="radio">
+                                                        <input id="radio2" value="2"name="duration" type="radio">
+                                                        <label for="radio2" class="radio-label">Multiple days</label>
+                                                    </div> -->
+                                                    <!-- <div class="radio">
+                                                        <input id="radio3" value="3"name="duration" type="radio">
+                                                        <label for="radio3" class="radio-label">Hours</label>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-sm-3">
                                                     <label for="exampleInputEmail1">Start Date <span class="text-danger">*</span> </label>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <input type="date" class="form-control " name="leave_start_date"id="">
+                                                    <input type="date" class="form-control " name="leave_start_date" id="leave_start_date">
                                                 </div>
                                                 <div class="col-sm-1">
                                                     <button type="button" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group " id="hour_sh">
+                                        <!-- <div class="form-group " id="hour_sh">
                                             <div class="row">
                                                 <div class="col-sm-3">
                                                     <label for="exampleInputEmail1">Hours <span class="text-danger">*</span> </label>
@@ -446,14 +444,14 @@ $role_id=$session[0]->role_id;
                                                     </select>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="form-group " id="end_date">
                                             <div class="row">
                                                 <div class="col-sm-3">
                                                     <label for="exampleInputEmail1">End Date <span class="text-danger">*</span> </label>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                     <input type="date" class="form-control " name="leave_end_date" id="">
+                                                     <input type="date" class="form-control " name="leave_end_date" id="leave_end_date">
                                                 </div>
                                                 <div class="col-sm-1">
                                                     <button type="button" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
@@ -481,7 +479,7 @@ $role_id=$session[0]->role_id;
                                                 <div class="col-md-9">
                                                      <div class="form-group ">
         <label class="sr-only" for="inputFile">File Upload</label>
-        <input type="file" name="files[]" class="form-control" multiple>
+        <input type="file" name="files[]"  multiple>
       </div>
                                                 </div>
                                             </div>
@@ -501,37 +499,18 @@ $role_id=$session[0]->role_id;
                                             </div>
 
                                         </div>
-                                        <?php
-                                            // print_r($MyApprovedLeave);
-                                        ?>
+                                       
                                         <div class="">
                                             <table class="table ">
                                                 <tbody>
-                                                    <?php
-                                                    // print_r($myLeaveDetails);
-                                                    $sum=0;
-                                                    $cat_id=0;
-                                                    foreach ($myLeaveDetails as $cat) {
-                                                        $temp=0;
-                                                            if($cat_id==$cat['cate_id']){
-                                                                $sum+=$cat['leaveDuration'];
-                                                               $temp=1;
-                                                            }
-                                                            if($temp==0){
-                                                                ?>
-                                                                <tr class="border-bottom">
-                                                                    <td><strong><?=ucwords($cat['cat_name'])?>:</strong></td>
-                                                                    <td><?=$sum?>/<?=$cat['leaveDays']?></td>
-                                                                </tr>
-                                                                <?php
-                                                            }
-                                                            $sum=$cat['leaveDuration'];
-                                                            // echo ' Cate Id : '.$cat_id.'  ';
-                                                            $cat_id=$cat['cate_id'];
-                                                            // echo ' Cate Id : '.$cat_id.' || ';
-                                                        }
-
-                                                    ?>
+                                                    
+                                                    <?php foreach($myLeaveDetails as $leave):?>
+                                                    <tr class="border-bottom">
+                                                        <td><strong><?=ucwords($leave['cat_name'])?>:</strong></td>
+                                                        <td><?=$leave['leaveDuration']?>/<?=$leave['leaveDays']?></td>
+                                                    </tr>
+                                                    <?php endforeach;?>
+                                                            
                                                    
                                                 </tbody>
                                             </table>
@@ -1142,6 +1121,104 @@ $role_id=$session[0]->role_id;
         })  
       </script>
 <script type="text/javascript">
+    //Date Difference Checker
+    var startDate;
+    var endDate;
+    var maxLeaveICanTake=0;
+    $(document).on('change','#leave_start_date',function(){
+        startDate=$(this).val();
+        // console.log(" Leave Start Date : "+startDate);
+        if(endDate!=null){
+            const date1 = new Date(startDate);
+            const date2 = new Date(endDate);
+            const diffTime = Math.abs(date2 - date1);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+            // console.log(diffDays);
+            $tLeave=diffDays+1;
+            if(maxLeaveICanTake!=0){
+                if($tLeave<=maxLeaveICanTake){
+                    $('#leave_duration').val($tLeave);
+                }else{
+                    swal("Oops!!", "Leaves Out of Stock", "warning");
+                    $('#leave_start_date')[0].reset();
+                }
+            }else{
+                swal("Oops!!", "Leaves Out of Stock", "warning");
+                $('#leave_start_date')[0].reset();
+            }
+        }else{
+            if(maxLeaveICanTake!=0){
+                $tLeave=1;
+                if($tLeave<=maxLeaveICanTake){
+                    $('#leave_duration').val($tLeave);
+                }else{
+                    swal("Oops!!", "Leaves Out of Stock", "warning");
+                    $('#leave_start_date')[0].val("");
+                    $('#leave_duration').val(0);
+                }
+            }else{
+                swal("Oops!!", "Leaves Out of Stock", "warning");
+                $('#leave_start_date')[0].val("");
+                $('#leave_duration').val(0);
+            }
+            
+            // $('#leave_duration').val($tLeave);
+        }
+        
+        // console.log(' Start---> Leaves I Can take: '+ maxLeaveICanTake);
+
+    });
+    $(document).on('change','#leave_end_date',function(){
+        endDate=$(this).val();
+        console.log(' End---> Leaves I Can take: '+ maxLeaveICanTake);
+        // console.log(" Leave End Date : "+endDate);
+        const date1 = new Date(startDate);
+        const date2 = new Date(endDate);
+        const diffTime = Math.abs(date2 - date1);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+        // console.log(diffDays);
+        $tLeave=diffDays+1;
+        if(maxLeaveICanTake!=0){
+            // swal("Oops!!", "Leaves Out of Stockwww", "warning");
+            if($tLeave <= maxLeaveICanTake){
+                $('#leave_duration').val($tLeave);
+            }else{
+                swal("Oops!!", "Leaves Out of Stock", "warning");
+                $('#leave_end_date').val("");
+                $('#leave_duration').val(0);
+            }
+        }else{
+            swal("Oops!!", "Leaves Out of Stock", "warning");
+            $('#leave_end_date').val("");
+            $('#leave_duration').val(0);
+        }
+        // $('#leave_duration').val($tLeave);
+    });
+    $(document).on('change','.leave_category_id_',function(){
+        // console.log(' Leaves I Can take: '+); // var cat_id=;
+        //Get Leave Quota
+        $.ajax({
+            url:"<?=base_url('Leavemanagement/getLeaveQuota')?>",
+            type:"post",
+            data:{cat_id:$(this).val()},
+            success:function(response){
+                console.log(response);
+                response=JSON.parse(response);
+                if(response.data.length>0){
+                    
+                    maxLeaveICanTake =response.remaining;
+                    console.log(maxLeaveICanTake);
+                }else{
+                    maxLeaveICanTake=0;
+                }
+            }
+        });
+
+       
+    
+    });
+
+    
     $(document).ready(function() {
         $('#example2').DataTable({
             dom: 'Bfrtip',

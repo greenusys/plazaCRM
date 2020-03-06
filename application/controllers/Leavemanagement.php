@@ -26,40 +26,49 @@ class Leavemanagement extends MY_Controller {
 		$data['MyApprovedLeave']=$this->leave->getMyApprovedLeaveDetails($formyleave);
 		$MyApprovedLeave=$data['MyApprovedLeave'];
 		$data['LeaveCategories']=$this->leave->getLeaveCategory($designation_id);
-		$LeaveCate=$data['LeaveCategories'];
+		// $LeaveCate=$data['LeaveCategories'];
 		// echo '********* Leave Category ********* ';
 		$leaveDeatils=array();
 		$resArray=array();
 		// print_r($MyApprovedLeave);
 		// print_r($LeaveCate);
+		$LeaveCate=$this->chekcForMyLeaveCategory($designation_id);
+		// print_r($LeaveCate);
 		foreach ($LeaveCate as $key => $cat) {
-
-		$calLEa=$this->countMyLeaveOfThisCategory($cat['leave_category_id']);
-		print_r($calLEa);
-		// if($calLEa!=""){
-			
-		// }
-// die;
-			$result=$this->checkForLeaveApplication($cat['leave_category_id']);
-			// print_r($result);
-			$leaveDaysArr=$this->functionToCheckLeaveDays($cat['leave_category_id']);
-    		if(count($result)>0){
-    			foreach ($result as $key => $value) {
-    				$date1=date_create($value['start_']);
-					$date2=date_create($value['end_']);
-					$diff=date_diff($date1,$date2);
-					$resArray[]=array("cate_id"=>$cat['leave_category_id'],'cat_name'=>$cat['leave_category'], 'leaveDuration'=>$calLEa[0]->leave_d,'leaveDays'=>$leaveDaysArr[0]['leave_quota']);
-    			}
-    			 // print_r($resArray);
-    		}else{
-    			$resArray[]=array("cate_id"=>$cat['leave_category_id'],'cat_name'=>$cat['leave_category'], 'leaveDuration'=>0,'leaveDays'=>$leaveDaysArr[0]['leave_quota']);
-    		}
+			# code...
+			$calLEa=$this->countMyLeaveOfThisCategory($cat['leave_category_id']);
+			if($calLEa[0]->leave_d!=""){
+				$leaveDuration=$calLEa[0]->leave_d;
+			}else{
+				$leaveDuration=0;
+			}
+			$resArray[]=array("cate_id"=>$cat['leave_category_id'],'cat_name'=>$cat['leave_category'], 'leaveDuration'=>$leaveDuration,'leaveDays'=>$cat['leave_quota']);
 		}
-		$tempCatId=0;
-		$levDua=0;
-		$rArray=array();
+		// echo '********************';
+		// print_r($resArray);
+		// die;
+		// foreach ($LeaveCate as $key => $cat) {
+
+		// $calLEa=$this->countMyLeaveOfThisCategory($cat['leave_category_id']);
+		// 	$leaveDaysArr=$this->functionToCheckLeaveDays($cat['leave_category_id']);
+  //   		if(count($result)>0){
+  //   			foreach ($result as $key => $value) {
+  //   				$date1=date_create($value['start_']);
+		// 			$date2=date_create($value['end_']);
+		// 			$diff=date_diff($date1,$date2);
+		// 			$resArray[]=array("cate_id"=>$cat['leave_category_id'],'cat_name'=>$cat['leave_category'], 'leaveDuration'=>$calLEa[0]->leave_d,'leaveDays'=>$leaveDaysArr[0]['leave_quota']);
+  //   			}
+  //   			 // print_r($resArray);
+  //   		}else{
+  //   			$resArray[]=array("cate_id"=>$cat['leave_category_id'],'cat_name'=>$cat['leave_category'], 'leaveDuration'=>0,'leaveDays'=>$leaveDaysArr[0]['leave_quota']);
+  //   		}
+		// }
+		// $tempCatId=0;
+		// $levDua=0;
+		// $rArray=array();
 		
-		print_r($resArray);
+		// print_r($resArray);
+		// die;
 		// echo '********* My Leave Data ********* ';
 		// die;
 		
@@ -95,6 +104,9 @@ class Leavemanagement extends MY_Controller {
 		$this->load->view('layout/header');
 		$this->load->view("pages/leave_management",$data);
 		$this->load->view("layout/footer");
+	}
+	public function chekcForMyLeaveCategory($designation_id){
+		return $this->db->where('leave_cat_desig_id',$designation_id)->get('tbl_leave_category')->result_array();
 	}
 	public function countMyLeaveOfThisCategory($cat_id){
 		$usersdetail=$this->session->logged_user;
@@ -297,6 +309,10 @@ class Leavemanagement extends MY_Controller {
 	}
 	public function addleaveapplication()
 	{
+
+
+		// print_r($_POST);
+		// die(json_encode($_POST));
 		$usersdetail=$this->session->logged_user;
 		$designation_id=$usersdetail[0]->designations_id;
 	    $user_id=$usersdetail[0]->user_id;
@@ -304,6 +320,7 @@ class Leavemanagement extends MY_Controller {
 		// $user_id=$user_id;
 // 		$album_title=$this->input->post('alb_title');
 		$leave_category_id=$this->input->post('leave_category_id');
+		$leave_duration=$this->input->post('leave_duration');
 		$reason=$this->input->post('editor1');
  		$leave_type=$this->input->post('duration');
 //  		print_r($leave_type);
@@ -377,7 +394,7 @@ class Leavemanagement extends MY_Controller {
 	        	'application_date'=>$application_date,
 	        	'attachment'=>$attachfiles,
 	        	'comments'=>$comments,
-	        	'leave_duration'=>$diff->d,
+	        	'leave_duration'=>$leave_duration,
 	        	'approve_by'=>$approve_by);
 	       //	print_r($data);
 	        $results=$this->leave->addLeaveData($data);
@@ -488,6 +505,17 @@ class Leavemanagement extends MY_Controller {
 		$results=$this->leave->DeleteAllLeave($data);
 		die(json_encode($results));
 
+	}
+	public function getLeaveQuota(){
+		$data=$this->db->where('leave_category_id',$this->input->post('cat_id'))->get('tbl_leave_category')->result();
+			
+		$leaveTaken=$this->countMyLeaveOfThisCategory($this->input->post('cat_id'));
+		$remain=($data[0]->leave_quota)-($leaveTaken[0]->leave_d);
+		if(count($data)>0){
+			die(json_encode(array("code"=>1,"data"=>$data,"leaveTaken"=>$leaveTaken,"remaining"=>$remain)));
+		}else{
+			die(json_encode(array("code"=>0,"data"=>"No Data Found.","leaveTaken"=>$leaveTaken,"remaining"=>$remain)));
+		}
 	}
 }
 ?>
