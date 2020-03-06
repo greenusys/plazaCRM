@@ -138,7 +138,7 @@
 				                <h6><?=$project_details->project_name?></h6>
 				            </div>
 				            <div class="col-sm-2">
-				            	 <a href="Javascript:void(0)" class="text-decoration-none text-primary" id="edits">Edit Projects</a>
+				            	 <a href="<?=base_url('Projects/editProject/').$project_details->project_id?>" class="text-decoration-none text-primary" id="edits">Edit Projects</a>
 				            </div>
 				        </div>
 					    <div class="line"></div>
