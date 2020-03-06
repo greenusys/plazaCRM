@@ -24,7 +24,7 @@
 			// }else{
 			// 	return $check;
 			// } 
-			$qy="SELECT project_id,tbl_project.uploads as project_uploads, project_name,progress,end_date,project_status,permission,tbl_client.name as client_name FROM `tbl_project` join tbl_client on tbl_client.client_id = tbl_project.client_id WHERE tbl_project.`end_date` < '$today' and tbl_project.project_status='in_progress'";
+			$qy="SELECT tbl_project.client_id, tbl_project.project_id,tbl_project.uploads as project_uploads, project_name,progress,end_date,project_status,permission,tbl_client.name as client_name FROM `tbl_project` join tbl_client on tbl_client.client_id = tbl_project.client_id WHERE tbl_project.`end_date` < '$today' and tbl_project.project_status='in_progress'";
 			// $qy="Select project_id,tbl_project.uploads as project_uploads, project_name,progsress,end_date,project_status,permission,tbl_client.name as client_name from tbl_project join tbl_client on tbl_client.client_id=tbl_project.project_id where tbl_project.project_status='in_progress' and tbl_project.end_date < '$today'";
 			return $this->db->query($qy)->result_array();
 		}

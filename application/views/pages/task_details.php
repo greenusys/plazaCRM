@@ -284,7 +284,7 @@ font-size: 35px;
                             <div class="col-md-10">
                               <h6 class="m-0 mt-1"><?=$task['task_name']?></h6></div>
                             <div class="col-md-2 text-right"> 
-                                <a href="" class="text-primary font-weight-bold " id="update"><i class="far fa-edit"></i> Edit</a>
+                                <a href="<?=base_url('Task/editTaskpage/').$task['task_id']?>" class="text-primary font-weight-bold " id="update"><i class="far fa-edit"></i> Edit</a>
                             </div>
                         </div>
                       <div class="line mt-2"></div>

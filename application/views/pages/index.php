@@ -194,7 +194,7 @@
                               ?>
                                 <tr>
                                   <td><a href="<?=base_url('Projects/project_details/').$proj_detail['project_id']?>"><?=$proj_detail['project_name']?></a></td>
-                                  <td><?=$proj_detail['client_name']?></td>
+                                  <td><a href="<?=base_url('Client/client_details/').$proj_detail['client_id']?>" ><?=$proj_detail['client_name']?></a></td>
                                   <td><?=$proj_detail['end_date']?></td>
                                   <td>
                                      <?php

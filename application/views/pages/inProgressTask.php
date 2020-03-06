@@ -234,8 +234,9 @@
                                     $checker=array('user_id'=>$user_id);
                                     $this->db->where($checker);
                                     $check = $this->db->get("tbl_account_details")->result_array();
+                                    $url=base_url('User/userDetails/').$check[0]['user_id'];
                                     // print_r($check);
-                                    echo '<img src="'.base_url().$check[0]['avatar'].'" style="height:28px;width:28px" class="rounded-circle ml-2 img-circle img-xs" title="'.$check[0]['fullname'].'" alt="'.$check[0]['fullname'].'">';
+                                    echo '<a href="'.$url.'"><img src="'.base_url().$check[0]['avatar'].'" style="height:28px;width:28px" class="rounded-circle ml-2 img-circle img-xs" title="'.$check[0]['fullname'].'" alt="'.$check[0]['fullname'].'"></a>';
                                   }
                                 }
                                 ?> 
