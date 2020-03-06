@@ -35,7 +35,7 @@ class Leavemanagement extends MY_Controller {
 		foreach ($LeaveCate as $key => $cat) {
 
 		$calLEa=$this->countMyLeaveOfThisCategory($cat['leave_category_id']);
-		print_r($calLEa);
+		// print_r($calLEa);
 		// if($calLEa!=""){
 			
 		// }
@@ -59,7 +59,7 @@ class Leavemanagement extends MY_Controller {
 		$levDua=0;
 		$rArray=array();
 		
-		print_r($resArray);
+		// print_r($resArray);
 		// echo '********* My Leave Data ********* ';
 		// die;
 		
