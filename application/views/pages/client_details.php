@@ -982,7 +982,9 @@ font-size: 35px;
                                          <th scope="col" class="fs1">Project Name</th>
                                          <th scope="col" class="fs1">End Date</th>
                                          <th scope="col" class="fs1">Status</th>
-                                    
+                                         <th scope="col" class="fs1">Fixed Rate</th>
+                                         <th scope="col" class="fs1">Token Amount</th>
+                                         <th scope="col" class="fs1">Remaining Amount</th>
                                       </tr>
                                   </thead>
                                   <tbody>
@@ -999,6 +1001,9 @@ font-size: 35px;
                                             <td><?=ucwords($cli_pro['project_name'])?></td>
                                             <td><?=$cli_pro['end_date']?></td>
                                             <td><?=ucwords($cli_pro['project_status'])?></td>
+                                            <td><?=$cli_pro['fixed_rate']?></td>
+                                            <td><?=$cli_pro['token_amount']?></td>
+                                            <td><?=$cli_pro['remaining_amt']?></td>
                                           </tr>
                                           <?php
                                           } 

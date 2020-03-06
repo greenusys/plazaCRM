@@ -86,7 +86,7 @@ $('#hosting_tab').addClass('active');
   
   <script>
     $( function() {
-    $( ".datepicker" ).datepicker();
+    $( ".datepicker" ).datepicker({ dateFormat: 'yy-dd-mm' });
     } );
   </script>
 <script>
@@ -630,7 +630,18 @@ $(document).on('click','.edt_project',function(){
                 <label >Fixed Price  </label>
               </div>
               <div class="col-sm-9">
-                <input type="text" name="fixed_rate" class="form-control" placeholder="50" >
+                <input type="number" name="fixed_rate" class="form-control" id="fp" placeholder="50" >
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+              <div class="row">
+              <div class="col-sm-3">
+                <label >Token Amount  </label>
+              </div>
+              <div class="col-sm-9">
+                <input type="number" name="token_amount" class="form-control" id="token" value="0" >
               </div>
             </div>
           </div>
@@ -1225,6 +1236,16 @@ $(document).on('click','.edt_project',function(){
      <style>
  
      </style>
+     <script type="text/javascript">
+  $(document).on('keyup','#token',function(){
+      var token= parseInt($(this).val());
+      var fp = parseInt($('#fp').val());
+      if (token >= fp) {
+        swal('Error','Token Amount Can not be greater than fixed price','warning');
+        $('#token').val("0");
+      }
+  })
+</script>
       <script>
         $(document).ready(function() {
         $("#e1").select2(); 

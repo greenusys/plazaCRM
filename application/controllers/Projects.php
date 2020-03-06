@@ -231,6 +231,10 @@ class Projects extends MY_Controller {
 		unset($_POST['vehicle2']);
 		unset($_POST['vehicle1']);
 		unset($_POST['editor1']);
+        $token = $_POST['token_amount'];
+        $fp = $_POST['fixed_rate'];
+        $remaining_amt = $fp-$token;
+        $_POST['remaining_amt'] = $remaining_amt;
 		$permission=$_POST['permission'];
 		$session=$this->session->userdata('logged_user');
 		$user_id=$session[0]->user_id;
