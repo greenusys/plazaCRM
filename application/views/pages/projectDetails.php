@@ -263,7 +263,7 @@
 							                </div>
 							              </div>
 							            </div>
-							            							            <div class="form-group">
+					            		<div class="form-group">
 							              <div class="row">
 							                <div class="offset-1 col-sm-3 text-right">
 							                  <label  class="label-style">Token Amount :</label>
@@ -273,7 +273,7 @@
 							                </div>
 							              </div>
 							            </div>
-							            							            <div class="form-group">
+				            			<div class="form-group">
 							              <div class="row">
 							                <div class="offset-1 col-sm-3 text-right">
 							                  <label  class="label-style">Remaining Amount :</label>

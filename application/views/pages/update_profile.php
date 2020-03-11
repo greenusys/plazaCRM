@@ -69,7 +69,7 @@
 											<label for="imgup">Profile Photo</label>
 										</div>
 										<div class="col-sm-4">
-											<img id="blah" src="<?=base_url()?>uploads/profile_pic/<?=$user_info[0]->avatar?>" alt="your image" onerror="this.src='<?=base_url()?>assets/img/avatar/avatar-2.png'" class="w-100" />
+											<img id="blah" src="<?=base_url()?><?=$user_info[0]->avatar?>" alt="your image" onerror="this.src='<?=base_url()?>assets/img/avatar/avatar-2.png'" class="w-100" />
 											<input type='file' name="file" id="imgup" onchange="readURL(this);" />
 										</div>
 									</div>
@@ -208,7 +208,7 @@ $(document).on('submit','#updatePassword',function(e){
 		});
 </script>
 
-						<h6 class="mt-4">Change Username</h6>
+<!-- 						<h6 class="mt-4">Change Username</h6>
 		                <div class="line mt-2"></div>
 		                <form>		
 						<div class="row mt-5">
@@ -242,7 +242,7 @@ $(document).on('submit','#updatePassword',function(e){
 								
 							</div>
 						</div>
-					</form>
+					</form> -->
 				</div>
 			</div>
 		</div>

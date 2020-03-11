@@ -74,6 +74,17 @@ class User_model extends MY_Model
         } 
     }
 
+    public function fetch_all_details($user_id){
+        $checker=array('tbl_users.user_id'=>$user_id);
+        $this->db->select('*');
+        $this->db->from('tbl_users');
+        $this->db->join('tbl_account_details', 'tbl_users.user_id = tbl_account_details.user_id');
+        $this->db->where($checker);
+        $query_result = $this->db->get();
+        $result = $query_result->result();
+        return $result;
+    }
+
     public function fetch_all_users()
     {
         $this->db->select('*');
@@ -193,6 +204,31 @@ class User_model extends MY_Model
          return $res;   
     }
 
+    public function update_user_with_image($user_id,$data,$email){
+        $cond1=array("user_id"=>$user_id);
+        $this->db->where($cond1);
+        $ct =$this->db->get('tbl_account_details')->row();
+        if(count($ct)>0){
+            $this->db->where($cond1);
+            $res = $this->db->update('tbl_account_details',$data);
+            if($res){
+                $this->db->where($cond1);
+                $res1 = $this->db->update('tbl_users',array('email'=>$email));
+                if ($res1) {
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }else{
+               return false;
+            }
+        }else{
+            return false;
+        }
+
+    }
+
     public function update_user_data($data){
         //print_r($data);
         $condition =array("user_id"=>$data['user_id']);
@@ -213,7 +249,7 @@ class User_model extends MY_Model
      public function update_user_email($data){
         $condition =array("user_id"=>$data['user_id'],"password"=>$data['password']);
         $this->db->where($condition);
-        $ct =$this->db->get('tbl_users')->row();
+        $ct =$this->db->get('tbl_users')->result();
         if(count($ct)>0){
             $dta = array('email'=>$data['email']);
                 $this->db->where($condition);
@@ -231,7 +267,7 @@ class User_model extends MY_Model
     public function update_user_password($data){
         $condition =array("user_id"=>$data['user_id'],"password"=>$data['oldpassword']);
         $this->db->where($condition);
-        $ct =$this->db->get('tbl_users')->row();
+        $ct =$this->db->get('tbl_users')->result();
         if(count($ct)>0){
             $dta = array('password'=>$data['newpassword']);
                 $this->db->where($condition);

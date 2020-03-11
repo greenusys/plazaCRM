@@ -10,18 +10,18 @@ $role_id=$session[0]->role_id;
         <div class="card">
           <ul class="nav nav-tabs nav-justified md-tabs indigo col-md-5" id="myTabJust" role="tablist">
             <li class="nav-item">
-              <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
+              <a class="nav-link" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
                 aria-selected="true">All Users</a>
             </li>
             <?php if($role_id!=3):?>
             <li class="nav-item">
-              <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
-                aria-selected="false">New Users</a>
+              <a class="nav-link active" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
+                aria-selected="false">Edit User</a>
             </li>
           <?php endif;?>
           </ul>
           <div class="tab-content card pt-5" id="myTabContentJust">
-            <div class="tab-pane fade show active px-4" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
+            <div class="tab-pane fade px-4 " id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
               <table id="job_post" class="display nowrap" style="width:100%">
                 <thead>
                   <tr>
@@ -115,17 +115,17 @@ $role_id=$session[0]->role_id;
                 </tfoot>
               </table>
             </div>
-            <div class="tab-pane fade px-4" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
+            <div class="tab-pane fade show active px-4" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
               <div class="row">
                 <div class="offset-1 col-sm-8 cl-md-8 col-lg-8">
-                  <form id="job_posted" role="form" enctype="multipart/form-data" data-parsley-validate="">
+                  <form action="<?=base_url()?>User/update_user" role="form" method="POST" enctype="multipart/form-data" data-parsley-validate="">
                     <div class="form-group">
                         <div class="row">
                         <div class="col-sm-3">
                           <label for="full_name">Full Name<sub class="text-danger">*</sub></label>
                         </div>
                         <div class="col-sm-8">
-                         <input type="text" name="full_name" value="" class="form-control" required="1" placeholder="e.g Enter your  Full Name">
+                         <input type="text" name="full_name" value="<?=$edit_data[0]->fullname?>" class="form-control" required="1" placeholder="e.g Enter your  Full Name">
                         </div>
                       </div>
                     </div>
@@ -135,37 +135,7 @@ $role_id=$session[0]->role_id;
                           <label for="Employment_id">Employment ID<sub class="text-danger">*</sub></label>
                         </div>
                         <div class="col-sm-8">
-                         <input type="text" name="Employment_id" value="" class="form-control" required="1" placeholder="e.g 15351">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
-                        <div class="col-sm-3">
-                          <label for="exampleInputusername">Username<sub class="text-danger">*</sub></label>
-                        </div>
-                        <div class="col-sm-8">
-                         <input type="text" name="username" value="" class="form-control" required="1" placeholder="e.g Enter your  Username">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
-                        <div class="col-sm-3">
-                          <label for="Password">Password<sub class="text-danger">*</sub></label>
-                        </div>
-                        <div class="col-sm-8">
-                         <input type="password" id="pass" name="password" value="" class="form-control" required="1" placeholder="Password">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
-                        <div class="col-sm-3">
-                          <label for="confirmPassword">Confirm Password<sub class="text-danger">*</sub></label>
-                        </div>
-                        <div class="col-sm-8">
-                         <input type="password" id="cpass" value="" class="form-control" required="1" placeholder="Confirm Password">
+                         <input type="text" name="Employment_id" value="<?=$edit_data[0]->employment_id?>" class="form-control" required="1" placeholder="e.g 15351">
                         </div>
                       </div>
                     </div>
@@ -175,7 +145,7 @@ $role_id=$session[0]->role_id;
                           <label for="email">Email<sub class="text-danger">*</sub></label>
                         </div>
                         <div class="col-sm-8">
-                         <input type="email" name="email" value="" class="form-control" required="1" placeholder="Email">
+                         <input type="email" name="email" value="<?=$edit_data[0]->email?>" class="form-control"  placeholder="Email">
                         </div>
                       </div>
                     </div>
@@ -185,7 +155,7 @@ $role_id=$session[0]->role_id;
                           <label for="Phone">Phone<sub class="text-danger">*</sub></label>
                         </div>
                         <div class="col-sm-8">
-                         <input type="text" name="phone" value="" class="form-control" required="1" placeholder="e.g user_placeholder_phone">
+                         <input type="text" name="phone" value="<?=$edit_data[0]->phone?>" class="form-control" placeholder="e.g user_placeholder_phone">
                         </div>
                       </div>
                     </div>
@@ -195,7 +165,7 @@ $role_id=$session[0]->role_id;
                           <label for="Mobile">Mobile<sub class="text-danger">*</sub></label>
                         </div>
                         <div class="col-sm-8">
-                         <input type="text" name="mobile" value="" class="form-control" required="1" placeholder="e.g user_placeholder_Mobile">
+                         <input type="text" name="mobile" value="<?=$edit_data[0]->mobile?>" class="form-control"  placeholder="e.g user_placeholder_Mobile">
                         </div>
                       </div>
                     </div>
@@ -205,7 +175,7 @@ $role_id=$session[0]->role_id;
                           <label for="Skype id ">Skype id <sub class="text-danger">*</sub></label>
                         </div>
                         <div class="col-sm-8">
-                         <input type="text" name="skype_id" value="" class="form-control" required="1" placeholder="e.g user_placeholder_skype">
+                         <input type="text" name="skype_id" value="<?=$edit_data[0]->skype?>" class="form-control" placeholder="e.g user_placeholder_skype">
                         </div>
                       </div>
                     </div>
@@ -215,21 +185,9 @@ $role_id=$session[0]->role_id;
                           <label for="Profilephoto">Profile Photo<sub class="text-danger">*</sub></label>
                         </div>
                         <div class="col-sm-8">
-                         <input type="file" name="profilephoto" value="" class="form-control" required="1" placeholder="e.g user_placeholder_skype">
-                        </div>
-                      </div>
-                    </div>
-                     <div class="form-group">
-                        <div class="row">
-                        <div class="col-sm-3">
-                          <label for="direction">Direction<sub class="text-danger">*</sub></label>
-                        </div>
-                        <div class="col-sm-8">
-                          <select id="direction" name="direction" class="form-control" required="">
-                                <option value="" disabled="" selected="">Select Direction</option>
-                                <option value="LTR">LTR</option>
-                                <option value="RTL">RTL</option>
-                            </select>
+                         <input type="hidden" value="<?=$edit_data[0]->user_id?>" name="user_id">
+                         <img src="<?php echo base_url().$edit_data[0]->avatar?>" height="50%">
+                         <input type="file" name="file" value="" class="form-control" placeholder="e.g user_placeholder_skype">
                         </div>
                       </div>
                     </div>
@@ -254,9 +212,7 @@ $role_id=$session[0]->role_id;
                                           <?php foreach ($v_department_info as $designation) : ?>
                                               <option value="<?php echo $designation->designations_id; ?>"
                                                   <?php
-                                                  if (!empty($job_posted->designations_id)) {
-                                                      echo $designation->designations_id == $job_posted->designations_id ? 'selected' : '';
-                                                  }
+                                                      echo $designation->designations_id == $edit_data[0]->designations_id ? 'selected' : '';
                                                   ?>><?php echo $designation->designations ?>
                                                     
                                                   </option>
