@@ -85,7 +85,7 @@ class User extends MY_Controller {
 		$designations_id=$_POST['designations_id'];
 		$check_data=$this->User_model->check_user($username,$email);
 		if($check_data){
-			die(json_encode(array('status'=>'0','msg'=>'no data')));
+			die(json_encode(array('status'=>'0','msg'=>'Already Exists')));
 		}
 		else{
 			$data=array('username'=>$username,
@@ -96,11 +96,15 @@ class User extends MY_Controller {
 						'activated'=>'1');
 			$insert=$this->User_model->insert_user($data);
 			$user_id=$insert;
-	        $config['upload_path'] = './uploads/';
-	        $config['allowed_types'] = '*';
-	        $config['max_size'] = 2000;
-	        $config['max_width'] = 1500;
-	        $config['max_height'] = 1500;
+            $image = rand(0000,9999).'-'.$_FILES["profilephoto"]['name'];
+            $config['upload_path']          = './uploads/';
+            $config['allowed_types']        = 'jpg|png|jpeg';
+            $config['file_name'] = $image;
+	        // $config['upload_path'] = './uploads/';
+	        // $config['allowed_types'] = '*';
+	        // $config['max_size'] = 2000;
+	        // $config['max_width'] = 1500;
+	        // $config['max_height'] = 1500;
 
 	        $this->load->library('upload', $config);
 	        $this->upload->initialize($config);
@@ -110,7 +114,7 @@ class User extends MY_Controller {
 	            die(json_encode(array('status'=>'0','msg'=>$error)));
 	        } else {
 	        	$upload_data = $this->upload->data(); 
-				echo $file_name = "uploads/".date('dmYhis').$upload_data['file_name'];
+				$file_name = "uploads/".$image;
 				$new_data=array('user_id'=>$user_id,
 								'fullname'=>$full_name,
 								'employment_id'=>$employment_id,
@@ -126,7 +130,7 @@ class User extends MY_Controller {
 					die(json_encode(array('status'=>'1','msg'=>'success')));
 				}
 				else{
-					die(json_encode(array('status'=>'0','msg'=>'failed')));
+					die(json_encode(array('status'=>'0','msg'=>'OOPS ! Something Went Wrong')));
 				}
 	        }
 		}

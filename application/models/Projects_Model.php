@@ -82,6 +82,10 @@ class Projects_Model extends CI_Model{
 			$id=$data['project_id'];
 			unset($data['project_id']);
 			unset($data['editor1']);
+	        $token = $data['token_amount'];
+        	$fp = $data['fixed_rate'];
+        	$remaining_amt = $fp-$token;
+        	$data['remaining_amt'] = $remaining_amt;
 			$this->db->where('project_id', $id);
     		if($this->db->update('tbl_project',$data)){
     			return true;
