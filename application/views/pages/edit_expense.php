@@ -385,7 +385,7 @@ else{
     </div>
      </form>
                   </div>
-                  <div class="tab-pane fade show px-4" id="imp_project" role="tabpanel" aria-labelledby="import_project">
+                  <!-- <div class="tab-pane fade show px-4" id="imp_project" role="tabpanel" aria-labelledby="import_project">
                       <div class="text-right dnld_sample"><button class="btn btn-primary"> <i class="fas fa-download"></i>Download Sample</div>
                     <div class="row">
                       <div class="col-md-12 card p-4">
@@ -470,7 +470,7 @@ else{
                       </div>
               
 
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>

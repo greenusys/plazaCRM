@@ -253,16 +253,16 @@ font-size: 35px;
                 <li class="w-100 side_br active">
                     <a href="#details" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Details</a>
                 </li>
-                <li class="w-100 side_br">
+               <!--  <li class="w-100 side_br">
                     <a href="#contacts" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Contacts</a>
-                </li>
+                </li> -->
            
                 <!-- <li class="w-100 side_br">
                     <a href="#notes" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Notes</a>
                 </li> -->
-                <li class="w-100 side_br">
+               <!--  <li class="w-100 side_br">
                     <a href="#invoices" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Invoices</a>
-                </li>
+                </li> -->
                 <li class="w-100 side_br">
                     <a href="#payments" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Payments</a>
                 </li>

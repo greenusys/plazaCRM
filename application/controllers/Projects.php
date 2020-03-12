@@ -434,6 +434,7 @@ class Projects extends MY_Controller {
         die(json_encode(array('code'=>1,'data'=>$data)));
 
     }
+   
 
 }
 ?>

@@ -1,5 +1,5 @@
 <?php
-    class AttendanceModel extends CI_Model{
+    class AttendanceModel extends MY_Model{
         public $_table_name;
         public $_order_by;
         public $_primary_key;
