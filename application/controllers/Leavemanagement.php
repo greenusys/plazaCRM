@@ -9,31 +9,18 @@ class Leavemanagement extends MY_Controller {
 	}
 	public function index()
 	{
-		// print_r($this->session->logged_user);
-		// die();
-
 		$usersdetail=$this->session->logged_user;
 		$designation_id=$usersdetail[0]->designations_id;
 	    $formyleave=$usersdetail[0]->user_id;
 		$data['fetch_leave_data']=$this->leave->fetchLeaveDetails();
 		$data['fetch_users_data']=$this->leave->fetchUserForApplyLeave();
 		$data['fetch_leave_category_data']=$this->leave->fetchLeaveCategoryData($designation_id);
-
-
-
-
-
 		$data['MyApprovedLeave']=$this->leave->getMyApprovedLeaveDetails($formyleave);
 		$MyApprovedLeave=$data['MyApprovedLeave'];
 		$data['LeaveCategories']=$this->leave->getLeaveCategory($designation_id);
-		// $LeaveCate=$data['LeaveCategories'];
-		// echo '********* Leave Category ********* ';
 		$leaveDeatils=array();
 		$resArray=array();
-		// print_r($MyApprovedLeave);
-		// print_r($LeaveCate);
 		$LeaveCate=$this->chekcForMyLeaveCategory($designation_id);
-		// print_r($LeaveCate);
 		foreach ($LeaveCate as $key => $cat) {
 			# code...
 			$calLEa=$this->countMyLeaveOfThisCategory($cat['leave_category_id']);
@@ -44,64 +31,12 @@ class Leavemanagement extends MY_Controller {
 			}
 			$resArray[]=array("cate_id"=>$cat['leave_category_id'],'cat_name'=>$cat['leave_category'], 'leaveDuration'=>$leaveDuration,'leaveDays'=>$cat['leave_quota']);
 		}
-		// echo '********************';
-		// print_r($resArray);
-		// die;
-		// foreach ($LeaveCate as $key => $cat) {
-
-
-		// $calLEa=$this->countMyLeaveOfThisCategory($cat['leave_category_id']);
-		// 	$leaveDaysArr=$this->functionToCheckLeaveDays($cat['leave_category_id']);
-  //   		if(count($result)>0){
-  //   			foreach ($result as $key => $value) {
-  //   				$date1=date_create($value['start_']);
-		// 			$date2=date_create($value['end_']);
-		// 			$diff=date_diff($date1,$date2);
-		// 			$resArray[]=array("cate_id"=>$cat['leave_category_id'],'cat_name'=>$cat['leave_category'], 'leaveDuration'=>$calLEa[0]->leave_d,'leaveDays'=>$leaveDaysArr[0]['leave_quota']);
-  //   			}
-  //   			 // print_r($resArray);
-  //   		}else{
-  //   			$resArray[]=array("cate_id"=>$cat['leave_category_id'],'cat_name'=>$cat['leave_category'], 'leaveDuration'=>0,'leaveDays'=>$leaveDaysArr[0]['leave_quota']);
-  //   		}
-
-		$calLEa=$this->countMyLeaveOfThisCategory($cat['leave_category_id']);
-		// print_r($calLEa);
-		// if($calLEa!=""){
-			
-
-		// }
-		// $tempCatId=0;
-		// $levDua=0;
-		// $rArray=array();
-		
-		// print_r($resArray);
-
-		// die;
-
-		// echo '********* My Leave Data ********* ';
-		// die;
-		
-		// print_r($MyApprovedLeave);
-		// foreach ($MyApprovedLeave as $key2 => $application) {
-		// 	$LeaveID[]=$application['leave_category_id'];
-		// 	$LeaveKey[]=$key2;
-		// }
-		// print_r($LeaveID);
-		// print_r($catID);
-		// foreach ($catID as $value) {
-		// 	echo array_search($value,$LeaveID);
-		// }
-		// $result=array_intersect($LeaveID,$catID);
-		// print_r($result);
-      	// $data['MyApprovedLeaveCategories']=$result;
-
-
-		// print_r($LeaveKey);
+	
 
       	$data['myLeaveDetails']=$resArray;
 
 		$data['fetch_Myleave_data']=$this->leave->fetchMyLeaveDetails($formyleave);
-		
+// 		die(json_encode($data['fetch_Myleave_data']));
 		$data['fetch_Designation_data']=$this->leave->fetchDesignationforLeave();
 		$session=$this->session->userdata('logged_user');
 		$designation_id=$session[0]->designations_id;

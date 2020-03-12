@@ -38,6 +38,11 @@
 		// 		return $check;
 		// 	} 
 		// }
+		public function get_in_progress_bug(){
+			$today=date('Y-m-d');
+			$qy="Select * from tbl_bug  join tbl_project on tbl_project.project_id=tbl_bug.project_id where tbl_bug.bug_status='in_progress' ";
+			return $this->db->query($qy)->result();
+		}
 		public function get_in_progress_task(){
 			$today=date('Y-m-d');
 			$qy="Select * from tbl_task where task_status='in_progress' and due_date>='$today'";

@@ -45,7 +45,13 @@ class Leave_Model extends CI_Model
 	
 	public function fetchMyLeaveDetails($formyleave)
 	{
-	    return $this->db->query("select tbl_leave_application.*,tbl_users.*,tbl_leave_category.*,tbl_account_details.*,tbl_leave_application.user_id as users,tbl_leave_application.leave_category_id as leavecatid from tbl_leave_application join tbl_users on tbl_users.user_id=tbl_leave_application.user_id  join  tbl_account_details on tbl_account_details.user_id= tbl_users.user_id join tbl_leave_category on tbl_leave_category.leave_category_id=tbl_leave_application.leave_category_id where tbl_leave_application.user_id=$formyleave")->result();
+	    
+	    $this->db->join('tbl_users','tbl_users.user_id=tbl_leave_application.user_id');
+	    $this->db->join('tbl_account_details','tbl_account_details.user_id=tbl_leave_application.user_id');
+	    $this->db->join('tbl_leave_category','tbl_leave_category.leave_category_id=tbl_leave_application.leave_category_id');
+	    $this->db->where('tbl_leave_application.user_id',$formyleave);
+	    return $this->db->get('tbl_leave_application')->result();
+	   // return $this->db->query("om tbl_leave_application join tbl_users on tbl_users.user_id=tbl_leave_application.user_id  join  tbl_account_details on tbl_account_details.user_id= tbl_users.user_id join tbl_leave_category on tbl_leave_category.leave_category_id=tbl_leave_application.leave_category_id where tbl_leave_application.user_id=$formyleave")->result();
 	}
 	public function fetchleaveDataByIdToModal($leave_id)
     {

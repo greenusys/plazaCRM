@@ -167,13 +167,13 @@ $role_id=$session[0]->role_id;
                                      <?php
                                     foreach($fetch_Myleave_data as $MyleaveAllData)
                                     {
-                                        // print_r($leaseAllData);
+                                        // print_r($MyleaveAllData);
                                     ?>
                                         <tr>
                                             <td><a href="<?=base_url('Leavemanagement/Leave_Modal_Detailss/').$MyleaveAllData->leave_application_id?>"  LeaveApp_id="<?=$MyleaveAllData->leave_application_id?>" class="Applicationdata "data-toggle="modal" data-target="#leaveapplicationsection"><?=$MyleaveAllData->fullname?></a></td>
-                                            <td><?=ucwords($leaseAllData->leave_category)?></td>
-                                            <td><?=date('d-m-Y',strtotime($leaseAllData->leave_start_date))?></td>
-                                            <td><?=date('d-m-Y',strtotime($leaseAllData->leave_end_date))?></td>
+                                            <td><?=ucwords($MyleaveAllData->leave_category)?></td>
+                                            <td><?=date('d-m-Y',strtotime($MyleaveAllData->leave_start_date))?></td>
+                                            <td><?=date('d-m-Y',strtotime($MyleaveAllData->leave_end_date))?></td>
                                             <td><?php print_r($diff->d)?></td>
                                             <?php
                                             if($MyleaveAllData->application_status==1)
@@ -505,6 +505,7 @@ $role_id=$session[0]->role_id;
                                                 <tbody>
                                                     <?php $leaveSum=0;?>
                                                     <?php $leaveTaken=0;?>
+                                                    <?php $red="";?>
                                                     <?php foreach($myLeaveDetails as $leave):?>
                                                         <?php
                                                         $leaveSum+=$leave['leaveDays'];
@@ -690,76 +691,66 @@ $role_id=$session[0]->role_id;
                                                 </div>
                                             </div>
                                         </div>
-                                        
+                                            <?php if($role_id!=3):?>
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="offset-1 col-sm-4">
-                                                            <label for="exampleInputEmail1"><strong>Change Status:</strong></label>
+                                                            <label for="exampleInput
+                                                            Email1"><strong>Change Status:</strong></label>
                                                         </div>
                                                         <!-- jjf -->
      
                                                          <!-- jjj -->
                                                         <div class="col-sm-7">
                                                             <div class="row">
-        <div class="col-sm-7 col-7">
-            <a href="javascript:void(0)" class="btn btn-success acceptleave" d-aplId=""><i class="fa fa-thumbs-up"></i>Approved</a>
-        </div>
-         <div class="col-sm-5 col-5">
-              <a href="javascript:void(0)" class="btn btn-danger rejectleave" d-aplId=""><i class="fa fa-thumbs-up"></i>Reject</a>
-        </div>
+                                                                
+                                                                    <div class="col-sm-7 col-7">
+                                                                        <a href="javascript:void(0)" class="btn btn-success acceptleave" d-aplId=""><i class="fa fa-thumbs-up"></i>Approved</a>
+                                                                    </div>
+                                                                     <div class="col-sm-5 col-5">
+                                                                          <a href="javascript:void(0)" class="btn btn-danger rejectleave" d-aplId=""><i class="fa fa-thumbs-up"></i>Reject</a>
+                                                                    </div>
+                                                              
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                              <?php endif;?>
                                             </div>
                                         </div>
                                       
                                         <div class="col-sm-4 card shadow mb-5">
                                             <div class="row" >
                                                 <div class="col-md-12" >
-                                            <h6 id="categorynameofrleave">Detail Of </h6>
+                                                    <h6 >Leave Detail</h6>
                                                 </div>
                                             </div>
                                             <div class="">
                                                 <div class="line mt-2"></div>
-                                                <form>
-
-                                                    <div class="offset-1 col-sm-11">
-                                                        <div class="form-group">
-                                                            <div class="row">
-                                                    <?php 
-                                                    foreach($fetch_leave_category_data as $fetch_cat_name)
-                                                    {
-                                         
-                                                    ?>
-                                                        <div class="offset-1 col-sm-4 col-4 ">
-
-                                                            <label for="exampleInputEmail1"><strong><?=ucwords($fetch_cat_name->leave_category)?></strong></label>
-                                                            <input type="hidden" class="fetchdesig_id" desig_id="<?=$fetch_cat_name->leave_cat_desig_id?>">
-                                                        </div>
-
-                                                        <div class="col-sm-7 col-7
-                                                        pl-5">
-                                                    <span>0/</span><span><?=$fetch_cat_name->leave_quota?></span>                                                                   <!--  <label for="exampleInputEmail1">0/2</label> -->
-                                                                </div>
+                                                    <table class="table ">
+                                                        <tbody>
+                                                            <?php $leaveSum=0;?>
+                                                            <?php $leaveTaken=0;?>
+                                                            <?php $red="";?>
+                                                            <?php foreach($myLeaveDetails as $leave):?>
                                                                 <?php
-                                                            }
-                                                            ?>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div class="form-group bg-dark p-1 text-white">
-                                                            <div class="row">
-                                                                <div class=" col-sm-6 col-6">
-                                                                    <label for="exampleInputEmail1">Total:</label>
-                                                                </div>
-                                                                <div class="col-sm-6 col-6">
-                                     <span id="availableleave"></span>/<span id="totalleave"></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
+                                                                $leaveSum+=$leave['leaveDays'];
+                                                                $leaveTaken+=$leave['leaveDuration'];
+                                                                 $red=($leave['leaveDuration']==$leave['leaveDays']) ? "text-danger" : "text-success";
+                                                                ?>
+                                                            <tr class="border-bottom">
+                                                                <td><strong><?=ucwords($leave['cat_name'])?>:</strong></td>
+                                                                <td class="<?=$red?> font-weight-bold"><?=$leave['leaveDuration']?>/<?=$leave['leaveDays']?></td>
+                                                            </tr>
+                                                            <?php endforeach;?>
+                                                            <tr class="border-bottom">
+                                                                <td><strong>Summary :</strong></td>
+                                                                <td class="text-warning font-weight-bold"><?=$leaveTaken?>/<?=$leaveSum?></td>
+                                                            </tr>     
+                                                           
+                                                        </tbody>
+                                                    </table>
+
                                             </div>
                                         </div>                                  
                                     </div>

@@ -43,9 +43,9 @@
 				<thead>
 					<th>Bug Title</th>
 					<th>Date</th>
-					<th>Status</th>
+					<!--<th>Status</th>-->
 					<th>Severity</th>
-					<th>Reporter</th>
+					<!--<th>Reporter</th>-->
 					<th>ASSigned To </th>
 					<th>Action</th>
 				</thead>
@@ -55,26 +55,26 @@
 					?>
 					<tr>
 						<td><a href="#"><?=$buggy->bug_title?></a></td>
-						<td><?=$buggy->created_time?></td>
-						<td>
-							<div class="row">
-								<div class="col-sm-4">
-								<label class="bg-success text-white p-1">Resolved</label>
-								</div>
-								<div class="col-sm-6">
-									<select class="slect_ht form-control" name="department">
-									<option value="name1">Change</option>
-									<option value="name2">Verified</option>
-									<option value="name3">Resolved</option>
-									<option value="name1">In Progress</option>
-									<option value="name2">Confirmed</option>
-									<option value="name3">Unconfirmed</option>
-									</select>
-								</div>
-							</div>
-						</td>
+						<td><?=date('d, M Y',strtotime($buggy->created_time))?></td>
+						<!--<td>-->
+						<!--	<div class="row">-->
+						<!--		<div class="col-sm-4">-->
+						<!--		<label class="bg-success text-white p-1">Resolved</label>-->
+						<!--		</div>-->
+						<!--		<div class="col-sm-6">-->
+						<!--			<select class="slect_ht form-control" name="department">-->
+						<!--			<option value="name1">Change</option>-->
+						<!--			<option value="name2">Verified</option>-->
+						<!--			<option value="name3">Resolved</option>-->
+						<!--			<option value="name1">In Progress</option>-->
+						<!--			<option value="name2">Confirmed</option>-->
+						<!--			<option value="name3">Unconfirmed</option>-->
+						<!--			</select>-->
+						<!--		</div>-->
+						<!--	</div>-->
+						<!--</td>-->
 						<td><label class="bg-primary text-white p-1">Minor</label></td>
-						<td>Undefined User</td>
+						<!--<td>Undefined User</td>-->
 						<td>Everyone<i class="fa fa-question-circle"></i> <i class="fa fa-plus text-primary"></i></td>
 						<td scope="row" >
 							<?php

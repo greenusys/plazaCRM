@@ -79,7 +79,10 @@ $('#hosting_tab').addClass('active');
   
   <script>
     $( function() {
-    $( ".datepicker" ).datepicker();
+    $( ".datepicker" ).datetimepicker({
+       viewMode: 'years',
+          format: 'YYYY-MM-DD'
+    });
     } );
   </script>
 <script>

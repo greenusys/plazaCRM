@@ -82,7 +82,7 @@
                  <div class="col-md-9">
                     <div class="card-wrap text-center">
                       <div class="card-header">
-                        <h4><?=count($in_progress_task)?></h4>
+                        <h4><?=count($in_progress_bug)?></h4>
                       </div>
                       <div class="card-body">
                        In Progress Bugs<br>
