@@ -310,5 +310,39 @@ class User_model extends MY_Model
                 return 0;
             }
     }
+    public function fetch_UserInProgressproject($user_id)
+    {
+       $tabledata=$this->db->get('tbl_project')->result();
+       // $permission=$tabledata[0]->permission;
+             $finalpermission=array();
+               foreach ($tabledata as $value) {
+                    $finalpermission[]=array($value->permission);
+
+                       $dec=json_decode($finalpermission);
+                   }
+                   return  $dec;
+               }
+
+       
+    public function random_stuff()
+    {
+        $users_array = array(
+            'attributes'  => array(
+                'age'       => '25', 
+                'height'    => '1.75cm', 
+                'weight'    => '70kg'
+            ),
+            'savings'     => array(
+                'cash'      => 3000,
+                'bank'      => rand(1, 222)
+            )
+        );
+
+        $users_array = json_encode($users_array);
+        $value       = json_decode($users_array, true);
+        return $value;
+
+    }
+
 }
 ?>

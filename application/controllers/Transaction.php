@@ -216,7 +216,7 @@ class Transaction extends MY_Controller {
 		                // File upload configuration
 	            $uploadPath = './uploads/expense/';
 		                $config['upload_path'] = $uploadPath;
-		                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+		                $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf|doc|csv|xlsx';
 	 
 	            // Load and initialize upload library
 	             $this->load->library('upload', $config);
@@ -365,7 +365,8 @@ class Transaction extends MY_Controller {
 		                // File upload configuration
 		                 $uploadPath = './uploads/deposit/';
 		                $config['upload_path'] = $uploadPath;
-		                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+		                $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf|doc|csv|xlsx';
+		                
 	 
 	            // Load and initialize upload library
 	             $this->load->library('upload', $config);
@@ -467,7 +468,7 @@ class Transaction extends MY_Controller {
 		                // File upload configuration
 	            $uploadPath = './uploads/transfer/';
 		                $config['upload_path'] = $uploadPath;
-		                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+		                $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf|doc|csv|xlsx';
 	 
 	            // Load and initialize upload library
 	             $this->load->library('upload', $config);
@@ -571,7 +572,7 @@ class Transaction extends MY_Controller {
 		                // File upload configuration
 	            $uploadPath = './uploads/expense/';
 		                $config['upload_path'] = $uploadPath;
-		                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+		                $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf|doc|csv|xlsx';
 	 
 	            // Load and initialize upload library
 	             $this->load->library('upload', $config);
@@ -672,7 +673,7 @@ class Transaction extends MY_Controller {
 		                // File upload configuration
 	                    $uploadPath = './uploads/deposit';
 		                $config['upload_path'] = $uploadPath;
-		                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+		                $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf|doc|csv|xlsx';
 	 
 	            // Load and initialize upload library
 	             $this->load->library('upload', $config);
@@ -796,7 +797,7 @@ class Transaction extends MY_Controller {
 		                // File upload configuration
 	            $uploadPath = './uploads/transfer/';
 		                $config['upload_path'] = $uploadPath;
-		                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+		                $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf|doc|csv|xlsx';
 	 
 	            // Load and initialize upload library
 	             $this->load->library('upload', $config);

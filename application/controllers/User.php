@@ -72,7 +72,7 @@ class User extends MY_Controller {
 								'direction'=>$direction);
 				$final=$this->User_model->insert_account($new_data);
 				if($final){
-					die(json_encode(array('status'=>1,'msg'=>'success')));
+					die(json_encode(array('status'=>'1','msg'=>'success')));
 				}
 				else{
 					die(json_encode(array('status'=>'0','msg'=>'failed')));
@@ -660,6 +660,17 @@ class User extends MY_Controller {
         $results=$this->User_model->DeleteUsers($data);
         die(json_encode($results));
 
+    }
+     public function InProgressUserProject()
+    {
+        $session=$this->session->userdata('logged_user');
+        $user_id=$session[0]->user_id;
+        $data['project']=$this->User_model->fetch_UserInProgressproject($user_id);
+        print_r($data['project']);
+        die;
+        $this->load->view('layout/header');
+        $this->load->view("pages/user_inprogressproject",$data);
+        $this->load->view("layout/footer");
     }
 	
 }
