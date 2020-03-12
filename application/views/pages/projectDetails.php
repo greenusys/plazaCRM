@@ -256,6 +256,37 @@
 							            <div class="form-group">
 							              <div class="row">
 							                <div class="offset-1 col-sm-3 text-right">
+							                  <label  class="label-style">Fixed Rate:</label>
+							                </div>
+							                <div class="col-sm-7">
+							                   <label  ><?=$project_details->fixed_rate?></label>
+							                </div>
+							              </div>
+							            </div>
+					            		<div class="form-group">
+							              <div class="row">
+							                <div class="offset-1 col-sm-3 text-right">
+							                  <label  class="label-style">Token Amount :</label>
+							                </div>
+							                <div class="col-sm-7">
+							                   <label  ><?=$project_details->token_amount?></label>
+							                </div>
+							              </div>
+							            </div>
+				            			<div class="form-group">
+							              <div class="row">
+							                <div class="offset-1 col-sm-3 text-right">
+							                  <label  class="label-style">Remaining Amount :</label>
+							                </div>
+							                <div class="col-sm-7">
+							                   <label  ><?=$project_details->remaining_amt?></label>
+							                </div>
+							              </div>
+							            </div>
+
+							            <div class="form-group">
+							              <div class="row">
+							                <div class="offset-1 col-sm-3 text-right">
 							                  <label  class="label-style ml-5">Budget :</label>
 							                </div>
 							                <div class="col-sm-7">

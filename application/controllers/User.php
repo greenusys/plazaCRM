@@ -20,6 +20,57 @@ class User extends MY_Controller {
 		$this->load->view('pages/auth-register',$data);
 	}
 
+    public function edit_user(){
+        $user_id = $this->uri->segment(3);
+        $data['edit_data'] = $this->User_model->fetch_all_details($user_id);
+        $action = "";
+        if ($action == 'edit_user' && $id != my_id()) {
+            $data['active'] = 2;
+            $can_edit = $this->User_model->can_action('tbl_users', 'edit', array('user_id' => $id));
+            $edited = can_action('24', 'edited');
+            if (!empty($can_edit) || !empty($edited)) {
+                $data['login_info'] = $this->db->where('user_id', $user_id)->get('tbl_users')->row();
+            }
+        } else {
+            $data['active'] = 1;
+        }
+
+        $data['title'] = 'User List';
+
+        $this->User_model->_table_name = 'tbl_client'; //table name
+        $this->User_model->_order_by = 'client_id';
+        $data['all_client_info'] = $this->User_model->get();
+
+        // get all language
+        $data['languages'] = $this->db->where('active', 1)->order_by('name', 'ASC')->get('tbl_languages')->result();
+
+        $data['permission_user'] = $this->User_model->all_permission_user('24');
+
+        $data['all_user_info'] = $this->User_model->get_permission('tbl_users');
+
+        $data['all_designation_info'] = $this->User_model->all_designation();
+
+
+        $data['countries']=$this->db->get('tbl_countries')->result();
+        $data['all_dept_info'] = $this->db->get('tbl_departments')->result();
+        foreach ($data['all_dept_info'] as $v_dept_info) {
+            $data['all_department_info'][] = $this->Job_circular_model->get_add_department_by_id($v_dept_info->departments_id);
+        }
+        $session=$this->session->userdata('logged_user');
+        // print_r($session);
+        // die;
+        $designation_id=$session[0]->designations_id;
+        $user_id=$session[0]->user_id;
+        $data['Assign_permission']=$this->User_model->CheckPermission($designation_id);
+        $data['UsersPermission']=$this->User_model->CheckUserPermission($user_id);
+          // print_r($data['UsersPermission']);
+          // die;
+        $data['all_users']=$this->User_model->fetch_all_users();
+        $this->load->view('layout/header');
+        $this->load->view("pages/user_edit",$data);
+        $this->load->view("layout/footer");
+    }
+
 	public function new_user()
     {
 		$full_name=$_POST['full_name'];
@@ -504,12 +555,59 @@ class User extends MY_Controller {
             }
         }
     }
+
+    public function update_user(){
+        if($_FILES["file"]['name'] !=""){
+            $image = rand(0000,9999).'-'.$_FILES["file"]['name'];
+            $config['upload_path']          = './uploads/';
+            $config['allowed_types']        = 'jpg|png|jpeg';
+            $config['file_name'] = $image;
+            $this->upload->initialize($config);
+                $this->load->library('upload', $config);
+
+            if (!$this->upload->do_upload('file')) {
+               $error = array('error' => $this->upload->display_errors());
+                //$this->session->set_flashdata('msg','Error In Uploading Image');
+               // $this->load->view('files/upload_form', $error);
+                //$this->userProfile();
+            } else {
+                $imager="uploads/".$image;
+                $data=array('fullname'=>$_POST['full_name'],
+                            'employment_id'=>$_POST['Employment_id'],
+                            'phone'=>$_POST['mobile'],
+                            'skype'=>$_POST['skype_id'],
+                            'designations_id'=>$_POST['designations_id'],
+                            'avatar'=>$imager
+                            );
+                $email=$_POST['email'];
+                $result=$this->User_model->update_user_with_image($_POST['user_id'],$data,$email);
+                if ($result) {
+                    redirect('User/user_list');
+                }
+            }
+        }
+        else{
+            $data=array('fullname'=>$_POST['full_name'],
+                        'employment_id'=>$_POST['Employment_id'],
+                        'phone'=>$_POST['mobile'],
+                        'skype'=>$_POST['skype_id'],
+                        'designations_id'=>$_POST['designations_id'],
+                        );
+            $email=$_POST['email'];
+            $result=$this->User_model->update_user_with_image($_POST['user_id'],$data,$email);
+            if ($result) {
+                redirect('User/user_list');
+            }
+        }
+    }
+
 	public function updateUserInfo(){
 		if($_FILES["file"]['name'] !=""){
 			$image = rand(0000,9999).'-'.$_FILES["file"]['name'];
-			$config['upload_path']          = './uploads/profile_pic/';
+			$config['upload_path']          = './uploads/';
 	        $config['allowed_types']        = 'jpg|png|jpeg';
 	        $config['file_name'] = $image;
+               $this->upload->initialize($config);
 	            $this->load->library('upload', $config);
 
 	        if (!$this->upload->do_upload('file')) {
@@ -519,7 +617,7 @@ class User extends MY_Controller {
 	        	$this->userProfile();
 	        } else {
 	        	$rss = $this->upload->data();
-	        	$_POST['avatar']=$rss['file_name'];
+	        	$_POST['avatar']="uploads/".$rss['file_name'];
 		 		if($this->User_model->update_user_data($_POST)){
 		    		$this->session->set_flashdata('msg','Successfully Updated');
 		    		$this->userProfile();
