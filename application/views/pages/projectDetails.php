@@ -266,7 +266,7 @@
 					            		<div class="form-group">
 							              <div class="row">
 							                <div class="offset-1 col-sm-3 text-right">
-							                  <label  class="label-style">Token Amount :</label>
+							                  <label  class="label-style">Received Amount :</label>
 							                </div>
 							                <div class="col-sm-7">
 							                   <label  ><?=$project_details->token_amount?></label>

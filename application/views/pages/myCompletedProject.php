@@ -1,11 +1,4 @@
-<?php
-    $session=$this->session->userdata('logged_user');
-   
-$myId=$session[0]->user_id;
-$role_id=$session[0]->role_id;
-?>
-
-  <script>
+<script>
     function openCity(evt, cityName) {
       console.log(evt);
       var i, tabcontent, tablinks;
@@ -86,7 +79,7 @@ $('#hosting_tab').addClass('active');
   
   <script>
     $( function() {
-    $( ".datepicker" ).datepicker({ dateFormat: 'yy-dd-mm' });
+    $( ".datepicker" ).datepicker();
     } );
   </script>
 <script>
@@ -96,65 +89,9 @@ $(document).ready(function(){
   });
  
 });
-$(document).on('click','.dlt_project',function(){
-  var projectId=$(this).attr('d-Pro');
-  $.ajax({
-    url:"<?=base_url('Projects/delete_project')?>",
-    type:"post",
-    data:{project_id:projectId},
-    success:function(response){
-        response=JSON.parse(response);
-        if(response.status==1){
-            swal('success','Project Deleted Successfully.','success');      
-            $('#myTabContentJust').load(document.URL +  ' #myTabContentJust');  
-        }
-    }
-  });
-  
-});
-$(document).on('click','.edt_project',function(){
-  var projectId=$(this).attr('d-Pro');
-  window.location.href="<?=base_url('Projects/')?>"+project_id;
-  swal('success','Yeah','success');
-});
 </script>
 
-<?php
-  // $pover
-  
-  $all_project_info = $this->db->get('tbl_project')->result();
-  $totalProject=count($all_project_info);
-  // echo ' ***  '.
-  $p_started = 0;
-  $p_in_progress = 0;
-  $p_completed = 0;
-  $project_time = 0;
-  // $project_time = $this->User_model->my_spent_time($profile_info->user_id, true);
-
-  if (!empty($all_project_info)) {
-    // print_r($all_project_info);
-      foreach ($all_project_info as $v_user_project) {
-        // print_r($v_user_project->project_status);
-        // echo ' || <br>';
-          if ($v_user_project->project_status == 'started') {
-            $p_started += 1;
-              // $p_started += count($v_user_project->project_status);
-          }
-          if ($v_user_project->project_status == 'in_progress') {
-            $p_in_progress += 1;
-              // $p_in_progress += count($v_user_project->project_status);
-          }
-          if ($v_user_project->project_status == 'completed') {
-            $p_completed += 1;
-              // $p_completed += count($v_user_project->project_status);
-          }
-      }
-
-  }
-  // $totalProject=$p_started+$p_in_progress+$p_completed;
-
-?>
-          <!--  <div class="p-3">
+         <!--   <div class="p-3">
             <div class="row bg-white mt-3">
                 <div class="col-md-2 ">
                   <div class="p-3 pro_status">
@@ -196,67 +133,10 @@ $(document).on('click','.edt_project',function(){
 
                 </div>
             </div>  
-          </div> -->
+          </div>
          
           <div class="row mt-4">
-            <div class="col-lg-4 col-md-4 col-sm-12">
-              <div class="card card-statistic-2 px-2">
-                <div class="row  py-1">
-                 <div class="col-md-8">
-                   <div class=" ">
-                      <h6 class="text_col">In Progress</h6>
-                   </div>
-                 </div>
-                 <div class="col-md-4">
-                    <span><?=$p_in_progress?>/<?=$totalProject?></span>
-                 </div>
-               </div>
-               <div class="progress">
-                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:<?=($p_in_progress/$totalProject)*100?>%">
-                    <?=(int)(($p_in_progress/$totalProject)*100)?>%
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-12">
-              <div class="card card-statistic-2 px-2">
-                <div class="row  py-1">
-                 <div class="col-md-8">
-                   <div class=" ">
-                      <h6 class="text_col">Completed</h6>
-                   </div>
-                 </div>
-                 <div class="col-md-4">
-                    <span><?=$p_completed?>/<?=$totalProject?></span>
-                 </div>
-               </div>
-               <div class="progress">
-                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:<?=($p_completed/$totalProject)*100?>%">
-                    <?=(int)(($p_completed/$totalProject)*100)?>%
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-12">
-              <div class="card card-statistic-2 px-2">
-                <div class="row  py-1">
-                 <div class="col-md-8">
-                   <div class=" ">
-                      <h6 class="text_col">Started</h6>
-                   </div>
-                 </div>
-                 <div class="col-md-4">
-                    <span><?=$p_started?>/<?=$totalProject?></span>
-                 </div>
-               </div>
-               <div class="progress">
-                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:<?=($p_started/$totalProject)*100?>%%">
-                    <?=(int)(($p_started/$totalProject)*100)?>%
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- <div class="col-lg-2 col-md-2 col-sm-12">
+            <div class="col-lg-2 col-md-2 col-sm-12">
               <div class="card card-statistic-2 px-2">
                 <div class="row  py-1">
                  <div class="col-md-8">
@@ -265,26 +145,7 @@ $(document).on('click','.edt_project',function(){
                    </div>
                  </div>
                  <div class="col-md-4">
-                    <span>9/<?=$totalProject?></span>
-                 </div>
-               </div>
-               <div class="progress">
-                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
-                    40%
-                  </div>
-                </div>
-              </div>
-            </div> -->
-           <!--  <div class="col-lg-2 col-md-2 col-sm-12">
-              <div class="card card-statistic-2 px-2">
-                <div class="row  py-1">
-                 <div class="col-md-8">
-                   <div class=" ">
-                      <h6 class="text_col">Overdue</h6>
-                   </div>
-                 </div>
-                 <div class="col-md-4">
-                    <span>9/<?=$totalProject?></span>
+                    <span>9/48</span>
                  </div>
                </div>
                <div class="progress">
@@ -303,7 +164,7 @@ $(document).on('click','.edt_project',function(){
                    </div>
                  </div>
                  <div class="col-md-4">
-                    <span>9/<?=$totalProject?></span>
+                    <span>9/48</span>
                  </div>
                </div>
                <div class="progress">
@@ -312,9 +173,85 @@ $(document).on('click','.edt_project',function(){
                   </div>
                 </div>
               </div>
-            </div> -->
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-12">
+              <div class="card card-statistic-2 px-2">
+                <div class="row  py-1">
+                 <div class="col-md-8">
+                   <div class=" ">
+                      <h6 class="text_col">Overdue</h6>
+                   </div>
+                 </div>
+                 <div class="col-md-4">
+                    <span>9/48</span>
+                 </div>
+               </div>
+               <div class="progress">
+                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
+                    40%
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-12">
+              <div class="card card-statistic-2 px-2">
+                <div class="row  py-1">
+                 <div class="col-md-8">
+                   <div class=" ">
+                      <h6 class="text_col">Overdue</h6>
+                   </div>
+                 </div>
+                 <div class="col-md-4">
+                    <span>9/48</span>
+                 </div>
+               </div>
+               <div class="progress">
+                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
+                    40%
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-12">
+              <div class="card card-statistic-2 px-2">
+                <div class="row  py-1">
+                 <div class="col-md-8">
+                   <div class=" ">
+                      <h6 class="text_col">Overdue</h6>
+                   </div>
+                 </div>
+                 <div class="col-md-4">
+                    <span>9/48</span>
+                 </div>
+               </div>
+               <div class="progress">
+                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
+                    40%
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-12">
+              <div class="card card-statistic-2 px-2">
+                <div class="row  py-1">
+                 <div class="col-md-8">
+                   <div class=" ">
+                      <h6 class="text_col">Overdue</h6>
+                   </div>
+                 </div>
+                 <div class="col-md-4">
+                    <span>9/48</span>
+                 </div>
+               </div>
+               <div class="progress">
+                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
+                    40%
+                  </div>
+                </div>
+              </div>
+            </div>
   
-          </div>
+          </div> -->
           <div class="row mt-4">
             <div class="col-lg-12">
               <div class="card">
@@ -327,33 +264,31 @@ $(document).on('click','.edt_project',function(){
                 <ul class="nav nav-tabs nav-justified md-tabs indigo col-md-5" id="myTabJust" role="tablist">
                   <li class="nav-item">
                     <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
-                      aria-selected="true">All Projects</a>
+                      aria-selected="true">Project List</a>
                   </li>
-                  <?php if($role_id!=3):?>
-                  <li class="nav-item">
+                  <!-- <li class="nav-item">
                     <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
                       aria-selected="false">New Project</a>
                   </li>
                   <li class="nav-item ">
                   <a class="nav-link" id="import_project" data-toggle="tab" href="#imp_project" role="tab" aria-controls="imp_project" aria-selected="false">Import Projects</a>
-                  </li>
-                <?php endif;?>
+                  </li> -->
                 </ul>
                 <div class="tab-content card pt-3" id="myTabContentJust">
                   <div class="tab-pane fade show active px-4" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
 
-                   <table id="" class="alldatatable display nowrap table-responsive" style="width:100%">
+                   <table id="example" class="display nowrap table-responsive" style="width:100%">
                         <thead>
-                            <tr>
+                            <!-- <tr> -->
                                 <th>Project Name</th>
                                 <th>Client</th>
                                 <th>End Date</th>
-                                <th>Status</th>
+                                <!-- <th>Status</th> -->
                                 <th>Assigned To</th>
                                 <th>Downloads</th>
-                                <th>Action</th>
+                                <!-- <th>Action</th> -->
                              
-                            </tr>
+                            <!-- </tr> -->
                         </thead>
 
                         <tbody>
@@ -373,9 +308,9 @@ $(document).on('click','.edt_project',function(){
                                       </div>
                                 </div>
                               </td>
-                                <td><?=$pr['client_name']?></td>
-                                <td><?=$pr['end_date']?></td>
-                                
+                              <td><?=$pr['client_name']?></td>
+                              <td><?=$pr['end_date']?></td>
+                             
                                 <td>
                                   <?php
                                   if ($pr['project_status']=="completed") {
@@ -388,7 +323,7 @@ $(document).on('click','.edt_project',function(){
                                     echo "<span class='text-white bg-warning sele_staus'>Waiting For Someone</span>";
                                   }
                                   elseif ($pr['project_status']=="in_progress") {
-                                    echo "<span class='text-white bg-warning sele_staus'>In Progresse</span>";
+                                    echo "<span class='text-white bg-warning sele_staus'>In Progress</span>";
                                   }
                                   else{
                                     echo "<span class='text-white bg-danger sele_staus'>Not Started</span>";
@@ -407,47 +342,25 @@ $(document).on('click','.edt_project',function(){
                                  </td>
                                 <td>
                                   <?php
-                                  // if(count($pr['assigned_to'])>0){
-                                  //   foreach ($pr['assigned_to'] as $assigned_to) {
-                                  //     print_r($assigned_to);
-                                  //    echo '<img src="'.base_url().'" class="rounded-circle"> <a href="javascript:void(0)" id="open_modal"><i class="fa fa-plus" aria-hidden="true"></i></a>';
-                                  //   }
-                                  // // print_r($pr['assigned_to']);
-                                  
-                                  // }else{
-                                  //    echo '<a href="javascript:void(0)" id="open_modal"><i class="fa fa-plus" aria-hidden="true"></i></a>';
-                                  // }
-
-                                  if(count($pr['assigned_to'])>0){
-                                    foreach ($pr['assigned_to'] as $user) {
-                                      if ($user=="Everyone") {
+                                  $total = count((array)$pr);
+              // print_r($total);
+                                  if($total>8)
+                                  {
+                                    $total=$total-8;
+                                    for($i=0;$i<$total;$i++)
+                                    {
+                                      if($pr[0]=="Everyone ")
+                                      {
                                         echo "Everyone";
-                                      }else{
-                                          echo '<a href="'.base_url('User/userDetails/').$user->userid.'"><img src="'.base_url().$user->avatar.'"  width="20px" class="rounded-circle" alt="'.$user->fullname.'"  title ="'.$user->fullname.'"></a>';
                                       }
-                                    }
-                                  
+                                      else{
+                                        // echo $pr[$i]->fullname;
+                                      }
+                                   }
                                   }
-                                  // die(json_encode($pr));
-                                  // $total = count($pr);
-                                  // print_r($pr);
-                                  // if($total>8)
-                                  // {
-                                  //   $total=$total-8;
-                                  //   for($i=0;$i<$total;$i++)
-                                  //   {
-                                  //     if($pr[$i]=="Everyone ")
-                                  //     {
-                                  //       echo "Everyone";
-                                  //     }
-                                  //     else{
-                                  //       // echo $pr[$i]->fullname;
-                                  //     }
-                                  //  }
-                                  // }
-                                  // else{
-                                  //   echo "Everyone";
-                                  // }
+                                  else{
+                                    echo "Everyone";
+                                  }
                                   //print_r($pr[0]->fullname);
                                  
                                   ?>
@@ -458,52 +371,53 @@ $(document).on('click','.edt_project',function(){
                                     echo "No Downloads";
                                   }
                                   else{
-                                    echo "<a href='".base_url()."Projects/downloader/".$pr['project_id']."'>Download Now</a>";
+                                    echo "<a href='".base_url('Projects/downloader/').$pr['project_id']."'>Download Now</a>";
                                   }
                                   ?>
                                 </td>
-                                <td>
-                                    <div class="">
-                                      <?php
+                                <!-- <td> -->
+                                  <!--  <?php
                                       foreach($Assign_permission as $checkpermission)
                                         {
                                           $permission=$checkpermission->permission;
-                                          // print_r($permission);
-                                          foreach ($UsersPermission as $Uperms) 
-                                            {
-                                             $Userpermi=$Uperms->permission;
-                                                
-                                          if(strpos($permission,'Edit')!==false||strpos($Userpermi,'Edit')!==false)
+                                              // print_r($permission);
+                                          // $permission=explode(',',$checkpermission->permission);
+
+                                            // print_r($permission);
+                                            // die;  
+                                          if(strpos($permission,'Edit')!==false)
                                           {?>
-                                      <a href="<?=base_url('Projects/editProject/').$pr['project_id']?>" class="sele_staus bg-info p-1 text-white " d-Pro="<?=$pr['project_id']?>"><span><i class="far fa-edit"></i></span></a>
-                                       <?php }
+                                              <a href="" id="edit_p"class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+
+                                         <?php }
                                          else
                                          {
                                           ?>
-                                           <a href="#"
-                                           style="visibility: hidden" class="sele_staus bg-info p-1 text-white " d-Pro="<?=$pr['project_id']?>"><span><i class="far fa-edit"></i></span></a>
-                                           <?php
+                                            <a href="" id="edit_p"class="sele_staus bg-info p-1 text-white " style="visibility: hidden"><span><i class="far fa-edit"></i></span></a>
+
+                                         <?php
                                           }
-                                         if(strpos($permission,'Delete')!==false||strpos($Userpermi,'Delete')!==false)
+                                         if(strpos($permission,'Delete')!==false)
                                           {?>
+                                              <a href="" class="sele_staus  p-1 text-white ">  <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
 
-
-                                      <a href="javascript:void(0)" class="dlt_project" d-Pro="<?=$pr['project_id']?>"><span class="sele_staus bg-danger p-1  text-white"><i class="far fa-trash-alt"></i></span></a>
-                                       <?php }
+                                         <?php }
                                          else
                                          {
                                           ?>
+                                            <a href="" class="sele_staus  p-1 text-white " style="visibility: hidden">  <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
 
-                                      <a href="javascript:void(0)" style="visibility: hidden"class="dlt_project" d-Pro="<?=$pr['project_id']?>"><span class="sele_staus bg-danger p-1  text-white"><i class="far fa-trash-alt"></i></span></a>
-                                      <?php
+                                         <?php
                                           }
 
-                                        }
-                                      }?>
-                                       <!-- <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span> -->
-                                    </div>
+                                        }?> -->
+                                    <!-- <div class="">
+                                      <a href="" class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                      <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
+                                       <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span>
+                                    </div> -->
 
-                                </td>
+                                <!-- </td> -->
                              
                             </tr>
                             <?php
@@ -519,17 +433,17 @@ $(document).on('click','.edt_project',function(){
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label >Project Name <span class="text-danger">*</span> </label>
+                <label for="exampleInputEmail1">Project Name <span class="text-danger">*</span> </label>
               </div>
               <div class="col-sm-9">
-                <input type="text" name="project_name" class="form-control" >
+                <input type="text" name="project_name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
               </div>
             </div>
           </div>
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label >Select Client  <span class="text-danger">*</span> </label>
+                <label for="exampleInputEmail1">Select Client  <span class="text-danger">*</span> </label>
               </div>
               <div class="col-sm-8">
                 <div class="input-group">
@@ -553,7 +467,7 @@ $(document).on('click','.edt_project',function(){
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label >Progress </label>
+                <label for="exampleInputEmail1">Progress </label>
               </div>
               <div class="col-sm-9">
                   <div id="slider-range-min"></div>
@@ -584,7 +498,7 @@ $(document).on('click','.edt_project',function(){
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label >Start Date  <span class="text-danger">*</span> </label>
+                <label for="exampleInputEmail1">Start Date  <span class="text-danger">*</span> </label>
               </div>
               <div class="col-sm-8">
                 <input type="text" name="start_date" class="form-control datepicker">
@@ -597,7 +511,7 @@ $(document).on('click','.edt_project',function(){
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label >End Date  <span class="text-danger">*</span> </label>
+                <label for="exampleInputEmail1">End Date  <span class="text-danger">*</span> </label>
               </div>
               <div class="col-sm-8">
                 <input type="text" name="end_date" class="form-control datepicker">
@@ -610,7 +524,7 @@ $(document).on('click','.edt_project',function(){
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label >Billing Type  <span class="text-danger">*</span> </label>
+                <label for="exampleInputEmail1">Billing Type  <span class="text-danger">*</span> </label>
               </div>
               <div class="col-sm-9">
                 <div class="input-group">
@@ -627,28 +541,17 @@ $(document).on('click','.edt_project',function(){
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label >Fixed Price  </label>
+                <label for="exampleInputEmail1">Fixed Price  </label>
               </div>
               <div class="col-sm-9">
-                <input type="number" name="fixed_rate" class="form-control" id="fp" placeholder="50" >
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-              <div class="row">
-              <div class="col-sm-3">
-                <label >Received Amount  </label>
-              </div>
-              <div class="col-sm-9">
-                <input type="number" name="token_amount" class="form-control" id="token" value="0" >
+                <input type="text" name="fixed_rate" class="form-control" placeholder="50" id="exampleInputEmail1" aria-describedby="emailHelp">
               </div>
             </div>
           </div>
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label >Estimate Hours  </label>
+                <label for="exampleInputEmail1">Estimate Hours  </label>
               </div>
               <div class="col-sm-9">
                 <input type="number" step="0.01" value="" class="form-control" name="estimate_hours" data-parsley-id="23">
@@ -658,7 +561,7 @@ $(document).on('click','.edt_project',function(){
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label >Status  <span class="text-danger">*</span> </label>
+                <label for="exampleInputEmail1">Status  <span class="text-danger">*</span> </label>
               </div>
               <div class="col-sm-9">
                 <div class="input-group">
@@ -676,17 +579,17 @@ $(document).on('click','.edt_project',function(){
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label >Demo Url </label>
+                <label for="exampleInputEmail1">Demo Url </label>
               </div>
               <div class="col-sm-9">
-                <input type="text" name="demo_url" class="form-control" placeholder="http://www.demo.com" >
+                <input type="text" name="demo_url" class="form-control" placeholder="http://www.demo.com" id="exampleInputEmail1" aria-describedby="emailHelp">
               </div>
             </div>
           </div>
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label >Assigned To <span class="text-danger">*</span></label>
+                <label for="exampleInputEmail1">Assigned To <span class="text-danger">*</span></label>
               </div>
               <div class="col-sm-9">
                 <div class="checkbox c-radio needsclick">
@@ -712,7 +615,7 @@ $(document).on('click','.edt_project',function(){
           <div class="form-group dvPassport"  style="display: none">
               <div class="row">
               <div class="col-sm-3">
-                <label >Select Users<span class="text-danger">*</span></label>
+                <label for="exampleInputEmail1">Select Users<span class="text-danger">*</span></label>
               </div>
               <div class="col-sm-9">
                  <?php
@@ -757,7 +660,7 @@ $(document).on('click','.edt_project',function(){
     </div>
       <div class="row">
         <div class=" col-md-2">
-          <label >Description <span class="text-danger">*</span> </label>
+          <label for="exampleInputEmail1">Description <span class="text-danger">*</span> </label>
       </div>
       <div class="col-md-10">
            <textarea name="editor1"></textarea>
@@ -933,37 +836,37 @@ $(document).on('click','.edt_project',function(){
                 <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label >Company Name <span class="text-danger">*</span> </label>
+                    <label for="exampleInputEmail1">Company Name <span class="text-danger">*</span> </label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" name="name" >
+                    <input type="text" class="form-control" name="name" id="exampleInputEmail1" aria-describedby="emailHelp">
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label >Company Email <span class="text-danger">*</span> </label>
+                    <label for="exampleInputEmail1">Company Email <span class="text-danger">*</span> </label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="email" class="form-control" name="email" >
+                    <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label >Company VAT </label>
+                    <label for="exampleInputEmail1">Company VAT </label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" name="vat" >
+                    <input type="text" class="form-control" name="vat" id="exampleInputEmail1" aria-describedby="emailHelp">
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label >Customer Group  </label>
+                    <label for="exampleInputEmail1">Customer Group  </label>
                   </div>
                   <div class="col-sm-9">
                     <div class="input-group">
@@ -977,7 +880,7 @@ $(document).on('click','.edt_project',function(){
                   <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label >Language  </label>
+                    <label for="exampleInputEmail1">Language  </label>
                   </div>
                   <div class="col-sm-9">
                     <div class="input-group">
@@ -991,7 +894,7 @@ $(document).on('click','.edt_project',function(){
                   <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label >Currency </label>
+                    <label for="exampleInputEmail1">Currency </label>
                   </div>
                   <div class="col-sm-9">
                     <div class="input-group">
@@ -1005,7 +908,7 @@ $(document).on('click','.edt_project',function(){
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label >Short Note  </label>
+                    <label for="exampleInputEmail1">Short Note  </label>
                   </div>
                   <div class="col-sm-9">
                     <textarea class="form-control" name="short_note"></textarea>
@@ -1021,40 +924,40 @@ $(document).on('click','.edt_project',function(){
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label >Company Phone</label>
+                    <label for="exampleInputEmail1">Company Phone</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="number" name="phone" class="form-control" >
+                    <input type="number" name="phone" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label >Company Mobile </label>
+                    <label for="exampleInputEmail1">Company Mobile </label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="number" class="form-control" name="mobile" >
+                    <input type="number" class="form-control" name="mobile" id="exampleInputEmail1" aria-describedby="emailHelp">
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label >Zip code </label>
+                    <label for="exampleInputEmail1">Zip code </label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="zipcode" class="form-control" >
+                    <input type="text" name="zipcode" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                   </div>
                 </div>
                   </div> 
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label >Company City</label>
+                    <label for="exampleInputEmail1">Company City</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="city" class="form-control" >
+                    <input type="text" name="city" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                   </div>
                 </div>
                   </div> 
@@ -1075,17 +978,17 @@ $(document).on('click','.edt_project',function(){
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label >Company Fax</label>
+                    <label for="exampleInputEmail1">Company Fax</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="fax" class="form-control" >
+                    <input type="text" name="fax" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                   </div>
                 </div>
                   </div>
                 <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label >Company Address </label>
+                    <label for="exampleInputEmail1">Company Address </label>
                   </div>
                   <div class="col-sm-9">
                     <textarea class="form-control" name="address"></textarea>
@@ -1095,20 +998,20 @@ $(document).on('click','.edt_project',function(){
                             <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label > Latitude( Google Map ) </label>
+                    <label for="exampleInputEmail1"> Latitude( Google Map ) </label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="latitude" class="form-control" >
+                    <input type="text" name="latitude" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                   </div>
                 </div>
                   </div>
                             <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label >Longitude( Google Map ) </label>
+                    <label for="exampleInputEmail1">Longitude( Google Map ) </label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="longitude" class="form-control" >
+                    <input type="text" name="longitude" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                   </div>
                 </div>
                   </div>   
@@ -1121,50 +1024,50 @@ $(document).on('click','.edt_project',function(){
                 <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label >Company Website</label>
+                    <label for="exampleInputEmail1">Company Website</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="website" class="form-control" >
+                    <input type="text" name="website" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label >Skype id</label>
+                    <label for="exampleInputEmail1">Skype id</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="skype_id" class="form-control" >
+                    <input type="text" name="skype_id" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label >Facebook URL</label>
+                    <label for="exampleInputEmail1">Facebook URL</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="facebook" class="form-control" >
+                    <input type="text" name="facebook" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label >Twitter URL</label>
+                    <label for="exampleInputEmail1">Twitter URL</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="twitter" class="form-control" >
+                    <input type="text" name="twitter" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label >Linkedin URL</label>
+                    <label for="exampleInputEmail1">Linkedin URL</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="linkedin" class="form-control" >
+                    <input type="text" name="linkedin" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                   </div>
                 </div>
                   </div>
@@ -1176,50 +1079,50 @@ $(document).on('click','.edt_project',function(){
                 <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label >Hosting Company</label>
+                    <label for="exampleInputEmail1">Hosting Company</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="hosting_company" class="form-control" >
+                    <input type="text" name="hosting_company" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label >Hosting</label>
+                    <label for="exampleInputEmail1">Hosting</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="hostname" class="form-control" >
+                    <input type="text" name="hostname" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label >Username</label>
+                    <label for="exampleInputEmail1">Username</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="username" class="form-control" >
+                    <input type="text" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label >Password</label>
+                    <label for="exampleInputEmail1">Password</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="password" name="password" class="form-control" >
+                    <input type="password" name="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                   </div>
                 </div>
                   </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3">
-                    <label >Port</label>
+                    <label for="exampleInputEmail1">Port</label>
                   </div>
                   <div class="col-sm-9">
-                    <input type="text" name="port" class="form-control" >
+                    <input type="text" name="port" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                   </div>
                 </div>
                   </div>
@@ -1236,16 +1139,6 @@ $(document).on('click','.edt_project',function(){
      <style>
  
      </style>
-     <script type="text/javascript">
-  $(document).on('keyup','#token',function(){
-      var token= parseInt($(this).val());
-      var fp = parseInt($('#fp').val());
-      if (token > fp) {
-        swal('Error','Token Amount Can not be greater than fixed price','warning');
-        $('#token').val("0");
-      }
-  })
-</script>
       <script>
         $(document).ready(function() {
         $("#e1").select2(); 

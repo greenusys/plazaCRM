@@ -379,7 +379,7 @@ $role_id=$session[0]->role_id;
             success:function(response)
             {
               var response=JSON.parse(response);
-              console.log(response);
+             // console.log(response);
               if(response.status==1)
               {
                 console.log(response);

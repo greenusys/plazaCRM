@@ -110,7 +110,7 @@ class User extends MY_Controller {
 	            die(json_encode(array('status'=>'0','msg'=>$error)));
 	        } else {
 	        	$upload_data = $this->upload->data(); 
-				echo $file_name = "uploads/".date('dmYhis').$upload_data['file_name'];
+				$file_name = "uploads/".date('dmYhis').$upload_data['file_name'];
 				$new_data=array('user_id'=>$user_id,
 								'fullname'=>$full_name,
 								'employment_id'=>$employment_id,
@@ -770,6 +770,31 @@ class User extends MY_Controller {
         $this->load->view("pages/user_inprogressproject",$data);
         $this->load->view("layout/footer");
     }
+    public function myOpenTask(){
+        $data['all_tasks']=array();
+        $this->load->view('layout/header');
+        $this->load->view("pages/myOpenTask",$data);
+        $this->load->view("layout/footer");
+    }
+    public function myCompletedTask(){
+        $data['all_tasks']=array();
+        $this->load->view('layout/header');
+        $this->load->view("pages/myCompletedTask",$data);
+        $this->load->view("layout/footer");
+    }
+    public function myOpenProject(){
+        $data['project']=array();
+        $this->load->view('layout/header');
+        $this->load->view("pages/myOpenProject",$data);
+        $this->load->view("layout/footer");
+    }
+    public function myCompletedProject(){
+        $data['project']=array();
+        $this->load->view('layout/header');
+        $this->load->view("pages/myCompletedProject",$data);
+        $this->load->view("layout/footer");
+    }
+    
 	
 }
 ?>

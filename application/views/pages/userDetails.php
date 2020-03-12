@@ -423,7 +423,7 @@ $totalTasks=$t_not_started+$t_in_progress+$t_completed;
                                     ?></h6>
                            <ul class="text-white p-0" style="list-style:none;font-size:13px">
                               <li class="text-light">Open Projects</li>
-                              <a href="<?=base_url("User/InProgressUserProject")?>" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
+                              <a href="<?=base_url("Projects")?>" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
                            </ul>
                         </div>
                         <div class="col-sm-6">
@@ -432,7 +432,7 @@ $totalTasks=$t_not_started+$t_in_progress+$t_completed;
                                     ?></h6>
                            <ul class="text-white p-0" style="list-style:none;font-size:13px">
                               <li class="text-light">Open Tasks</li>
-                              <a href="#" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
+                              <a href="<?=base_url("Task")?>" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
                            </ul>
                         </div>
                         <div class="col-sm-6">
@@ -441,7 +441,7 @@ $totalTasks=$t_not_started+$t_in_progress+$t_completed;
                                     ?></h6>
                            <ul class="text-white p-0" style="list-style:none;font-size:13px">
                               <li class="text-light">Complete Projects</li>
-                              <a href="#" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
+                              <a href="<?=base_url("Projects")?>" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
                            </ul>
                         </div>
                         <div class="col-sm-6">
@@ -450,7 +450,7 @@ $totalTasks=$t_not_started+$t_in_progress+$t_completed;
                                     ?></h6>
                             <ul class="text-white p-0" style="list-style:none;font-size:13px">
                               <li class="text-light">Complete Tasks</li>
-                              <a href="#" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
+                              <a href="<?=base_url("Task")?>" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
                            </ul>
                         </div>
                     </div>
@@ -481,7 +481,7 @@ $totalTasks=$t_not_started+$t_in_progress+$t_completed;
                                     ?> / <?php echo $total_days; ?></h6>
                                <ul class="text-white p-0" style="list-style:none;font-size:13px">
                                   <li class="text-light">Monthly Attendance</li>
-                                  <a href="#" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
+                                  <a href="<?=base_url('Attendance/attendanceReport')?>" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
                                </ul>
                             </div>
                             <div class="col-sm-6">
@@ -494,10 +494,10 @@ $totalTasks=$t_not_started+$t_in_progress+$t_completed;
                                     ?></h6>
                                <ul class="text-white p-0" style="list-style:none;font-size:13px">
                                   <li class="text-light">Monthly Absent</li>
-                                  <a href="#" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
+                                  <a href="<?=base_url('Attendance/attendanceReport')?>" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
                                </ul>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                <h6 class="text-white"><?php
                                     if (!empty($total_leave)) {
                                         echo $total_leave;
@@ -507,10 +507,10 @@ $totalTasks=$t_not_started+$t_in_progress+$t_completed;
                                     ?></h6>
                                <ul class="text-white p-0" style="list-style:none;font-size:13px">
                                   <li class="text-light">Monthly Leave</li>
-                                  <a href="#" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
+                                  <a href="<?=base_url('Leavemanagement')?>" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
                                </ul>
                             </div>
-                            <div class="col-sm-6">
+                            <!-- <div class="col-sm-6">
                                 <h6 class="text-white"><?php
                                     if (!empty($total_award)) {
                                         echo $total_award;
@@ -522,7 +522,7 @@ $totalTasks=$t_not_started+$t_in_progress+$t_completed;
                                   <li class="text-light">Monthly Awards</li>
                                   <a href="#" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
                                </ul>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
