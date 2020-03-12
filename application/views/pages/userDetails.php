@@ -613,9 +613,9 @@ $totalTasks=$t_not_started+$t_in_progress+$t_completed;
                 <li class="w-100 side_br">
                     <a href="#salary_details" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Salary Details</a>
                 </li>
-                <li class="w-100 side_br">
+                <!-- <li class="w-100 side_br">
                     <a href="#timecard_details" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Timecard Details</a>
-                </li>
+                </li> -->
                 <li class="w-100 side_br">
                     <a href="#leave_details" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Leave Details</a>
                 </li>
@@ -623,9 +623,9 @@ $totalTasks=$t_not_started+$t_in_progress+$t_completed;
                 <!-- <li class="w-100 side_br">
                     <a href="#prov_fund" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Provident Fund</a>
                 </li> -->
-                <li class="w-100 side_br">
+              <!--   <li class="w-100 side_br">
                     <a href="#overtime_details" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Overtime Details</a>
-                </li>
+                </li> -->
                  <li class="w-100 side_br">
                     <a href="#tasks" data-toggle="tab"><i class="fas fa-info-circle" aria-hidden="true"></i> Tasks</a>
                 </li>
@@ -1489,35 +1489,26 @@ $totalTasks=$t_not_started+$t_in_progress+$t_completed;
                         <div class="row p-2">
                             <table class="table table-striped  ">
                                 <tbody>
-                                <?php
-                                $total_taken = 0;
-                                $total_quota = 0;
-                                $leave_report = leave_report($profile_info->user_id);
-                               // print_r($leave_report['leave_category']);
-                                if (!empty($leave_report['leave_category'])) {
-                                    foreach ($leave_report['leave_category'] as $lkey => $v_l_report) {
-                                        $total_quota += $leave_report['leave_quota'][$lkey];
-                                        $total_taken += $leave_report['leave_taken'][$lkey];
-                                        ?>
-                                    <tr>
-                                        <th scope="row">
-                                            <h6 class="label-style"><?= ucwords($leave_report['leave_category'][$lkey]) ?></h6>
-                                        </th>
-                                        <td scope="row">
-                                            <?= $leave_report['leave_taken'][$lkey] ?>/<?= $leave_report['leave_quota'][$lkey]; ?>
-                                        </td>
-                                    </tr>
-                                     <?php }
-                                        }
-                                        ?>
-                                    <tr>
-                                <td style="background-color: #e8e8e8; font-size: 14px; font-weight: bold;">
-                                    <strong> Total</strong>:
-                                </td>
-                                <td style="background-color: #e8e8e8; font-size: 14px; font-weight: bold;"> <?= $total_taken; ?>
-                                    /<?= $total_quota; ?> </td>
-                            </tr>
-                                </tbody>
+                                  <?php $leaveSum=0;?>
+                                  <?php $leaveTaken=0;?>
+                                  <?php $red="";?>
+                                  <?php foreach($myLeaveDetails as $leave):?>
+                                      <?php
+                                      $leaveSum+=$leave['leaveDays'];
+                                      $leaveTaken+=$leave['leaveDuration'];
+                                       $red=($leave['leaveDuration']==$leave['leaveDays']) ? "text-danger" : "text-success";
+                                      ?>
+                                  <tr class="border-bottom">
+                                      <td><strong><?=ucwords($leave['cat_name'])?>:</strong></td>
+                                      <td class="<?=$red?> font-weight-bold" style="    font-size: 16px;"><?=$leave['leaveDuration']?>/<?=$leave['leaveDays']?></td>
+                                  </tr>
+                                  <?php endforeach;?>
+                                  <tr class="border-bottom">
+                                      <td><strong>Leaves :</strong></td>
+                                      <td class="<?=$red?> font-weight-bold"><?=$leaveTaken?>/<?=$leaveSum?></td>
+                                  </tr>     
+                                 
+                              </tbody>
                             </table>
                         </div>
                         </div> 
@@ -1528,74 +1519,33 @@ $totalTasks=$t_not_started+$t_in_progress+$t_completed;
                                 </div>
                             </div>
                             <div class="line"></div>
+                              <table class="table table-striped  ">
+                                  <tbody>
+
+                                    
+                                    <?php $leaveSum_=0;?>
+                                    <?php $leaveTaken_=0;?>
+                                    <?php $red="";?>
+                                    <?php foreach($myLeaveReport as $leave):?>
+                                        <?php
+                                        $leaveSum_+=$leave['leaveDays'];
+                                        $leaveTaken_+=$leave['leaveDuration'];
+                                         $red=($leave['leaveDuration']==$leave['leaveDays']) ? "text-danger" : "text-success";
+                                        ?>
+                                    <tr class="border-bottom">
+                                        <td><strong><?=ucwords($leave['cat_name'])?>:</strong></td>
+                                        <td class="<?=$red?> font-weight-bold" style="    font-size: 16px;"><?=$leave['leaveDuration']?>/<?=$leave['leaveDays']?></td>
+                                    </tr>
+                                    <?php endforeach;?>
+                                    <tr class="border-bottom">
+                                        <td><strong>Leaves :</strong></td>
+                                        <td class="font-weight-bold"><?=$leaveTaken?>/<?=$leaveSum?></td>
+                                    </tr>     
+                                   
+                                </tbody>
+                              </table>
                         </div> 
-                        <?php
-                      $all_category = $this->db->get('tbl_leave_category')->result();
-                      $color = array('37bc9b', '7266ba', 'f05050', 'ff902b', '7266ba', 'f532e5', '5d9cec', '7cd600', '91ca00', 'ff7400', '1cc200', 'bb9000', '40c400');
-                      foreach ($all_category as $key => $v_category) {
-                          if (!empty($my_leave_report['leave_taken'][$key])) {
-                              $a = $my_leave_report['leave_taken'][$key];
-                          }
-                      }
-                      if (!empty($a)) {
-                          ?>
-                          <script type="text/javascript">
-                              // CHART PIE
-                              // -----------------------------------
-                              (function (window, document, $, undefined) {
-
-                                  $(function () {
-
-                                      var data = [
-                                          <?php
-                                          if(!empty($all_category)){
-                                          foreach ($all_category as $key => $v_category) {
-                                          if (!empty($my_leave_report['leave_taken'][$key])) {
-                                          $result = $my_leave_report['leave_taken'][$key];
-                                          ?>
-                                          {
-                                              "label": "<?= $v_category->leave_category . ' ( <small>' . 'quota'. ': ' . $my_leave_report['leave_quota'][$key] . ' ' .'taken'. ': ' . $result . '</small>)'?>",
-                                              "color": "#<?=$color[$key] ?>",
-                                              "data": <?= $result?>
-                                          },
-                                          <?php }
-                                          }
-                                          }?>
-                                      ];
-
-                                      var options = {
-                                          series: {
-                                              pie: {
-                                                  show: true,
-                                                  innerRadius: 0,
-                                                  label: {
-                                                      show: true,
-                                                      radius: 0.8,
-                                                      formatter: function (label, series) {
-                                                          return '<div class="flot-pie-label">' +
-                                                                  //label + ' : ' +
-                                                              Math.round(series.percent) +
-                                                              '%</div>';
-                                                      },
-                                                      background: {
-                                                          opacity: 0.8,
-                                                          color: '#222'
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                      };
-
-                                      var chart = $('.chart-pie-my');
-                                      if (chart.length)
-                                          $.plot(chart, data, options);
-
-                                  });
-
-                              })(window, document, window.jQuery);
-
-                          </script>
-                      <?php } ?>
+                        
                     </div>
                   <!----------Leave Details End ------>
 

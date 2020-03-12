@@ -355,9 +355,9 @@ background: #f3f3f3;
               <a href="<?=base_url('User/userProfile')?>" class="dropdown-item has-icon">
                 <i class="far fa-user"></i> Profile
               </a>
-            <!--   <a href="features-activities.html" class="dropdown-item has-icon">
-                <i class="fas fa-bolt"></i> Activities
-              </a> -->
+              <a href="<?=base_url('User/userDetails/').$session[0]->user_id?>" class="dropdown-item has-icon">
+                <i class="fas fa-bolt"></i> My Details
+              </a>
              <!--  <a href="features-settings.html" class="dropdown-item has-icon">
                 <i class="fas fa-cog"></i> Settings
               </a> -->

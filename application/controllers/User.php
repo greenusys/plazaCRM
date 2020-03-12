@@ -299,9 +299,46 @@ class User extends MY_Controller {
 			echo "0";
 		}
 	}
-
-	 public function userDetails($id, $active = null)
+    public function chekcForMyLeaveCategory($designation_id){
+        return $this->db->where('leave_cat_desig_id',$designation_id)->get('tbl_leave_category')->result_array();
+    }
+    public function countMyLeaveOfThisCategory($cat_id,$id){
+        
+        return $this->db->query("SELECT SUM(leave_duration ) as leave_d FROM tbl_leave_application WHERE application_status='2' and leave_category_id='$cat_id' and user_id='$id'")->result();
+        
+    }
+	public function userDetails($id, $active = null)
     {
+        // $usersdetail=$this->session->logged_user;
+        
+        $formyleave=$id;
+        $userDe=$this->db->select('designations_id')->where('user_id',$id)->get('tbl_account_details')->row();
+        $designation_id=$userDe->designations_id;
+        // print_r();
+        // die();
+        $myLeaveReport=array();
+        $leaveDeatils=array();
+        $resArray=array();
+        $LeaveCate=$this->chekcForMyLeaveCategory($designation_id);
+        foreach ($LeaveCate as $key => $cat) {
+            # code...
+            $calLEa=$this->countMyLeaveOfThisCategory($cat['leave_category_id'],$id);
+            // print_r($calLEa);
+
+            if($calLEa[0]->leave_d!=""){
+                $leaveDuration=$calLEa[0]->leave_d;
+                $myLeaveReport[]=array("cate_id"=>$cat['leave_category_id'],'cat_name'=>$cat['leave_category'], 'leaveDuration'=>$leaveDuration,'leaveDays'=>$cat['leave_quota']);
+                
+                
+            }else{
+                $leaveDuration=0;
+            }
+            $resArray[]=array("cate_id"=>$cat['leave_category_id'],'cat_name'=>$cat['leave_category'], 'leaveDuration'=>$leaveDuration,'leaveDays'=>$cat['leave_quota']);
+        }
+        $leaveReportArray=$this->db->where('user_id',$id)->get('tbl_leave_application')->result();
+        // print_r($myLeaveReport);
+        $data['myLeaveDetails']=$resArray;
+        $data['myLeaveReport']=$myLeaveReport;
         if (isset($id)) 
         {
             $data['title'] = 'user_details';
