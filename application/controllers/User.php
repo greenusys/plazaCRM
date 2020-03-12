@@ -110,7 +110,7 @@ class User extends MY_Controller {
 	            die(json_encode(array('status'=>'0','msg'=>$error)));
 	        } else {
 	        	$upload_data = $this->upload->data(); 
-				echo $file_name = "uploads/".date('dmYhis').$upload_data['file_name'];
+				$file_name = "uploads/".date('dmYhis').$upload_data['file_name'];
 				$new_data=array('user_id'=>$user_id,
 								'fullname'=>$full_name,
 								'employment_id'=>$employment_id,
