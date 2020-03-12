@@ -423,7 +423,7 @@ $totalTasks=$t_not_started+$t_in_progress+$t_completed;
                                     ?></h6>
                            <ul class="text-white p-0" style="list-style:none;font-size:13px">
                               <li class="text-light">Open Projects</li>
-                              <a href="<?=base_url("User/InProgressUserProject")?>" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
+                              <a href="<?=base_url("User/myOpenProject")?>" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
                            </ul>
                         </div>
                         <div class="col-sm-6">
@@ -432,7 +432,7 @@ $totalTasks=$t_not_started+$t_in_progress+$t_completed;
                                     ?></h6>
                            <ul class="text-white p-0" style="list-style:none;font-size:13px">
                               <li class="text-light">Open Tasks</li>
-                              <a href="#" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
+                              <a href="<?=base_url("User/myOpenTask")?>" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
                            </ul>
                         </div>
                         <div class="col-sm-6">
@@ -441,7 +441,7 @@ $totalTasks=$t_not_started+$t_in_progress+$t_completed;
                                     ?></h6>
                            <ul class="text-white p-0" style="list-style:none;font-size:13px">
                               <li class="text-light">Complete Projects</li>
-                              <a href="#" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
+                              <a href="<?=base_url("User/myCompletedProject")?>" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
                            </ul>
                         </div>
                         <div class="col-sm-6">
@@ -450,7 +450,7 @@ $totalTasks=$t_not_started+$t_in_progress+$t_completed;
                                     ?></h6>
                             <ul class="text-white p-0" style="list-style:none;font-size:13px">
                               <li class="text-light">Complete Tasks</li>
-                              <a href="#" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
+                              <a href="<?=base_url("User/myCompletedTask")?>" class="text-decoration-none"><li class="text-primary">More info <i class="fa fa-arrow-circle-right"></i></li></a>
                            </ul>
                         </div>
                     </div>

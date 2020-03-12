@@ -770,6 +770,31 @@ class User extends MY_Controller {
         $this->load->view("pages/user_inprogressproject",$data);
         $this->load->view("layout/footer");
     }
+    public function myOpenTask(){
+        $data['all_tasks']=array();
+        $this->load->view('layout/header');
+        $this->load->view("pages/myOpenTask",$data);
+        $this->load->view("layout/footer");
+    }
+    public function myCompletedTask(){
+        $data['all_tasks']=array();
+        $this->load->view('layout/header');
+        $this->load->view("pages/myCompletedTask",$data);
+        $this->load->view("layout/footer");
+    }
+    public function myOpenProject(){
+        $data['project']=array();
+        $this->load->view('layout/header');
+        $this->load->view("pages/myOpenProject",$data);
+        $this->load->view("layout/footer");
+    }
+    public function myCompletedProject(){
+        $data['project']=array();
+        $this->load->view('layout/header');
+        $this->load->view("pages/myCompletedProject",$data);
+        $this->load->view("layout/footer");
+    }
+    
 	
 }
 ?>
