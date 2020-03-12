@@ -638,7 +638,7 @@ $(document).on('click','.edt_project',function(){
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
-                <label >Token Amount  </label>
+                <label >Received Amount  </label>
               </div>
               <div class="col-sm-9">
                 <input type="number" name="token_amount" class="form-control" id="token" value="0" >
@@ -1240,7 +1240,7 @@ $(document).on('click','.edt_project',function(){
   $(document).on('keyup','#token',function(){
       var token= parseInt($(this).val());
       var fp = parseInt($('#fp').val());
-      if (token >= fp) {
+      if (token > fp) {
         swal('Error','Token Amount Can not be greater than fixed price','warning');
         $('#token').val("0");
       }
