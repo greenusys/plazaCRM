@@ -10,8 +10,24 @@
 				join('tbl_users','tbl_account_details.user_id=tbl_users.user_id')->get('tbl_account_details')->row()));
 		}
 		public function fetchMessages(){
-			$friend_id=$this->input->post('friend_id');
-			$response=$this->db->query("SELECT * from tbl_private_chat_messages join tbl_private_chat_users on tbl_private_chat_users.private_chat_id=tbl_private_chat_messages.private_chat_id where tbl_private_chat_users.to_user_id='$friend_id'")->result();
+
+			$friend_id=$_POST['friend_id'];
+
+			$condition1=array(
+								"tbl_private_chat_users.to_user_id"=>$friend_id,
+								"tbl_private_chat_users.user_id"=>$this->my_id,
+								// ""=>,
+							);
+			$condition2=array(
+								"tbl_private_chat_users.to_user_id"=>$this->my_id,
+								"tbl_private_chat_users.user_id"=>$friend_id,
+								// ""=>,
+							);
+			$this->db->join('tbl_private_chat_users','tbl_private_chat_users.user_id=tbl_private_chat_messages.user_id');
+			$this->db->where($condition1);
+			$this->db->or_where($condition2);
+			$response=$this->db->get('tbl_private_chat_messages')->result();
+			// $response=$this->db->query("SsELECT * from tbl_private_chat_messages join tbl_private_chat_users on tbl_private_chat_users.private_chat_id=tbl_private_chat_messages.private_chat_id where tbl_private_chat_users.to_user_id='$friend_id'")->result();
 			die(json_encode($response));
 			// 
 		}

@@ -368,6 +368,7 @@ input:active {
     });
   });
 </script>
+<script>!function(e,t,a){var c=e.head||e.getElementsByTagName("head")[0],n=e.createElement("script");n.async=!0,n.defer=!0, n.type="text/javascript",n.src=t+"/static/js/chat_widget.js?config="+JSON.stringify(a),c.appendChild(n)}(document,"https://app.engati.com",{bot_key:"790de58bb3964c50",welcome_msg:true,branding_key:"default",server:"https://app.engati.com",e:"p" });</script>
 <script type="text/javascript">
 
   function sendMessage(message,sendMessageTo){
@@ -428,14 +429,16 @@ input:active {
 
       }
     function fetchMessage(friend_id){
+      console.log("Friend Id: "+friend_id);
+      var fId=friend_id;
         $.ajax({
           url:"<?=base_url('Message/fetchMessages')?>",
           type:"post",
-          data:{friend_id:friend_id},
+          data:{friend_id:fId},
           success:function(response){
             // console.log(response);
             response=JSON.parse(response);
-            $('#'+friend_id).find('ul').empty();
+            $('#'+fId).find('ul').empty();
             for(let i=0; i<response.length;i++){
               var fD=response[i].to_user_id;
               var name=userDetail(fD);
