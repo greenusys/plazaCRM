@@ -282,7 +282,7 @@ class Projects extends MY_Controller {
       // Looping all files
       for($i=0;$i<$countfiles;$i++){
  
-        if(!empty($_FILES['files']['name'][$i])){
+        // if(!empty($_FILES['files']['name'][$i])){
  
           // Define new $_FILES array - $_FILES['file']
           $_FILES['file']['name'] = $_FILES['files']['name'][$i];
@@ -299,6 +299,7 @@ class Projects extends MY_Controller {
  
           //Load upload library
           $this->load->library('upload',$config); 
+          $this->upload->initialize($config);
  
           // File upload
           if($this->upload->do_upload('file')){
@@ -313,7 +314,7 @@ class Projects extends MY_Controller {
           // 	$error = array('error' => $this->upload->display_errors());
           // 	print_r($error);
           // }
-        }
+        // }
  
       }
         $file_list=implode(',',$uploaded_files);

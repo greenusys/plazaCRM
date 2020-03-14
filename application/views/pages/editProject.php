@@ -79,7 +79,10 @@ $('#hosting_tab').addClass('active');
   
   <script>
     $( function() {
-    $( ".datepicker" ).datepicker();
+    $( ".datepicker" ).datetimepicker({
+       viewMode: 'years',
+          format: 'YYYY-MM-DD'
+    });
     } );
   </script>
 <script>
@@ -437,16 +440,37 @@ $(document).on('click','.edt_project',function(){
                               </div>
                             </div>
                           </div> -->
+<script type="text/javascript">
+  $(document).on('keyup','#token',function(){
+      var token= parseInt($(this).val());
+      var fp = parseInt($('#fp').val());
+      if (token > fp) {
+        swal('Error','Token Amount Can not be greater than fixed price','warning');
+        $('#token').val("0");
+      }
+  })
+</script>
                           <div class="form-group">
                               <div class="row">
                               <div class="col-sm-3">
                                 <label for="exampleInputEmail1">Fixed Price  </label>
                               </div>
                               <div class="col-sm-9">
-                                <input type="text" name="fixed_rate" class="form-control" placeholder="50" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?=$particular_project_Detail[0]->fixed_rate?>">
+                                <input type="text" name="fixed_rate" class="form-control" placeholder="50" id="fp" aria-describedby="emailHelp" value="<?=$particular_project_Detail[0]->fixed_rate?>">
                               </div>
                             </div>
                           </div>
+                          <div class="form-group">
+                              <div class="row">
+                              <div class="col-sm-3">
+                                <label >Received Amount  </label>
+                              </div>
+                              <div class="col-sm-9">
+                                <input type="number" name="token_amount" class="form-control" id="token" value="<?=$particular_project_Detail[0]->token_amount?>" >
+                              </div>
+                            </div>
+                          </div>
+
                           <div class="form-group">
                               <div class="row">
                               <div class="col-sm-3">

@@ -102,7 +102,7 @@
                                <td><?=$AED->amount?></td>
                                <td><?=$AED->total_balance?></td>
                              
-                            <td><a href="">Download</a></td>
+                            <td><a href="<?=base_url('uploads/deposit/').$AED->attachement?>" download>Download</a></td>
                            
                                 <td>
                                     <div class="">
@@ -1181,7 +1181,8 @@
                   response=JSON.parse(response);             
                      if (response==1)
                       {
-                   alert('Delete Record successfully');
+                        swal("Deposit", "Record Delete successfully", "success")
+                   // alert('');
                     location.reload();
                     
                        }

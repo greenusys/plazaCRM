@@ -115,7 +115,7 @@
                                }
                                ?>
                               
-                               <td ><a href=""  download>Download</a></td>
+                               <td ><a href="<?=base_url('uploads/expense/').$AED->attachement?>"  download>Download</a></td>
                            
                                 <td>
                                     <div class="">
@@ -184,6 +184,7 @@
              <?php
                   if($this->session->flashdata('msg'))
                   {
+
 
                     echo '<div class="alert alert-info">'.$this->session->flashdata('msg').'</div>';
                    
@@ -1210,7 +1211,8 @@
                   response=JSON.parse(response);             
                      if (response==1)
                       {
-                   alert('Record Delete successfully');
+                        swal("Expense", "Record Delete successfully", "success")
+                   // alert('Record Delete successfully');
                     location.reload();
                     
                        }

@@ -38,6 +38,11 @@
 		// 		return $check;
 		// 	} 
 		// }
+		public function get_in_progress_bug(){
+			$today=date('Y-m-d');
+			$qy="Select * from tbl_bug  join tbl_project on tbl_project.project_id=tbl_bug.project_id where tbl_bug.bug_status='in_progress' ";
+			return $this->db->query($qy)->result();
+		}
 		public function get_in_progress_task(){
 			$today=date('Y-m-d');
 			$qy="Select * from tbl_task where task_status='in_progress' and due_date>='$today'";
@@ -49,10 +54,11 @@
 			return $this->db->query($qy)->result_array();
 		}
 		public function get_online_user(){
-			$this->db->Select('tbl_account_details.user_id,tbl_account_details.fullname,tbl_account_details.avatar');
-			$this->db->join('tbl_account_details','tbl_account_details.user_id=tbl_users.user_id');
-			$this->db->where('online_time',1);
-			return $this->db->get('tbl_users')->result();
+			// $this->db->Select('tbl_account_details.user_id,tbl_account_details.fullname,tbl_account_details.avatar');
+			// $this->db->join('tbl_account_details','tbl_account_details.user_id=tbl_users.user_id');
+			// $this->db->where('online_time',1);
+			return $this->db->query("Select tbl_account_details.user_id,tbl_account_details.fullname,tbl_account_details.avatar from tbl_users join tbl_account_details on tbl_account_details.user_id=tbl_users.user_id where online_time=1 and tbl_users.user_id NOT IN ('".$this->my_id."')")->result();
+			// return $this->db->get('tbl_users')->result();
 		}
 	}
 	

@@ -43,38 +43,39 @@
 				<thead>
 					<th>Bug Title</th>
 					<th>Date</th>
-					<th>Status</th>
+					<!--<th>Status</th>-->
 					<th>Severity</th>
-					<th>Reporter</th>
+					<!--<th>Reporter</th>-->
 					<th>ASSigned To </th>
 					<th>Action</th>
 				</thead>
 				<tbody>
 					<?php
 					foreach ($all_bugs_info as $buggy) {
+						// print_r($buggy);
 					?>
 					<tr>
 						<td><a href="#"><?=$buggy->bug_title?></a></td>
-						<td><?=$buggy->created_time?></td>
-						<td>
-							<div class="row">
-								<div class="col-sm-4">
-								<label class="bg-success text-white p-1">Resolved</label>
-								</div>
-								<div class="col-sm-6">
-									<select class="slect_ht form-control" name="department">
-									<option value="name1">Change</option>
-									<option value="name2">Verified</option>
-									<option value="name3">Resolved</option>
-									<option value="name1">In Progress</option>
-									<option value="name2">Confirmed</option>
-									<option value="name3">Unconfirmed</option>
-									</select>
-								</div>
-							</div>
-						</td>
+						<td><?=date('d, M Y',strtotime($buggy->created_time))?></td>
+						<!--<td>-->
+						<!--	<div class="row">-->
+						<!--		<div class="col-sm-4">-->
+						<!--		<label class="bg-success text-white p-1">Resolved</label>-->
+						<!--		</div>-->
+						<!--		<div class="col-sm-6">-->
+						<!--			<select class="slect_ht form-control" name="department">-->
+						<!--			<option value="name1">Change</option>-->
+						<!--			<option value="name2">Verified</option>-->
+						<!--			<option value="name3">Resolved</option>-->
+						<!--			<option value="name1">In Progress</option>-->
+						<!--			<option value="name2">Confirmed</option>-->
+						<!--			<option value="name3">Unconfirmed</option>-->
+						<!--			</select>-->
+						<!--		</div>-->
+						<!--	</div>-->
+						<!--</td>-->
 						<td><label class="bg-primary text-white p-1">Minor</label></td>
-						<td>Undefined User</td>
+						<!--<td>Undefined User</td>-->
 						<td>Everyone<i class="fa fa-question-circle"></i> <i class="fa fa-plus text-primary"></i></td>
 						<td scope="row" >
 							<?php
@@ -97,7 +98,7 @@
                                          if(strpos($permission,'Delete')!==false||strpos($Userpermi,'Delete')!==false)
                                           {?>
 
-                                       <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
+                                        <a href="javascript:void(0)" bugs_id="<?=$buggy->bug_id?>" class="deletetbugss"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
                                         <?php }
                                          else
                                          {
@@ -618,6 +619,41 @@ $(document).ready(function(){
  
 });
 </script>
+ <script type="text/javascript">
+        $(document).ready(function(){
+          $('.deletetbugss').on('click',function(){ 
+             var bugs_id=$(this).attr("bugs_id");
+               // alert(bugs_id);
+           if(confirm("Are you Sure want to delete this record?") ==true)
+            {       
+            // alert(owner_id);         
+                $.ajax({
+                  url:"<?=base_url('Bugs/DeleteBugsData')?>",
+                  type:"post",
+                  data:{bugs_id:bugs_id},
+                  success:function(response)
+                  {   
+                  response=JSON.parse(response);             
+                     if (response==1)
+                      {
+                        swal("Bugs", "Delete successfully", "success")
+                   // alert('');
+                    location.reload();
+                    
+                       }
+                  }
+                 })                           
+             userPreference = "Data Delete successfully!";
+
+             }
+             else 
+             {
+              userPreference = "Save Canceled!";
+              }
+              
+          });
+        })  ;
+      </script>
 <!-- 
 </body>
 </html> -->

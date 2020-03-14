@@ -5,6 +5,20 @@
     		$this->db->insert('tbl_bug', $data);
        		return true;
     	}
+    	public function DeleteBugsData($data)
+    {
+        $this->db->where($data);
+         $results=$this->db->delete('tbl_bug');
+         if($results)
+            {
+                return 1;
+            }
+    
+            else
+            {
+                return 0;
+            }
+    }
 
     }
 ?>

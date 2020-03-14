@@ -7,19 +7,19 @@
                   <div class="col-md-6">
                     <span><strong>Job Application List</strong></span> 
                    </div>
-                    <div class="col-md-6 text-right"><div class="btn-group">
+                   <!--  <div class="col-md-6 text-right"><div class="btn-group">
                         <button type="button" class="btn btn-default rounded dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fa fa-filter" aria-hidden="true"></i>
                         </button>
                         <div class="dropdown-menu margl_65">
-                          <a class="dropdown-item" href="#">Action</a>
+                          <a class="dropdown-item" href="#">Action</a> -->
                          <!--  <a class="dropdown-item" href="#">Another action</a>
                           <a class="dropdown-item" href="#">Something else here</a>
                           <div class="dropdown-divider"></div>
                           <a class="dropdown-item" href="#">Separated link</a> -->
-                        </div>
+                        <!-- </div>
                       </div>
-                    </div>
+                    </div> -->
                 </div>
               <div class="p-2">
               <table id="example" class="display nowrap" style="width:100%">

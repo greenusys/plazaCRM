@@ -159,9 +159,9 @@
                     <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
                       aria-selected="false">New Client</a>
                   </li>
-                  <li class="nav-item ">
+                 <!--  <li class="nav-item ">
                   <a class="nav-link" id="import_project" data-toggle="tab" href="#imp_project" role="tab" aria-controls="imp_project" aria-selected="false">Import Client</a>
-                  </li>
+                  </li> -->
                 </ul>
                 <div class="tab-content card pt-3" id="myTabContentJust">
                   <div class="tab-pane fade show active px-4" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
@@ -538,7 +538,7 @@
                                     <label for="exampleInputEmail1"> Latitude( Google Map ) </label>
                                   </div>
                                   <div class="col-sm-7">
-                                    <input type="email" class="form-control" name="compLatitude" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    <input type="number" class="form-control" name="compLatitude" id="exampleInputEmail1" aria-describedby="emailHelp">
                                   </div>
                                 </div>
                               </div>
@@ -548,7 +548,7 @@
                                     <label for="exampleInputEmail1">Longitude( Google Map ) </label>
                                   </div>
                                   <div class="col-sm-7">
-                                    <input type="email" class="form-control" name="compLongitude" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    <input type="number" class="form-control" name="compLongitude" id="exampleInputEmail1" aria-describedby="emailHelp">
                                   </div>
                                 </div>
                               </div>

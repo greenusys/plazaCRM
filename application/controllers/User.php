@@ -85,7 +85,7 @@ class User extends MY_Controller {
 		$designations_id=$_POST['designations_id'];
 		$check_data=$this->User_model->check_user($username,$email);
 		if($check_data){
-			die(json_encode(array('status'=>'0','msg'=>'no data')));
+			die(json_encode(array('status'=>'0','msg'=>'Already Exists')));
 		}
 		else{
 			$data=array('username'=>$username,
@@ -96,11 +96,15 @@ class User extends MY_Controller {
 						'activated'=>'1');
 			$insert=$this->User_model->insert_user($data);
 			$user_id=$insert;
-	        $config['upload_path'] = './uploads/';
-	        $config['allowed_types'] = '*';
-	        $config['max_size'] = 2000;
-	        $config['max_width'] = 1500;
-	        $config['max_height'] = 1500;
+            $image = rand(0000,9999).'-'.$_FILES["profilephoto"]['name'];
+            $config['upload_path']          = './uploads/';
+            $config['allowed_types']        = 'jpg|png|jpeg';
+            $config['file_name'] = $image;
+	        // $config['upload_path'] = './uploads/';
+	        // $config['allowed_types'] = '*';
+	        // $config['max_size'] = 2000;
+	        // $config['max_width'] = 1500;
+	        // $config['max_height'] = 1500;
 
 	        $this->load->library('upload', $config);
 	        $this->upload->initialize($config);
@@ -110,7 +114,7 @@ class User extends MY_Controller {
 	            die(json_encode(array('status'=>'0','msg'=>$error)));
 	        } else {
 	        	$upload_data = $this->upload->data(); 
-				echo $file_name = "uploads/".date('dmYhis').$upload_data['file_name'];
+				$file_name = "uploads/".$image;
 				$new_data=array('user_id'=>$user_id,
 								'fullname'=>$full_name,
 								'employment_id'=>$employment_id,
@@ -126,7 +130,7 @@ class User extends MY_Controller {
 					die(json_encode(array('status'=>'1','msg'=>'success')));
 				}
 				else{
-					die(json_encode(array('status'=>'0','msg'=>'failed')));
+					die(json_encode(array('status'=>'0','msg'=>'OOPS ! Something Went Wrong')));
 				}
 	        }
 		}
@@ -299,9 +303,46 @@ class User extends MY_Controller {
 			echo "0";
 		}
 	}
-
-	 public function userDetails($id, $active = null)
+    public function chekcForMyLeaveCategory($designation_id){
+        return $this->db->where('leave_cat_desig_id',$designation_id)->get('tbl_leave_category')->result_array();
+    }
+    public function countMyLeaveOfThisCategory($cat_id,$id){
+        
+        return $this->db->query("SELECT SUM(leave_duration ) as leave_d FROM tbl_leave_application WHERE application_status='2' and leave_category_id='$cat_id' and user_id='$id'")->result();
+        
+    }
+	public function userDetails($id, $active = null)
     {
+        // $usersdetail=$this->session->logged_user;
+        
+        $formyleave=$id;
+        $userDe=$this->db->select('designations_id')->where('user_id',$id)->get('tbl_account_details')->row();
+        $designation_id=$userDe->designations_id;
+        // print_r();
+        // die();
+        $myLeaveReport=array();
+        $leaveDeatils=array();
+        $resArray=array();
+        $LeaveCate=$this->chekcForMyLeaveCategory($designation_id);
+        foreach ($LeaveCate as $key => $cat) {
+            # code...
+            $calLEa=$this->countMyLeaveOfThisCategory($cat['leave_category_id'],$id);
+            // print_r($calLEa);
+
+            if($calLEa[0]->leave_d!=""){
+                $leaveDuration=$calLEa[0]->leave_d;
+                $myLeaveReport[]=array("cate_id"=>$cat['leave_category_id'],'cat_name'=>$cat['leave_category'], 'leaveDuration'=>$leaveDuration,'leaveDays'=>$cat['leave_quota']);
+                
+                
+            }else{
+                $leaveDuration=0;
+            }
+            $resArray[]=array("cate_id"=>$cat['leave_category_id'],'cat_name'=>$cat['leave_category'], 'leaveDuration'=>$leaveDuration,'leaveDays'=>$cat['leave_quota']);
+        }
+        $leaveReportArray=$this->db->where('user_id',$id)->get('tbl_leave_application')->result();
+        // print_r($myLeaveReport);
+        $data['myLeaveDetails']=$resArray;
+        $data['myLeaveReport']=$myLeaveReport;
         if (isset($id)) 
         {
             $data['title'] = 'user_details';
@@ -691,7 +732,7 @@ class User extends MY_Controller {
 		      $pics=implode(",",$images);
 	          $_POST['rpt_images']=$pics;
 	         	if($this->User_model->add_user_reports($_POST)){
-					$this->session->set_flashdata('msg','Added Successfully ssaa' );
+					$this->session->set_flashdata('msg','Added Successfully' );
 			    		redirect(base_url('User/generateReport'));
 				}else{
 					$this->session->set_flashdata('msg','Server Error, Please Try Again');
@@ -700,7 +741,7 @@ class User extends MY_Controller {
 
 		}else{
 			if($this->User_model->add_user_reports($_POST)){
-					$this->session->set_flashdata('msg','Added Successfully 88uj7u');
+					$this->session->set_flashdata('msg','Added Successfully ');
 			    		redirect(base_url('User/generateReport'));
 			}else{
 				$this->session->set_flashdata('msg','Server Error, Please Try Again');
@@ -770,6 +811,31 @@ class User extends MY_Controller {
         $this->load->view("pages/user_inprogressproject",$data);
         $this->load->view("layout/footer");
     }
+    public function myOpenTask(){
+        $data['all_tasks']=array();
+        $this->load->view('layout/header');
+        $this->load->view("pages/myOpenTask",$data);
+        $this->load->view("layout/footer");
+    }
+    public function myCompletedTask(){
+        $data['all_tasks']=array();
+        $this->load->view('layout/header');
+        $this->load->view("pages/myCompletedTask",$data);
+        $this->load->view("layout/footer");
+    }
+    public function myOpenProject(){
+        $data['project']=array();
+        $this->load->view('layout/header');
+        $this->load->view("pages/myOpenProject",$data);
+        $this->load->view("layout/footer");
+    }
+    public function myCompletedProject(){
+        $data['project']=array();
+        $this->load->view('layout/header');
+        $this->load->view("pages/myCompletedProject",$data);
+        $this->load->view("layout/footer");
+    }
+    
 	
 }
 ?>

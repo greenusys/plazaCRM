@@ -31,6 +31,9 @@ class Dashboard extends MY_Controller {
 		$data['get_All_announcement']=$this->db->get('tbl_announcements')->result();
 		$tasks=$this->Demo->get_over_due_task();
 		$projects=$this->Demo->get_over_due_project();
+		$data['in_progress_bug']=$this->Demo->get_in_progress_bug();
+		$project_data=array();
+		$task_data=array();
 		if(count($projects)>0){
 			foreach ($projects as $pr) {
 				$perm=$pr['permission'];
@@ -47,8 +50,6 @@ class Dashboard extends MY_Controller {
 				$project_data[]=array_merge($pr,array("assigned_to"=>$user));
 
 			}
-		}else{
-			$project_data=array();
 		}
 		if(count($tasks)>0){
 			foreach ($tasks as $pr) {
@@ -65,8 +66,6 @@ class Dashboard extends MY_Controller {
 				}
 				$task_data[]=array_merge($pr,array("assigned_to"=>$user));
 			}
-		}else{
-			$task_data=array();
 		}
 		
         $data['Overproject']=$project_data;
@@ -92,6 +91,8 @@ class Dashboard extends MY_Controller {
 		die(json_encode($this->Demo->get_online_user()));
 	}
 	public function projectInprogress(){
+		$project_data=array();
+		// $task_data=array();
 		$session=$this->session->userdata('logged_user');
         $id=$session[0]->user_id;
         $designation_id=$session[0]->designations_id;
@@ -158,7 +159,7 @@ class Dashboard extends MY_Controller {
 
     }
     public function inProgressTasks(){
-    	$data['all_tasks']=$this->db->where('task_status','in_progress')->get('tbl_task')->result();
+    	$data['all_tasks']=$this->Demo->get_in_progress_task();
     	// print_r($data['all_tasks']);
     	// die;
 		$data['users']=$this->User_model->fetch_user();
@@ -168,7 +169,7 @@ class Dashboard extends MY_Controller {
     }
     public function InProgressBugss(){
     	// $this->db->join('tbl_project','tbl_project.project_id=tbl_bug.project_id');	
-    	$data['all_bugs']=$this->db->join('tbl_project','tbl_project.project_id=tbl_bug.project_id')->where('bug_status','in_progress')->get('tbl_bug')->result();
+    	$data['all_bugs']=$this->Demo->get_in_progress_bug();
     	// print_r($data['all_bugs']);
     	// die;
 		$data['users']=$this->User_model->fetch_user();

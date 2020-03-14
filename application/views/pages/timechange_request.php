@@ -57,13 +57,13 @@
                                               
                                           if(strpos($permission,'Edit')!==false||strpos($Userpermi,'Edit')!==false)
                                           {?>
-                                              <a href="" id="edit_p"class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                              <!-- <a href="" id="edit_p"class="sele_staus bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a> -->
 
                                          <?php }
                                          else
                                          {
                                           ?>
-                                            <a href="javascript:void(0)" id="edit_p"class="sele_staus bg-info p-1 text-white " style="visibility: hidden"><span><i class="far fa-edit"></i></span></a>
+                                            <!-- <a href="javascript:void(0)" id="edit_p"class="sele_staus bg-info p-1 text-white " style="visibility: hidden"><span><i class="far fa-edit"></i></span></a> -->
 
                                          <?php
                                           }
