@@ -70,6 +70,9 @@ class Job_Circular_Model extends MY_Model
         return $this->db->get('tbl_designations')->result();
     }
 
+     
+    
+
   
 
 

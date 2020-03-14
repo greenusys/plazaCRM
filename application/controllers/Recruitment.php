@@ -81,5 +81,6 @@ class Recruitment extends MY_Controller {
 		 	die(json_encode(array('status' =>'0','msg'=>'Job With Same Name Already Exists')));
 		}
 	}
+	
 }
 ?>
