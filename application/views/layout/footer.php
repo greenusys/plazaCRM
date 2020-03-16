@@ -475,6 +475,7 @@ input:active {
            '</div>'+
            '<div class="sendBox">'+
            '<input type="text" placeholder="Enter your message.. " class="sendMyNewMsg" f-dd="'+frnd_id+'">'+
+			'<input type="file" id="upload_attachment" class="sendMyNewMsg" f-dd="'+frnd_id+'">'
            '</div>';
            // console.log(parentString);
         $('#viewport').append(parentString);
