@@ -5,7 +5,7 @@ $session=$this->session->userdata('logged_user');
 
 <footer class="main-footer">
         <div class="footer-left">
-          Copyright &copy; 2019 
+          Copyright &copy; 2019
           <!-- <div class="bullet"></div> Design By  -->
         </div>
         <div class="footer-right">
@@ -72,7 +72,7 @@ RowSorter(gebi('table2'), {
     font-size: 12px
   }
   .chat_popup{
-    width: 60px; 
+    width: 60px;
     height: 60px ;
      bottom:0px;
      position: fixed;
@@ -93,7 +93,7 @@ RowSorter(gebi('table2'), {
     height: 320px;
   }
   /*.chat_box{
-    
+
     display: block;
     bottom:0px;
     position: fixed;
@@ -161,7 +161,7 @@ RowSorter(gebi('table2'), {
 :-ms-input-placeholder { color: #B0BEC5; }
 :-moz-placeholder { color: #B0BEC5; }
 
-#viewport { 
+#viewport {
   position: fixed;
   bottom: 0px;
   z-index: 10000;
@@ -183,7 +183,7 @@ RowSorter(gebi('table2'), {
 }
 #viewport > .chatbox > .chats {
   position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0; 
+  top: 0; left: 0; bottom: 0; right: 0;
   display: table-cell;
   vertical-align: bottom;
   padding: 1rem;
@@ -204,7 +204,7 @@ ul > li:after {
   content: '';
   clear: both;
 }
-.msg {    
+.msg {
   max-width: 85%;
   display: inline-block;
   padding: 0.5rem 1rem;
@@ -228,8 +228,8 @@ ul > li:after {
   color: #607D8B;
   border-bottom-right-radius: 0.125rem;
 }
-.msg.load { 
-  background-color: #F8BBD0; 
+.msg.load {
+  background-color: #F8BBD0;
   border-bottom-left-radius: 0.125rem;
 }
 .msg > span {
@@ -274,8 +274,8 @@ ul > li:after {
 }
 input:hover,
 input:focus,
-input:active { 
-  outline: none!important; 
+input:active {
+  outline: none!important;
   border-top: 0.125rem solid #E91E63;
 }
 
@@ -286,7 +286,7 @@ input:active {
   height: 0.375rem;
   border-radius: 0.25rem;
   margin-right: 0.125rem;
-  background-color: rgba(255,255,255,0.75); 
+  background-color: rgba(255,255,255,0.75);
 }
 .load .dot:nth-last-child(1) {animation: loadAnim 1s .2s linear infinite;}
 .load .dot:nth-last-child(2) {animation: loadAnim 1s .4s linear infinite;}
@@ -309,7 +309,7 @@ input:active {
         <div class=" "><h6>User's Name</h6></div> -->
         <!--    <div class="chat_minimize"><i class="fas fa-minus"></i></div> -->
         <!-- <div class="chat_close"><i class="fas fa-times"></i></div>
-     
+
       </div>
       <div class="">
         <div class="">
@@ -382,7 +382,7 @@ input:active {
     })
   }
   $(document).on('keypress','.sendMyNewMsg',function(e){
-   // var 
+   // var
     if(e.keyCode==13){
       var element=$(this);
 
@@ -406,7 +406,8 @@ input:active {
   $(document).ready(function(){
     var left =0;
     var chatArray=[];
-    setInterval(function(){ 
+    var uname='xcvxvxvxcv'
+    setInterval(function(){
         $.each(chatArray,function(index,value){
             fetchMessage(value);
         });
@@ -423,7 +424,8 @@ input:active {
             response=JSON.parse(response)
              name=response.fullname;
             console.log('  // /////  '+name);
-            return name;
+            uname=name
+            // return name;
           }
         });
 
@@ -435,19 +437,21 @@ input:active {
           url:"<?=base_url('Message/fetchMessages')?>",
           type:"post",
           data:{friend_id:fId},
+			async:false,
           success:function(response){
             // console.log(response);
             response=JSON.parse(response);
             $('#'+fId).find('ul').empty();
             for(let i=0; i<response.length;i++){
               var fD=response[i].to_user_id;
-              var name=userDetail(fD);
-              console.log(name);
+              // var name=userDetail(fD);
+              userDetail(fD);
+              console.log('user name is ',fD);
                var _cl;
               (response[i].user_id == <?=$this->my_id?>) ? _cl = 'you' : _cl = 'him';
               var dataString = '<li>'+
                      '<div class="msg ' + _cl +'">'+
-                     '<span class="partner">'+name+'</span>'+
+                     '<span class="partner">'+uname+'</span>'+
                      response[i].message +
                      '<span class="time"> ago</span>'+
                      '</div></li>';
@@ -457,7 +461,7 @@ input:active {
           }
         });
       }
-      
+
   $(document).on("click",".opn_chat",function(){
     var frnd_id=$(this).attr('frnd_id');
     var fname=$(this).attr('f-name');
@@ -471,16 +475,16 @@ input:active {
            '</div>'+
            '<div class="sendBox">'+
            '<input type="text" placeholder="Enter your message.. " class="sendMyNewMsg" f-dd="'+frnd_id+'">'+
-           '</div>';  
+           '</div>';
            // console.log(parentString);
         $('#viewport').append(parentString);
     }else{
       console.log('Already Exists');
     }
-    
+
     console.log(chatArray);
-    
-    
+
+
     // $.ajax({
     //   url:"<?=base_url('User/getUserByDetails')?>",
     //   type:"post",
@@ -544,7 +548,7 @@ input:active {
     //     }
     //   }
     // });
-    
+
    });
 
 });
@@ -575,13 +579,13 @@ input:active {
         action: ''
       }]
     };
-      
+
     init();
     function init () {
 
       renderData();
-    };  
-    
+    };
+
     // RENDER METHODS
     function renderData () {
       // console.log("Workingn");
@@ -595,7 +599,7 @@ input:active {
            '</div>'+
            '<div class="sendBox">'+
            '<input type="text" placeholder="enter next line '+ user.split(' ')[0]+'...">'+
-           '</div>';  
+           '</div>';
            // console.log(parentString);
         $('#viewport1').append(parentString);
         _json.chats.forEach(function (chat) {
@@ -607,27 +611,27 @@ input:active {
              chat.msg +
              '<span class="time">' + getDateTime (chat.time) + '</span>'+
              '</div></li>';
-          $('#viewport #'+ userID +' .chats>ul').append(dataString);    
+          $('#viewport #'+ userID +' .chats>ul').append(dataString);
         });
-      });   
+      });
     };
-    
+
     function newMsgRender (data) {
       $('#viewport .chats ul>li.pending').remove();
       _json.users.forEach(function (user) {
         var checkID = user.replace(/ /g,"_");
         var _cl = '';
-        (data.from === user) ? _cl = 'you' : _cl= 'him';          
+        (data.from === user) ? _cl = 'you' : _cl= 'him';
         $('#viewport .chatbox#'+ checkID +' .chats ul')
           .append('<li><div class="msg '+_cl+'">'+
                 '<span class="partner">'+ data.from +'</span>'+
                 data.msg +
                 '<span class="time">' + getDateTime (data.time) + '</span>'+
                 '</div>'+
-                '</li>'); 
+                '</li>');
       });
     }
-    
+
     function pendingRender (typingUser) {
       var pending = '<li class="pending">'+
          '<div class="msg load">'+
@@ -642,12 +646,12 @@ input:active {
           if(!($('#'+ user +' .chats ul>li').hasClass('pending')))
             $('#'+ user +' .chats ul').append(pending);
         }
-      });   
+      });
     }
-    
+
     // HELPER FUNCTION
     function getDateTime (t) {
-      var month   = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']; 
+      var month   = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       var d     = new Date(t/1000),
          month  = (month[d.getMonth()]),
          day    = d.getDate().toString(),
@@ -655,13 +659,13 @@ input:active {
          min    = d.getMinutes().toString();
       (day.length < 2) ? day = '0' + day : '';
       (hour.length < 2) ? hour = '0' + hour : '';
-      (min.length < 2) ? min = '0' + min : '';    
+      (min.length < 2) ? min = '0' + min : '';
       var res = ''+month+' '+day+' '+hour+ ':' + min;
       return res;
     }
-    
+
     // KEYPRESS EVENTS HANDLER
-    $('#viewport .sendBox>input').keypress(function( e ) {      
+    $('#viewport .sendBox>input').keypress(function( e ) {
       var _id = $(this).closest('.chatbox').attr('id');
       pendingRender(_id);
       if(e.which == 13) {
@@ -688,17 +692,17 @@ input:active {
           $('#viewport .chats ul>li.pending').remove();
         }
       }
-    }); 
-    
+    });
+
     // EVENT HANDLER
     $('#viewport .sendBox>input').focusout(function() {
       $('#viewport .chats ul>li.pending').remove();
     });
   });
 </script>
-<div class="">         
+<div class="">
   <div id="sh_dv" class="chat_popup bg-primary p-3" style="">
-    <img src="<?=base_url()?>assets/img/comment.png" class="img-fluid" >         
+    <img src="<?=base_url()?>assets/img/comment.png" class="img-fluid" >
   </div>
   <div  class="chat_list" id="chat_list" style="">
     <div class="d-flex bg-info text-white p-2">
@@ -745,14 +749,14 @@ $(document).on("click","#sh_dv",function(){
   $(this).hide();
   $("#chat_list").show();
 
-})  
+})
 $(document).on("click",".chat_close",function(){
   $("#sh_dv").show();
   $("#chat_list").hide();
 
-})  
+})
 function getConversation(frndId){
-  
+
   // $.ajax({
   //   url:"<?=base_url('Chat/getMessages_')?>",
   //     type:"post",
@@ -784,9 +788,9 @@ function getConversation(frndId){
   //     }
 
   // });
- 
 
-  
+
+
 }
 
 $(document).on("click",".chat_close",function(){

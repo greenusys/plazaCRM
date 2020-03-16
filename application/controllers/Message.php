@@ -10,7 +10,7 @@
 				join('tbl_users','tbl_account_details.user_id=tbl_users.user_id')->get('tbl_account_details')->row()));
 		}
 		public function fetchMessages(){
-
+//			die($this->my_id);
 			$friend_id=$_POST['friend_id'];
 
 			$condition1=array(
@@ -26,10 +26,11 @@
 			$this->db->join('tbl_private_chat_users','tbl_private_chat_users.user_id=tbl_private_chat_messages.user_id');
 			$this->db->where($condition1);
 			$this->db->or_where($condition2);
+			$this->db->group_by("tbl_private_chat_messages.private_chat_messages_id");
 			$response=$this->db->get('tbl_private_chat_messages')->result();
 			// $response=$this->db->query("SsELECT * from tbl_private_chat_messages join tbl_private_chat_users on tbl_private_chat_users.private_chat_id=tbl_private_chat_messages.private_chat_id where tbl_private_chat_users.to_user_id='$friend_id'")->result();
 			die(json_encode($response));
-			// 
+			//
 		}
 		public function sendMessage(){
 			// print_r($_POST);
@@ -62,7 +63,7 @@
 			}
 		}
 		public function insertInPrivateChat($sent_by,$chat_title="",$sentTo,$msg){
-			// tbl_private_chat`(`private_chat_id`, `chat_title`, `user_id`, `time`) 
+			// tbl_private_chat`(`private_chat_id`, `chat_title`, `user_id`, `time`)
 			$data=array(
 						"chat_title"=>$chat_title,
 						"user_id"=>$sent_by,
@@ -74,7 +75,7 @@
 				if($this->db->insert('tbl_private_chat',$data)){
 					return true;
 				}else{
-					return false;				
+					return false;
 				}
 			}else{
 				// echo 'Insert in Private Chat Message';
@@ -96,7 +97,7 @@
 						echo 'AA';
 						return false;
 					}
-					
+
 				}else{
 					// echo 'CCC';
 					return false;
@@ -134,7 +135,7 @@
 			}else{
 				return false;
 			}
-	
+
 		}
 		public function de(){
 			// $privateChatDetails=$this->getLastPrivateChatId($sentTo);
@@ -153,7 +154,7 @@
 			// 			}else{
 			// 				return false;
 			// 			}
-						
+
 			// 		}else{
 			// 			return false;
 			// 		}
