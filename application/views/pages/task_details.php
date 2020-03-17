@@ -478,7 +478,7 @@ font-size: 35px;
                               <li class="dots">:</li>
                               <li>10<span>Seconds</span></li>
                             </ul>
-                            <span class="text-danger">  task_description</span>
+                            <span class="text-danger">  <?=$task['task_description']?></span>
                         </div>  
                     </div>
                 </div>

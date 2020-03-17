@@ -337,10 +337,12 @@ $(document).on('click','.del_template',function(){
       success:function(response){
         var response=JSON.parse(response);
         if(response.status==1){
+           swal("Salary", "Template Delete successfully", "success");
           location.reload();
         }
         else{
-          alert('Failed TO Delete');
+           swal("Deposit", "Failed TO Delete", "Error");
+          // alert('Failed TO Delete');
         }
       }
     })
@@ -452,13 +454,16 @@ $("#set_template").submit(function(e){
              success:function(response)
              {
                var response=JSON.parse(response);
-               if(response.status==1){
+               if(response.status==1)
+               {
                  swal("Template Created Successfully!", "Created", "success");
+                 location.reload();
                  $("#example").load(location.href + " #example");
                  //window.location.href='<?=base_url()?>Home';
                }
                else if(response.status=="0"){
                 swal(response.msg, "Already Exists", "error");
+                location.reload();
               }
              }
          });

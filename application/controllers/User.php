@@ -732,7 +732,7 @@ class User extends MY_Controller {
 		      $pics=implode(",",$images);
 	          $_POST['rpt_images']=$pics;
 	         	if($this->User_model->add_user_reports($_POST)){
-					$this->session->set_flashdata('msg','Added Successfully ssaa' );
+					$this->session->set_flashdata('msg','Added Successfully' );
 			    		redirect(base_url('User/generateReport'));
 				}else{
 					$this->session->set_flashdata('msg','Server Error, Please Try Again');
@@ -741,7 +741,7 @@ class User extends MY_Controller {
 
 		}else{
 			if($this->User_model->add_user_reports($_POST)){
-					$this->session->set_flashdata('msg','Added Successfully 88uj7u');
+					$this->session->set_flashdata('msg','Added Successfully ');
 			    		redirect(base_url('User/generateReport'));
 			}else{
 				$this->session->set_flashdata('msg','Server Error, Please Try Again');

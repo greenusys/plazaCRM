@@ -17,9 +17,11 @@
 </style>
 <?php
     $session=$this->session->userdata('logged_user');
+    // print_r($session);
    
 $myId=$session[0]->user_id;
 $role_id=$session[0]->role_id;
+$designation=$session[0]->designations_id;
 ?>
 
         <div class="row mt-4">
@@ -48,10 +50,24 @@ $role_id=$session[0]->role_id;
                            <!--  <li class="nav-item ">
                                 <a class="nav-link" id="leave_report_tab" data-toggle="tab" href="#leave_report" role="tab" aria-controls="leave_report" aria-selected="false">Leave Report</a>
                             </li> -->
-                       
-                        <li class="nav-item ">
+                       <?php 
+                        $session=$this->session->userdata('logged_user');
+                        $designation_idddd=$session[0]->designations_id;
+                        // print_r( $designation_idddd);
+                        if($designation_idddd==1)
+                        {
+                            ?>
+                        <li class="nav-item "style="display:none">
                             <a class="nav-link" id="apply_leave_tab" data-toggle="tab" href="#apply_leave" role="tab" aria-controls="apply_leave" aria-selected="false">Apply Leave</a>
                         </li>
+                        <?php
+                    }
+                    else{
+                        ?>
+                        <li class="nav-item " >
+                            <a class="nav-link" id="apply_leave_tab" data-toggle="tab" href="#apply_leave" role="tab" aria-controls="apply_leave" aria-selected="false">Apply Leave</a>
+                        </li>
+                   <?php }?>
                     </ul>
                     <div class="tab-content card pt-5 refreshlocation"  id="myTabContentJust ">
                         <div class="tab-pane fade show active px-4" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
@@ -967,7 +983,9 @@ $role_id=$session[0]->role_id;
                 // var leavedate=response.data[0].leave_start_date;
                 var leavecategory=response.data[0].leave_category;
                  var duration=response.data[0].hours;
-                var applieddate=response.data[0].created;
+                 var applieddate=response.data[0].created;
+
+                var applydate=response.data[0].lpolicy_addedon;
                 var reason=response.data[0].reason;
                 var leavestartdate=response.data[0].leave_start_date;
                 var leaveendate=response.data[0].leave_end_date;
@@ -993,6 +1011,8 @@ $role_id=$session[0]->role_id;
                  $("#categorynameofrleave").append(fullname);
                  $("#Duration").append(diffDays);
                  $("#Applieddate").append(applieddate);
+                 
+                 // console.log('applied date',applieddate);
                  $("#reason").append(reason);
                   $("#leavestartdate").append(strtDate);
                    $("#leaveenddate").append(endDate);

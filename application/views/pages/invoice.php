@@ -587,7 +587,7 @@ $(document).ready(function(){
 				    <div class="row mt-5">
 		               <div class="offset-6 col-sm-6">
 		                 <!-- <button type="submit" class="btn btn-primary ">Save as Draft</button> -->
-		                  <button type="submit" class="btn btn-success ">Update</button>
+		                  <button type="submit" class="btn btn-success ">Add</button>
 		               </div>
 		            </div>
 		        </form>

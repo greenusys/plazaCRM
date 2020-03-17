@@ -538,7 +538,7 @@
                                     <label for="exampleInputEmail1"> Latitude( Google Map ) </label>
                                   </div>
                                   <div class="col-sm-7">
-                                    <input type="email" class="form-control" name="compLatitude" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    <input type="number" class="form-control" name="compLatitude" id="exampleInputEmail1" aria-describedby="emailHelp">
                                   </div>
                                 </div>
                               </div>
@@ -548,7 +548,7 @@
                                     <label for="exampleInputEmail1">Longitude( Google Map ) </label>
                                   </div>
                                   <div class="col-sm-7">
-                                    <input type="email" class="form-control" name="compLongitude" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    <input type="number" class="form-control" name="compLongitude" id="exampleInputEmail1" aria-describedby="emailHelp">
                                   </div>
                                 </div>
                               </div>

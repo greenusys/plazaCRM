@@ -95,6 +95,15 @@
             // $this->load->view('pages/inProgressBugs',$data);
             // $this->load->view('layout/footer');
         }
+        public function DeleteBugsData()
+    {
+
+        $data=array('bug_id'=>$this->input->post('bugs_id'));
+
+        $results=$this->Bugs_model->DeleteBugsData($data);
+        die(json_encode($results));
+
+    }
     
 
 	}

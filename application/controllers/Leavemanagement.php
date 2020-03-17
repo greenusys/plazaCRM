@@ -297,7 +297,7 @@ class Leavemanagement extends MY_Controller {
 		                // File upload configuration
 	            $uploadPath = './uploads/leave/';
 		                $config['upload_path'] = $uploadPath;
-		                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+		               $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf|doc';
 	 
 	            // Load and initialize upload library
 	             $this->load->library('upload', $config);

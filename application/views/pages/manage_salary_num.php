@@ -38,7 +38,7 @@ min-height: 35px
                       </div>
                     <div class="mt-5">
                       <form method="POST" action="<?=base_url()?>Payroll/update_salary_details">
-                        <button type="submit" class="btn btn-danger float-right">Update</button>
+                        <button type="submit" class="btn btn-info float-right">Update</button>
                         <br>
                      <table id="example" class="display nowrap" style="width:100%">
                           <thead>

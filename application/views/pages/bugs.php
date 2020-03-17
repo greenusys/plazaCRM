@@ -52,6 +52,7 @@
 				<tbody>
 					<?php
 					foreach ($all_bugs_info as $buggy) {
+						// print_r($buggy);
 					?>
 					<tr>
 						<td><a href="#"><?=$buggy->bug_title?></a></td>
@@ -97,7 +98,7 @@
                                          if(strpos($permission,'Delete')!==false||strpos($Userpermi,'Delete')!==false)
                                           {?>
 
-                                       <span class="sele_staus bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span>
+                                        <a href="javascript:void(0)" bugs_id="<?=$buggy->bug_id?>" class="deletetbugss"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
                                         <?php }
                                          else
                                          {
@@ -618,6 +619,41 @@ $(document).ready(function(){
  
 });
 </script>
+ <script type="text/javascript">
+        $(document).ready(function(){
+          $('.deletetbugss').on('click',function(){ 
+             var bugs_id=$(this).attr("bugs_id");
+               // alert(bugs_id);
+           if(confirm("Are you Sure want to delete this record?") ==true)
+            {       
+            // alert(owner_id);         
+                $.ajax({
+                  url:"<?=base_url('Bugs/DeleteBugsData')?>",
+                  type:"post",
+                  data:{bugs_id:bugs_id},
+                  success:function(response)
+                  {   
+                  response=JSON.parse(response);             
+                     if (response==1)
+                      {
+                        swal("Bugs", "Delete successfully", "success")
+                   // alert('');
+                    location.reload();
+                    
+                       }
+                  }
+                 })                           
+             userPreference = "Data Delete successfully!";
+
+             }
+             else 
+             {
+              userPreference = "Save Canceled!";
+              }
+              
+          });
+        })  ;
+      </script>
 <!-- 
 </body>
 </html> -->

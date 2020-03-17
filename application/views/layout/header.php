@@ -539,8 +539,10 @@ background: #f3f3f3;
                 </ul>
               </li>
              <?php endif; ?>
-            
+             
+             <?php if($role_id!=3):?>
             <li><a class="nav-link" href="<?=base_url('User/user_list')?>"><i class="fas fa-user"></i> <span>Users</span></a></li>
+            <?php endif; ?>
            
 
           
