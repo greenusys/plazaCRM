@@ -62,6 +62,62 @@
 				}
 			}
 		}
+		public function sendAttachment(){
+			// print_r($_POST);
+			$sent_by=$this->my_id;
+			$message='';
+			if(isset($_FILES['file']['name']) && !empty($_FILES['file']['name'])){
+				$ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+				$_FILES['fil']['name']     = "file".date("Y-m-d-H-i-s").".".$ext;
+				$_FILES['fil']['type']     = $_FILES['file']['type'];
+				$_FILES['fil']['tmp_name'] = $_FILES['file']['tmp_name'];
+				$_FILES['fil']['error']     = $_FILES['file']['error'];
+				$_FILES['fil']['size']     = $_FILES['file']['size'];
+
+				// File upload configuration
+				$uploadPath = 'uploads/';
+				$config['upload_path'] = $uploadPath;
+				$config['allowed_types'] = '*';
+				// Load and initialize upload library
+				$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+
+				// Upload file to server
+				if($this->upload->do_upload('fil')){
+					// Uploaded file data
+					$fileData = $this->upload->data();
+//					$uploadData['file_name'] = $fileData['file_name'];
+					$message= base_url('uploads/').$fileData['file_name'];
+				}else{
+//					print_r($this->upload->display_errors());die();
+				}
+			}
+			$sentTo=$this->input->post('sendMessageTo');
+			//To insert in Private Chat
+			if($this->insertInPrivateChat($sent_by,$chat_title="",$sentTo,$message)){
+				//To get Last Insert Id
+				$privateChatDetails=$this->getLastPrivateChatId($sentTo);
+				;
+				//To Insert in Private Chat Message
+				if($this->insertInPrivateChatMessage($privateChatDetails->private_chat_id,$sent_by,$message)){
+					$msgData=array(
+									"private_chat_id"=>$privateChatDetails->private_chat_id,
+									"user_id"=>$sent_by,
+									"to_user_id"=>$sentTo,
+									"active"=>1,
+									"unread"=>1,
+									"title"=>$chat_title,
+									"deleted"=>0,
+					);
+					//To In Private Chat User
+					if($this->insertInPrivateChatUser($msgData)){
+						echo 'Success';
+					}else{
+						echo 'failed';
+					}
+				}
+			}
+		}
 		public function insertInPrivateChat($sent_by,$chat_title="",$sentTo,$msg){
 			// tbl_private_chat`(`private_chat_id`, `chat_title`, `user_id`, `time`)
 			$data=array(
@@ -80,6 +136,7 @@
 			}else{
 				// echo 'Insert in Private Chat Message';
 				$privateChatDetails=$this->getLastPrivateChatId($sentTo);
+
 				if($this->insertInPrivateChatMessage($privateChatDetails->private_chat_id,$sent_by,$msg)){
 					$msgData=array(
 								"private_chat_id"=>$privateChatDetails->private_chat_id,
@@ -109,6 +166,7 @@
 			return $this->db->where($condition)->limit(1)->order_by('private_chat_id','desc')->get('tbl_private_chat')->row();
 		}
 		public function insertInPrivateChatMessage($private_chat_id,$sent_by,$message){
+
 			$data=array(
 						"private_chat_id"=>$private_chat_id,
 						"user_id"=>$sent_by,

@@ -183,7 +183,7 @@ RowSorter(gebi('table2'), {
 }
 #viewport > .chatbox > .chats {
   position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
+  top: 20px; left: 0; bottom: 0; right: 0;
   display: table-cell;
   vertical-align: bottom;
   padding: 1rem;
@@ -381,6 +381,16 @@ input:active {
       }
     })
   }
+  function sendAttachment(file,sendMessageTo){
+    $.ajax({
+      url:"<?=base_url('Message/sendAttachment')?>",
+      type:"post",
+      data:{file:file,sendMessageTo:sendMessageTo},
+      success:function(response){
+
+      }
+    })
+  }
   $(document).on('keypress','.sendMyNewMsg',function(e){
    // var
     if(e.keyCode==13){
@@ -466,10 +476,16 @@ input:active {
     var frnd_id=$(this).attr('frnd_id');
     var fname=$(this).attr('f-name');
     var a = chatArray.indexOf(frnd_id);
+    if(a!=-1){
+    	chatArray.splice(a,1)
+		$('#'+frnd_id).remove()
+		a=-1
+	}
     if(a==-1){
       chatArray.push(frnd_id);
        var userID = frnd_id;
-        var parentString = '<div class="chatbox" id="'+userID+'"><div class="chat_box_nav_bar p-2 text-white"><a href="<?=base_url('User/userDetails/')?>'+userID+'">'+fname+'</a><div class="float-right"><a href="javascript:void(0)"><i class="fa fa-times" aria-hidden="true"></i></a></div></div>'+
+        var parentString = '<div class="chatbox" id="'+userID+'"><div class="chat_box_nav_bar p-2 text-white"><a href="<?=base_url('User/userDetails/')?>'+userID+'">'+fname+'</a>' +
+			'<div class="float-right"><a href="javascript:void(0)" class="close_port"><i class="fa fa-times" aria-hidden="true"></i></a></div></div>'+
            '<div class="chats">'+
            '<ul style="margin-top:50px"></ul>'+
            '</div>'+
@@ -552,7 +568,44 @@ input:active {
 
    });
 
+
+    $(document).on('change','#upload_attachment',function () {
+
+		var chatBoxId=$(this).parent().parent().attr('id');
+		var message=$(this).val();
+		var chattingwith=$(this).attr('f-dd');
+		// co
+		var _cl="you";
+		var dataString = '<li>'+
+			'<div class="msg ' + _cl +'">'+
+			'<span class="partner"> User Dd</span>'+
+			message +
+			'<span class="time"> ago</span>'+
+			'</div></li>';
+		console.log('Chat Box Id: '+chatBoxId+' Send Message. '+message+' To: '+chattingwith);
+		var fd = new FormData();
+		var files = $(this)[0].files[0];
+		fd.append('file',files)
+		fd.append('sendMessageTo',chattingwith)
+		$.ajax({
+			url:"<?=base_url('Message/sendAttachment')?>",
+			type:"post",
+			data:fd,
+			processData: false,
+			contentType: false,
+			success:function(response){
+				fetchMessage(chattingwith)
+			}
+		})
+	})
+
 });
+
+  $(document).on('click','.close_port',function () {
+	  $(this).parent().parent().parent().hide()
+	  // alert('zsdfsdf')
+  })
+
 
   $(function(){
     // You can add Users inside JSON users section
