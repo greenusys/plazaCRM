@@ -727,7 +727,7 @@ class User extends MY_Controller
 //		print_r($_POST);die();
 //print_r($_FILES);
 		$adminlist = $this->input->post('admin_list') ? $this->input->post('admin_list') : '';
-		$emplist = $this->input->post('admin_list') ? $this->input->post('emp_list') : '';
+		$emplist = $this->input->post('emp_list') ? $this->input->post('emp_list') : '';
 		$adminEmailString = $adminlist ? implode(',', $adminlist) : '';
 		$empEmailString = $emplist ? implode(',', $emplist) : '';
 		$data['detail']=$_POST;
@@ -757,6 +757,8 @@ class User extends MY_Controller
 			unset($_POST['user_type']);
 			$usname=$_POST['your_name'];
 			unset($_POST['your_name']);
+			unset($_POST['admin_list']);
+			unset($_POST['emp_list']);
 			if ($this->User_model->add_user_reports($_POST)) {
 				if($adminEmailString || $empEmailString){
 					$this->load->config('email');
