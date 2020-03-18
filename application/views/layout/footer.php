@@ -581,7 +581,7 @@ $myId = $session[0]->user_id;
 					'</div>' +
 					'<div class="sendBox">' +
 					'<input type="text" placeholder="Enter your message.. " class="sendMyNewMsg" f-dd="' + frnd_id + '">' +
-					'<input type="file"  class="sendMyNewMsg upload_attachment" f-dd="' + frnd_id + '">'
+					'<input type="file" accept="image/jpeg,application/pdf"  class="sendMyNewMsg upload_attachment" f-dd="' + frnd_id + '">'
 				'</div>';
 				// console.log(parentString);
 				$('#viewport').append(parentString);
