@@ -837,7 +837,7 @@ class User extends MY_Controller
 		$this->db->join('tbl_account_details', 'tbl_account_details.user_id=tbl_users.user_id');
 		die(json_encode($this->db->get('tbl_users')->result()));
 	}
-<<<<<<< HEAD
+
     public function DeleteUsers()
     {
 
@@ -907,9 +907,6 @@ class User extends MY_Controller
     }
 
     }
-    
-	
-=======
 
 	public function DeleteUsers()
 	{
@@ -964,8 +961,6 @@ class User extends MY_Controller
 		$this->load->view("layout/footer");
 	}
 
-
->>>>>>> d2fb1a8e3859ce4604145366a405b793caef02ae
 }
 
 ?>

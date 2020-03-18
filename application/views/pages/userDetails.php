@@ -2556,16 +2556,18 @@ function explodePie(e) {
                      if(obj.status==2)
                      {
                         swal("Ooops!","Old Password Not Match", "warning");
+                        location.reload();
                      }
                      else if(obj.status==1)
                      {
                        swal("Password!", " Updated Successfully", "success");
+                        location.reload();
                      }
                      else
                      {
                       swal("Ooops!","Try Again", "error");
                      }
-                     location.reload();
+                     // location.reload();
                      
                      // window.location.href='<?=base_url("User/index")?>';
                     }
