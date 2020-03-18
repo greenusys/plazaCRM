@@ -486,7 +486,7 @@ $designation=$session[0]->designations_id;
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <div class="row">
                                                 <div class=" col-md-3">
                                                     <label for="exampleInputEmail1">Attachment <span class="text-danger">*</span></label>
@@ -499,7 +499,7 @@ $designation=$session[0]->designations_id;
       </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="text-center">
                                             <button type="submit" class="btn btn-success">Submit</button>

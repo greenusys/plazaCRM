@@ -529,4 +529,9 @@ class Payroll_Model extends MY_Model
                 return 0;
             }
     }
+    public function fetch_AdvSalary()
+    {
+       
+        return $this->db->get('tbl_advance_salary')->result();
+    }
 }

@@ -500,10 +500,12 @@ $(document).ready(function(){
               if(response.status==1)
               {
                 swal("Job Posted Successfully!", "Created", "success");
+                location.reload();
               }
               else if(response.status=="0")
               {
                swal(response.msg, "Already Exists", "error");
+               location.reload();
               }
             }
          });

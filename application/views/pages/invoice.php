@@ -961,10 +961,10 @@ $(document).ready(function(){
 				}
 			})
 			 }
-			 else{
-						swal("Oops!", 'error', "warning");
-						location.reload(); 
-					}
+			 // else{
+				// 		swal("Invoice!", 'Data Secure', "Success");
+				// 		// location.reload(); 
+				// 	}
 		});
 </script>
 

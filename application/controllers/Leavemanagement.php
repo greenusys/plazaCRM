@@ -251,77 +251,154 @@ class Leavemanagement extends MY_Controller {
 	   die(json_encode(array('msg'=>1,'data'=>$data)));
 	   //print_r($transid);
 	}
+// 	public function addleaveapplication()
+// 	{
+
+
+// 		// print_r($_POST);
+// 		// die(json_encode($_POST));
+// 		$usersdetail=$this->session->logged_user;
+// 		$designation_id=$usersdetail[0]->designations_id;
+// 	    $user_id=$usersdetail[0]->user_id;
+// 	   // print_r($_POST);
+// 		// $user_id=$user_id;
+// // 		$album_title=$this->input->post('alb_title');
+// 		$leave_category_id=$this->input->post('leave_category_id');
+// 		$leave_duration=$this->input->post('leave_duration');
+// 		$reason=$this->input->post('editor1');
+//  		$leave_type=$this->input->post('duration');
+// //  		print_r($leave_type);
+// //  		die();
+ 		
+// 		$hours=$this->input->post('hours');
+// 		$leave_start_date=$this->input->post('leave_start_date');
+// 		$leave_end_date=$this->input->post('leave_end_date');
+//      	$application_status=$this->input->post('application_status');
+// 		$application_date=date('d-m-Y H:i:s');
+// // 		$view_status=$this->input->post('attachment');
+// 		$comments=$this->input->post('comments');
+// 		$approve_by=$this->input->post('approve_by');
+// 		$date1=date_create($leave_start_date);
+//         $date2=date_create($leave_end_date);
+//         $diff=date_diff($date1,$date2);
+// 		$data = array();
+// 		// If file upload form submitted
+// 			if(!empty($_FILES['files']['name']))
+// 			{
+// 			   $filesCount = count($_FILES['files']['name']);
+// 			     for($i = 0; $i < $filesCount; $i++)
+// 		        {
+// 		            $ext = pathinfo($_FILES['files']['name'][$i], PATHINFO_EXTENSION);
+// 		                $_FILES['file']['name']     = "leave-image".date("Y-m-d-H-i-s").$i.".".$ext;
+// 		                $_FILES['file']['type']     = $_FILES['files']['type'][$i];
+// 		                $_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i];
+// 		                $_FILES['file']['error']     = $_FILES['files']['error'][$i];
+// 		                $_FILES['file']['size']     = $_FILES['files']['size'][$i];
+// 		                // File upload configuration
+// 	            $uploadPath = './uploads/leave/';
+// 		                $config['upload_path'] = $uploadPath;
+// 		               $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf|doc';
+	 
+// 	            // Load and initialize upload library
+// 	             $this->load->library('upload', $config);
+// 		                $this->upload->initialize($config);
+	            
+// 	            // Upload file to server
+// 	            if($this->upload->do_upload('file'))
+// 		                {
+// 		                    // Uploaded file data
+// 		                    $fileData = $this->upload->data();
+// 		                    $uploadData[$i]['file_name'] = $fileData['file_name'];
+// 		                    $uploadData[$i]['uploaded_on'] = date("Y-m-d H:i:s");
+// 		                }
+// 		                else
+// 		                {
+// 		                	echo"";
+// 		                }
+// 		                $attach[]=$_FILES['file']['name'];	
+    	            
+// 		        }
+// 	            $attachfiles=implode(",",$attach);
+// 			    // $videos=implode(",",$images);
+// 			    if(!empty($uploadData))
+// 			    {
+// 			        // Insert files data into the database
+// 				$uploadDate=date("Y-m-d H:i:s");
+// 				$data = array(
+// 	        	'user_id'=>$user_id,
+// 	        	'designation_id'=>$designation_id,
+// 	        	'leave_category_id'=>$leave_category_id,
+// 	        	'reason'=>$reason,
+// 	        	'leave_type'=>$leave_type,
+// 	        	'hours'=>$hours,
+// 	        	'leave_start_date'=>$leave_start_date,
+// 	        	'leave_end_date'=>$leave_end_date,
+// 	        	'application_status'=>1,
+// 	        	'view_status'=>0,
+// 	        	'application_date'=>$application_date,
+// 	        	'attachment'=>$attachfiles,
+// 	        	'comments'=>$comments,
+// 	        	'leave_duration'=>$leave_duration,
+// 	        	'approve_by'=>$approve_by);
+// 	       //	print_r($data);
+// 	        $results=$this->leave->addLeaveData($data);
+//     	        	  switch ($results) 
+//     				{
+//     					case 0:$this->session->set_flashdata('msg','Error');
+//     						break;
+//     					case 1:$this->session->set_flashdata('msg','Leave applied Successfully');
+//     						break;
+    					
+//     					default:$this->session->set_flashdata('msg','Error');
+//     						break;
+//     				}
+//     					redirect('Leavemanagement/index');
+// 			    }
+	        
+//     // 			if($results)
+//     // 			{
+//     // 				die(json_encode(array('status' =>'1' ,'msg'=>'Leave applied Successfully')));
+//     // 					redirect('Leavemanagement/index');
+    				
+//     // 			}
+//  			else
+//  			{
+//  			    	die(json_encode(array('status' =>'2' ,'msg'=>'code error')));
+//  			}
+//  			// image if end
+// 		}
+// 		else
+// 		{
+// 		    	die(json_encode(array('status' =>'3' ,'msg'=>'Error Try Again ')));
+// 		}
+	
+// 	}
 	public function addleaveapplication()
 	{
 
 
-		// print_r($_POST);
-		// die(json_encode($_POST));
+	
 		$usersdetail=$this->session->logged_user;
 		$designation_id=$usersdetail[0]->designations_id;
 	    $user_id=$usersdetail[0]->user_id;
-	   // print_r($_POST);
-		// $user_id=$user_id;
-// 		$album_title=$this->input->post('alb_title');
+	   
 		$leave_category_id=$this->input->post('leave_category_id');
 		$leave_duration=$this->input->post('leave_duration');
 		$reason=$this->input->post('editor1');
- 		$leave_type=$this->input->post('duration');
-//  		print_r($leave_type);
-//  		die();
- 		
+ 		$leave_type=$this->input->post('duration'); 		
 		$hours=$this->input->post('hours');
 		$leave_start_date=$this->input->post('leave_start_date');
 		$leave_end_date=$this->input->post('leave_end_date');
      	$application_status=$this->input->post('application_status');
 		$application_date=date('d-m-Y H:i:s');
-// 		$view_status=$this->input->post('attachment');
+		$view_status=$this->input->post('attachment');
 		$comments=$this->input->post('comments');
 		$approve_by=$this->input->post('approve_by');
 		$date1=date_create($leave_start_date);
         $date2=date_create($leave_end_date);
         $diff=date_diff($date1,$date2);
-		$data = array();
-		// If file upload form submitted
-			if(!empty($_FILES['files']['name']))
-			{
-			   $filesCount = count($_FILES['files']['name']);
-			     for($i = 0; $i < $filesCount; $i++)
-		        {
-		            $ext = pathinfo($_FILES['files']['name'][$i], PATHINFO_EXTENSION);
-		                $_FILES['file']['name']     = "leave-image".date("Y-m-d-H-i-s").$i.".".$ext;
-		                $_FILES['file']['type']     = $_FILES['files']['type'][$i];
-		                $_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i];
-		                $_FILES['file']['error']     = $_FILES['files']['error'][$i];
-		                $_FILES['file']['size']     = $_FILES['files']['size'][$i];
-		                // File upload configuration
-	            $uploadPath = './uploads/leave/';
-		                $config['upload_path'] = $uploadPath;
-		               $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf|doc';
-	 
-	            // Load and initialize upload library
-	             $this->load->library('upload', $config);
-		                $this->upload->initialize($config);
-	            
-	            // Upload file to server
-	            if($this->upload->do_upload('file'))
-		                {
-		                    // Uploaded file data
-		                    $fileData = $this->upload->data();
-		                    $uploadData[$i]['file_name'] = $fileData['file_name'];
-		                    $uploadData[$i]['uploaded_on'] = date("Y-m-d H:i:s");
-		                }
-		                else
-		                {
-		                	echo"";
-		                }
-		                $attach[]=$_FILES['file']['name'];	
-    	            
-		        }
-	            $attachfiles=implode(",",$attach);
-			    // $videos=implode(",",$images);
-			    if(!empty($uploadData))
-			    {
+		
+		
 			        // Insert files data into the database
 				$uploadDate=date("Y-m-d H:i:s");
 				$data = array(
@@ -336,7 +413,7 @@ class Leavemanagement extends MY_Controller {
 	        	'application_status'=>1,
 	        	'view_status'=>0,
 	        	'application_date'=>$application_date,
-	        	'attachment'=>$attachfiles,
+	        	// 'attachment'=>$attachfiles,
 	        	'comments'=>$comments,
 	        	'leave_duration'=>$leave_duration,
 	        	'approve_by'=>$approve_by);
@@ -353,26 +430,7 @@ class Leavemanagement extends MY_Controller {
     						break;
     				}
     					redirect('Leavemanagement/index');
-			    }
-	        
-    // 			if($results)
-    // 			{
-    // 				die(json_encode(array('status' =>'1' ,'msg'=>'Leave applied Successfully')));
-    // 					redirect('Leavemanagement/index');
-    				
-    // 			}
- 			else
- 			{
- 			    	die(json_encode(array('status' =>'2' ,'msg'=>'code error')));
- 			}
- 			// image if end
-		}
-		else
-		{
-		    	die(json_encode(array('status' =>'3' ,'msg'=>'Error Try Again ')));
-		}
-	
-	}
+			    }		
 	public function getleaveapp()
 	{
 		if(count($data=$this->leave->getAllDetails)>0)

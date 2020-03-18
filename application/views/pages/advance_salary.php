@@ -378,26 +378,11 @@
                             </thead>
                             <tbody>
                           
-                                  <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                                    <td>Edinburgh</td>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                             
-                                </tr>
-                                   <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                                    <td>Edinburgh</td>
-                                    <td>Tiger Nixon</td>
-                                    <td>2011/04/25</td>
-                                    <td>Edinburgh</td>
-                             
-                                </tr>
+                                   <?php
+                                foreach($All_expense_Data as $AED)
+                                {
+                                    //  print_r($AED);
+                                ?>
                                    <tr>
                                     <td>Tiger Nixon</td>
                                     <td>2011/04/25</td>
@@ -408,6 +393,8 @@
                                     <td>Edinburgh</td>
                                   
                                 </tr>
+                                <?php
+                                }?>
                             </tbody>
                             <tfoot>
                                 <tr>

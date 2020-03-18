@@ -881,8 +881,9 @@ class Payroll extends MY_Controller {
 	}
 	public function advanceSalary()
 	{
+        $data['fetchAdvSalary']=$this->Payroll_model->fetch_AdvSalary();
 		$this->load->view('layout/header');
-		$this->load->view("pages/advance_salary");
+		$this->load->view("pages/advance_salary",$data);
 		$this->load->view("layout/footer");
 		
 	}
