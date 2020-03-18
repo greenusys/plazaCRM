@@ -53,10 +53,10 @@ class MY_Controller extends CI_Controller
                 }
                 // echo ' Value of Check In Status: '.$this->checkin_status;
             }else{
-                echo 'Error Two.';
+                // echo 'Error Two.';
             }
         }else{
-            echo 'Error One.';
+            // echo 'Error One.';
         }
     }
     public function checkForClockInStatus($st){
