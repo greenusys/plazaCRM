@@ -421,34 +421,34 @@ $myId = $session[0]->user_id;
 			type: "post",
 			success: function (response) {
 				console.log(response);
-				response = JSON.parse(response);
-				if (response.length > 0) {
-					for (let i = 0; i < response.length; i++) {
-						var card = '';
-						card += '<div class="card border-bottom p-2 opn_chat" frnd_id="' + response[i].user_id + '" f-name="' + response[i].fullname + '">';
-						card += '<ul class="list-unstyled d-flex chat_s m-0">';
-						card += '<li class="">';
-						card += '<img src="<?=base_url()?>assets/img/avatar/avatar-3.png"  style="width: 40px;height: 40px"class="rounded-circle" >';
-						card += '</li>';
-						card += '<li class="ml-1 w-75">';
-						card += '<h6 class="m-0 mt-1">' + response[i].fullname + ' </h6>';
-						// card+='<span>-</span>';
-						card += '</li>';
-						card += '<li class="text-center" >';
-						card += '<h6 class="m-0"><i class="fas fa-circle text-primary"></i></h6>';
-						card += '<span class="">Never</span>';
-						card += '</li>';
-						card += '</ul>';
-						card += '</div>';
-						$('#onlineUser').append(card);
-					}
+				// response = JSON.parse(response);
+			// 	if (response.length > 0) {
+			// 		for (let i = 0; i < response.length; i++) {
+			// 			var card = '';
+			// 			card += '<div class="card border-bottom p-2 opn_chat" frnd_id="' + response[i].user_id + '" f-name="' + response[i].fullname + '">';
+			// 			card += '<ul class="list-unstyled d-flex chat_s m-0">';
+			// 			card += '<li class="">';
+			// 			card += '<img src="<?=base_url()?>assets/img/avatar/avatar-3.png"  style="width: 40px;height: 40px"class="rounded-circle" >';
+			// 			card += '</li>';
+			// 			card += '<li class="ml-1 w-75">';
+			// 			card += '<h6 class="m-0 mt-1">' + response[i].fullname + ' </h6>';
+			// 			// card+='<span>-</span>';
+			// 			card += '</li>';
+			// 			card += '<li class="text-center" >';
+			// 			card += '<h6 class="m-0"><i class="fas fa-circle text-primary"></i></h6>';
+			// 			card += '<span class="">Never</span>';
+			// 			card += '</li>';
+			// 			card += '</ul>';
+			// 			card += '</div>';
+			// 			$('#onlineUser').append(card);
+			// 		}
 
-				}
+			// 	}
 			}
 		});
 	});
 </script>
-<script>!function (e, t, a) {
+<!-- <script>!function (e, t, a) {
 		var c = e.head || e.getElementsByTagName("head")[0], n = e.createElement("script");
 		n.async = !0, n.defer = !0, n.type = "text/javascript", n.src = t + "/static/js/chat_widget.js?config=" + JSON.stringify(a), c.appendChild(n)
 	}(document, "https://app.engati.com", {
@@ -457,7 +457,7 @@ $myId = $session[0]->user_id;
 		branding_key: "default",
 		server: "https://app.engati.com",
 		e: "p"
-	});</script>
+	});</script> -->
 <script type="text/javascript">
 
 	function sendMessage(message, sendMessageTo, messagetype) {

@@ -2556,7 +2556,12 @@ function explodePie(e) {
                      if(obj.status==2)
                      {
                         swal("Ooops!","Old Password Not Match", "warning");
+<<<<<<< HEAD
                         location.reload();
+=======
+                        $("#UsersUpdatePassword")[0].reset();
+
+>>>>>>> 92a1ca77bfea9d23c5737f2f825c684be0ab9f5a
                      }
                      else if(obj.status==1)
                      {
@@ -2567,7 +2572,11 @@ function explodePie(e) {
                      {
                       swal("Ooops!","Try Again", "error");
                      }
+<<<<<<< HEAD
                      // location.reload();
+=======
+                    
+>>>>>>> 92a1ca77bfea9d23c5737f2f825c684be0ab9f5a
                      
                      // window.location.href='<?=base_url("User/index")?>';
                     }

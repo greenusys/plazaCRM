@@ -712,9 +712,9 @@ class User extends MY_Controller
 	function generateReport()
 	{
 		//	get all employee details to show on dropdown
-		$this->db->where('role_id !=', 3);
+		$this->db->where('role_id', 3);
 		$data['employees'] = $this->db->get('tbl_users')->result();
-		$this->db->where('role_id ', 3);
+		$this->db->where('role_id !=', 3);
 		$data['admins'] = $this->db->get('tbl_users')->result();
 		$this->load->view('layout/header');
 		$this->load->view("pages/generate_report", $data);
@@ -727,7 +727,7 @@ class User extends MY_Controller
 //		print_r($_POST);die();
 //print_r($_FILES);
 		$adminlist = $this->input->post('admin_list') ? $this->input->post('admin_list') : '';
-		$emplist = $this->input->post('admin_list') ? $this->input->post('emp_list') : '';
+		$emplist = $this->input->post('emp_list') ? $this->input->post('emp_list') : '';
 		$adminEmailString = $adminlist ? implode(',', $adminlist) : '';
 		$empEmailString = $emplist ? implode(',', $emplist) : '';
 		$data['detail']=$_POST;
@@ -754,6 +754,11 @@ class User extends MY_Controller
 			}
 			$pics = implode(",", $images);
 			$_POST['rpt_images'] = $pics;
+			unset($_POST['user_type']);
+			$usname=$_POST['your_name'];
+			unset($_POST['your_name']);
+			unset($_POST['admin_list']);
+			unset($_POST['emp_list']);
 			if ($this->User_model->add_user_reports($_POST)) {
 				if($adminEmailString || $empEmailString){
 					$this->load->config('email');
@@ -761,12 +766,12 @@ class User extends MY_Controller
 					$this->email->initialize();
 					$this->email->set_newline("\r\n");
 					$contwnt=$this->load->view('email/report',$data,true);
-					$this->email->from($this->config->item('smtp_user'), $this->config->item('from_user'));
+					$this->email->from($this->config->item('smtp_user'), $usname);
 					foreach ($images as $imagename){
 						$this->email->attach(APPPATH.'../uploads/report_images/'.$imagename);
 					}
 					$this->email->to($adminEmailString.$empEmailString);
-					$this->email->subject('Report '.$_POST['your_name']);
+					$this->email->subject('Report '.$usname);
 					$this->email->message($contwnt);
 					$this->email->send();
 				}
@@ -837,6 +842,7 @@ class User extends MY_Controller
 		$this->db->join('tbl_account_details', 'tbl_account_details.user_id=tbl_users.user_id');
 		die(json_encode($this->db->get('tbl_users')->result()));
 	}
+<<<<<<< HEAD
 
     public function DeleteUsers()
     {
@@ -882,6 +888,9 @@ class User extends MY_Controller
         $this->load->view("layout/footer");
     }
     public function UpdateUsersPassword()
+=======
+	public function UpdateUsersPassword()
+>>>>>>> 92a1ca77bfea9d23c5737f2f825c684be0ab9f5a
     {
  
         $session=$this->session->userdata('logged_user');
@@ -891,22 +900,23 @@ class User extends MY_Controller
         $oldpass=$this->input->post('oldpass');
         $data=array('password'=>$newpass);
         $results=$this->User_model->UpdateusersPassword($oldpass,$user_id,$data);
-    if($results==1)
-    {
-    die(json_encode(array('status'=>1,'msg'=>'update successfully')));
+	    if($results==1)
+	    {
+	    die(json_encode(array('status'=>1,'msg'=>'update successfully')));
+
+	    }
+	     elseif($results==2)
+	    {
+	        die(json_encode(array('status'=>2,'msg'=>'Old Password Not match')));
+
+	    }
+	    else
+	    {
+	     die(json_encode(array('status'=>0,'msg'=>'Error Try Again')));
+	    }
 
     }
-     elseif($results==2)
-    {
-        die(json_encode(array('status'=>2,'msg'=>'Old Password Not match')));
-
-    }
-    else
-    {
-     die(json_encode(array('status'=>0,'msg'=>'Error Try Again')));
-    }
-
-    }
+<<<<<<< HEAD
 
 	public function DeleteUsers()
 	{
@@ -961,6 +971,7 @@ class User extends MY_Controller
 		$this->load->view("layout/footer");
 	}
 
+=======
+>>>>>>> 92a1ca77bfea9d23c5737f2f825c684be0ab9f5a
 }
-
 ?>
