@@ -18,6 +18,7 @@ class Expense_model extends CI_Model
 	}
 	  public function addExpenseData($data)
 	{
+		
 		if($this->db->insert('tbl_transactions',$data))
 		{
 			return 1;

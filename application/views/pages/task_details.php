@@ -321,7 +321,7 @@ font-size: 35px;
                               <div class="offset-1 col-sm-3 text-right">
                                 <!-- <label class="label-style ml-3">Status :</label> -->
                               </div>
-                              <div class="col-sm-5 d-flex ">
+                              <div class="col-sm-9 d-flex ">
                                 <!-- <div class="refreshlocation">
                                 
                                  <label class=" bg-warning p-1 he  text-white" ><?=$project_details->project_status?></label>
@@ -334,7 +334,7 @@ font-size: 35px;
                                           <option value="in_progress">In progress</option>
                                           <option value="completed">Completed</option>
                                           <option value="deferred">Deferred</option>
-                                          <option value="waiting_for_someone">Waiting For Someone</option>
+                                          <!-- <option value="waiting_for_someone">Waiting For Someone</option> -->
                                     </select>
                                 
                               </div>

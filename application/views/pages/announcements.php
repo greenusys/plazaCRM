@@ -26,7 +26,8 @@
                             </thead>
                             <tbody>
                             <?php
-                            foreach ($Announcement as $announce) {
+                            foreach ($Announcement as $announce) 
+                            {
                             # code...?
                             ?>
                             <tr>
@@ -35,6 +36,7 @@
                             <td><?=$announce->start_date?></td>
                             <td><?=$announce->end_date?></td>
                             <td><?=$announce->status?></td>
+
                             <td>
                             <div class="">
                             <?php
@@ -47,12 +49,15 @@
 
                             if(strpos($permission,'Edit')!==false||strpos($Userpermi,'Edit')!==false)
                             {?>
-                            <a href="javascript:void(0)" class="sele_staus bg-info p-1 text-white " data-id="<?=$announce->announcements_id?>"><span><i class="far fa-edit"></i></span></a>
+                               <!--  <button class="btn btn-success rounded-0" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus" aria-hidden="true"></i>New Announcements</button> -->
+
+                            <a href="javascript:void(0)" class="Announceid_forupdates sele_staus bg-info p-1 text-white " data-toggle="modal" data-target="#updatedetails" announce-id="<?=$announce->announcements_id?>"><span><i class="far fa-edit"></i></span></a>
                             <?php }
                             else
                             {
                             ?>
-                            <a href="javascript:void(0)" style="visibility: hidden"class="sele_staus bg-info p-1 text-white " data-id="<?=$announce->announcements_id?>"><span><i class="far fa-edit"></i></span></a>
+                             <a href="javascript:void(0)" style="visibility: hidden"id="Announceid_forupdates"class=" sele_staus bg-info p-1 text-white " data-toggle="modal" data-target="#updatedetails" announce-id="<?=$announce->announcements_id?>"><span><i class="far fa-edit"></i></span></a>
+                            <!-- <a href="javascript:void(0)" style="visibility: hidden"class="sele_staus bg-info p-1 text-white " Announceid="<?=$announce->announcements_id?>"><span><i class="far fa-edit"></i></span></a> -->
                             <?php
                             }
                             if(strpos($permission,'Delete')!==false||strpos($Userpermi,'Delete')!==false)
@@ -67,8 +72,8 @@
                             <?php
                             }
 
-                            }
-                          }?>
+                            } }
+                         ?>
                             <!--   <a><span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span></a> -->
                             </div>
 
@@ -142,7 +147,7 @@
                                 <label for="exampleInputEmail1">Start Date <span class="text-danger">*</span> </label>
                             </div>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="datepicker" name="start_date">
+                                <input type="date" class="form-control" id="datepicker" name="start_date">
                             </div>
                             <div class="col-sm-1">
                                 <button type="button" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
@@ -154,9 +159,10 @@
                             <div class="col-sm-3">
                                 <label for="exampleInputEmail1">End Date <span class="text-danger">*</span> </label>
                             </div>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="datepicker" name="end_date">
+                              <div class="col-sm-8">
+                                <input type="date" class="form-control" id="datepicker" name="end_date">
                             </div>
+                           
                             <div class="col-sm-1">
                                 <button type="button" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
                             </div>
@@ -218,9 +224,251 @@
 
     </div>
 </div>
+<div id="updatedetails" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header border-bottom">
+                <h5 class="modal-title" id="exampleModalLabel">Update Announcements</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="UpdateAnnouncement">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="exampleInputEmail1"> Title <span class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-sm-9">
+                                
+                                 <input type="hidden" class="idsss form-control" name="announce_id">
+                                <input type="text" value="" class="title_ form-control" name="title">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class=" col-md-3">
+                                <label for="exampleInputEmail1">Description </label>
+                            </div>
+                            <div class="col-md-9">
+                                <textarea name="editor1" class="description" ></textarea>
+                         <script>
+                                                CKEDITOR.replace( 'editor1' );
+                                        </script>
+                                        <script src="https://cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="exampleInputEmail1">Start Date <span class="text-danger">*</span> </label>
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="date" class="start_date form-control" id="datepicker" name="start_date">
+                            </div>
+                            <div class="col-sm-1">
+                                <button type="button" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group " id="end_date">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="exampleInputEmail1">End Date <span class="text-danger">*</span> </label>
+                            </div>
+                              <div class="col-sm-8">
+                                <input type="date" class="end_date form-control" id="datepicker" name="end_date">
+                            </div>
+                           
+                            <div class="col-sm-1">
+                                <button type="button" class="btn btn-light butn"><i class="fa fa-calendar"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class=" col-md-3">
+                                <label for="exampleInputEmail1">Attachment <span class="text-danger">*</span></label>
+                            </div>
+
+                            <div class="col-md-9">
+                                <div class="form-group inputDnD">
+                                    <label class="sr-only" for="inputFile">File Upload</label>
+                                    <input type="file" class="form-control-file text-primary font-weight-bold" id="inputFile" accept="image/*" onchange="readUrl(this)" data-title="Drag and drop a file or Click" name="fileToUpload">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class=" col-md-3">
+                                <label for="exampleInputEmail1">Share With </label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="checkbox" class="all_client" name="shareWith" value="1"> All Clients
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class=" col-md-3">
+                                <label for="exampleInputEmail1">Status </label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="checkbox" class="status"name="published"> Published
+
+                            </div>
+                            <div class="col-md-4">
+                                <input type="checkbox" name="unPublished"> Un Published
+
+                            </div>
+                        </div>
+                         <div class="row">
+                            <div class="col">
+                                <button type="submit" class="btn btn-info" >Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 <script>
     CKEDITOR.replace('description');
 </script>
+<script type="text/javascript">
+    $(document).ready(function(){
+          $('.Announceid_forupdates').on('click',function(){ 
+               var an_id=$(this).attr("announce-id");
+             
+              // alert(an_id);
+              //  console.log('idsaaaaa',an_id);
+            $.ajax({
+            url:'<?=base_url('Announcement/EditAnnounceData')?>',
+            type:"post",
+            data:{an_id:an_id},
+         
+            success:function(response)
+            {
+                 
+    //                 $(".Expense_div").show();
+    //                 // $('#expensemodalreset')[0].reset();  
+    //                 //  $(this).prev('span').remove();
+                      $(".title_").html("");
+                      // $(".description").html("");
+                     $(".start_date").html("");
+                 $(".end_date").html("");
+                     $(".all_client").html("");
+                      $(".status").html("");
+                      $(".idsss").html("");
+                     // $("#paymethod").html("");
+                     //  $("#notes").html("");
+    //                   $("#transstatus").html("");
+    //                   $("#transamount").html("");
+    //                    $("#trans_image").html("");
+    //                 // $(".Expense_div").empty();
+                     // $(".title_").empty();
+                    // $(".title_").empty(;
+                    // $(".description").empty(;
+                    // $(".start_date").empty();
+                    // $(".end_date").empty();
+                    // $(".all_client").empty();
+                    // $(".status").empty();
+    //                 // $("#notes").empty();
+    //                 // $("#transstatus").empty();
+    //                 // $("#transamount").empty();
+    //                 // $("#reference").empty();
+    
+                response=JSON.parse(response);
+                 console.log("responsedata",response.data);
+                var title=response.data[0].title;
+
+                var description=response.data[0].description;
+                var start_date=response.data[0].start_date;
+                var end_date=response.data[0].end_date;
+                var all_client=response.data[0].all_client;
+                var status=response.data[0].status;
+                var idss=response.data[0].announcements_id;
+                if(all_client==1)
+                {
+
+                    $(".all_client").prop("checked", true);
+                    
+                }
+                else{
+                      $(".all_client").removeAttr("checked",false);
+                    // $(".all_client").prop("checked", true);
+                }
+                if(status=='published')
+                {
+                  $(".status").prop("checked", true);   
+                }
+                 else{
+                      $(".status").removeAttr("checked",false);
+                    
+                }
+                           
+                 $(".title_").val(title);
+                  $(".description").val(description);
+                 $(".start_date").val(start_date);
+                  $(".end_date").val(end_date);
+                   $(".idsss").val(idss);
+                 // $(".all_client").val(all_client);
+                 // $(".status").val(status);
+                 console.log('sfaf',description);
+                 
+             }              
+         });
+            
+          });
+        }); 
+</script>
+ <script type="text/javascript">
+        $(document).ready(function(){
+          $('.deleteAnnuo').on('click',function(){ 
+             var announce_id=$(this).attr("data-id");
+                // alert(announce_id);
+               if(confirm("Are you Sure want to delete this record?") ==true)
+            {       
+            // alert(owner_id);         
+                $.ajax({
+                  url:"<?=base_url('Announcement/DeleteAnnounceData')?>",
+                  type:"post",
+                  data:{announce_id:announce_id},
+                  success:function(response)
+                  {   
+                  response=JSON.parse(response);             
+                     if (response==1)
+                      {
+                        swal("Announce", "Delete successfully", "success")
+                   // alert('');
+                    location.reload();
+                    
+                       }
+                  }
+                 })                           
+             userPreference = "Data Delete successfully!";
+
+             }
+             else 
+             {
+              userPreference = "Save Canceled!";
+              }
+              
+          });
+        })  ;
+      </script>
 <script type="text/javascript">
     $(document).on('submit','#submitAnnouncement',function(e){
         e.preventDefault();
@@ -238,6 +486,7 @@
                 response=JSON.parse(response);
                 if(response.code==1){
                     swal("Good job!", response.msg, "success");
+                    
                 }else{
                     swal("Ooops!", response.msg, "warning");
                 }
@@ -263,6 +512,79 @@
 }
 });
 </script>
+<!-- <script type="text/javascript">
+    $(document).on('submit','#UpdateAnnouncement',function(e){
+        e.preventDefault();
+        var formData=new FormData($(this)[0]);
+        console.log(formData);
+        $.ajax({
+            url:"<?=base_url('Announcement/UpdateAnnouncement')?>",
+            type:"post",
+            cache:false,
+            contentType:false,
+            processData:false,
+            data:formData,
+            success:function(response){
+
+                // console.log(response);
+                response=JSON.parse(response);
+                console.log(response);
+                if(response.code==1){
+                    alert('skja');
+                    // swal("Announcement!", " Updated Successfully", "success");
+                    // location.reload();
+                    
+                }else{
+                    swal("Ooops!", response.msg, "warning");
+                }
+                
+            }
+        })
+    });
+
+ 
+</script> -->
+ <script> 
+
+       $(document).ready(function(){
+            $("#UpdateAnnouncement").submit(function(e){
+                e.preventDefault();
+        var formData=new FormData($(this)[0]);
+                $.ajax({
+                    url:"<?=base_url('Announcement/UpdateAnnouncement')?>",
+                     type:"post",
+                     data:formData,
+                     // enctype:"multipart/form-data",
+                     contentType:false,
+                     processData:false,
+                     cache:false,
+                    success:function(response)
+                    {
+                     var obj=JSON.parse(response);
+                     console.log('check response'obj);
+                    //  if(obj.code==0)
+                    //  {
+                    //     swal("Announcement", "Error", "error")
+                    //  }
+                    //  if(obj.code==1)
+                    //  {
+                    //      // swal("Announcement!", " Updated Successfully", "success");
+                    //   swal("Announcement!", "Updated Successfully", "success")
+                    //  }
+                    //  if(obj.code==2)
+                    //  {
+                    //  swal("Announcement", "Try Again", "error")
+                    //  }
+                    //  // location.reload();
+                    //   window.location.href='<?=base_url("Announcement/index")?>';
+                    // }
+                });
+            });
+             });
+
+        
+
+    </script>
 <style type="text/css">
 .inputDnD .form-control-file {
   position: relative;

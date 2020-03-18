@@ -241,6 +241,44 @@ class Global_Model extends MY_Model
         $result = $this->db->get('tbl_notifications')->result();
         return $result;
     }
+    public function DeleteHolidayData($data)
+        {
+            $this->db->where($data);
+             $results=$this->db->delete('tbl_holiday');
+             if($results)
+                {
+                    return 1;
+                }
+        
+                else
+                {
+                    return 0;
+                }
+        }
+
+      public function FetchHolidayData($id)
+        {
+            $this->db->where('holiday_id',$id);
+            return  $this->db->get('tbl_holiday')->result();
+         
+        }
+        public function UpdateHolidaysData($data,$holiday_id)
+    {
+        $this->db->where('holiday_id',$holiday_id);
+         $results=$this->db->update('tbl_holiday',$data);
+        
+            if($results)
+            {
+                return 1;
+            }
+    
+            else
+            {
+                return 0;
+            }
+    }
+
+
 
 
 }

@@ -15,7 +15,9 @@
                             <tr>
                                <th>EMP ID</th>
                                 <th>Name</th>
+                                <th>Date In</th>
                                 <th>Time In</th>
+                                <th>Date Out</th>
                                 <th>Time Out</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -32,7 +34,9 @@
                                 <tr>
                                   <td><?=$value->user_id?></td>
                                   <td><?=$value->fullname?></td>
+                                    <td><?=$value->date_in?></td>
                                     <td><?=$value->clockin_time?></td>
+                                     <td><?=$value->date_out?></td>
                                     <td><?=$value->clockout_time?></td>
                                     <td>
                                       <?php
@@ -149,6 +153,7 @@
                   response=JSON.parse(response);
                   if(response.code==1){
                     swal("Attendance Marked Successfully!", "Marked", "success");
+                    location.reload();
                   }else{
                     swal("Ooops!", "Failed", "error");
                   }

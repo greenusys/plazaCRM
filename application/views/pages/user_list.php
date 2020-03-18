@@ -304,8 +304,9 @@ $role_id=$session[0]->role_id;
                   response=JSON.parse(response);             
                      if (response==1)
                       {
-                   alert('Record Delete successfully');
-                    location.reload();
+                        swal("User!", "Delete","success");
+                      // alert('Record Delete successfully');
+                        location.reload();
                     
                        }
                   }

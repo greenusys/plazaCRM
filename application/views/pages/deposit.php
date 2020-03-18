@@ -1405,7 +1405,7 @@ $(document).ready(function(){
                     {
                         alert(response.msg);
                         $("#depoacccc").load(location.href + " #depoacccc");
-                       // location.reload();
+                        location.reload();
                     }
                     else
                     {

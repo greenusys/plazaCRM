@@ -6,6 +6,7 @@ class Utilities extends MY_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->load->model('Global_Model');
+        $this->load->model('User_model');
 	}
 
 	public function holiday(){
@@ -39,6 +40,11 @@ class Utilities extends MY_Controller {
         // die(json_encode($data));
         // $data['subview'] = $this->load->view('admin/holiday/holiday_list', $data, TRUE);
         // $this->load->view('admin/_layout_main', $data);
+        $session=$this->session->userdata('logged_user');
+        $designation_id=$session[0]->designations_id;
+        $data['Assign_permission']=$this->User_model->CheckPermission($designation_id);
+        $user_id=$session[0]->user_id;
+        $data['UsersPermission']=$this->User_model->CheckUserPermission($user_id);
 		$this->load->view('layout/header');
 		$this->load->view("pages/holiday",$data);
 		$this->load->view("layout/footer");
@@ -74,5 +80,47 @@ class Utilities extends MY_Controller {
 			echo '0';
 		}
 	}
+    public function DeleteHoliday()
+    {
+
+        $data=array('holiday_id'=>$this->input->post('holiday_id'));
+        $results=$this->Global_Model->DeleteHolidayData($data);
+        die(json_encode($results));
+
+    }
+    public function Edit_Holiday($id)
+    {
+        $data['fetch_Holiday']=$this->Global_Model->FetchHolidayData($id);
+        // print_r( $data['fetch_Holiday']);
+        // die;
+        $this->load->view('layout/header');
+        $this->load->view("pages/edit_holiday",$data);
+        $this->load->view("layout/footer");
+    }
+    public function updateHolidaybyid()
+    {
+        $holiday_id=$this->input->post('holiday_id');
+        $eventname=$this->input->post('eventname');
+        $description=$this->input->post('description'); 
+        $strdate=$this->input->post('strdate'); 
+        $enddate=$this->input->post('enddate'); 
+
+        $data = array(
+            'event_name'=>$eventname,
+            'description'=>$description,
+            'start_date'=>$strdate,
+            'end_date'=>$enddate);
+   
+        $result=$this->Global_Model->UpdateHolidaysData($data,$holiday_id);
+        if($result==1){
+            die(json_encode(array('status' =>'1' ,'msg'=>'Update Successfully')));
+        }
+        elseif($result==0){
+            die(json_encode(array('status' =>'0' ,'msg'=>'Error')));
+        }
+        else{
+            die(json_encode(array('status' =>'2' ,'msg'=>'Try Again')));
+        }
+    }
 }
 ?>

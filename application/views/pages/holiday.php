@@ -185,6 +185,7 @@ $(document).on("click",".month_sel",function(){
                                 <th >Start Date</th>
                                 <th >End Date</th>
                                 <th >Color</th>
+                                <th >Action</th>
                                 <?php if (!empty($edited) || !empty($deleted)) { ?>
                                     <th class="col-sm-2">Action</th>
                                 <?php } ?>
@@ -199,17 +200,47 @@ $(document).on("click",".month_sel",function(){
                                     <td><?=$v_holiday->end_date?></td>
                                     <td><span style="background-color:<?= $v_holiday->color ?>"
                                               class="color-tag"></span></td>
-                                    <?php if (!empty($edited) || !empty($deleted)) { ?>
-                                        <td>
-                                            <?php if (!empty($edited)) { ?>
+                                   <td>
+                                    <div class="">
+                                      <?php
+                                      foreach($Assign_permission as $checkpermission)
+                                        {
+                                          $permission=$checkpermission->permission;
+                                          foreach ($UsersPermission as $Uperms) 
+                                            {
+                                             $Userpermi=$Uperms->permission;
+                                                
+                                          if(strpos($permission,'Edit')!==false||strpos($Userpermi,'Edit')!==false)
+                                          {?>
+                                     <a href="<?=base_url('Utilities/Edit_Holiday/').$v_holiday->holiday_id?>" class="bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                     
+                                     <?php }
+                                         else
+                                         {
+                                          ?>
+                                          <a href="#" style="visibility: hidden"class="bg-info p-1 text-white "><span><i class="far fa-edit"></i></span></a>
+                                          <?php
+                                          }
+                                         if(strpos($permission,'Delete')!==false||strpos($Userpermi,'Delete')!==false)
+                                          {?>
 
-                                                <?php echo btn_edit_modal('admin/holiday/add_holiday/' . $v_holiday->holiday_id); ?>
-                                            <?php }
-                                            if (!empty($deleted)) { ?>
-                                                <?php echo btn_delete('admin/holiday/delete_holiday/' . $v_holiday->holiday_id); ?>
-                                            <?php } ?>
-                                        </td>
-                                    <?php } ?>
+                                      <a href="javascript:void(0)" holiday_id="<?=$v_holiday->holiday_id?>" class="deletetholiday"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+                                       <?php }
+                                         else
+                                         {
+                                          ?>
+                                           <a href="#" style="visibility: hidden"class="deletetholiday"><span class="bg-danger p-1 text-white"><i class="far fa-trash-alt"></i></span></a>
+
+                                      <!--  <span class="sele_staus bg-success p-1 text-white"><i class="far fa-clock"></i></span> -->
+                                      <?php
+                                          }
+
+                                        }
+                                      }?>
+
+                                    </div>
+
+                                </td>
 
                                 </tr>
                                 <?php
@@ -320,7 +351,7 @@ $(document).on("click",".month_sel",function(){
                 </div>
               </div>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <div class="row">
                 <div class="offset-1 col-sm-3">
                   <label for="exampleInputEmail1">Location </label>
@@ -329,7 +360,7 @@ $(document).on("click",".month_sel",function(){
                   <input type="text" class="form-control" id="" name="location" placeholder="Enter Your Location">
                 </div>
               </div>
-            </div>
+            </div> -->
             <div class="form-group" style="margin-left: 120px">
                 <label for="field-1" class="col-sm-3 control-label"></label>
 
@@ -358,6 +389,46 @@ $(document).on("click",".month_sel",function(){
       </div>
     </div>
   </div>
+  <script type="text/javascript">
+        $(document).ready(function(){
+          $('.deletetholiday').on('click',function(){ 
+             var holiday_id=$(this).attr("holiday_id");
+             // alert(holiday_id);
+           if(confirm("Are you Sure want to delete this record?") ==true)
+            {       
+            // alert(owner_id);         
+                $.ajax({
+                  url:"<?=base_url('Utilities/DeleteHoliday')?>",
+                  type:"post",
+                  data:{holiday_id:holiday_id},
+                  success:function(response)
+                  {   
+                  response=JSON.parse(response);             
+                     if (response==1)
+                      {
+                        swal("Holiday", "Event Delete successfully", "success")
+                   // alert('');
+                    location.reload();
+                    
+                       }
+                       else{
+                        swal("Holiday", "Try Again", "error")
+                   // alert('');
+                    location.reload();
+                       }
+                  }
+                 })                           
+             // userPreference = "Data Delete successfully!";
+
+             }
+             else 
+             {
+              userPreference = "Save Canceled!";
+              }
+              
+          })
+        })  
+      </script>
 
 <script type="text/javascript">
       $("#add_holiday").submit(function(e){

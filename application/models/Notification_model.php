@@ -5,6 +5,10 @@
 	        $this->db->insert('tbl_notifications', $new_data);
        		return  true;
 		}
+		// public function insert_notification($new_data){
+	 //        $this->db->insert('tbl_notifications', $new_data);
+  //      		return  true;
+		// }
 
 		public function update_notification($id){
 			 $this->db->where('to_user_id', $id); 
