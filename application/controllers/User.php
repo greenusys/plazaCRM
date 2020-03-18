@@ -754,6 +754,9 @@ class User extends MY_Controller
 			}
 			$pics = implode(",", $images);
 			$_POST['rpt_images'] = $pics;
+			unset($_POST['user_type']);
+			$usname=$_POST['your_name'];
+			unset($_POST['your_name']);
 			if ($this->User_model->add_user_reports($_POST)) {
 				if($adminEmailString || $empEmailString){
 					$this->load->config('email');
@@ -766,7 +769,7 @@ class User extends MY_Controller
 						$this->email->attach(APPPATH.'../uploads/report_images/'.$imagename);
 					}
 					$this->email->to($adminEmailString.$empEmailString);
-					$this->email->subject('Report '.$_POST['your_name']);
+					$this->email->subject('Report '.$usname);
 					$this->email->message($contwnt);
 					$this->email->send();
 				}
