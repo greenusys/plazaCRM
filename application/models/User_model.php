@@ -283,6 +283,7 @@ class User_model extends MY_Model
      }
 
      public function add_user_reports($data){
+        // print_r($data);
             if($this->db->insert('tbl_reports', $data)){
                 return  true;
             }else{

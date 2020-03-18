@@ -712,9 +712,9 @@ class User extends MY_Controller
 	function generateReport()
 	{
 		//	get all employee details to show on dropdown
-		$this->db->where('role_id !=', 3);
+		$this->db->where('role_id', 3);
 		$data['employees'] = $this->db->get('tbl_users')->result();
-		$this->db->where('role_id ', 3);
+		$this->db->where('role_id !=', 3);
 		$data['admins'] = $this->db->get('tbl_users')->result();
 		$this->load->view('layout/header');
 		$this->load->view("pages/generate_report", $data);
