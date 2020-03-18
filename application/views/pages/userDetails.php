@@ -763,8 +763,8 @@ $totalTasks=$t_not_started+$t_in_progress+$t_completed;
                                     <label for="exampleInputEmail1" class="font-weight-bold label-style">Password :</label>
                                 </div>
                                 <div class="col-sm-6">
-                                 <p class="form-control-static"><a data-toggle="modal" data-target="#myModal"
-                                                                      href="<?= base_url() ?>admin/user/reset_password/<?= $user_info->user_id ?>">Reset_password</a>
+                                 <p class="form-control-static"><a data-toggle="modal" data-target="#updatepassword"
+                                     href="<?= base_url() ?>admin/user/reset_password/<?= $user_info->user_id ?>">Reset_password</a>
                                     </p>
                                 </div>
                             </div>
@@ -1911,7 +1911,55 @@ $totalTasks=$t_not_started+$t_in_progress+$t_completed;
     </div>    
 </div>    
        
+<div id="updatepassword" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header border-bottom">
+                <h5 class="modal-title" id="exampleModalLabel">Update Password</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="UsersUpdatePassword">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="exampleInputEmail1"> Old Password <span class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-sm-9">
+                                
+                                <!--  <input type="hidden" class="idsss form-control" name="announce_id"> -->
+                                <input type="text"  class=" form-control" name="oldpass">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="exampleInputEmail1"> New Password <span class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="text" value="" class="form-control" name="newpass">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group"> 
+                         <div class="row">
+                            <div class="col">
+                                <button type="submit" class="btn btn-info" >Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 <script>
 window.onload = function () {
 
@@ -2486,7 +2534,85 @@ function explodePie(e) {
     </div>
    </div>
 </div>
+<script> 
+       $(document).ready(function(){
+            $("#UsersUpdatePassword").submit(function(e){
+                e.preventDefault();
+                var formData= new FormData($(this)[0]); 
+                // console.log(formData);
+                $.ajax({
+                    url:"<?=base_url('User/UpdateUsersPassword')?>",
+                     type:"post",
+                     data:formData,
+                     // enctype:"multipart/form-data",
+                     // dataType: 'json', 
+                     contentType:false,
+                     processData:false,
+                     cache:false,
+                    success:function(response)
+                    {
+                     var obj=JSON.parse(response);
+                      // console.log('dvsg',response);
+                     if(obj.status==2)
+                     {
+                        swal("Ooops!","Old Password Not Match", "warning");
+                     }
+                     else if(obj.status==1)
+                     {
+                       swal("Password!", " Updated Successfully", "success");
+                     }
+                     else
+                     {
+                      swal("Ooops!","Try Again", "error");
+                     }
+                     location.reload();
+                     
+                     // window.location.href='<?=base_url("User/index")?>';
+                    }
+                });
+            });
 
+        });
+      </script>
+
+<!-- <script type="text/javascript">
+    $(document).on('submit','#UpdatePassword',function(e){
+        e.preventDefault();
+        var formData=new FormData($(this)[0]);
+        console.log(formData);
+        $.ajax({
+            url:"<?=base_url('User/UpdateUsersPassword')?>",
+            type:"post",
+            cache:false,
+            contentType:false,
+            processData:false,
+            data:formData,
+            // success:function(response){
+
+            //     // console.log(response);
+            //     response=JSON.parse(response);
+            //     console.log(response);
+            //     if(response.code==1)
+            //     {
+            //         // alert('skja');
+            //         swal("Password!", " Updated Successfully", "success");
+            //         location.reload();
+                    
+            //     }else if
+            //     {
+            //         swal("Ooops!","Old Password Not Match", "warning");
+            //     }
+            //     else
+            //     {
+            //        swal("Password!", " Try Again", "error");
+            //     }
+                
+            // }
+        })
+    });
+
+ 
+</script> -->
 <script>
     $(document).ready(function(){
       $("#update").click(function(){

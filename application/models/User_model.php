@@ -380,6 +380,33 @@ class User_model extends MY_Model
         return $value;
 
     }
+    public function UpdateusersPassword($oldpass,$user_id,$data)
+    {
+        $this->db->where('user_id',$user_id);
+        $check=$this->db->get('tbl_users')->result();
+        
+         $dbpass=$check[0]->password;
+         if($oldpass==$dbpass)
+         {
+            $this->db->where('user_id',$user_id);
+            if($this->db->update('tbl_users',$data))
+            {
+            return 1;
+            }
+            else
+            {
+              return 0;  
+            }
+         }
+         else
+         {
+            return 2;
+         }
+         // print_r($dbpass);
+         // die;
+        // $dbpass=$check['']
+
+    }
 
 }
 ?>

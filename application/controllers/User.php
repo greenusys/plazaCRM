@@ -837,6 +837,79 @@ class User extends MY_Controller
 		$this->db->join('tbl_account_details', 'tbl_account_details.user_id=tbl_users.user_id');
 		die(json_encode($this->db->get('tbl_users')->result()));
 	}
+<<<<<<< HEAD
+    public function DeleteUsers()
+    {
+
+        $data=array('user_id'=>$this->input->post('users_id'));
+        $results=$this->User_model->DeleteUsers($data);
+        die(json_encode($results));
+
+    }
+     public function InProgressUserProject()
+    {
+        $session=$this->session->userdata('logged_user');
+        $user_id=$session[0]->user_id;
+        $data['project']=$this->User_model->fetch_UserInProgressproject($user_id);
+        print_r($data['project']);
+        die;
+        $this->load->view('layout/header');
+        $this->load->view("pages/user_inprogressproject",$data);
+        $this->load->view("layout/footer");
+    }
+    public function myOpenTask(){
+        $data['all_tasks']=array();
+        $this->load->view('layout/header');
+        $this->load->view("pages/myOpenTask",$data);
+        $this->load->view("layout/footer");
+    }
+    public function myCompletedTask(){
+        $data['all_tasks']=array();
+        $this->load->view('layout/header');
+        $this->load->view("pages/myCompletedTask",$data);
+        $this->load->view("layout/footer");
+    }
+    public function myOpenProject(){
+        $data['project']=array();
+        $this->load->view('layout/header');
+        $this->load->view("pages/myOpenProject",$data);
+        $this->load->view("layout/footer");
+    }
+    public function myCompletedProject(){
+        $data['project']=array();
+        $this->load->view('layout/header');
+        $this->load->view("pages/myCompletedProject",$data);
+        $this->load->view("layout/footer");
+    }
+    public function UpdateUsersPassword()
+    {
+ 
+        $session=$this->session->userdata('logged_user');
+        $user_id=$session[0]->user_id;
+        $newpass=$this->input->post('newpass');
+        // print_r( $session);
+        $oldpass=$this->input->post('oldpass');
+        $data=array('password'=>$newpass);
+        $results=$this->User_model->UpdateusersPassword($oldpass,$user_id,$data);
+    if($results==1)
+    {
+    die(json_encode(array('status'=>1,'msg'=>'update successfully')));
+
+    }
+     elseif($results==2)
+    {
+        die(json_encode(array('status'=>2,'msg'=>'Old Password Not match')));
+
+    }
+    else
+    {
+     die(json_encode(array('status'=>0,'msg'=>'Error Try Again')));
+    }
+
+    }
+    
+	
+=======
 
 	public function DeleteUsers()
 	{
@@ -892,6 +965,7 @@ class User extends MY_Controller
 	}
 
 
+>>>>>>> d2fb1a8e3859ce4604145366a405b793caef02ae
 }
 
 ?>

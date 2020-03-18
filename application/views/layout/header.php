@@ -490,7 +490,7 @@ background: #f3f3f3;
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe-europe"></i> <span>Recruitment <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></span></a>
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href="<?=base_url('Recruitment/jobsPosted')?>"><span> <i class="fas fa-ticket-alt"></i></span>Jobs Posted<i class="fa fa-check" aria-hidden="true" style="color:orange"></i> </a></li>
-                  <li><a class="nav-link" href="<?=base_url('Recruitment/jobsApplications')?>"><span><i class="far fa-compass"></i></span>Jobs Application</a></li>
+                 <!--  <li><a class="nav-link" href="<?=base_url('Recruitment/jobsApplications')?>"><span><i class="far fa-compass"></i></span>Jobs Application</a></li> -->
                 </ul>
             </li>
           <?php endif;?>
