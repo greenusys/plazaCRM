@@ -6,8 +6,8 @@
 					<?php if($this->session->flashdata('msg')){
 						echo "<div class='alert-info alert'>".$this->session->flashdata('msg')."</div>";
 
-					}?>	
-<?php 
+					}?>
+<?php
  $session=$this->session->userdata('logged_user');
 // print_r($session);
 // $user_id=$session[0]->employment_id;
@@ -17,6 +17,57 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group">
+									<div class="row">
+										<div class="offset-2 col-sm-3 text-right">
+											<label for="exampleInputEmail1" class="label-style ml-4">Send Report To<span class="text-danger"> *</span></label>
+										</div>
+										<div class="col-sm-4">
+										    <div class="form-group">
+							                  <select id="u_type" class="form-control selectpicker" name="user_type[]" multiple data-live-search="true" required>
+												  <option value="admin">Admin</option>
+												  <option value="emp">Employees</option>
+											  </select>
+							                </div>
+								        </div>
+									</div>
+									<div class="row" id="admin_row" style="display: none;">
+										<div class="offset-2 col-sm-3 text-right">
+											<label for="exampleInputEmail1" class="label-style ml-4">Choose Admins</label>
+										</div>
+										<div class="col-sm-4">
+											<div class="form-group">
+												<select class="form-control selectpicker" name="admin_list[]" multiple data-live-search="true">
+													<option value="">--select--</option>
+													<?php
+													foreach ($admins as $adm){
+														?>
+														<option value="<?=$adm->email?>"><?=$adm->full_name?></option>
+														<?php
+													}
+													?>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="row" id="emp_row" style="display: none;">
+										<div class="offset-2 col-sm-3 text-right">
+											<label for="exampleInputEmail1" class="label-style ml-4">Choose Employees</label>
+										</div>
+										<div class="col-sm-4">
+										    <div class="form-group">
+							                  <select class="form-control selectpicker" name="emp_list[]" multiple data-live-search="true">
+												  <option value="">--select--</option>
+												  <?php
+												  foreach ($employees as $emp){
+												  	?>
+													  <option value="<?=$emp->email?>"><?=$emp->full_name?></option>
+												  <?php
+												  }
+												  ?>
+											  </select>
+							                </div>
+								        </div>
+									</div>
 									<div class="row">
 										<div class="offset-2 col-sm-3 text-right">
 											<label for="exampleInputEmail1" class="label-style ml-4">Date Of Report<span class="text-danger"> *</span></label>
@@ -50,9 +101,10 @@
 											<label  class="label-style ml-4">Full Name<span class="text-danger"> *</span></label>
 										</div>
 										<div class="col-sm-6">
-											<input type="text" disabled="" value="<?=$session[0]->full_name?>" class="form-control" id="firstname"  placeholder="Enter First Name">
+											<input type="text" disabled=""  value="<?=$session[0]->full_name?>" class="form-control" id="firstname"  placeholder="Enter First Name">
+											<input type="hidden" name="your_name" value="<?=$session[0]->full_name?>">
 										</div>
-										
+
 									</div>
 								</div>
 								<div class="form-group">
@@ -63,7 +115,7 @@
 										<div class="col-sm-6">
 											<input type="text" disabled="" value="<?=$session[0]->employment_id?>" class="form-control" id="employee" name="rpt_employment_id" >
 										</div>
-										
+
 									</div>
 								</div>
 								<input type="hidden" name="user_id" value="<?=$session[0]->user_id?>">
@@ -112,7 +164,7 @@
 										<div class=" col-sm-5 text-right">
 											<label class="label-style ml-5">Did You Experience Any Problem Or Issues That Keep Your Work From Progressing Today?<span class="text-danger"> *</span></label>
 										</div>
-									
+
 										<div class="col-sm-6" >
 											<textarea rows="3" name="rpt_issues" cols="69"></textarea>
 										</div>
@@ -123,12 +175,12 @@
 										<div class="offset-2 col-sm-3 text-right">
 											<label class="label-style ml-5">Daily Report Summary<span class="text-danger"> *</span></label>
 										</div>
-									
+
 										<div class="col-sm-5 " >
 											<textarea rows="3" name="rpt_summary" cols="69"></textarea>
 											<h6 class="m-auto font">Write a general summary of your work activity today.</h6>
 										</div>
-										
+
 									</div>
 								</div>
 								<div class="form-group">
@@ -140,7 +192,7 @@
 											<textarea rows="3" name="rpt_task1" cols="69"></textarea>
 											<h6 class="m-auto font"> Please explain a text you completed today.</h6>
 										</div>
-										
+
 									</div>
 								</div>
 								<div class="form-group">
@@ -152,7 +204,7 @@
 											<textarea rows="3" name="rpt_task2" cols="69"></textarea>
 											<h6 class="m-auto font"> Please explain a text you completed today.</h6>
 										</div>
-										
+
 									</div>
 								</div>
 								<div class="form-group">
@@ -164,7 +216,7 @@
 											<textarea rows="3" name="rpt_task3" cols="69"></textarea>
 											<h6 class="m-auto font"> Please explain a text you completed today.</h6>
 										</div>
-										
+
 									</div>
 								</div>
 								<div class="form-group">
@@ -196,7 +248,7 @@
 										</div>
 										<div class="col-sm-6">
 											<input type="file" id="myfile" name="myfile[]" multiple><br><br>
-                                           
+
 										</div>
 									</div>
 								</div>
@@ -217,4 +269,18 @@
         format: 'DD/MM/YYYY'
 	    });
 	});
-</script> 
+
+  $(document).on('hide.bs.select','#u_type',function () {
+	var selectedVal=$(this).val();
+	if(selectedVal.indexOf('emp')!=-1){
+		$('#emp_row').show()
+	}else{
+		$('#emp_row').hide()
+	}
+	if(selectedVal.indexOf('admin')!=-1){
+		$('#admin_row').show()
+	}else{
+		$('#admin_row').hide()
+	}
+  })
+</script>
