@@ -766,7 +766,7 @@ class User extends MY_Controller
 					$this->email->initialize();
 					$this->email->set_newline("\r\n");
 					$contwnt=$this->load->view('email/report',$data,true);
-					$this->email->from($this->config->item('smtp_user'), $this->config->item('from_user'));
+					$this->email->from($this->config->item('smtp_user'), $usname);
 					foreach ($images as $imagename){
 						$this->email->attach(APPPATH.'../uploads/report_images/'.$imagename);
 					}
