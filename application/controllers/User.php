@@ -776,10 +776,10 @@ class User extends MY_Controller
 					$this->email->send();
 				}
 				$this->session->set_flashdata('msg', 'Added Successfully');
-				redirect(base_url('User/generateReport'));
+				// redirect(base_url('User/generateReport'));
 			} else {
 				$this->session->set_flashdata('msg', 'Server Error, Please Try Again');
-				redirect(base_url('User/generateReport'));
+				// redirect(base_url('User/generateReport'));
 			}
 
 		} else {
