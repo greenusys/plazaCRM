@@ -88,6 +88,7 @@ class Dashboard extends MY_Controller {
 		die(json_encode($this->Demo->get_over_due_task()));
 	}
 	public function fetchOnlineUser(){
+		
 		die(json_encode($this->Demo->get_online_user()));
 	}
 	public function projectInprogress(){

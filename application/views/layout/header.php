@@ -350,7 +350,7 @@ background: #f3f3f3;
                               // echo date_format($date,"d/m/y H:i:s");
               ?>
 
-              <!-- <div class="dropdown-title"><?echo date_format($date,'h:i:s');?></div> -->
+          
               <div class="dropdown-title" style="padding: 10px"><?=$elapsed?></div>
               <a href="<?=base_url('User/userProfile')?>" class="dropdown-item has-icon">
                 <i class="far fa-user"></i> Profile
@@ -613,7 +613,12 @@ background: #f3f3f3;
                               echo '<button class="btn btn-success check_btn2 chekcIn" onclick="printTime(1)" d-Val="1"><i class="fas fa-sign-in-alt"></i> Checkin</button><button class="btn btn-danger check_btn2 checkOut d-non" onclick="printTime(0)" d-Val="0"><i class="fas fa-sign-out-alt"></i> Checkout</button>' ;
                             }
                           }else{
-                            echo '<button class="btn btn-success check_btn2 chekcIn" onclick="printTime(1)" d-Val="1"><i class="fas fa-sign-in-alt"></i> Checkin</button><button class="btn btn-danger check_btn2 checkOut d-non" onclick="printTime(0)" d-Val="0"><i class="fas fa-sign-out-alt"></i> Checkout</button>' ;
+                            if($this->checkin_status==1){
+                                  echo '<button class="btn btn-success check_btn2 chekcIn d-non" onclick="printTime(1)" d-Val="1"><i class="fas fa-sign-in-alt"></i> Checkin</button><button class="btn btn-danger check_btn2 checkOut" onclick="printTime(0)" d-val="0"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Checkout</button>';
+                            }else{
+                               echo '<button class="btn btn-success check_btn2 chekcIn" onclick="printTime(1)" d-Val="1"><i class="fas fa-sign-in-alt"></i> Checkin</button><button class="btn btn-danger check_btn2 checkOut d-non" onclick="printTime(0)" d-Val="0"><i class="fas fa-sign-out-alt"></i> Checkout</button>' ;
+                            }
+                           
                           }
                           if(count($attendaceData)>0){
 
