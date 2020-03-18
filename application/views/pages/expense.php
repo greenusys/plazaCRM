@@ -178,19 +178,10 @@
                     </table>
                   </div>
                   <div class="tab-pane fade px-4" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
-                      <div class="row">
+      <div class="row">
                           
         <div class="offset-1 col-sm-8 cl-md-8 col-lg-8">
-             <?php
-                  if($this->session->flashdata('msg'))
-                  {
-
-
-                    echo '<div class="alert alert-info">'.$this->session->flashdata('msg').'</div>';
-                   
-                  }
-                ?>
-        <form action="<?=base_url('Transaction/AddExpenseData')?>"method="post"  enctype="multipart/form-data">
+          <form id="addexpense" >
           <div class="form-group">
               <div class="row">
               <div class="col-sm-3">
@@ -380,52 +371,14 @@
               <div class="col-sm-9">
                 <div class="checkbox c-radio needsclick ">
                   <input type="radio" name="permission" value="all" class="btn1"> Everyone<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
-                                </div>
-              <!--   <div class="checkbox c-radio needsclick">
-                  <input type="radio" name="permission" value="" id="chkPassport" onclick="ShowHideDiv(this)" > Customise Permission<i title="" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" data-original-title="who have permission for this menu and all admin user."></i><br>
-                                </div> -->
               </div>
             </div>
           </div>
-          <!--<div class="form-group"  id="dvPassport" style="display: none">-->
-          <!--    <div class="row">-->
-          <!--    <div class="col-sm-3">-->
-          <!--      <label for="exampleInputEmail1">select Users<span class="text-danger">*</span></label>-->
-          <!--    </div>-->
-              <!--<div class="col-sm-9">
-                 <input type="checkbox" name="vehicle1" value="Bike"  id="chkPassport1" onclick="ShowHideDiv(this)"> admin <strong class="badge btn-danger">Admin</strong>
-                 <br>
-                 <div class="row"  id="dvPassport1" style="display: none">
-                    <div class="col-md-3">
-                   <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> View
-                  </div>
-                  <div class="col-md-3">
-                       <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Edit
-                  </div>
-                  <div class="col-md-3">
-                      <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Delete
-                  </div>
-                 </div>
-                 
-                                 <input type="checkbox" name="vehicle2" value="Car"  id="chkPassport2" onclick="ShowHideDiv(this)" > adminko <strong class="badge btn-danger">Admin</strong>
-                 <br>
-                 <div class="row"  id="dvPassport2" style="display: none">
-                    <div class="col-md-3">
-                   <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> View
-                  </div>
-                  <div class="col-md-3">
-                       <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Edit
-                  </div>
-                  <div class="col-md-3">
-                      <input type="checkbox" name="vehicle1" value="Bike" checked="checked"> Delete
-                  </div>
-                 </div>
-              </div>--->
-               
+        
          
         
         </div>
-    </div>
+    <!-- </div> -->
     <div class="row mt-3">
         <div class="offset-11 col-md-1">
          <button type="submit" class="btn btn-primary">Save</button>
@@ -436,90 +389,7 @@
       </div>
             </div>
                   </div>
-                 <!--  <div class="tab-pane fade show px-4 " id="imp_project" role="tabpanel" aria-labelledby="import_project">
-                      <div class="text-right dnld_sample"><button class="btn btn-primary"> <i class="fas fa-download"></i>Download Sample</div> -->
-                  <!--   <div class="row">
-                      <div class="col-md-12 card p-4">
-                          <div class="col-md-5 offset-md-1 mt-3">
-                            <form action="/action_page.php">
-                                <div class="form-group  row">
-                                  <label for="staticEmail" class="text-right col-sm-5 col-form-label font-weight-bold">Choosvve File <sup class="text-danger">*</sup></label>
-                                  <div class="col-sm-7">
-                                      <input type="file" class="text-right form-control border-0 d-none" id="img" placeholder="">
-                                  <label for="img" class="border w-50 pl-3">Select File</label>
-                                  </div>
-                                </div>
-                                <div class="form-group  row">
-                                  <label for="accounts" class="text-right col-sm-5 col-form-label font-weight-bold">Accounts <sup class="text-danger">*</sup></label>
-                                  <div class="col-sm-7">
-                           
-                                      <div class="input-group">
-                                        <select name="compLanguage" class="form-control language" id="accounts" style="width: 100%">
-                                          <option selected="" disabled="">Select Category</option>
-                                        </select>
-                                      </div>
-                                  </div>
-                                </div>
-
-
-                                <div class="form-group  row">
-                                  <label for="accounts" class="text-right col-sm-5 col-form-label font-weight-bold">Category <sup class="text-danger">*</sup></label>
-                                  <div class="col-sm-7">
-                                      <div class="input-group">
-                                        <select name="compLanguage" class="form-control language" id="language" style="width: 100%">
-                                          <option selected="" disabled="">Select Category</option>
-                                        </select>
-                                      </div>
-                                  </div>
-                                </div>
-
-                                <div class="form-group  row">
-                                  <label for="accounts" class="text-right col-sm-5 col-form-label font-weight-bold">Paid By <sup class="text-danger">*</sup></label>
-                                  <div class="col-sm-7">
-                                     <div class="input-group">
-                                        <select name="currency" class="form-control currency" id="currency" style="width: 100%">
-                                        <option selected="" disabled="">Select a Payer</option>
-                                      </select>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="form-group  row">
-                                  <label for="accounts" class="text-right col-sm-5 col-form-label font-weight-bold">Payment Method <sup class="text-danger">*</sup></label>
-                                  <div class="col-sm-7">
-                                     <div class="input-group">
-                                        <select name="currency" class="form-control currency" id="country" style="width: 100%">
-                                        <option selected="" disabled="">Select Payment Method</option>
-                                      </select>
-                                    </div>
-                                  </div>
-                                </div>
-                         
-                              <div class="form-group row">
-                                  <label for="staticEmail" class="text-right col-sm-5 col-form-label font-weight-bold">Attachment <sup class="text-danger">*</sup></label>
-                                  <div class="col-sm-4">
-                                      <input type="file" class="text-right form-control border-0 d-none" id="img" placeholder="">
-                                  <label for="img" class="border w-100 pl-3">Select File</label>
-                                  </div>
-                                  <div class="col-md-3">
-                                    <span><i class="fa fa-plus" aria-hidden="true"></i> Add More</span>
-                                  </div>
-                              </div>
-
-                                <div class="form-group row">
-                                  <label for="staticEmail" class="text-right col-sm-5 col-form-label font-weight-bold">  Assigned to <sup class="text-danger">*</sup></label>
-                                  <div class="col-sm-7">
-                                     <input type="radio" name="everyone" value="everyone" checked=""> Everyone  <i class="fa fa-question-circle" aria-hidden="true"></i><br>
-                                    <input type="radio" name="everyone" value="everyone">  customize permision  <i class="fa fa-question-circle" aria-hidden="true"></i>
-                                  </div>
-                                </div>
-                                <div class="" style="padding-left: 26%">
-                                  <button type="submit" class="btn btn-primary">upload</button>
-                              </div>  
-                            </form>   
-                          </div>
-                        </div>
-                      </div> -->
-              
+                 
 
                   </div>
                 </div>
@@ -1113,6 +983,39 @@
   </div>
 </div>
   <!--ending of expense-->
+  <script type="text/javascript">
+      $("#addexpense").submit(function(e){
+       e.preventDefault();
+          var formData= new FormData($(this)[0]);
+          // console.log(formData);
+          $.ajax({
+            url:"<?=base_url('Transaction/AddExpenseData')?>",
+            type:"post",
+             data:formData,
+              // contentType: 'multipart/form-data',
+              contentType:false,
+             processData:false,
+             cache:false,
+            success:function(response)
+            {
+              var response=JSON.parse(response);
+              console.log(response);
+              if(response.status==1)
+              {
+                // $('#add_holiday').trigger("reset");
+                swal("Expense!", " Added Successfully", "success");
+                location.reload();
+              }
+              else if(response.status==2)
+              {
+               swal("OOPS", "File Not Be Empty", "error");
+              }
+              else{
+                swal("OOPS", "Something Went Wrong", "error");
+              }
+            }
+         });
+    });</script>
   <script type="text/javascript">
   window.onload = function() {
   $(".Expense_div").hide();

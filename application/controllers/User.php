@@ -835,6 +835,32 @@ class User extends MY_Controller {
         $this->load->view("pages/myCompletedProject",$data);
         $this->load->view("layout/footer");
     }
+    public function UpdateUsersPassword()
+    {
+ 
+        $session=$this->session->userdata('logged_user');
+        $user_id=$session[0]->user_id;
+        $newpass=$this->input->post('newpass');
+        // print_r( $session);
+        $oldpass=$this->input->post('oldpass');
+        $data=array('password'=>$newpass);
+        $results=$this->User_model->UpdateusersPassword($oldpass,$user_id,$data);
+    if($results==1)
+    {
+    die(json_encode(array('status'=>1,'msg'=>'update successfully')));
+
+    }
+     elseif($results==2)
+    {
+        die(json_encode(array('status'=>2,'msg'=>'Old Password Not match')));
+
+    }
+    else
+    {
+     die(json_encode(array('status'=>0,'msg'=>'Error Try Again')));
+    }
+
+    }
     
 	
 }

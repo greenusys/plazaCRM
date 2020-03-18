@@ -260,28 +260,30 @@ class Transaction extends MY_Controller {
                         );
 	       //	print_r($data);
 	        	$results=$this->Expenses->addExpenseData($data);
-    	        	  switch ($results) 
+        	  	switch ($results) 
     				{
-    					case 0:$this->session->set_flashdata('msg','Error');
+					case 0:
+					die(json_encode(array('status'=>0,'msg'=>"failed try again")));
     						break;
-    					case 1:$this->session->set_flashdata('msg','Expense Added Successfully');
-    						break;
-    					
-    					default:$this->session->set_flashdata('msg','Error');
-    						break;
+					case 1:
+					die(json_encode(array('status' => 1, 'msg' => "Expense Added Successfully")));
+					break;
+					default:
+					die(json_encode(array('status'=>0,'msg'=>"failed try again")));
+						break;
     				}
-    					redirect('Transaction/expense');
+    				
 			    }
 	        
  			else
  			{
- 			    	die(json_encode(array('status' =>'2' ,'msg'=>'code error')));
+ 			    	die(json_encode(array('status' =>'2' ,'msg'=>'File Not Be Empty')));
  			}
  			// image if end
 		}
 		else
 		{
-		    	die(json_encode(array('status' =>'3' ,'msg'=>'Error Try Again ')));
+		    	die(json_encode(array('status' =>'0' ,'msg'=>'Error Try Again ')));
 		}
 	
 	}

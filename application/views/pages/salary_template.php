@@ -254,7 +254,7 @@
         <div class="pull-right ">
               <!-- <span><a href="http://plazacrm.com/admin/payroll/salary_template/5" class="btn btn-primary btn-xs" title="" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil-square-o"></i></a></span>
               <span><a href="http://plazacrm.com/admin/payroll/salary_template_pdf/5" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="top" title="" data-original-title="PDF"><span> <i="" class="fa fa-file-pdf-o"></span></a></span> -->
-              <button class="btn btn-xs btn-danger" type="button" data-toggle="tooltip" title="" onclick="printDiv('printableArea')" data-original-title="Print"><i class="fa fa-print"></i></button>
+             <!--  <button class="btn btn-xs btn-danger" type="button" data-toggle="tooltip" title="" onclick="printDiv('printableArea')" data-original-title="Print"><i class="fa fa-print"></i></button> -->
             </div>
       </div>
       <hr>

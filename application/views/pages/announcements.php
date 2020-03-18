@@ -562,22 +562,22 @@
                     {
                      var obj=JSON.parse(response);
                      console.log('check response'obj);
-                    //  if(obj.code==0)
-                    //  {
-                    //     swal("Announcement", "Error", "error")
-                    //  }
-                    //  if(obj.code==1)
-                    //  {
-                    //      // swal("Announcement!", " Updated Successfully", "success");
-                    //   swal("Announcement!", "Updated Successfully", "success")
-                    //  }
-                    //  if(obj.code==2)
-                    //  {
-                    //  swal("Announcement", "Try Again", "error")
-                    //  }
-                    //  // location.reload();
-                    //   window.location.href='<?=base_url("Announcement/index")?>';
-                    // }
+                     if(obj.code==0)
+                     {
+                        swal("Announcement", "Error", "error")
+                     }
+                     if(obj.code==1)
+                     {
+                         // swal("Announcement!", " Updated Successfully", "success");
+                      swal("Announcement!", "Updated Successfully", "success")
+                     }
+                     if(obj.code==2)
+                     {
+                     swal("Announcement", "Try Again", "error")
+                     }
+                     // location.reload();
+                      window.location.href='<?=base_url("Announcement/index")?>';
+                    }
                 });
             });
              });

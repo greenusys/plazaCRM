@@ -449,7 +449,8 @@
       var pressValue=parseInt($(this).val());
       console.log("Press Value : "+pressValue);
       if(pressValue > AvailLe){
-        alert("Leaves Out Of Stock");
+          swal("Leaves!", "Out Of Stock", "error");
+        // alert("Leaves Out Of Stock");
         $($(this).val(""));
       }
     });
