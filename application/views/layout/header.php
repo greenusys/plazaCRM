@@ -1,7 +1,7 @@
 <?php
 
   $session=$this->session->userdata('logged_user');
-   
+
 $myId=$session[0]->user_id;
 $role_id=$session[0]->role_id;
 
@@ -45,8 +45,9 @@ $role_id=$session[0]->role_id;
 
  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 <script src="<?=base_url()?>assets/js/bootstrap-toggle.min.js"></script>
-   
 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
   <!-- JS Libraies -->
  <!--  <script src="../node_modules/jquery-sparkline/jquery.sparkline.min.js"></script>
   <script src="../node_modules/chart.js/dist/Chart.min.js"></script>
@@ -68,7 +69,7 @@ $role_id=$session[0]->role_id;
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script> 
+  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
 
 
   <link href='<?=base_url()?>assets/css/calendar.css' rel='stylesheet' />
@@ -89,8 +90,8 @@ $role_id=$session[0]->role_id;
 
   <!-- <link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.css"> -->
     <!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script> -->
-      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.min.css"> 
-      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker-standalone.css"> 
+      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.min.css">
+      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker-standalone.css">
       <script type="text/javascript" src="<?=base_url()?>assets/js/bootstrap-datetimepicker.min.js"></script>
   <script>
   $(function() {
@@ -157,7 +158,7 @@ background: #f3f3f3;
     position: relative;
 }
 .time-item {
-  
+
     padding-bottom: 10px;
     position: relative;
 }
@@ -181,7 +182,7 @@ background: #f3f3f3;
 }
   </style>
 <style type="text/css">
-  
+
 
 
 
@@ -263,7 +264,7 @@ background: #f3f3f3;
         </form>
 
         <ul class="navbar-nav navbar-right">
-          
+
           <li class="dropdown dropdown-list-toggle " >
             <a href="javascript:void(0)" data-toggle="dropdown"  class="nav-link notification-toggle nav-link-lg"><i class="far fa-bell"></i>
               <?php
@@ -307,7 +308,7 @@ background: #f3f3f3;
                     <?php }
                 }
                 ?>
-             
+
               </div>
               <div class="dropdown-footer text-center">
                 <a href="#">View All <i class="fas fa-chevron-right"></i></a>
@@ -315,7 +316,7 @@ background: #f3f3f3;
             </div>
           </li>
           <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-          
+
             <img alt="image" src=" <?=base_url().'uploads/profile_pic/'.$session[0]->avatar?>" onerror="this.src='<?=base_url()?>assets/img/avatar/avatar-5.png';" class="rounded-circle mr-1">
 
             <div class="d-sm-none d-lg-inline-block">Hi, <?=$session[0]->fullname?></div></a>
@@ -331,7 +332,7 @@ background: #f3f3f3;
                 $datetime2 = new DateTime($session[0]->last_login);
                 $interval = $datetime1->diff($datetime2);
                 $elapsed = $interval->format('Last Login: %h h %i min ago');
-                
+
               // $date=date_create($session[0]->last_login);
               // echo date('Y-m-d');
               // $login_date = new DateTime($session[0]->last_login);
@@ -341,10 +342,10 @@ background: #f3f3f3;
               // print_r( $login_date);
               // print_r($cur_date);
               // die;
-              
+
 
               // $interval = $start_date->diff($end_date);
-              // $hours   = $interval->format('%h'); 
+              // $hours   = $interval->format('%h');
               // $minutes = $interval->format('%i');
               // echo  'Diff. in minutes is: '.($hours * 60 + $minutes);
                               // echo date_format($date,"d/m/y H:i:s");
@@ -406,7 +407,7 @@ background: #f3f3f3;
             <li class="nav-item dropdown">
                   <a href="#" class="nav-link has-dropdown"><i class="fa fa-user"></i> <span>Department</span></a>
                   <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="<?=base_url('Department')?>"><span><i class="fa fa-user"></i></span>Department  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>   
+                    <li><a class="nav-link" href="<?=base_url('Department')?>"><span><i class="fa fa-user"></i></span>Department  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
                   </ul>
             </li>
 
@@ -433,29 +434,29 @@ background: #f3f3f3;
                   <li><a class="nav-link" href="<?=base_url('Payroll/generatePaySlip')?>"><span><i class="fas fa-list"></i></span>Generate Payslip <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
                   <!-- <li><a class="nav-link" href="<?=base_url('Payroll/payrollSummary')?>"><span><i class="fas fa-camera-retro"></i></span>Payroll Summary <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li> -->
                   <li><a class="nav-link" href="<?=base_url('Payroll/advanceSalary')?>"><span><i class="fab fa-cc-mastercard"></i></span>Advance Salary <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
-                  <li><a class="nav-link" href="<?=base_url('Payroll/providentFund')?>"><span><i class="fas fa-briefcase"></i></span>Provident Fund</a></li>        
+                  <li><a class="nav-link" href="<?=base_url('Payroll/providentFund')?>"><span><i class="fas fa-briefcase"></i></span>Provident Fund</a></li>
                   <li><a class="nav-link" href="<?=base_url('Payroll/overTime')?>"><span><i class="far fa-clock"></i></span>Overtime</a></li>
                   <!-- <li><a class="nav-link" href="<?=base_url('Payroll/employeeAward')?>"><span><i class="fas fa-trophy"></i></span>Employee Award</a></li> -->
-                  
+
                 </ul>
             </li>
-            
+
              <!-- <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fab fa-dribbble"></i> <span>Performance</span></a>
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href="<?=base_url('Performance/indicator')?>"><span> <i class="fas fa-random"></i></span>Indicator<i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
                   <li><a class="nav-link" href="<?=base_url('Performance/giveAppraisal')?>"><span><i class="fas fa-plus"></i></span>Give Appraisal</a></li>
                   <li><a class="nav-link" href="<?=base_url('Performance/performanceReport')?>"><span><i class="far fa-calendar"></i></span>Performance Report</a></li>
-                
+
                 </ul>
             </li> -->
             <li class="nav-item dropdown">
               <a href="#" class="nav-link has-dropdown"><i class="fa fa-lock"></i> <span>Permission</span></a>
               <ul class="dropdown-menu">
                 <li><a class="nav-link" href="<?=base_url('Permission')?>"><span><i class="fa fa-lock"></i></span>Set Permiss  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
-                
-               
-                
+
+
+
               </ul>
             </li>
               <?php
@@ -465,25 +466,25 @@ background: #f3f3f3;
 
             <li><a class="nav-link" href="<?=base_url('Projects')?>"><i class="far fa-folder-open"></i><span>Projects  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></span></a></li>
 
-           
-            
 
-             
 
-           
 
-             
-            
+
+
+
+
+
+
              <!-- <li class="nav-item dropdown">
                   <a href="#" class="nav-link has-dropdown"><i class="fa fa-briefcase"></i> <span>Designation</span></a>
                   <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?=base_url('Designation')?>"><span><i class="fa fa-briefcase"></i></span>Designation  <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
-                    
-                   
-                    
+
+
+
                   </ul>
                 </li> -->
-                
+
            <?php if($role_id!=3):?>
              <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe-europe"></i> <span>Recruitment <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></span></a>
@@ -497,7 +498,7 @@ background: #f3f3f3;
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-bug"></i> <span>Bugs <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></span></a>
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href="<?=base_url('Bugs/')?>"><span> <i class="fas fa-bug"></i></span>Bugs<i class="fa fa-check" aria-hidden="true" style="color:orange"></i> </a></li>
-                 
+
                 </ul>
             </li> -->
 
@@ -539,15 +540,15 @@ background: #f3f3f3;
                 </ul>
               </li>
              <?php endif; ?>
-             
+
              <?php if($role_id!=3):?>
             <li><a class="nav-link" href="<?=base_url('User/user_list')?>"><i class="fas fa-user"></i> <span>Users</span></a></li>
             <?php endif; ?>
-           
 
-          
-           
-          
+
+
+
+
 
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe-europe"></i> <span>Utilities </span></a>
@@ -556,9 +557,9 @@ background: #f3f3f3;
                   <!-- <li><a class="nav-link" href="<?=base_url('Utilities/gaolTracking')?>"><span><i class="far fa-compass"></i></span>Goal Tracking</a></li> -->
                 </ul>
             </li>
-             
 
-            
+
+
             </ul>
         </aside>
       </div>
@@ -582,7 +583,7 @@ background: #f3f3f3;
       <!-- Main Content -->
       <div class="main-content">
         <section class="section">
-     
+
               <div class="row">
                     <div class="col-md-6 bg-white">
                       <h4 class=" p-2">Dashboard</h4>
@@ -596,13 +597,13 @@ background: #f3f3f3;
                         <span id="txt"></span>
                        <!--  <div class="row">
                           <div class="col-md-6 text-align-right" >
-                            
+
                           </div>
                           <div class="col-md-6" >
-                            
+
                           </div>
                         </div> -->
-                        
+
                       </div>
                       <div class="col-md-4">
                         <?php
@@ -621,14 +622,14 @@ background: #f3f3f3;
 
                           }
                         ?>
-                        
+
                       </div>
                     </div>
-                    
+
                   </div>
               </div>
   <script type="text/javascript">
-   
+
     $(document).on('click','.check_btn2',function(){
       var d_time=document.getElementById('txt').innerHTML;
       var elem=$(this);
@@ -681,7 +682,7 @@ background: #f3f3f3;
 			// 			}
 			// });
 			// var old_time=new Date("11:27:45");
-      
+
 			// var now_=new Date(document.getElementById('txt').innerHTML);
 			// console.log(" OLD : "+old_time);
 			// console.log(" Now : "+d_time);
@@ -689,7 +690,7 @@ background: #f3f3f3;
 			// console.log(" Difference : "+dif_);
 		}
  </script>
- <script>   
+ <script>
 
     $(document).on('click','#change_badge',function(){
       $.ajax({
