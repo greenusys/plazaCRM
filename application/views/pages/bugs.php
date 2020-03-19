@@ -55,7 +55,7 @@
 						// print_r($buggy);
 					?>
 					<tr>
-						<td><a href="#"><?=$buggy->bug_title?></a></td>
+						<td><a href="<?=base_url('Bugs/bugsDetails')?>"><?=$buggy->bug_title?></a></td>
 						<td><?=date('d, M Y',strtotime($buggy->created_time))?></td>
 						<!--<td>-->
 						<!--	<div class="row">-->
