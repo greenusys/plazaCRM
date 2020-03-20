@@ -84,6 +84,9 @@
 .selected-button {
   border-bottom: 2px solid orange;
 }
+#inp_amnt{
+	display: none;
+}
 </style>
 <div class=" mb-5">
 		<div class="row mt-4">
@@ -205,9 +208,9 @@
 							                <div class="col-sm-5 d-flex">
 							                	<div class="refreshlocation">
 							                	<input type="hidden" id="projectidss" value="<?=$project_details->project_id?>">
-							                   <label class=" bg-warning p-1 he  text-white" ><?=$project_details->project_status?></label></div>
+							                   <label class="rounded bg-warning p-1 he  text-white" ><?=$project_details->project_status?></label></div>
 							                   <!-- <label class=" p-1 ml-3 top"><span class="bg-primary p-1 text-white"></span> -->
-							                   	   <select class=" projectstatus form-control bg-success text-white" name="department">
+							                   	   <select class="ml-1 projectstatus form-control bg-success text-white" name="department">
 							                   	   	    <option value="change">Change</option>
 														<option value="started">Started</option>
 														<option value="in_progress">In progress</option>
@@ -294,7 +297,26 @@
 							                </div>
 							              </div>
 							            </div>
-
+							            <div class="form-group">
+							              <div class="row">
+							                <div class="offset-1 col-sm-3 text-right">
+							                  <label  class="label-style" >Total Earning :</label>
+							                </div>
+							                <div class="col-sm-7 ">
+							                	 <label  >00</label>
+							                	 <label class="btn btn-primary p-1" id="amnt">ADD</label>
+							                	<div id="inp_amnt" >
+								                   <input class="form-control" name="" >
+								                   <button class="btn btn-primary p-1">Update</button>
+								               </div>
+							                </div>
+							              </div>
+							            </div>
+<script type="text/javascript">
+	$(document).on("click","#amnt",function(){
+		$("#inp_amnt").slideToggle();
+	})
+</script>
 							       <!--      <div class="form-group">
 							              <div class="row">
 							                <div class="offset-1 col-sm-4">

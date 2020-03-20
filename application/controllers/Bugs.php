@@ -83,6 +83,12 @@
 			}
 		}
 
+        public function bugsDetails(){
+            $this->load->view('layout/header');
+            $this->load->view('pages/bugsDetails');
+            $this->load->view('layout/footer');
+        }
+
         public function  progessBugs()
         {
             $this->load->view('layout/header');
