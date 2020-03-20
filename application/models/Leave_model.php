@@ -9,9 +9,12 @@ class Leave_Model extends CI_Model
 	}
 	public function addLeaveData($data)
 	{
-	       // print_r($data); 
+	        // print_r($data); 
+	        // die;
+		
 		if($this->db->insert('tbl_leave_application',$data))
 		{
+
 			return 1;
 			
 		}else{
@@ -299,6 +302,40 @@ class Leave_Model extends CI_Model
 	public function getLeaveDetailsForCategoryWise($cat_id){
     	$condition=array("leave_category_id"=>$cat_id);
     	return $this->db->where($condition)->get('tbl_leave_category')->result_array();
+	}
+	public function LeaveDataInsertInTbl_Attendance($appid)
+	{
+		$this->db->where('leave_application_id',$appid);
+		$dataaa=$this->db->get('tbl_leave_application')->result();
+
+		$leaveid=$dataaa[0]->leave_application_id;
+		$userid=$dataaa[0]->user_id;
+		$strtdate=$dataaa[0]->leave_start_date;
+		$enddate=$dataaa[0]->leave_end_date;
+
+		$begin = new DateTime($strtdate);
+		$end = new DateTime($enddate);
+		$dates_array = array();
+
+		$daterange = new DatePeriod($begin, new DateInterval('P1D'), $end);
+
+			foreach($daterange as $date)
+			{
+			    $dates_array[]= $date->format("Y-m-d");
+			}
+
+			foreach($dates_array as $newlist)
+		    {
+	    	 $data = array(
+			    'user_id' =>$userid ,
+			    'leave_application_id'=>$leaveid,
+			    'date_in' => $newlist,
+			    'date_out' => $newlist,
+			    'attendance_status' => 3);
+				$this->db->insert('tbl_attendance', $data);
+				
+				// print_r($data);
+		    }
 	}
 }
 
