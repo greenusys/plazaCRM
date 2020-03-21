@@ -8,7 +8,7 @@ class Utilities extends MY_Controller {
 		$this->load->model('Global_Model');
         $this->load->model('User_model');
 	}
-
+   
 	public function holiday(){
         $data['title'] = lang('holiday');
 

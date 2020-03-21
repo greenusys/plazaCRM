@@ -46,8 +46,8 @@ $role_id=$session[0]->role_id;
  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 <script src="<?=base_url()?>assets/js/bootstrap-toggle.min.js"></script>
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
   <!-- JS Libraies -->
  <!--  <script src="../node_modules/jquery-sparkline/jquery.sparkline.min.js"></script>
   <script src="../node_modules/chart.js/dist/Chart.min.js"></script>
@@ -440,7 +440,15 @@ background: #f3f3f3;
 
                 </ul>
             </li>
+            <li class="nav-item dropdown">
+                <a href="javascript:void(0)" class="nav-link has-dropdown"><i class="fab fa-dribbble"></i> <span>IP Restriction</span></a>
+                <ul class="dropdown-menu">
+                  <li><a class="nav-link" href="<?=base_url('Restriction/ip_rest')?>"><span> <i class="fas fa-random"></i></span>IP Restriction<i class="fa fa-check" aria-hidden="true" style="color:orange"></i></a></li>
+                 <!--  <li><a class="nav-link" href="<?=base_url('Performance/giveAppraisal')?>"><span><i class="fas fa-plus"></i></span>Give Appraisal</a></li>
+                  <li><a class="nav-link" href="<?=base_url('Performance/performanceReport')?>"><span><i class="far fa-calendar"></i></span>Performance Report</a></li> -->
 
+                </ul>
+            </li>
              <!-- <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fab fa-dribbble"></i> <span>Performance</span></a>
                 <ul class="dropdown-menu">
@@ -494,7 +502,7 @@ background: #f3f3f3;
                 </ul>
             </li>
           <?php endif;?>
-						<!-- <li class="nav-item dropdown">
+            <!-- <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-bug"></i> <span>Bugs <i class="fa fa-check" aria-hidden="true" style="color:orange"></i></span></a>
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href="<?=base_url('Bugs/')?>"><span> <i class="fas fa-bug"></i></span>Bugs<i class="fa fa-check" aria-hidden="true" style="color:orange"></i> </a></li>
@@ -607,25 +615,24 @@ background: #f3f3f3;
                       </div>
                       <div class="col-md-4">
                         <?php
-                          if(isset($_SESSION['clocked'])){
-                            if($_SESSION['clocked']==1){
-                              echo '<button class="btn btn-success check_btn2 chekcIn d-non" onclick="printTime(1)" d-Val="1"><i class="fas fa-sign-in-alt"></i> Checkin</button><button class="btn btn-danger check_btn2 checkOut" onclick="printTime(0)" d-Val="0"><i class="fas fa-sign-out-alt"></i> Checkout</button>';
-                            }else{
-                              echo '<button class="btn btn-success check_btn2 chekcIn" onclick="printTime(1)" d-Val="1"><i class="fas fa-sign-in-alt"></i> Checkin</button><button class="btn btn-danger check_btn2 checkOut d-non" onclick="printTime(0)" d-Val="0"><i class="fas fa-sign-out-alt"></i> Checkout</button>' ;
-                            }
-                          }else{
-                            if($this->checkin_status==1){
-                                  echo '<button class="btn btn-success check_btn2 chekcIn d-non" onclick="printTime(1)" d-Val="1"><i class="fas fa-sign-in-alt"></i> Checkin</button><button class="btn btn-danger check_btn2 checkOut" onclick="printTime(0)" d-val="0"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Checkout</button>';
-                            }else{
-                               echo '<button class="btn btn-success check_btn2 chekcIn" onclick="printTime(1)" d-Val="1"><i class="fas fa-sign-in-alt"></i> Checkin</button><button class="btn btn-danger check_btn2 checkOut d-non" onclick="printTime(0)" d-Val="0"><i class="fas fa-sign-out-alt"></i> Checkout</button>' ;
-                            }
-                           
-                          }
-                          if(count($attendaceData)>0){
-
-                          }else{
-
-                          }
+                             if (in_array($this->input->ip_address(), $this->Global_Model->getAllowedIP()))
+                              {
+                            //   echo "Match found";
+                               if(isset($_SESSION['clocked'])){
+                                    if($_SESSION['clocked']==1){
+                                      echo '<button class="btn btn-success check_btn2 chekcIn d-non" onclick="printTime(1)" d-Val="1"><i class="fas fa-sign-in-alt"></i> Checkin</button><button class="btn btn-danger check_btn2 checkOut" onclick="printTime(0)" d-Val="0"><i class="fas fa-sign-out-alt"></i> Checkout</button>';
+                                    }else{
+                                      echo '<button class="btn btn-success check_btn2 chekcIn" onclick="printTime(1)" d-Val="1"><i class="fas fa-sign-in-alt"></i> Checkin</button><button class="btn btn-danger check_btn2 checkOut d-non" onclick="printTime(0)" d-Val="0"><i class="fas fa-sign-out-alt"></i> Checkout</button>' ;
+                                    }
+                                }else{
+                                    if($this->checkin_status==1){
+                                          echo '<button class="btn btn-success check_btn2 chekcIn d-non" onclick="printTime(1)" d-Val="1"><i class="fas fa-sign-in-alt"></i> Checkin</button><button class="btn btn-danger check_btn2 checkOut" onclick="printTime(0)" d-val="0"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Checkout</button>';
+                                    }else{
+                                       echo '<button class="btn btn-success check_btn2 chekcIn" onclick="printTime(1)" d-Val="1"><i class="fas fa-sign-in-alt"></i> Checkin</button><button class="btn btn-danger check_btn2 checkOut d-non" onclick="printTime(0)" d-Val="0"><i class="fas fa-sign-out-alt"></i> Checkout</button>' ;
+                                    }
+                                   
+                                }
+                              }
                         ?>
 
                       </div>
@@ -667,7 +674,7 @@ background: #f3f3f3;
            }
       })
     });
-		function printTime(id){
+    function printTime(id){
       // var d_time=document.getElementById('txt').innerHTML;
       // var type;
       // if(id==1){
@@ -677,23 +684,23 @@ background: #f3f3f3;
       //   console.log("Check Out: ");
       //   type=0;
       // }
-			// $.ajax({
-			// 	url:"<?=base_url('Attendance/markMyAttendance')?>",
+      // $.ajax({
+      //  url:"<?=base_url('Attendance/markMyAttendance')?>",
    //      type:"post",
    //      data:{d_time:d_time,type:type},
-			// 	success:function(response)
-			// 			{
-			// 				console.log(response);
-			// 			}
-			// });
-			// var old_time=new Date("11:27:45");
+      //  success:function(response)
+      //      {
+      //        console.log(response);
+      //      }
+      // });
+      // var old_time=new Date("11:27:45");
 
-			// var now_=new Date(document.getElementById('txt').innerHTML);
-			// console.log(" OLD : "+old_time);
-			// console.log(" Now : "+d_time);
-			// var dif_=(now_.getTime())-old_time.getTime();
-			// console.log(" Difference : "+dif_);
-		}
+      // var now_=new Date(document.getElementById('txt').innerHTML);
+      // console.log(" OLD : "+old_time);
+      // console.log(" Now : "+d_time);
+      // var dif_=(now_.getTime())-old_time.getTime();
+      // console.log(" Difference : "+dif_);
+    }
  </script>
  <script>
 
@@ -708,4 +715,4 @@ background: #f3f3f3;
         }
       })
     })
-		</script>
+    </script>

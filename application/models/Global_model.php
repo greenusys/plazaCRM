@@ -262,7 +262,7 @@ class Global_Model extends MY_Model
             return  $this->db->get('tbl_holiday')->result();
          
         }
-        public function UpdateHolidaysData($data,$holiday_id)
+    public function UpdateHolidaysData($data,$holiday_id)
     {
         $this->db->where('holiday_id',$holiday_id);
          $results=$this->db->update('tbl_holiday',$data);
@@ -277,7 +277,25 @@ class Global_Model extends MY_Model
                 return 0;
             }
     }
-
+    public function addIP($data){
+        $result=array("allowed_ip"=>$data['ip_address']);
+        if(count($this->db->where($result)->get('tbl_allowed_ip')->result())==0){
+            if($this->db->insert('tbl_allowed_ip',$result)){
+                return 1;
+            }else{
+                return 0;
+            }    
+        }else{
+            return 2;
+        }
+    }
+    public function getAllowedIP(){
+        $res=$this->db->where('status','active')->get('tbl_allowed_ip')->result();
+        foreach($res as $ip){
+            $ip_[]=$ip->allowed_ip;
+        }
+        return $ip_;
+    }
 
 
 
