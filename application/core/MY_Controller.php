@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class MY_Controller extends CI_Controller 
 {
     public $my_id;
+    public $my_ip;
     public $my_role_id;
     public $my_designation_id;
     public $timeZone;
@@ -41,6 +42,9 @@ class MY_Controller extends CI_Controller
     public function checkFunction(){
         echo 'working Fine';
     }
+    public function setIpAddress(){
+        $this->my_ip=$this->input->ip_address();
+    }
     public function getTimeZone(){
         $res=$this->db->get('installer')->result_array();
         $this->timeZone=$res[0]['timezone'];
@@ -49,15 +53,18 @@ class MY_Controller extends CI_Controller
     public function checkForMarkedAttendance(){
         $condition=array("user_id"=>$this->my_id,"date_in"=>date('Y-m-d'));
         $da=$this->ATND->getAttendanceId($condition);
-        // print_r($da);
+        print_r($da);
         if(count($da)>0){
             if($da[0]->date_out!=""){
                 $attendance_id=$da[0]->attendance_id;
                 $clk_resp=$this->checkForClockInStatus($attendance_id);
                 // print_r($clk_resp);
-                if($clk_resp[0]->clockout_time==""){
-                    $this->checkin_status=1;  
-                }
+                // if(count($clk_resp)>0){
+                //     if($clk_resp[0]->clockout_time==""){
+                //         $this->checkin_status=1;  
+                //     }
+                // }
+                
                 // echo ' Value of Check In Status: '.$this->checkin_status;
             }else{
                 // echo 'Error Two.';

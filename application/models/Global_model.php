@@ -291,6 +291,7 @@ class Global_Model extends MY_Model
     }
     public function getAllowedIP(){
         $res=$this->db->where('status','active')->get('tbl_allowed_ip')->result();
+        $ip_=array();
         foreach($res as $ip){
             $ip_[]=$ip->allowed_ip;
         }

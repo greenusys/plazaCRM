@@ -46,6 +46,7 @@
     			                    <td>
     			                        <a href="javascript:void(0)" class="accept_ btn btn-info" data-id="<?=$ip->allowed_ip_id?>"><i class="far fa-check-square"></i></a>
     			                        <a href="javascript:void(0)" class="reject_ btn btn-danger" data-id="<?=$ip->allowed_ip_id?>"><i class="fas fa-times"></i></a>
+    			                        <a href="javascript:void(0)" class="delete_ btn btn-danger" data-id="<?=$ip->allowed_ip_id?>"><i class="fas fa-trash"></i></a>
     			                    </td>
     			                   <?php endif; ?>
     			               </tr>
@@ -79,6 +80,7 @@
                             swal("Oops..!", response.msg, "warning");
                         }
                          $('#addIpAddress')[0].reset();
+                        location.reload();
                     }
          });
       });
@@ -118,4 +120,37 @@
                     }
          });
       });
+      $(document).on('click','.delete_',function(){
+      	swal({
+    		  title: "Are you sure?",
+    		  text: "Once deleted, you will not be able to recover this record!",
+    		  icon: "warning",
+    		  buttons: true,
+    		  dangerMode: true,
+    		})
+    		.then((willDelete) => {
+    		  if (willDelete) {
+    		  	 var id=$(this).attr('data-id');
+    	          $.ajax({
+    	             url:"<?=base_url('Restriction/delete_Ip')?>",
+    	             type:"post",
+    	             data:{id:id,act:1},
+    	             success:function(response){
+    	                        console.log(response);
+    	                        response=JSON.parse(response);
+    	                        if(response.code==1){
+    	                            swal("Great!!", response.msg, "success");
+    	                        }else{
+    	                            swal("Oops..!", response.msg, "warning");
+    	                        }
+    	                        $("#tbl_").load(location.href + " #tbl_");
+    	                    }
+    	         });
+    		  } else {
+    		    swal("Your  record is safe!");
+    		  }
+    		});
+         
+      });
+      
   </script>

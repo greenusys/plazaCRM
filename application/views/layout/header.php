@@ -388,6 +388,7 @@ background: #f3f3f3;
                 <?php if($role_id!=3):?>
                   <li><a class="nav-link" href="<?=base_url('Attendance/timeChaneRequest')?>"><span> <i class="far fa-calendar-minus"></i></span>TimeChange Request</a></li>
                 <?php endif;?>
+                <li><a class="nav-link" href="<?=base_url('Attendance/updateCheckIn')?>"><span><i class="far fa-file-alt"></i></span>Update Check In</a></li>
                 <li><a class="nav-link" href="<?=base_url('Attendance/attendanceReport')?>"><span><i class="far fa-file-alt"></i></span>Attendance Report</a></li>
                 <!-- <li><a class="nav-link" href="<?=base_url('Attendance/markAttendance')?>"><span><i class="far fa-file-alt"></i></span>Mark Attendance</a></li> -->
               </ul>
@@ -615,7 +616,9 @@ background: #f3f3f3;
                       </div>
                       <div class="col-md-4">
                         <?php
-                             if (in_array($this->input->ip_address(), $this->Global_Model->getAllowedIP()))
+                          $ipArr=$this->Global_Model->getAllowedIP();
+                          // if(count($ipArr)>0){
+                             if (in_array($this->input->ip_address(), $ipArr))
                               {
                             //   echo "Match found";
                                if(isset($_SESSION['clocked'])){
@@ -633,6 +636,7 @@ background: #f3f3f3;
                                    
                                 }
                               }
+                            // }
                         ?>
 
                       </div>
