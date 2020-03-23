@@ -12,7 +12,63 @@ class Attendance extends MY_Controller {
 		
 
 	}
+	public function markPresent(){
+		$res=$this->db->limit(1)->order_by('attendance_id','desc')->where("date_in='".date('Y-m-d')."' and user_id=".$this->my_id)->get('tbl_attendance')->row();
+		// print_r($res);
+		if($res->attendance_status==3){
+			// echo 'Absent';
+			if($this->db->where('attendance_id',$res->attendance_id)->update('tbl_attendance',array('attendance_status'=>1))){
+				if($this->updateClockStatus($res->attendance_id)){
+					die(json_encode(array("code"=>1,"msg"=>"Updated Successfully.")));	
+				}else{
+					die(json_encode(array("code"=>2,"msg"=>"Faled To Mark Attendance.")));
+				}
+	        	
+	      	}else{
+	        	die(json_encode(array("code"=>0,"msg"=>"Server Error.")));
+	      	}
+		}
+	}
+	public function updateClockStatus($attendance_id){
+		$data_to_insert=array(
+								"attendance_id"=>$attendance_id,
+								"clockin_time"=>date('H:i:s'),
+								"comments"=>"Late Commer",
+								"clocking_status"=>1,
+								"ip_address"=>$this->my_ip
+							);
+		if($this->db->insert('tbl_clock',$data_to_insert)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	public function updateCheckIn(){
+        // $data['ip_address']=$this->db->get('tbl_allowed_ip')->result();
+        $data['myAttendanceData']=$this->db->limit(1)->order_by('attendance_id','desc')->where("date_in='".date('Y-m-d')."' and user_id=".$this->my_id)->get('tbl_attendance')->row();
+        $data['myCheckInData']=$this->db->where("tbl_attendance.user_id=".$this->my_id." and tbl_attendance.date_in = '".date('Y-m-d')."'")->join('tbl_attendance','tbl_attendance.attendance_id= tbl_clock.attendance_id')->get('tbl_clock')->result();
+        $this->load->view('layout/header');
+        $this->load->view('pages/updateCheckIn',$data);
+        $this->load->view('layout/footer');
+	}
+	public function updateCheckInData(){
+		if($this->db->where('clock_id',$this->input->post('clock_Id'))
+					->update('tbl_clock',array('clockin_time'=>$this->input->post('clock_in')))){
+        	die(json_encode(array("code"=>1,"msg"=>"Updated Successfully.")));
+      	}else{
+        	die(json_encode(array("code"=>0,"msg"=>"Server Error.")));
+      	}
+	}
+	public function delete_clock_Status(){
+	    if($this->db->where('clock_id',$this->input->post('id'))->delete('tbl_clock')){
+	        die(json_encode(array("code"=>1,"msg"=>"Successfully Removed.")));
+	    }else{
+	      die(json_encode(array("code"=>0,"msg"=>"Server Error.")));
+	    }
+	   }
 	public function markMyAttendance(){
+		// print_r($_POST);
+
 		// echo $_SESSION['clocked']=0;
 		// die;
 		$session=$this->session->userdata('logged_user');
@@ -25,11 +81,13 @@ class Attendance extends MY_Controller {
 		$date_=date('Y-m-d');
 		
 		// `tbl_clock`(``, ``, `clockin_time`, `clockout_time`, `comments`, `clocking_status`, `ip_address`)
+		//type= 1 for clockin and type 2 for clock out
 		//first time
 		if($type==1){
 			$data=array(
 				"clockin_time"=>$my_time,
 				"ip_address"=>$ip,
+				"clocking_status"=>1,
 			);
 			$attArray=array(
 				"user_id"=>$my_Id,
@@ -42,6 +100,7 @@ class Attendance extends MY_Controller {
 			$data=array(
 				"clockout_time"=>$my_time,
 				"ip_address"=>$ip,
+				"clocking_status"=>0,
 			);
 			$attArray=array(
 				"user_id"=>$my_Id,
@@ -70,7 +129,7 @@ class Attendance extends MY_Controller {
 					// echo 'isiko update krana h';
 					$this->db->where('clock_id',$clk_id);
 					$clock_out=$my_time;
-					if($this->db->update('tbl_clock',array("clockout_time"=>$clock_out))){
+					if($this->db->update('tbl_clock',array("clockout_time"=>$clock_out,"clocking_status"=>0))){
 						$_SESSION['clocked']=0;
 						die(json_encode(array("code"=>1,"msg"=>"Attendance Marked.","data"=>$attendanceId,"act"=>"Update ")));
 					}else{

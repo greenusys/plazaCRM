@@ -638,7 +638,7 @@ $designation=$session[0]->designations_id;
                         <div class="">
                             <div class="line"></div>
                             <form>
-                                <div class="container">
+                             <div class="container">
                                     <div class="row mt-3">
                                         <div class="col-sm-8">
                                             <div class=" col-md-12">
@@ -651,6 +651,10 @@ $designation=$session[0]->designations_id;
                                                             <label for="exampleInputEmail1"><strong><span class="text-capitalize" id="leave_category"></span></strong></label>
                                                         </div>
                                                     </div>
+                                             <input type="hidden" class="usersssss_id" >   
+                                             <input type="hidden" class="apsssss_id">
+                                              <input type="hidden" class="strtsssss_date">
+                                               <input type="hidden" class="endsssss_date">
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">
@@ -695,7 +699,7 @@ $designation=$session[0]->designations_id;
                                                         </div>
                                                     </div>
                                                 </div>
-                                                    <div class="form-group">
+                                                    <!-- <div class="form-group">
                                             <div class="row">
                                                 <div class="offset-1 col-sm-4 col-4">
                                                     <label for="exampleInputEmail1"><strong>Attachment :</strong></label>
@@ -706,7 +710,7 @@ $designation=$session[0]->designations_id;
                                                 
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                             <?php if($role_id!=3):?>
                                                 <div class="form-group">
                                                     <div class="row">
@@ -893,7 +897,13 @@ $designation=$session[0]->designations_id;
 <script type="text/javascript">
      $(document).ready(function(){
           $('.acceptleave').on('click',function(){ 
+                var uidss=$(".usersssss_id").val();
+                var appis=$(".apsssss_id").val();
+                var strtssdate=$(".strtsssss_date").val();
+                var endssdate=$(".endsssss_date").val();
+               
                var leave_id=$(this).attr("d-aplId");
+              
               $.ajax({
                 url:'<?=base_url('Leavemanagement/changeLeaveStatus')?>',
                 type:"post",
@@ -904,12 +914,21 @@ $designation=$session[0]->designations_id;
                         // console.log(response.data);
                         if(response.data==1)
                         {
-                        
-                    swal("Application", "Approve", "success");
+                        swal("Application", "Approve", "success");
+                        $.ajax({
+                            url:'<?=base_url('Leavemanagement/LeaveDataInsertInTbl_Attendance')?>',
+                            type:"post",
+                            data:{appis:appis},
+                            success:function(response)
+                            {
+                                response=JSON.parse(response);
+                            }
+
+
+                             })
 
                          }
                             $(".refreshlocation").load(location.href + " .refreshlocation");
-
                     }
               });
            });
@@ -960,10 +979,8 @@ $designation=$session[0]->designations_id;
          
             success:function(response)
             {
-                      $(".leaveappss_div").show();
-                
+                $(".leaveappss_div").show();
                      $("#fullname").html("");
-                   
                      $("#leave_category").html("");
                      $("#Duration").html("");
                      $("#Applieddate").html(""); 
@@ -975,10 +992,26 @@ $designation=$session[0]->designations_id;
                      $("#dateleaveenddate").html("");
                       $("#categorynameofrleave").html("");
 
-                  
-    
+                  // variablefor tbl attendance 
+                $(".usersssss_id").html("");
+                $(".apsssss_id").html("");
+                $(".strtsssss_date").html("");
+                $(".endsssss_date").html("");
+                // variablefor tbl attendance 
+
                 response=JSON.parse(response);
-                 console.log(response);
+                 console.log("modals detailsss",response.data);
+
+                 // variable for tbl attendance 
+                    var userss_idforattnd=response.data[0].user_id;
+                    var app_idforattnd=response.data[0].leave_application_id;
+                    var strtdate_forattnd=response.data[0].leave_start_date;
+                    var enddate_forattnd=response.data[0].leave_end_date;
+                    console.log("usersid",userss_idforattnd);
+                     console.log("appssid",app_idforattnd);
+                      console.log("strdatess",strtdate_forattnd);
+                     console.log("endsdatess",enddate_forattnd);
+                // End variable for tbl attendance 
                 var fullname=response.data[0].fullname;
                 // var leavedate=response.data[0].leave_start_date;
                 var leavecategory=response.data[0].leave_category;
@@ -1000,6 +1033,8 @@ $designation=$session[0]->designations_id;
                var strtDate = mydateOne.getUTCDate()+'-'+mydateOne.getMonth()+'-'+mydateOne.getFullYear();
                var mydateTwo = new Date(leaveendate);
                var endDate = mydateTwo.getUTCDate()+'-'+mydateTwo.getMonth()+'-'+mydateTwo.getFullYear();
+               // console.log("sttrtssss",strtDate);
+               // console.log("endsss",endDate);
                // window.alert(str);
                     $('.acceptleave').attr('d-aplId',leave_application_id);
                     $('.rejectleave').attr('d-aplId',leave_application_id);
@@ -1021,6 +1056,14 @@ $designation=$session[0]->designations_id;
                     $("#leave_application_id").val(leave_application_id);
                     // $('#leave_image').attr('src',leave_image  );
                      $('#leave_image').attr('src',   leave_image  );
+
+
+                  // variablefor tbl attendance 
+                $(".usersssss_id").val(userss_idforattnd);
+                $(".apsssss_id").val(app_idforattnd);
+                $(".strtsssss_date").val(strtdate_forattnd);
+                $(".endsssss_date").val(enddate_forattnd);
+                // variablefor tbl attendance 
 
             }              
         });

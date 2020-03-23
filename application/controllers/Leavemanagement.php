@@ -395,8 +395,10 @@ class Leavemanagement extends MY_Controller {
 		$comments=$this->input->post('comments');
 		$approve_by=$this->input->post('approve_by');
 		$date1=date_create($leave_start_date);
+
         $date2=date_create($leave_end_date);
         $diff=date_diff($date1,$date2);
+      
 		
 		
 			        // Insert files data into the database
@@ -417,7 +419,8 @@ class Leavemanagement extends MY_Controller {
 	        	'comments'=>$comments,
 	        	'leave_duration'=>$leave_duration,
 	        	'approve_by'=>$approve_by);
-	       //	print_r($data);
+	       	// print_r($data);
+	       	// die;
 	        $results=$this->leave->addLeaveData($data);
     	        	  switch ($results) 
     				{
@@ -466,6 +469,42 @@ class Leavemanagement extends MY_Controller {
 		{
 			die(json_encode(array('code'=>0,'data'=>"Error try again")));
 		}
+
+	}
+	public function LeaveDataInsertInTbl_Attendance()
+	{
+		// $datearry=array();
+		 $appid=$this->input->post('appis');
+		 $results=$this->leave->LeaveDataInsertInTbl_Attendance($appid);
+
+		  // $apps_id=$this->input->post('uappis');
+		  //  $strtdate=$this->input->post('strtssdate');
+		  //   $endsate=$this->input->post('endssdate');
+		  //  	$begin = new DateTime($strtdate);
+				// $end = new DateTime($endsate);
+
+				// $daterange = new DatePeriod($begin, new DateInterval('P1D'), $end);
+
+				// foreach($daterange as $date){
+				//     echo  $date->format("Y-m-d") . "<br>";
+				// }
+		    // print_r($users_id);
+		    //  print_r($apps_id);
+		    //   print_r($strtdate);
+		    //    print_r($endsate);
+
+						// $applictaion_status=2;
+		// $leave_id=$this->input->post('leave_id');
+		// $data=array('application_status'=>$applictaion_status);
+		// $dataaa=$this->leave->changeleavestatusByid($leave_id,$data);
+		// if($dataaa)
+		// {
+		// 	die(json_encode(array('code'=>1,'data'=>$dataaa)));
+		// }
+		// else
+		// {
+		// 	die(json_encode(array('code'=>0,'data'=>"Error try again")));
+		// }
 
 	}
 	public function RejectLeaveStatus()
