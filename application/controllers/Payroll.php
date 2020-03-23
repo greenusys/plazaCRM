@@ -879,14 +879,171 @@ class Payroll extends MY_Controller {
 		$this->load->view("pages/payroll_summary");
 		$this->load->view("layout/footer");
 	}
-	public function advanceSalary()
+	public function advanceSalary($details = null)
 	{
-        $data['fetchAdvSalary']=$this->Payroll_model->fetch_AdvSalary();
+        // list view
+        if (!empty($details)) {
+            $data['active'] = 1;
+            $data['switch'] = 1;
+        }
+        $data['title'] = "Advance Salary";
+// active check with current month
+        $data['current_month'] = date('m');
+        if ($this->input->post('year', TRUE)) { // if input year
+            $data['year'] = $this->input->post('year', TRUE);
+        } else { // else current year
+            $data['year'] = date('Y'); // get current year
+        }
+// get all expense list by year and month
+        $data['advance_salary_info'] = $this->get_advance_salary_info($data['year']);
+        $data['all_employee'] = $this->Payroll_model->get_all_employee();
+
+        // $data['subview'] = $this->load->view('admin/payroll/advance_salary', $data, TRUE);
+        // $this->load->view('admin/_layout_main', $data);
+        // $data['fetchAdvSalary']=$this->Payroll_model->fetch_AdvSalary();
 		$this->load->view('layout/header');
 		$this->load->view("pages/advance_salary",$data);
 		$this->load->view("layout/footer");
 		
 	}
+
+        public function save_advance_salary($id = null)
+    {
+        $session=$this->session->userdata('logged_user');
+        $data['advance_amount'] = $this->input->post('advance_amount', TRUE);
+//receive form input by post
+        $user_id = $this->input->post('user_id', TRUE);
+        if (!empty($user_id)) {
+            $data['user_id'] = $user_id;
+        } else {
+            $session=$this->session->userdata('logged_user');
+            $data['user_id']=$session[0]->user_id;
+        }
+
+        $this->load->model('global_model');
+        $basic_salary = $this->global_model->get_advance_amount($data['user_id']);
+        if (!empty($basic_salary)) {
+            if ($basic_salary < $data['advance_amount']) {
+// messages for user
+                $type = "error";
+               echo $message = "Exceeded basic Salary";
+               die;
+                // set_message($type, $message);
+                // redirect('admin/payroll/advance_salary');
+            }
+        } else {
+            $type = "error";
+            echo $message = "You Can Not Apply";
+            die;
+            // set_message($type, $message);
+            // redirect('admin/payroll/advance_salary');
+        }
+
+        $data['reason'] = $this->input->post('reason', TRUE);
+        $data['deduct_month'] = $this->input->post('deduct_month', TRUE);
+
+        if ($this->session->userdata('user_type') == 1) {
+            $data['status'] = 1;
+        }
+//save data in database
+        $this->Payroll_model->_table_name = "tbl_advance_salary"; // table name
+        $this->Payroll_model->_primary_key = "advance_salary_id"; // $id
+        $id = $this->Payroll_model->save($data, $id);
+
+// save into activities
+        $activities = array(
+            'user' => $session[0]->user_id,
+            'module' => 'payroll',
+            'module_field_id' => $id,
+            'activity' => 'activity_apply_advance_salary',
+            'icon' => 'cc-mastercard',
+            'link' => 'admin/payroll/view_advance_salary/' . $id,
+            'value1' => $this->db->where('user_id', $data['user_id'])->get('tbl_account_details')->row()->fullname,
+            'value2' => $data['advance_amount'],
+        );
+
+// Update into tbl_project
+        $this->Payroll_model->_table_name = "tbl_activities"; //table name
+        $this->Payroll_model->_primary_key = "activities_id";
+        $this->Payroll_model->save($activities);
+
+        $advance_salary_info = $this->Payroll_model->check_by(array('advance_salary_id' => $id), 'tbl_advance_salary');
+        $profile_info = $this->Payroll_model->check_by(array('user_id' => $advance_salary_info->user_id), 'tbl_account_details');
+// send email to departments head
+        if ($advance_salary_info->status == 0) {
+            if (!empty($profile_info->designations_id)) {
+// get departments head user id
+                $designation_info = $this->Payroll_model->check_by(array('designations_id' => $profile_info->designations_id), 'tbl_designations');
+// get departments head by departments id
+                $dept_head = $this->Payroll_model->check_by(array('departments_id' => $designation_info->departments_id), 'tbl_departments');
+
+                if (!empty($dept_head->department_head_id)) {
+                    $advance_salary_email = config_item('advance_salary_email');
+                    if (!empty($advance_salary_email) && $advance_salary_email == 1) {
+
+                        $email_template = $this->Payroll_model->check_by(array('email_group' => 'advance_salary_email'), 'tbl_email_templates');
+                        $user_info = $this->Payroll_model->check_by(array('user_id' => $dept_head->department_head_id), 'tbl_users');
+                        $message = $email_template->template_body;
+                        $subject = $email_template->subject;
+                        $username = str_replace("{NAME}", $profile_info->fullname, $message);
+                        $Link = str_replace("{LINK}", base_url() . 'admin/payroll/view_advance_salary/' . $id, $username);
+                        $message = str_replace("{SITE_NAME}", config_item('company_name'), $Link);
+                        $data['message'] = $message;
+                        $message = $this->load->view('email_template', $data, TRUE);
+
+                        $params['subject'] = $subject;
+                        $params['message'] = $message;
+                        $params['resourceed_file'] = '';
+                        $params['recipient'] = $user_info->email;
+                        //$this->payroll_model->send_email($params);
+                    }
+
+                    $notifyUser = array($dept_head->department_head_id);
+                    if (!empty($notifyUser)) {
+                        foreach ($notifyUser as $v_user) {
+                            add_notification(array(
+                                'to_user_id' => $v_user,
+                                'description' => 'not_advance_salary_request',
+                                'icon' => 'cc-mastercard',
+                                'link' => 'admin/payroll/view_advance_salary/' . $id,
+                                'value' => lang('by') . ' ' . $session[0]->fullname,
+                            ));
+                        }
+                    }
+                    if (!empty($notifyUser)) {
+                        //show_notification($notifyUser);
+                    }
+                }
+            }
+        }
+// messages for user
+        $type = "success";
+        echo $message = "Advance Salary Submitted";
+        // set_message($type, $message);
+        // if (empty($_SERVER['HTTP_REFERER'])) {
+        //     redirect('admin/payroll/advance_salary');
+        // } else {
+        //     redirect($_SERVER['HTTP_REFERER']);
+        // }
+    }
+
+    public function get_advance_salary_info($year, $month = NULL)
+    {// this function is to create get monthy recap report
+        if (!empty($month)) {
+            $advance_salary_info = $this->Payroll_model->get_advance_salary_info_by_date($month); // get all report by start date and in date
+        } else {
+            for ($i = 1; $i <= 12; $i++) { // query for months
+                if ($i >= 1 && $i <= 9) { // if i<=9 concate with Mysql.becuase on Mysql query fast in two digit like 01.
+                    $month = $year . "-" . '0' . $i;
+                } else {
+                    $month = $year . "-" . $i;
+                }
+                $advance_salary_info[$i] = $this->Payroll_model->get_advance_salary_info_by_date($month); // get all report by start date and in date
+            }
+        }
+        return $advance_salary_info; // return the result
+    }
+
 	public function providentFund()
 	{
 		$this->load->view('layout/header');

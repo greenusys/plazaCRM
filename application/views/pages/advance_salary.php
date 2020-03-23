@@ -108,20 +108,26 @@
         </script>
         <div class="row mt-5">
           <div class="col-md-3">
+            <form action="<?php echo base_url() ?>Payroll/advanceSalary">
                  <div class="yetr__">
                     <ul class="list-unstyled d-flex">
                       <li ><strong>Year :</strong></li>
                       <li>
                           <div class='input-group date datetimepicker10 w-75' id='datetimepicker10'>
-                              <input type='text' class="input_year form-control" />
+                              <input type='text' name="year" class="input_year form-control" value="<?php
+                                if (!empty($year)) {
+                                    echo $year;
+                                }
+                                ?>" data-format="yyyy" />
                                 <span class="input-group-addon">
                                   <span ><i class="fa fa-calendar"></i></span>
                               </span>
                           </div>
                       </li>
-                      <li><button class="btn btn-info"><i class="fa fa-search" aria-hidden="true"></i></button></li>
+                      <li><button class="btn btn-info" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button></li>
                     </ul>
                 </div>
+              </form>
               </div>
               <div class="col-md-7">
                 <div class="mt-3"><a href="#" class="text-danger" data-toggle="modal" data-target="#exampleModal" data-toggle="tooltip" ><i class="fas fa-plus"></i> New Advance Salary</a></div>
@@ -141,10 +147,24 @@
 
               <div class="card">
                 <ul class="list-unstyled">
-                  <li>
-                    <a href="" class="mnth_c border-bottom"><i class="fas fa-calendar-alt"></i> <strong> January</strong> </a>
+                  <?php
+                    foreach ($advance_salary_info as $key => $v_advance_salary):
+                        $month_name = date('F', strtotime($year . '-' . $key)); // get full name of month by date query
+                  ?>
+                  <li class="<?php
+                        if ($current_month == $key) {
+                            echo 'active';
+                        }
+                        ?>">
+                    <a aria-expanded="<?php
+                            if ($current_month == $key) {
+                                echo 'true';
+                            } else {
+                                echo 'false';
+                            }
+                            ?>" data-toggle="tab" href="#<?php echo $month_name ?>" class="mnth_c border-bottom"><i class="fas fa-calendar-alt"></i> <strong> <?php echo $month_name; ?></strong> </a>
                   </li>
-                   <li>
+<!--                    <li>
                     <a href="" class="mnth_c border-bottom"><i class="fas fa-calendar-alt"></i> <strong> February</strong> </a>
                   </li>
                   <li>
@@ -176,19 +196,113 @@
                   </li>
                    <li>
                     <a href="" class="mnth_c border-bottom"><i class="fas fa-calendar-alt"></i> <strong> December</strong> </a>
-                  </li>
+                  </li> -->
+                  <?php endforeach; ?>
                 </ul>
               </div>
               </div>
               <div class="col-md-9">
                   <div class="card">
-                      <div class="card-header row border-bottom py-1">
+                                    <div class="tab-content pl0">
+                    <?php
+                    foreach ($advance_salary_info as $key => $v_advance_salary):
+                        $month_name = date('F', strtotime($year . '-' . $key)); // get full name of month by date query
+                        ?>
+                        <div id="<?php echo $month_name ?>" class="tab-pane <?php
+                        if ($current_month == $key) {
+                            echo 'active';
+                        }
+                        ?>">
+                            <div class="panel panel-custom">
+                                <div class="panel-heading">
+                                    <div class="panel-title">
+                                        <strong><i class="fa fa-calendar"></i> <?php echo $month_name . ' ' . $year; ?>
+                                        </strong>
+                                        <div class="pull-right hidden-print">
+                                            <span
+                                                class="hidden-print"><?php echo btn_pdf('admin/payroll/advance_salary_pdf/' . $year . '/' . $key); ?></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- Table -->
+                                <table class="table table-striped table-hover" id="example">
+                                    <thead>
+                                    <tr>
+                                    <th>EMP ID</th>
+                                    <th>Name</th>
+                                    <th>Amount </th>
+                                    <th>Deduct Month</th>
+                                    <th>Request Date</th>
+                                   
+                                    <th>Status </th>
+                                    <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    $total_amount = 0;
+                                    if (!empty($v_advance_salary)): foreach ($v_advance_salary as $advance_salary) : ?>
+                                        <tr>
+                                            <td><?php echo $advance_salary->employment_id ?></td>
+                                            <td><?php echo $advance_salary->fullname ?></td>
+                                            <td><?php echo display_money($advance_salary->advance_amount, default_currency());
+                                                $total_amount += $advance_salary->advance_amount;
+                                                ?></td>
+                                            <td><?php echo date('Y M', strtotime($advance_salary->deduct_month)) ?></td>
+                                            <td><?= strftime(config_item('date_format'), strtotime($advance_salary->request_date)) ?></td>
+
+                                            <td><?php
+                                                if ($advance_salary->status == '0') {
+                                                    echo '<span class="label label-warning">Pending</span>';
+                                                } elseif ($advance_salary->status == '1') {
+                                                    echo '<span class="label label-success">Accepted</span>';
+                                                } elseif ($advance_salary->status == '2') {
+                                                    echo '<span class="label label-danger">Rejected</span>';
+                                                } else {
+                                                    echo '<span class="label label-info">Paid</span>';
+                                                }
+                                                ?></td>
+                                                <td>
+                                                    <a href="<?= base_url() ?>admin/payroll/advance_salary_details/<?= $advance_salary->advance_salary_id ?>"
+                                                       class="btn btn-info btn-xs" title="View"
+                                                       data-toggle="modal"
+                                                       data-target="#myModal"><span
+                                                            class="fa fa-list-alt"></span></a>
+                                                </td>
+
+                                        </tr>
+                                        <?php
+                                        $key++;
+                                    endforeach;
+                                        ?>
+                                        <tr class="total_amount">
+                                            <td class="hidden-print"></td>
+                                            <td colspan="1" style="text-align: right;">
+                                                <strong>Total Advance Salary
+                                                    : </strong></td>
+                                            <td colspan="3" style="padding-left: 8px;">
+                                                <strong><?php echo display_money($total_amount, default_currency()); ?></strong>
+                                            </td>
+                                        </tr>
+                                    <?php else : ?>
+                                        <td colspan="6">
+                                            <strong>Nothing To Display</strong>
+                                        </td>
+                                    <?php endif; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+<!--                       <div class="card-header row border-bottom py-1">
                         <div class="col-md-6">
                           <span><i class="fas fa-calendar-alt"></i> <strong> Month Name</strong></span> 
-                         </div>
+                         </div> -->
                           <!-- <div class="col-md-6 text-right"><button class="btn btn-success rounded-0"><i class="fa fa-plus" aria-hidden="true"></i> Add Time Manually</button></div> -->
-                      </div>
-                      <div class="p-2 pt-3 ">
+<!--                       </div> -->
+<!--                       <div class="p-2 pt-3 ">
                        <table id="example" class="display nowrap " style="width:100%">
                             <thead>
                                 <tr>
@@ -248,7 +362,7 @@
                                 </tr>
                             </tfoot>
                         </table>
-                      </div>
+                      </div> -->
                   </div>
               </div>
             
@@ -448,18 +562,26 @@
           </div>
           <div class="line"></div>
         <div class="modal-body">
-            <form>
+            <form method="POST" action="<?=base_url()?>Payroll/save_advance_salary">
             <div class="form-group">
               <div class="row">
                 <div class="offset-1 col-sm-3">
                   <label for="exampleInputEmail1">Employee <sup class="text-danger">*</sup></label>
                 </div>
                 <div class="col-sm-6">
-                  <select  name="imptask_status" class="form-control " id="imptask_status" style="width: 100%" required="">
+                  <select  name="user_id" class="form-control " id="imptask_status" style="width: 100%" required="">
                     <option value="" selected="">Select Department</option>
-                    <option value="">IT / Collaborative</option>
-                    <option value="">HR</option>
-                    <option value="">IT</option>
+                    <?php
+                    foreach ($all_employee as $emp=>$val) {
+                    ?>
+                      <optgroup label="<?=$emp?>">
+                        <?php
+                        foreach ($val as $value) {
+                        ?>
+                        <option value="<?=$value->user_id?>"><?=$value->fullname?></option>
+                      <?php } ?>
+                      </optgroup>
+                    <?php } ?>
                   </select> 
                 </div>
               </div>
@@ -470,7 +592,7 @@
                   <label for="exampleInputEmail1">Amount <sup class="text-danger">*</sup> </label>
                 </div>
                 <div class="col-sm-6">
-                  <input type="number" class="form-control" id=""  placeholder="Amount" required="">
+                  <input type="number" class="form-control" id="" name="advance_amount"  placeholder="Amount" required="">
                 </div>
               </div>
             </div>
@@ -480,8 +602,8 @@
                   <label for="exampleInputEmail1">Deduct Month <sup class="text-danger">*</sup>  </label>
                 </div>
                 <div class="col-sm-6">
-                    <div class='input-group date form-group datetimepicker10' id='datetimepicker10'>
-                        <input type='text' class="form-control" />
+                    <div class='input-group date form-group datetimepicker11' id='datetimepicker10'>
+                        <input type='text' class="form-control" name="deduct_month" />
                           <span class="input-group-addon">
                             <span ><i class="fa fa-calendar"></i></span>
                         </span>
@@ -495,15 +617,15 @@
                   <label for="exampleInputEmail1">Reason  </label>
                 </div>
                 <div class="col-sm-6">
-                  <textarea type="number" class="form-control" id=""  placeholder="Reason" rows="5"></textarea>
+                  <textarea type="number" name="reason" class="form-control" id=""  placeholder="Reason" rows="5"></textarea>
                 </div>
               </div>
             </div>
+            <button type="submit" class="btn btn-primary">Save</button>
           </form>
         </div>
         <div class="modal-footer border-top-0 modal-butn">
-          <button type="button" class="btn btn-primary">Save</button>
-          <button type="button" class="btn btn-secondary">close</button>
+          <span type="button" class="btn btn-secondary">close</span>
           </div>
       </div>
     </div>
@@ -514,7 +636,13 @@
     $(function () {
         $('.datetimepicker10').datetimepicker({
             viewMode: 'years',
-            format: 'MM/YYYY'
+            format: 'YYYY'
+        });
+    });
+    $(function () {
+        $('.datetimepicker11').datetimepicker({
+            viewMode: 'years',
+            format: 'YYYY-MM'
         });
     });
 </script>
