@@ -199,6 +199,7 @@
 										<label for="exampleInputEmail1" class="ml-5 label-style">Bug Title  <span class="text-danger">*</span></label>
 									</div>
 									<div class="col-sm-5">
+									<input type="hidden" name="company_id" value="<?=$this->session->userdata('logged_user')[0]->company_id?>">
 										<input type="text" class="form-control" required="" name="bug_title" id="designation" aria-describedby="emailHelp" >
 									</div>
 								</div>

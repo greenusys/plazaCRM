@@ -522,6 +522,7 @@ $(document).on('click','.edt_project',function(){
                 <label >Project Name <span class="text-danger">*</span> </label>
               </div>
               <div class="col-sm-9">
+                <input type="hidden" name="company_id" value="<?=$this->session->userdata('logged_user')[0]->company_id?>">
                 <input type="text" name="project_name" class="form-control" >
               </div>
             </div>

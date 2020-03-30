@@ -6,7 +6,8 @@
 	{
 		public function get_in_progress_project(){
 			$today=date('Y-m-d');
-			$qy="select project_id,tbl_project.uploads as project_uploads, project_name,progress,end_date,project_status,permission,tbl_client.name as client_name from tbl_project join tbl_client on tbl_client.client_id=tbl_project.client_id  where tbl_project.project_status='in_progress' and end_date>='$today'";
+			$company_id=$this->session->userdata('logged_user')[0]->company_id;
+			$qy="select project_id,tbl_project.uploads as project_uploads, project_name,progress,end_date,project_status,permission,tbl_client.name as client_name from tbl_project join tbl_client on tbl_client.client_id=tbl_project.client_id  where tbl_project.project_status='in_progress' and end_date>='$today' and company_id=$company_id";
 			return $this->db->query($qy)->result_array();
 		}
 		public function get_particualr_user_project(){
@@ -24,7 +25,8 @@
 			// }else{
 			// 	return $check;
 			// } 
-			$qy="SELECT tbl_project.client_id, tbl_project.project_id,tbl_project.uploads as project_uploads, project_name,progress,end_date,project_status,permission,tbl_client.name as client_name FROM `tbl_project` join tbl_client on tbl_client.client_id = tbl_project.client_id WHERE tbl_project.`end_date` < '$today' and tbl_project.project_status='in_progress'";
+			$company_id=$this->session->userdata('logged_user')[0]->company_id;
+			$qy="SELECT tbl_project.client_id, tbl_project.project_id,tbl_project.uploads as project_uploads, project_name,progress,end_date,project_status,permission,tbl_client.name as client_name FROM `tbl_project` join tbl_client on tbl_client.client_id = tbl_project.client_id WHERE tbl_project.`end_date` < '$today' and tbl_project.project_status='in_progress' and company_id=$company_id";
 			// $qy="Select project_id,tbl_project.uploads as project_uploads, project_name,progsress,end_date,project_status,permission,tbl_client.name as client_name from tbl_project join tbl_client on tbl_client.client_id=tbl_project.project_id where tbl_project.project_status='in_progress' and tbl_project.end_date < '$today'";
 			return $this->db->query($qy)->result_array();
 		}
@@ -40,17 +42,20 @@
 		// }
 		public function get_in_progress_bug(){
 			$today=date('Y-m-d');
-			$qy="Select * from tbl_bug  join tbl_project on tbl_project.project_id=tbl_bug.project_id where tbl_bug.bug_status='in_progress' ";
+			$company_id=$this->session->userdata('logged_user')[0]->company_id;
+			$qy="Select * from tbl_bug  join tbl_project on tbl_project.project_id=tbl_bug.project_id where tbl_bug.bug_status='in_progress'  and tbl_project.company_id=$company_id";
 			return $this->db->query($qy)->result();
 		}
 		public function get_in_progress_task(){
 			$today=date('Y-m-d');
-			$qy="Select * from tbl_task where task_status='in_progress' and due_date>='$today'";
+			$company_id=$this->session->userdata('logged_user')[0]->company_id;
+			$qy="Select * from tbl_task where task_status='in_progress' and due_date>='$today' and company_id=$company_id";
 			return $this->db->query($qy)->result();
 		}
 		public function get_over_due_task(){
 			$today=date('Y-m-d');
-			$qy="Select * from tbl_task where task_status='in_progress' and due_date<'$today'";
+			$company_id=$this->session->userdata('logged_user')[0]->company_id;
+			$qy="Select * from tbl_task where task_status='in_progress' and due_date<'$today' and company_id=$company_id";
 			return $this->db->query($qy)->result_array();
 		}
 		public function get_online_user(){

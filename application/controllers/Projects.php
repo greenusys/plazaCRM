@@ -233,7 +233,8 @@ class Projects extends MY_Controller {
 		unset($_POST['editor1']);
         $token = $_POST['token_amount'];
         $fp = $_POST['fixed_rate'];
-        $remaining_amt = $fp-$token;
+        // print_r($token);die;
+        $remaining_amt = (integer)$fp-$token;
         $_POST['remaining_amt'] = $remaining_amt;
 		$permission=$_POST['permission'];
 		$session=$this->session->userdata('logged_user');

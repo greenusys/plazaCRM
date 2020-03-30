@@ -31,6 +31,7 @@
 											<label for="users">Select Users<span class="text-danger">*</span></label>
 										</div>
 										<div class="col-sm-8">
+                      
 											<select type="text" class="form-control" name="users" id="users" style="width:100%">
 												<option disabled="" selected="">Select User</option>
                         <?php
@@ -209,6 +210,7 @@
                 <div class="row form-group">
                   <div class="col-md-3 text-right"><label>Users <sup class="text-danger">*</sup></label> </div>
                   <div class="col-md-9">
+                  <input type="hidden" name="company_id" value="<?=$this->session->userdata('logged_user')[0]->company_id?>">
                     <select class="form-control" name="user_id" placeholder="">
                       <option selected="" disabled="">Select User</option>
                         <?php

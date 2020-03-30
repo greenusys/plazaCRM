@@ -524,6 +524,7 @@
                 <div class="row form-group">
                   <div class="col-md-3 text-right"><label>Users <sup class="text-danger">*</sup></label> </div>
                   <div class="col-md-9">
+                    <input type="hidden" name="company_id" value="<?=$this->session->userdata('logged_user')[0]->company_id?>">
                     <select class="form-control" name="user_id" placeholder="">
                       <option selected="" disabled="">Select User</option>
                       <?php

@@ -26,6 +26,8 @@
 			
 		}
 		public function getAnnounce(){
+			$WHERE=array('company_id'=>$this->session->userdata('logged_user')[0]->company_id);
+			$this->db->where($WHERE);
 			$this->db->join('tbl_account_details','tbl_account_details.user_id=tbl_announcements.user_id');
 			return $this->db->get('tbl_announcements')->result();
 		}

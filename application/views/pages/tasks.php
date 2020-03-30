@@ -306,6 +306,7 @@ $role_id=$session[0]->role_id;
                 <label for="exampleInputEmail1">Task Name <span class="text-danger">*</span> </label>
               </div>
               <div class="col-sm-9">
+                <input type="hidden" name="company_id" value="<?=$this->session->userdata('logged_user')[0]->company_id?>">
                 <input type="text" name="task_name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
               </div>
             </div>

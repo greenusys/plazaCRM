@@ -80,6 +80,8 @@ class Tasks_Model extends CI_Model{
         // }
         // return $tasks;
         // $this->db->where($checker);
+        $WHERE=array('company_id'=>$this->session->userdata('logged_user')[0]->company_id);
+        $this->db->where($WHERE);
         $this->db->order_by('task_id','desc');
         $check = $this->db->get("tbl_task")->result_array();
         if(count($check)==0 ){
@@ -167,6 +169,8 @@ class Tasks_Model extends CI_Model{
         $checker=array('tbl_todo.user_id'=>$id);
         $this->db->select('*');
         $this->db->from('tbl_todo');
+        $WHERE=array('tbl_todo.company_id'=>$this->session->userdata('logged_user')[0]->company_id);
+        $this->db->where($WHERE);
         $this->db->join('tbl_account_details','tbl_todo.assigned=tbl_account_details.user_id','left');
         $this->db->where($checker);
         $query_result = $this->db->get();
