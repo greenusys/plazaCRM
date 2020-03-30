@@ -74,6 +74,7 @@
 		}
 		public function addNewDep(){
 			$dep_id=$this->input->post('department');
+			// die($dep_id);die;
 			$newDep=$this->input->post('newDepartment');
 			$departmentHead=$this->input->post('departmentHead');
 			$newDesig=$this->input->post('designation');

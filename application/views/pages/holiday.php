@@ -305,6 +305,7 @@ $(document).on("click",".month_sel",function(){
                   <label for="exampleInputEmail1">Event Name <sup class="text-danger">*</sup> </label>
                 </div>
                 <div class="col-sm-6">
+                  <input type="hidden" name="company_id" value="<?=$this->session->userdata('logged_user')[0]->company_id?>">
                   <input type="text" class="form-control" id="" name="event_name"  placeholder="Enter Your Event Name" required="">
                 </div>
               </div>

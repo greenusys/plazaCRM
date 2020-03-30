@@ -569,6 +569,7 @@
                   <label for="exampleInputEmail1">Employee <sup class="text-danger">*</sup></label>
                 </div>
                 <div class="col-sm-6">
+                  <input type="hidden" name="company_id" value="<?=$this->session->userdata('logged_user')[0]->company_id?>">
                   <select  name="user_id" class="form-control " id="imptask_status" style="width: 100%" required="">
                     <option value="" selected="">Select Department</option>
                     <?php

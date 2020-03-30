@@ -106,6 +106,7 @@
                             <div class="form-group  row mt-2">
                                  <label class="col-md-3 text-right">Hourly Grade<sup class="text-danger">*</sup></label>
                                <div class="col-md-9">
+                                 <input type="hidden" name="company_id" value="<?=$this->session->userdata('logged_user')[0]->company_id?>">
                                     <input type="text" required="" class="form-control" name="hourly_grade" placeholder="Enter Hourly Grade">
                                </div>
 

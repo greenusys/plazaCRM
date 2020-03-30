@@ -89,7 +89,10 @@ class Department_Model extends MY_Model
     }
     public function createDesignation($dep_id,$newDesig){
         
-        $dat=array("departments_id"=>$dep_id,"designations"=>$newDesig);
+        $dat=array(
+            "company_id"=>$this->session->userdata('logged_user')[0]->company_id,
+            "departments_id"=>$dep_id,
+            "designations"=>$newDesig);
         $this->db->where($dat);
         if(count($this->db->get('tbl_designations')->result())==0){
             if($this->db->insert('tbl_designations',$dat)){

@@ -37,6 +37,7 @@
                         <tbody>
                           <?php
                           $count=1;
+                          if(!empty($templates)){
                           foreach ($templates as $template) {
                           ?>
                             <tr>
@@ -96,6 +97,7 @@
                             <?php
                             $count++;
                             }
+                          }
                             ?>
                         </tbody>
                         <tfoot>
@@ -119,6 +121,7 @@
                                 <label for="staticEmail" class="t3 text-right  col-sm-3 col-form-label font-weight-bold">Salary grade<sup class="a1">*</sup></label>
                               
                                 <div class="col-md-9">
+                                  <input type="hidden" name="company_id" value="<?=$this->session->userdata('logged_user')[0]->company_id?>">
                                 <input type="text" required="" name="salary_grade" class="enter form-control"placeholder="Enter Salary grade">
                               </div>
                             </div>

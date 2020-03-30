@@ -92,6 +92,8 @@ class Global_Model extends MY_Model
         if (!empty($end_date)) {
             $this->db->where('end_date <=', $end_date);
         }
+        $WHERE=array('company_id'=>$this->session->userdata('logged_user')[0]->company_id);
+        $this->db->where($WHERE);
         $query_result = $this->db->get();
         $result = $query_result->result();
         return $result;

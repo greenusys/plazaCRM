@@ -128,6 +128,8 @@ class Payroll_Model extends MY_Model
     public function fetch_templates(){
         $this->db->select('*');
         $this->db->from('tbl_salary_template');
+        $WHERE=array('company_id'=>$this->session->userdata('logged_user')[0]->company_id);
+        $this->db->where($WHERE);
         $query_result = $this->db->get();
         $result = $query_result->result();
         if(count($result)>0){
@@ -202,7 +204,9 @@ class Payroll_Model extends MY_Model
     }
 
     public function fetch_departments_data($id){
+        $WHERE=array('tbl_designations.company_id'=>$this->session->userdata('logged_user')[0]->company_id);
         $this->db->select('*,tbl_account_details.user_id as user');
+        $this->db->where($WHERE);
         $this->db->from('tbl_designations');
         $this->db->join('tbl_account_details', 'tbl_designations.designations_id=tbl_account_details.designations_id');
         $this->db->join('tbl_employee_payroll','tbl_employee_payroll.user_id = tbl_account_details.user_id','left');
@@ -215,9 +219,11 @@ class Payroll_Model extends MY_Model
 
     public function get_advance_salary_info_by_date($payment_month = NULL, $id = NULL, $user_id = NULL)
     {
+        $WHERE=array('tbl_advance_salary.company_id'=>$this->session->userdata('logged_user')[0]->company_id);
         $this->db->select('tbl_advance_salary.*', FALSE);
         $this->db->select('tbl_account_details.*', FALSE);
         $this->db->from('tbl_advance_salary');
+        $this->db->where($WHERE);
         $this->db->join('tbl_account_details', 'tbl_account_details.user_id = tbl_advance_salary.user_id', 'left');
         if ($this->session->userdata('user_type') != 1) {
             $this->db->where('tbl_advance_salary.user_id', $this->session->userdata('user_id'));
@@ -252,6 +258,8 @@ class Payroll_Model extends MY_Model
     public function fetch_hourly_templates(){
         $this->db->select('*');
         $this->db->from('tbl_hourly_rate');
+        $WHERE=array('company_id'=>$this->session->userdata('logged_user')[0]->company_id);
+        $this->db->where($WHERE);
         $query_result = $this->db->get();
         $result = $query_result->result();
         return $result;
