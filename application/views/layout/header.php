@@ -616,7 +616,8 @@ background: #f3f3f3;
                       </div>
                       <div class="col-md-4">
                         <?php
-                          $ipArr=$this->Global_Model->getAllowedIP();
+                          $ipArr=$this->global_model->getAllowedIP();
+                          // $ipArr=$ip_arr;
                           // if(count($ipArr)>0){
                              if (in_array($this->input->ip_address(), $ipArr))
                               {

@@ -53,7 +53,7 @@ class MY_Controller extends CI_Controller
     public function checkForMarkedAttendance(){
         $condition=array("user_id"=>$this->my_id,"date_in"=>date('Y-m-d'));
         $da=$this->ATND->getAttendanceId($condition);
-        print_r($da);
+        // print_r($da);
         if(count($da)>0){
             if($da[0]->date_out!=""){
                 $attendance_id=$da[0]->attendance_id;
