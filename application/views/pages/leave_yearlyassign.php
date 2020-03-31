@@ -15,6 +15,7 @@
               </div>
               <div class="col-sm-7">
                 <div class="input-group">
+                <input type="hidden" name="company_id" value="<?=$this->session->userdata('logged_user')[0]->company_id?>">
                   <select name="designation_id" class="form-control" id="emply">
                     <option selected="" disabled="" value="0">Select Department</option>
                     <?php

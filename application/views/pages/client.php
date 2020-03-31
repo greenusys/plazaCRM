@@ -183,6 +183,7 @@
                         </thead>
                         <tbody>
                           <?php
+                          if(isset($Clients) && !empty($Clients)){
                             foreach ($Clients as $client) {
                               # code...
                                 // print_r($client);
@@ -240,6 +241,13 @@
                             </tr>
                               <?php
                             }
+                          }else{
+                            ?>
+                            <tr>
+                              <td align="center" colspan="100">No Data Found</td>
+                            </tr>
+                            <?php
+                          }
                           ?>
                                 
                              <script type="text/javascript">

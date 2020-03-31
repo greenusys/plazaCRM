@@ -87,6 +87,8 @@ class Client_Model extends MY_Model{
 
 	public function getAllClient(){
 		$this->db->order_by('tbl_client.client_id', 'Desc');
+		$WHERE=array('company_id'=>$this->session->userdata('logged_user')[0]->company_id);
+		$this->db->where($WHERE);
 		// $this->db->join('tbl_customer_group','tbl_customer_group.customer_group_id=tbl_client.customer_group_id','full');
 		// $this->db->join('tbl_project','tbl_project.client_id=tbl_client.client_id');
 		$check = $this->db->get("tbl_client")->result();

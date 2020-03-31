@@ -126,6 +126,7 @@ public function __construct(){
 			$notify=0;
 		}
 		$data=array(
+					"company_id"=>$this->session->userdata('logged_user')[0]->company_id,
 					"primary_contact"=>$this->input->post('compPhone'),
 					"name"=>$this->input->post('compName'),
 					"email"=>$this->input->post('compEmail'),

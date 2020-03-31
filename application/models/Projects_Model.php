@@ -40,6 +40,8 @@ class Projects_Model extends CI_Model{
 	}
 	public function fetch_projects(){
 		$this->db->select('project_id,tbl_project.uploads as project_uploads, project_name,progress,end_date,project_status,permission,tbl_client.name as client_name');
+		$WHERE=array('company_id'=>$this->session->userdata('logged_user')[0]->company_id);
+		$this->db->where($WHERE);
 		$this->db->join('tbl_client', 'tbl_client.client_id = tbl_project.client_id');
 		$check = $this->db->get("tbl_project")->result_array();
 		if(count($check)==0 ){

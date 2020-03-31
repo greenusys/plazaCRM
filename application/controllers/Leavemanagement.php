@@ -116,7 +116,8 @@ class Leavemanagement extends MY_Controller {
 		$designation_id=$this->input->post('designation_id');
 		$total_leave=$this->input->post('totalleave'); 	 
 		$data = array(
-        	'designation_id'=>$designation_id,
+			'designation_id'=>$designation_id,
+			'company_id'=>$this->input->post('company_id'),
         	'total_Yearlyleave'=>$total_leave
         );
    
@@ -193,7 +194,9 @@ class Leavemanagement extends MY_Controller {
 			'lpolicy_days'=>$this->input->post('lpolicy_days'),
 			'lpolicy_gender'=>$this->input->post('lpolicy_gender'),
 			'lpolicy_effective_date'=>$this->input->post('lpolicy_effective_date'),
-			'lpolicy_activate'=>$this->input->post('lpolicy_activate'));
+			'lpolicy_activate'=>$this->input->post('lpolicy_activate'),
+			'company_id'=>$this->session->userdata('logged_user')[0]->company_id
+		);
    
         $result=$this->leave->addLeavePolicyData($data);
 		if($result){
@@ -404,6 +407,7 @@ class Leavemanagement extends MY_Controller {
 			        // Insert files data into the database
 				$uploadDate=date("Y-m-d H:i:s");
 				$data = array(
+					'company_id'=>$usersdetail[0]->company_id,
 	        	'user_id'=>$user_id,
 	        	'designation_id'=>$designation_id,
 	        	'leave_category_id'=>$leave_category_id,
