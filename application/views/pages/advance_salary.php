@@ -493,6 +493,7 @@
                             <tbody>
                           
                                    <?php
+                                   if(isset($All_expense_Data) && !empty($All_expense_Data)){
                                 foreach($All_expense_Data as $AED)
                                 {
                                     //  print_r($AED);
@@ -508,7 +509,7 @@
                                   
                                 </tr>
                                 <?php
-                                }?>
+                                }}?>
                             </tbody>
                             <tfoot>
                                 <tr>
