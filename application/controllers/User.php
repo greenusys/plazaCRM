@@ -90,7 +90,9 @@ class User extends MY_Controller
 		if ($check_data) {
 			die(json_encode(array('status' => '0', 'msg' => 'Already Exists')));
 		} else {
-			$data = array('username' => $username,
+			$data = array(
+				'company_id'=>$_POST['company_id'],
+				'username' => $username,
 				'full_name' => $full_name,
 				'password' => $password,
 				'email' => $email,
@@ -216,6 +218,7 @@ class User extends MY_Controller
 		// print_r($data['UsersPermission']);
 		// die;
 		$data['all_users'] = $this->User_model->fetch_all_users();
+		$data['companies']=$this->db->get('tbl_companies')->result();
 		$this->load->view('layout/header');
 		$this->load->view("pages/user_list", $data);
 		$this->load->view("layout/footer");

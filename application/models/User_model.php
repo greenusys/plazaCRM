@@ -87,7 +87,11 @@ class User_model extends MY_Model
 
     public function fetch_all_users()
     {
+        $company_id=$this->session->userdata('logged_user')[0]->company_id;
+        $company_id=$company_id?$company_id:'""';
+        $WHERE=array('company_id'=>$company_id);
         $this->db->select('*');
+        $this->db->where($WHERE);
         $this->db->from('tbl_users');
         $this->db->join('tbl_account_details', 'tbl_users.user_id = tbl_account_details.user_id');
         $query_result = $this->db->get();

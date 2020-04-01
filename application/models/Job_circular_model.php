@@ -56,6 +56,10 @@ class Job_Circular_Model extends MY_Model
     }
      public function fetch_job($data)
     {
+        $company_id=$this->session->userdata('logged_user')[0]->company_id;
+        $company_id=$company_id?$company_id:'""';
+        $WHERE=array('tbl_job_circular.company_id'=>$company_id);
+        $this->db->where($WHERE);
         $this->db->select('*', FALSE);
         $this->db->from('tbl_job_circular');
         $this->db->join('tbl_designations', 'tbl_job_circular.designations_id = tbl_designations.designations_id', 'full');

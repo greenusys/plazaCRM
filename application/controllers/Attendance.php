@@ -425,6 +425,7 @@ class Attendance extends MY_Controller {
 		}else{
 			// print('Insert in Both Table');
 			$inAttData=array(
+							"company_id"=>$this->session->userdata('logged_user')[0]->company_id,
 							"user_id"=>$user_id,
 							"date_in"=>$dayIn,
 							"date_out"=>$dayOut,

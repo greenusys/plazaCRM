@@ -68,7 +68,8 @@ class Recruitment extends MY_Controller {
 			"posted_date"=>$posted_date,
 			"description"=>$job_description,
 			"status"=>$status,
-			"permission"=>$Permission 			
+			"permission"=>$Permission,
+			"company_id"=>$this->session->userdata('logged_user')[0]->company_id
         );
 		 // print_r($data);
 		$result = $this->Job_circular_model->create_job($data);

@@ -164,11 +164,14 @@ class Leave_Model extends CI_Model
     }
     public function fetchLeaveYearlyData()
     {
-        $WHERE = array('tbl_leave_yearly.company_id' => $this->session->userdata('logged_user')[0]->company_id);
+        $company_id=$this->session->userdata('logged_user')[0]->company_id;
+        $company_id=$company_id?$company_id:'""';
+        $WHERE = array('tbl_leave_yearly.company_id' => $company_id);
         $this->db->select('*')
             ->where($WHERE)
             ->from('tbl_leave_yearly')
             ->join('tbl_designations', 'tbl_designations.designations_id = tbl_leave_yearly.designation_id');
+            
         return $this->db->get()->result();
         // return $this->db->get('tbl_leave_yearly')->result();
 

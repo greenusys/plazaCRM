@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 31, 2020 at 04:36 PM
+-- Generation Time: Apr 01, 2020 at 02:36 PM
 -- Server version: 5.7.29-0ubuntu0.16.04.1
 -- PHP Version: 7.4.4
 
@@ -260,6 +260,7 @@ INSERT INTO `tbl_advance_salary` (`advance_salary_id`, `user_id`, `company_id`, 
 
 CREATE TABLE `tbl_allowed_ip` (
   `allowed_ip_id` int(11) NOT NULL,
+  `company_id` bigint(20) UNSIGNED DEFAULT NULL,
   `allowed_ip` varchar(100) NOT NULL,
   `status` enum('active','reject','pending') DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -268,11 +269,12 @@ CREATE TABLE `tbl_allowed_ip` (
 -- Dumping data for table `tbl_allowed_ip`
 --
 
-INSERT INTO `tbl_allowed_ip` (`allowed_ip_id`, `allowed_ip`, `status`) VALUES
-(2, '103.99.15.6', 'active'),
-(3, '103.99.15.12', 'active'),
-(4, '103.99.125.12', 'reject'),
-(5, '103.99.15.182', 'active');
+INSERT INTO `tbl_allowed_ip` (`allowed_ip_id`, `company_id`, `allowed_ip`, `status`) VALUES
+(2, NULL, '103.99.15.6', 'reject'),
+(3, NULL, '103.99.15.12', 'active'),
+(4, NULL, '103.99.125.12', 'reject'),
+(5, NULL, '103.99.15.182', 'active'),
+(6, 0, '123.243.255.13', 'pending');
 
 -- --------------------------------------------------------
 
@@ -356,7 +358,9 @@ INSERT INTO `tbl_attendance` (`attendance_id`, `user_id`, `leave_application_id`
 (14, 19, 0, '2020-03-23', NULL, 1, 0),
 (15, 8, 0, '2020-03-30', '2020-03-30', 1, 0),
 (16, 8, 0, '2020-03-31', '2020-03-31', 1, 0),
-(17, 24, 0, '2020-03-31', '2020-03-31', 1, 0);
+(17, 24, 0, '2020-03-31', '2020-03-31', 1, 0),
+(18, 13, 0, '2020-04-01', '2020-04-01', 1, 0),
+(19, 15, 0, '2020-04-01', '2020-04-01', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -625,7 +629,9 @@ INSERT INTO `tbl_clock` (`clock_id`, `attendance_id`, `clockin_time`, `clockout_
 (22, 14, '11:48:44', NULL, NULL, 0, '103.99.15.182'),
 (23, 15, '11:10:20', '11:10:20', NULL, 1, '::1'),
 (24, 16, '02:35:20', '02:35:20', NULL, 1, '::1'),
-(25, 17, '02:46:21', '02:46:21', NULL, 1, '::1');
+(25, 17, '02:46:21', '02:46:21', NULL, 1, '::1'),
+(26, 18, '09:34:55', '09:34:55', NULL, 1, '::1'),
+(27, 19, '11:57:31', '11:57:31', NULL, 1, '::1');
 
 -- --------------------------------------------------------
 
@@ -658,6 +664,14 @@ CREATE TABLE `tbl_companies` (
   `company_email` varchar(255) NOT NULL,
   `company_address` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_companies`
+--
+
+INSERT INTO `tbl_companies` (`id`, `company_name`, `company_email`, `company_address`) VALUES
+(1, 'Greenusys Technology', 'hr@greenusys.com', NULL),
+(2, 'Green Noida', 'greennoida@greenusys.com', NULL);
 
 -- --------------------------------------------------------
 
@@ -1444,6 +1458,7 @@ INSERT INTO `tbl_db_backup` (`backup_id`, `company_id`, `path`, `backup_time`) V
 
 CREATE TABLE `tbl_departments` (
   `departments_id` int(10) NOT NULL,
+  `company_id` bigint(20) UNSIGNED DEFAULT NULL,
   `deptname` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `department_head_id` int(11) DEFAULT NULL COMMENT 'department_head_id == user_id',
   `email` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -1461,12 +1476,13 @@ CREATE TABLE `tbl_departments` (
 -- Dumping data for table `tbl_departments`
 --
 
-INSERT INTO `tbl_departments` (`departments_id`, `deptname`, `department_head_id`, `email`, `encryption`, `host`, `username`, `password`, `mailbox`, `unread_email`, `delete_mail_after_import`, `last_postmaster_run`) VALUES
-(1, 'IT / Collaborative', 3, NULL, '', '', '', '', '', 0, 0, NULL),
-(14, 'Dummy Departments ', 22, NULL, '', '', '', '', '', 0, 0, NULL),
-(17, 'Testing', NULL, NULL, '', '', '', '', '', 0, 0, NULL),
-(18, 'xzxzxzxz', NULL, NULL, '', '', '', '', '', 0, 0, NULL),
-(19, '', 8, NULL, '', '', '', '', '', 0, 0, NULL);
+INSERT INTO `tbl_departments` (`departments_id`, `company_id`, `deptname`, `department_head_id`, `email`, `encryption`, `host`, `username`, `password`, `mailbox`, `unread_email`, `delete_mail_after_import`, `last_postmaster_run`) VALUES
+(1, NULL, 'IT / Collaborative', 3, NULL, '', '', '', '', '', 0, 0, NULL),
+(14, NULL, 'Dummy Departments ', 22, NULL, '', '', '', '', '', 0, 0, NULL),
+(17, NULL, 'Testing', NULL, NULL, '', '', '', '', '', 0, 0, NULL),
+(18, NULL, 'xzxzxzxz', NULL, NULL, '', '', '', '', '', 0, 0, NULL),
+(19, NULL, '', 8, NULL, '', '', '', '', '', 0, 0, NULL),
+(24, 0, 'Accounting & Finance', 8, NULL, '', '', '', '', '', 0, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -1500,7 +1516,12 @@ INSERT INTO `tbl_designations` (`designations_id`, `company_id`, `departments_id
 (343, NULL, 19, 'dddd', NULL),
 (346, NULL, 17, 'Testing', '["View"]'),
 (347, NULL, 18, 'xzxzxzxzxz', ''),
-(348, 2, 1, 'deepak', NULL);
+(348, 2, 1, 'deepak', NULL),
+(349, NULL, 20, '', NULL),
+(350, NULL, 21, '', NULL),
+(351, NULL, 22, '', NULL),
+(352, NULL, 23, '', NULL),
+(353, NULL, 24, '', NULL);
 
 -- --------------------------------------------------------
 
@@ -1693,6 +1714,7 @@ CREATE TABLE `tbl_employee_document` (
 
 CREATE TABLE `tbl_employee_payroll` (
   `payroll_id` int(11) NOT NULL,
+  `company_id` bigint(20) UNSIGNED DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   `salary_template_id` int(11) DEFAULT NULL,
   `hourly_rate_id` int(11) DEFAULT NULL
@@ -1702,8 +1724,8 @@ CREATE TABLE `tbl_employee_payroll` (
 -- Dumping data for table `tbl_employee_payroll`
 --
 
-INSERT INTO `tbl_employee_payroll` (`payroll_id`, `user_id`, `salary_template_id`, `hourly_rate_id`) VALUES
-(0, 21, NULL, NULL);
+INSERT INTO `tbl_employee_payroll` (`payroll_id`, `company_id`, `user_id`, `salary_template_id`, `hourly_rate_id`) VALUES
+(0, NULL, 21, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1979,6 +2001,7 @@ CREATE TABLE `tbl_income_category` (
 
 CREATE TABLE `tbl_invoices` (
   `invoices_id` int(11) NOT NULL,
+  `company_id` bigint(20) UNSIGNED DEFAULT NULL,
   `recur_start_date` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `recur_end_date` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `reference_no` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -2029,13 +2052,14 @@ CREATE TABLE `tbl_invoices` (
 -- Dumping data for table `tbl_invoices`
 --
 
-INSERT INTO `tbl_invoices` (`invoices_id`, `recur_start_date`, `recur_end_date`, `reference_no`, `client_id`, `project_id`, `invoice_date`, `invoice_month`, `invoice_year`, `due_date`, `alert_overdue`, `notes`, `tax`, `total_tax`, `discount_percent`, `recurring`, `recuring_frequency`, `recur_frequency`, `recur_next_date`, `currency`, `status`, `archived`, `date_sent`, `inv_deleted`, `date_saved`, `emailed`, `show_client`, `viewed`, `allow_paypal`, `allow_stripe`, `allow_2checkout`, `allow_authorize`, `allow_ccavenue`, `allow_braintree`, `allow_mollie`, `allow_payumoney`, `allow_tapPayment`, `allow_razorpay`, `permission`, `client_visible`, `discount_type`, `user_id`, `adjustment`, `discount_total`, `show_quantity_as`) VALUES
-(1, '', '', '123456', 15, NULL, '2020-03-03', '2020-03', '2020', '2020-03-11', 0, '<p>Testing</p>\n', '0.00', '{"tax_name":null,"total_tax":null}', 0, 'No', 31, NULL, NULL, 'INR', 'Unpaid', 0, NULL, 'No', '2020-03-03 18:26:47', 'No', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'No', 'No', 'No', 'No', 'No', 'Yes', 'No', '{"8":["View"],"15":["View"],"18":["View"]}', 'No', 'before_tax', 0, '0.00', '0.00', 'qty'),
-(2, '', '', '112233', 2, 6, '2020-03-20', '2020-03', '2020', '2020-03-28', 0, '<p>notessssssssss</p>\n', '0.00', '{"tax_name":null,"total_tax":null}', 0, 'No', 31, NULL, NULL, 'INR', 'Unpaid', 0, NULL, 'No', '2020-03-12 00:39:20', 'No', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'No', 'No', 'No', 'No', 'No', 'Yes', 'No', 'all', 'No', '', 0, '0.00', '0.00', 'qty'),
-(3, '', '', '4547987', 2, 4, '2020-03-12', '2020-03', '2020', '2020-03-18', 0, '<p>jhjkkjhkhkjh</p>\n', '0.00', '{"tax_name":null,"total_tax":null}', 0, 'No', 31, NULL, NULL, 'INR', 'Unpaid', 0, NULL, 'No', '2020-03-12 00:40:39', 'No', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'No', 'No', 'No', 'No', 'No', 'Yes', 'No', 'all', 'No', '', 0, '0.00', '0.00', 'qty'),
-(5, '', '', '8900809', 2, 4, '2020-03-12', '2020-03', '2020', '2020-03-18', 0, '<p>jhjkkjhkhkjh</p>\n', '0.00', '{"tax_name":null,"total_tax":null}', 0, 'No', 31, NULL, NULL, 'INR', 'Unpaid', 0, NULL, 'No', '2020-03-12 00:42:11', 'No', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'No', 'No', 'No', 'No', 'No', 'Yes', 'No', 'all', 'No', '', 0, '0.00', '0.00', 'qty'),
-(6, '', '', '7657575', 4, 68, '2020-03-14', '2020-03', '2020', '2020-03-23', 0, '<p>5654654</p>\n', '0.00', '{"tax_name":null,"total_tax":null}', 0, 'No', 31, NULL, NULL, 'INR', 'Unpaid', 0, NULL, 'No', '2020-03-12 00:48:21', 'No', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'No', 'No', 'No', 'No', 'No', 'Yes', 'No', 'all', 'No', '', 0, '0.00', '0.00', 'qty'),
-(7, '', '', '565656', 4, 68, '2020-03-14', '2020-03', '2020', '2020-03-23', 0, '<p>5654654</p>\n', '0.00', '{"tax_name":null,"total_tax":null}', 0, 'No', 31, NULL, NULL, 'INR', 'Unpaid', 0, NULL, 'No', '2020-03-12 00:48:59', 'No', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'No', 'No', 'No', 'No', 'No', 'Yes', 'No', 'all', 'No', '', 0, '0.00', '0.00', 'qty');
+INSERT INTO `tbl_invoices` (`invoices_id`, `company_id`, `recur_start_date`, `recur_end_date`, `reference_no`, `client_id`, `project_id`, `invoice_date`, `invoice_month`, `invoice_year`, `due_date`, `alert_overdue`, `notes`, `tax`, `total_tax`, `discount_percent`, `recurring`, `recuring_frequency`, `recur_frequency`, `recur_next_date`, `currency`, `status`, `archived`, `date_sent`, `inv_deleted`, `date_saved`, `emailed`, `show_client`, `viewed`, `allow_paypal`, `allow_stripe`, `allow_2checkout`, `allow_authorize`, `allow_ccavenue`, `allow_braintree`, `allow_mollie`, `allow_payumoney`, `allow_tapPayment`, `allow_razorpay`, `permission`, `client_visible`, `discount_type`, `user_id`, `adjustment`, `discount_total`, `show_quantity_as`) VALUES
+(1, NULL, '', '', '123456', 15, NULL, '2020-03-03', '2020-03', '2020', '2020-03-11', 0, '<p>Testing</p>\n', '0.00', '{"tax_name":null,"total_tax":null}', 0, 'No', 31, NULL, NULL, 'INR', 'Unpaid', 0, NULL, 'No', '2020-03-03 18:26:47', 'No', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'No', 'No', 'No', 'No', 'No', 'Yes', 'No', '{"8":["View"],"15":["View"],"18":["View"]}', 'No', 'before_tax', 0, '0.00', '0.00', 'qty'),
+(2, NULL, '', '', '112233', 2, 6, '2020-03-20', '2020-03', '2020', '2020-03-28', 0, '<p>notessssssssss</p>\n', '0.00', '{"tax_name":null,"total_tax":null}', 0, 'No', 31, NULL, NULL, 'INR', 'Unpaid', 0, NULL, 'No', '2020-03-12 00:39:20', 'No', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'No', 'No', 'No', 'No', 'No', 'Yes', 'No', 'all', 'No', '', 0, '0.00', '0.00', 'qty'),
+(3, NULL, '', '', '4547987', 2, 4, '2020-03-12', '2020-03', '2020', '2020-03-18', 0, '<p>jhjkkjhkhkjh</p>\n', '0.00', '{"tax_name":null,"total_tax":null}', 0, 'No', 31, NULL, NULL, 'INR', 'Unpaid', 0, NULL, 'No', '2020-03-12 00:40:39', 'No', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'No', 'No', 'No', 'No', 'No', 'Yes', 'No', 'all', 'No', '', 0, '0.00', '0.00', 'qty'),
+(5, NULL, '', '', '8900809', 2, 4, '2020-03-12', '2020-03', '2020', '2020-03-18', 0, '<p>jhjkkjhkhkjh</p>\n', '0.00', '{"tax_name":null,"total_tax":null}', 0, 'No', 31, NULL, NULL, 'INR', 'Unpaid', 0, NULL, 'No', '2020-03-12 00:42:11', 'No', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'No', 'No', 'No', 'No', 'No', 'Yes', 'No', 'all', 'No', '', 0, '0.00', '0.00', 'qty'),
+(6, NULL, '', '', '7657575', 4, 68, '2020-03-14', '2020-03', '2020', '2020-03-23', 0, '<p>5654654</p>\n', '0.00', '{"tax_name":null,"total_tax":null}', 0, 'No', 31, NULL, NULL, 'INR', 'Unpaid', 0, NULL, 'No', '2020-03-12 00:48:21', 'No', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'No', 'No', 'No', 'No', 'No', 'Yes', 'No', 'all', 'No', '', 0, '0.00', '0.00', 'qty'),
+(7, NULL, '', '', '565656', 4, 68, '2020-03-14', '2020-03', '2020', '2020-03-23', 0, '<p>5654654</p>\n', '0.00', '{"tax_name":null,"total_tax":null}', 0, 'No', 31, NULL, NULL, 'INR', 'Unpaid', 0, NULL, 'No', '2020-03-12 00:48:59', 'No', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'No', 'No', 'No', 'No', 'No', 'Yes', 'No', 'all', 'No', '', 0, '0.00', '0.00', 'qty'),
+(8, 3, '', '', 'saef2q3sdf', 17, 84, '2020-04-01', '2020-04', '2020', '2020-04-09', 0, '<p>zxczxc</p>\n', '0.00', '{"tax_name":null,"total_tax":null}', 0, 'No', 31, NULL, NULL, 'INR', 'Unpaid', 0, NULL, 'No', '2020-04-01 08:41:23', 'No', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'No', 'No', 'No', 'No', 'No', 'Yes', 'No', 'all', 'No', '', 0, '0.00', '0.00', 'qty');
 
 -- --------------------------------------------------------
 
@@ -2120,10 +2144,11 @@ CREATE TABLE `tbl_job_appliactions` (
 
 CREATE TABLE `tbl_job_circular` (
   `job_circular_id` int(11) NOT NULL,
+  `company_id` bigint(20) UNSIGNED DEFAULT NULL,
   `job_title` varchar(200) NOT NULL,
   `designations_id` int(11) NOT NULL,
   `vacancy_no` varchar(50) NOT NULL,
-  `posted_date` date NOT NULL,
+  `posted_date` date DEFAULT NULL,
   `employment_type` enum('contractual','full_time','part_time') NOT NULL DEFAULT 'full_time',
   `experience` varchar(200) DEFAULT NULL,
   `age` varchar(200) DEFAULT NULL,
@@ -2139,8 +2164,8 @@ CREATE TABLE `tbl_job_circular` (
 -- Dumping data for table `tbl_job_circular`
 --
 
-INSERT INTO `tbl_job_circular` (`job_circular_id`, `job_title`, `designations_id`, `vacancy_no`, `posted_date`, `employment_type`, `experience`, `age`, `salary_range`, `last_date`, `description`, `status`, `created_date`, `permission`) VALUES
-(0, 'php devloper', 1, '6456456456546546', '0000-00-00', 'full_time', '3628736236827', '4234234', '10000', '0000-00-00', '<html>\n<head>\n	<title></title>\n</head>\n<body>\n<p>6456546546</p>\n</body>\n</html>\n', 'published', '2020-03-03 12:11:24', 'all');
+INSERT INTO `tbl_job_circular` (`job_circular_id`, `company_id`, `job_title`, `designations_id`, `vacancy_no`, `posted_date`, `employment_type`, `experience`, `age`, `salary_range`, `last_date`, `description`, `status`, `created_date`, `permission`) VALUES
+(1, NULL, 'sdfsfdsf', 1, '23', '2020-04-01', 'full_time', '2', '23sd', 'sdf', '2020-04-09', '<html>\n<head>\n	<title></title>\n</head>\n<body></body>\n</html>\n', 'published', '2020-04-01 08:13:37', 'all');
 
 -- --------------------------------------------------------
 
@@ -4757,6 +4782,7 @@ CREATE TABLE `tbl_training` (
 
 CREATE TABLE `tbl_transactions` (
   `transactions_id` int(11) NOT NULL,
+  `company_id` bigint(20) UNSIGNED DEFAULT NULL,
   `project_id` int(11) DEFAULT NULL,
   `account_id` int(11) NOT NULL,
   `invoices_id` int(11) NOT NULL DEFAULT '0',
@@ -4786,6 +4812,15 @@ CREATE TABLE `tbl_transactions` (
   `deposit_2` text,
   `under_55` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_transactions`
+--
+
+INSERT INTO `tbl_transactions` (`transactions_id`, `company_id`, `project_id`, `account_id`, `invoices_id`, `name`, `type`, `category_id`, `amount`, `paid_by`, `payment_methods_id`, `reference`, `status`, `notes`, `tags`, `tax`, `date`, `debit`, `credit`, `total_balance`, `transfer_id`, `permission`, `attachement`, `client_visible`, `added_by`, `paid`, `billable`, `deposit`, `deposit_2`, `under_55`) VALUES
+(0, 3, NULL, 0, 0, 'demo', 'Expense', 0, '130.00', 3, 2, 'afe13123das', 'non_approved', 'mark noted', '', '0.00', '2020-04-09', '0.00', '0.00', '0.00', 0, NULL, 'expense-image2020-04-01-14-25-250.jpeg', 'No', 15, 0, 'No', NULL, NULL, NULL),
+(0, NULL, NULL, 0, 0, 'asasd', 'Income', 0, '2342.00', 3, 10, 'asedasd', 'non_approved', 'asfdadsasd', '', '0.00', '2020-04-01', '0.00', '0.00', '0.00', 0, 'all', 'deposit-image2020-04-01-14-30-460.jpeg', 'No', 15, 0, 'No', NULL, NULL, NULL),
+(0, 3, NULL, 0, 0, 'hbk23wkndf', 'Income', 0, '222.00', 17, 11, 'kjashddjh123', 'non_approved', 'sdf\'\r\n[09ewef', '', '0.00', '2020-04-22', '0.00', '0.00', '0.00', 0, 'all', 'deposit-image2020-04-01-14-35-280.jpeg', 'No', 15, 0, 'No', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -4881,8 +4916,8 @@ CREATE TABLE `tbl_users` (
 
 INSERT INTO `tbl_users` (`user_id`, `company_id`, `username`, `full_name`, `password`, `email`, `role_id`, `activated`, `banned`, `ban_reason`, `new_password_key`, `new_password_requested`, `new_email`, `new_email_key`, `last_ip`, `last_login`, `created`, `modified`, `online_time`, `permission`, `active_email`, `smtp_email_type`, `smtp_encription`, `smtp_action`, `smtp_host_name`, `smtp_username`, `smtp_password`, `smtp_port`, `smtp_additional_flag`, `last_postmaster_run`, `media_path_slug`) VALUES
 (8, 2, 'adminko', 'Lohn', '123456', 'admin@admin.com', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, '::1', '2020-03-31 14:54:31', '2019-10-04 09:41:35', '2020-03-31 09:24:31', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(13, NULL, 'ravishbeg', NULL, 'dca29b5f9649b6547b51bd5814f7390e55e724cea2367dbe67a89f96b6407e080baba48524485595cda0eb09db4c2103ce3f0ccd194471e9099a9dec75633b37', 'ravish3474@gmail.com', 3, 1, 0, NULL, NULL, NULL, NULL, NULL, '103.99.15.182', NULL, NULL, '2020-02-18 09:39:50', 0, 'all', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(15, NULL, 'shubham', '7777', 'abc6548ebd8967e04dfcc817aeed72f2dd8c851e14eb2e3efb74bc5fcff0d3c6e64569e5ce702ca7619cf2c4289bfa749472c4ca71c30b0ca4923f1443b2d8fd', 'ty@gmail.com', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, '103.99.15.182', NULL, NULL, '2020-02-18 09:39:50', 0, 'all', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(13, NULL, 'ravishbeg', NULL, '123456', 'ravish3474@gmail.com', 3, 1, 0, NULL, NULL, NULL, NULL, NULL, '::1', '2020-04-01 09:27:10', NULL, '2020-04-01 03:57:10', 1, 'all', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(15, 3, 'shubham', '7777', 'subham@123', 'ty@gmail.com', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, '::1', '2020-04-01 14:10:34', NULL, '2020-04-01 08:40:34', 1, 'all', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (18, NULL, 'piyush@123', 'Piyush Mohan', 'piyush@123', 'piyushmohan@gmail.com', 3, 1, 0, NULL, NULL, NULL, NULL, NULL, '103.99.15.6', '2020-03-02 18:11:33', NULL, '2020-03-02 12:41:33', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (19, NULL, 'kaif@123', 'Md. Kaif', 'kaif@123', 'kaif@amdin.com', 3, 1, 0, NULL, NULL, NULL, NULL, NULL, '139.167.109.38', '2020-03-23 10:36:25', NULL, '2020-03-23 05:06:25', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (20, NULL, 'shubham@123', 'Shubham Bhatt', 'shubh@123', 'shub@add.com', 3, 1, 0, NULL, NULL, NULL, NULL, NULL, '139.167.159.116', '2020-03-23 10:04:46', NULL, '2020-03-23 04:34:46', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -4892,7 +4927,8 @@ INSERT INTO `tbl_users` (`user_id`, `company_id`, `username`, `full_name`, `pass
 (24, 1, 'deepak@123', 'Deepak Nouliya', 'deepak@123', 'ded@sd.com', 3, 1, 0, NULL, NULL, NULL, NULL, NULL, '::1', '2020-03-31 14:46:29', NULL, '2020-03-31 09:24:26', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (25, NULL, 'sonali@123', 'Sonali', 'sonali@123', 'sonali@asd.com', 3, 1, 0, NULL, NULL, NULL, NULL, NULL, '103.99.15.182', '2020-03-18 11:56:14', NULL, '2020-03-18 06:26:14', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (26, NULL, 'vaishali@123', 'Vaishali Sharma', 'valishali@123', 'asdf@sd.v', 3, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-18 09:39:50', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(39, NULL, 'demo@123', 'Parveen Dahiya', 'demo@123', 'gnagendran@gmail.com', 3, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-20 06:48:08', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(39, NULL, 'demo@123', 'Parveen Dahiya', 'demo@123', 'gnagendran@gmail.com', 3, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-20 06:48:08', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(42, 1, 'root', 'jkgghj', 'mmmmmmm', 'hjhjgg@jh.com', 3, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-01 05:18:30', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -6514,7 +6550,7 @@ ALTER TABLE `tbl_account_details`
 -- AUTO_INCREMENT for table `tbl_allowed_ip`
 --
 ALTER TABLE `tbl_allowed_ip`
-  MODIFY `allowed_ip_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `allowed_ip_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `tbl_announcements`
 --
@@ -6524,7 +6560,7 @@ ALTER TABLE `tbl_announcements`
 -- AUTO_INCREMENT for table `tbl_attendance`
 --
 ALTER TABLE `tbl_attendance`
-  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `tbl_bug`
 --
@@ -6534,17 +6570,17 @@ ALTER TABLE `tbl_bug`
 -- AUTO_INCREMENT for table `tbl_client`
 --
 ALTER TABLE `tbl_client`
-  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `tbl_clock`
 --
 ALTER TABLE `tbl_clock`
-  MODIFY `clock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `clock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT for table `tbl_companies`
 --
 ALTER TABLE `tbl_companies`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tbl_db_backup`
 --
@@ -6554,12 +6590,12 @@ ALTER TABLE `tbl_db_backup`
 -- AUTO_INCREMENT for table `tbl_departments`
 --
 ALTER TABLE `tbl_departments`
-  MODIFY `departments_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `departments_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT for table `tbl_designations`
 --
 ALTER TABLE `tbl_designations`
-  MODIFY `designations_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=349;
+  MODIFY `designations_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=354;
 --
 -- AUTO_INCREMENT for table `tbl_holiday`
 --
@@ -6574,12 +6610,17 @@ ALTER TABLE `tbl_hourly_rate`
 -- AUTO_INCREMENT for table `tbl_invoices`
 --
 ALTER TABLE `tbl_invoices`
-  MODIFY `invoices_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `invoices_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `tbl_ip_restriction`
 --
 ALTER TABLE `tbl_ip_restriction`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tbl_job_circular`
+--
+ALTER TABLE `tbl_job_circular`
+  MODIFY `job_circular_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `tbl_leave_application`
 --
@@ -6639,7 +6680,7 @@ ALTER TABLE `tbl_todo`
 -- AUTO_INCREMENT for table `tbl_users`
 --
 ALTER TABLE `tbl_users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

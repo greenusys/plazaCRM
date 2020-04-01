@@ -328,6 +328,7 @@ class Payroll extends MY_Controller
             $date = $_POST['sal_date'];
             $dept_id = $_POST['dept_id'];
             $department = $this->Payroll_model->fetch_departments_data($dept_id);
+            $arr=[];
             foreach ($department as $dept) {
                 $user_id = $dept->user;
                 $check_payment_status = $this->Payroll_model->check_user_payment($user_id, $date);

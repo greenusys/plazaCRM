@@ -14,6 +14,9 @@ class Restriction extends MY_Controller {
         }else{
             $data['act']=2;
         }
+        $company_id=$this->session->userdata('logged_user')[0]->company_id;
+        $company_id=$company_id?$company_id:'""';
+        $this->db->where('company_id',$company_id);
         $data['ip_address']=$this->db->get('tbl_allowed_ip')->result();
         $this->load->view('layout/header');
         $this->load->view('pages/ip_restriction',$data);

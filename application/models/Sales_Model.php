@@ -24,6 +24,10 @@ class Sales_Model extends MY_Model
     }
 
     public function fetch_invoices(){
+        $company_id=$this->session->userdata('logged_user')[0]->company_id;
+        $company_id=$company_id?$company_id:'""';
+        $WHERE=array('tbl_invoices.company_id'=>$company_id);
+        $this->db->where($WHERE);
         $this->db->select('*');
         $this->db->from('tbl_invoices');
         $this->db->join('tbl_client', 'tbl_invoices.client_id = tbl_client.client_id');

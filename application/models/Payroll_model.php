@@ -37,13 +37,21 @@ class Payroll_Model extends MY_Model
 
             $count = $query->num_rows();
             if ($count!=0) {
-                $data=array("salary_template_id"=>null,"hourly_rate_id"=>null);
+                $data=array(
+                    "salary_template_id"=>null,
+                    "company_id"=>$this->session->userdata('logged_user')[0]->company_id,
+                    "hourly_rate_id"=>null
+                );
                 $this->db->where('user_id', $user);
                 $this->db->update('tbl_employee_payroll', $data);
                 return true;
              }
              else{
-                $data=array("salary_template_id"=>null,"hourly_rate_id"=>null,"user_id"=>$user);
+                $data=array(
+                    "salary_template_id"=>null,
+                    "company_id"=>$this->session->userdata('logged_user')[0]->company_id,
+                    "hourly_rate_id"=>null,
+                    "user_id"=>$user);
                 $this->db->insert('tbl_employee_payroll', $data);
                 return true;
              } 
@@ -56,13 +64,20 @@ class Payroll_Model extends MY_Model
             $count = $query->num_rows();
             if ($count!=0) {
                 $count = $query->num_rows();
-                $data=array("hourly_rate_id"=>$hourly_index);
+                $data=array(
+                    "hourly_rate_id"=>$hourly_index,
+                    "company_id"=>$this->session->userdata('logged_user')[0]->company_id
+                );
                 $this->db->where('user_id', $hourly_user);
                 $this->db->update('tbl_employee_payroll', $data);
                 return true;
             }
             else{
-                $data=array("hourly_rate_id"=>$hourly_index,"user_id"=>$hourly_user);
+                $data=array(
+                    "hourly_rate_id"=>$hourly_index,
+                    "company_id"=>$this->session->userdata('logged_user')[0]->company_id,
+                    "user_id"=>$hourly_user
+                );
                 $this->db->insert('tbl_employee_payroll', $data);
                 return true;
             }
@@ -74,13 +89,20 @@ class Payroll_Model extends MY_Model
             ));
             $count = $query->num_rows();
             if ($count!=0) {
-                $data=array("salary_template_id"=>$monthly_index);
+                $data=array(
+                    "salary_template_id"=>$monthly_index,
+                    "company_id"=>$this->session->userdata('logged_user')[0]->company_id
+                );
                 $this->db->where('user_id', $monthly_user);
                 $this->db->update('tbl_employee_payroll', $data);
                 return true;
             }
             else{
-                $data=array("salary_template_id"=>$monthly_index,"user_id"=>$monthly_user);
+                $data=array(
+                    "salary_template_id"=>$monthly_index,
+                    "company_id"=>$this->session->userdata('logged_user')[0]->company_id,
+                    "user_id"=>$monthly_user
+                );
                 $this->db->insert('tbl_employee_payroll', $data);
                 return true;
             }
@@ -128,7 +150,9 @@ class Payroll_Model extends MY_Model
     public function fetch_templates(){
         $this->db->select('*');
         $this->db->from('tbl_salary_template');
-        $WHERE=array('company_id'=>$this->session->userdata('logged_user')[0]->company_id);
+        $company_id=$this->session->userdata('logged_user')[0]->company_id;
+        $company_id=$company_id?$company_id:'""';
+        $WHERE=array('company_id'=>$company_id);
         $this->db->where($WHERE);
         $query_result = $this->db->get();
         $result = $query_result->result();
@@ -204,7 +228,9 @@ class Payroll_Model extends MY_Model
     }
 
     public function fetch_departments_data($id){
-        $WHERE=array('tbl_designations.company_id'=>$this->session->userdata('logged_user')[0]->company_id);
+        $company_id=$this->session->userdata('logged_user')[0]->company_id;
+        $company_id=$company_id?$company_id:'""';
+        $WHERE=array('tbl_designations.company_id'=>$company_id);
         $this->db->select('*,tbl_account_details.user_id as user');
         $this->db->where($WHERE);
         $this->db->from('tbl_designations');
@@ -219,7 +245,9 @@ class Payroll_Model extends MY_Model
 
     public function get_advance_salary_info_by_date($payment_month = NULL, $id = NULL, $user_id = NULL)
     {
-        $WHERE=array('tbl_advance_salary.company_id'=>$this->session->userdata('logged_user')[0]->company_id);
+        $company_id=$this->session->userdata('logged_user')[0]->company_id;
+        $company_id=$company_id?$company_id:'""';
+        $WHERE=array('tbl_advance_salary.company_id'=>$company_id);
         $this->db->select('tbl_advance_salary.*', FALSE);
         $this->db->select('tbl_account_details.*', FALSE);
         $this->db->from('tbl_advance_salary');
@@ -258,7 +286,9 @@ class Payroll_Model extends MY_Model
     public function fetch_hourly_templates(){
         $this->db->select('*');
         $this->db->from('tbl_hourly_rate');
-        $WHERE=array('company_id'=>$this->session->userdata('logged_user')[0]->company_id);
+        $company_id=$this->session->userdata('logged_user')[0]->company_id;
+        $company_id=$company_id?$company_id:'""';
+        $WHERE=array('company_id'=>$company_id);
         $this->db->where($WHERE);
         $query_result = $this->db->get();
         $result = $query_result->result();
@@ -301,11 +331,15 @@ class Payroll_Model extends MY_Model
 
     public function get_emp_salary_list($id = NULL, $designation_id = NULL)
     {
+        $company_id=$this->session->userdata('logged_user')[0]->company_id;
+        $company_id=$company_id?$company_id:'""';
+        $WHERE=array('tbl_employee_payroll.company_id'=>$company_id);
         $this->db->select('tbl_employee_payroll.*', FALSE);
         $this->db->select('tbl_account_details.*', FALSE);
         $this->db->select('tbl_salary_template.*', FALSE);
         $this->db->select('tbl_hourly_rate.*', FALSE);
         $this->db->select('tbl_designations.*', FALSE);
+        $this->db->where($WHERE);
         $this->db->select('tbl_departments.deptname', FALSE);
         $this->db->from('tbl_employee_payroll');
         $this->db->join('tbl_account_details', 'tbl_employee_payroll.user_id = tbl_account_details.user_id', 'left');

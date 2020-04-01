@@ -80,7 +80,9 @@ class Tasks_Model extends CI_Model{
         // }
         // return $tasks;
         // $this->db->where($checker);
-        $WHERE=array('company_id'=>$this->session->userdata('logged_user')[0]->company_id);
+        $company_id=$this->session->userdata('logged_user')[0]->company_id;
+        $company_id=$company_id?$company_id:'""';
+        $WHERE=array('company_id'=>$company_id);
         $this->db->where($WHERE);
         $this->db->order_by('task_id','desc');
         $check = $this->db->get("tbl_task")->result_array();

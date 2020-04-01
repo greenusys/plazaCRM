@@ -122,6 +122,24 @@ $role_id=$session[0]->role_id;
                     <div class="form-group">
                         <div class="row">
                         <div class="col-sm-3">
+                          <label for="full_name">Choose Company<sub class="text-danger">*</sub></label>
+                        </div>
+                        <div class="col-sm-8">
+                         <select class="form-control" name="company_id" require>
+                           <?php
+                           foreach($companies as $company){
+                             ?>
+                             <option value="<?=$company->id?>"><?=$company->company_name?></option>
+                             <?php
+                           }
+                           ?>
+                         </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                        <div class="col-sm-3">
                           <label for="full_name">Full Name<sub class="text-danger">*</sub></label>
                         </div>
                         <div class="col-sm-8">

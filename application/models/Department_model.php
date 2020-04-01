@@ -41,6 +41,10 @@ class Department_Model extends MY_Model
         return $result;
     }
     public function getAllDeppartments(){
+        $company_id=$this->session->userdata('logged_user')[0]->company_id;
+        $company_id=$company_id?$company_id:'""';
+        $WHERE=array('tbl_departments.company_id'=>$company_id);
+        $this->db->where($WHERE);
         $this->db->join('tbl_account_details', 'tbl_departments.department_head_id = tbl_account_details.user_id');
         $dpt= $this->db->get('tbl_departments')->result();
         return $dpt;
@@ -67,9 +71,15 @@ class Department_Model extends MY_Model
         }
     }
     public function createDepartment($newDep,$newDesig,$departmentHead=""){
-        $condition=array("deptname"=>$newDep,"department_head_id"=>$departmentHead);
+        $condition=array(
+            "deptname"=>$newDep,
+            "department_head_id"=>$departmentHead,
+        );
         $this->db->where($condition);
         if(count($this->db->get('tbl_departments')->result())==0){
+            $company_id=$this->session->userdata('logged_user')[0]->company_id;
+            $company_id=$company_id?$company_id:'""';
+            $condition['company_id']=$company_id;
             if($this->db->insert('tbl_departments',$condition)){
                 $this->db->order_by('departments_id','desc');
                 $this->db->limit(1);

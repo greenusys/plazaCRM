@@ -15,6 +15,10 @@ class Permission extends MY_Controller
 	}
 	public function index(){
 		//$data['Employee']=$this->ATND->fetchEmployee();
+		$company_id=$this->session->userdata('logged_user')[0]->company_id;
+		$company_id=$company_id?$company_id:'""';
+		$WHERE=array('company_id'=>$company_id);
+		$this->db->where($WHERE);
 		$data['Designation']=$this->db->get('tbl_departments')->result();
 		
 		$this->load->view('layout/header');

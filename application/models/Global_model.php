@@ -92,7 +92,9 @@ class Global_Model extends MY_Model
         if (!empty($end_date)) {
             $this->db->where('end_date <=', $end_date);
         }
-        $WHERE=array('company_id'=>$this->session->userdata('logged_user')[0]->company_id);
+        $company_id = $this->session->userdata('logged_user')[0]->company_id;
+        $company_id = $company_id ? $company_id : '""';
+        $WHERE = array('company_id' => $company_id);
         $this->db->where($WHERE);
         $query_result = $this->db->get();
         $result = $query_result->result();
@@ -284,6 +286,9 @@ class Global_Model extends MY_Model
     {
         $result = array("allowed_ip" => $data['ip_address']);
         if (count($this->db->where($result)->get('tbl_allowed_ip')->result()) == 0) {
+            $company_id = $this->session->userdata('logged_user')[0]->company_id;
+            $company_id = $company_id ? $company_id : '""';
+            $result['company_id']=$company_id;
             if ($this->db->insert('tbl_allowed_ip', $result)) {
                 return 1;
             } else {

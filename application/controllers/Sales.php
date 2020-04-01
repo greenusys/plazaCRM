@@ -109,6 +109,7 @@
 		$_POST['currency']="INR";
 		$_POST['date_saved']=date('Y-m-d H:i:s');
 		$_POST['total_tax']='{"tax_name":null,"total_tax":null}';
+		$_POST['company_id']=$this->session->userdata('logged_user')[0]->company_id;
 		$result=$this->Sales_Model->create_invoice($_POST);
 		if (!$result) {
 			die(json_encode(array('status'=>'0','msg'=>'Invoice ID already Exists')));
